@@ -1,8 +1,4 @@
-<?php if($this->session->userdata('loginStatus') == false)
-{
-    redirect(base_url());
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +6,7 @@
     <!-- Twitter meta-->
     <meta property="twitter:card" content="summary_large_image">
     <!-- Open Graph Meta-->
-    <title>Microfina</title>
+    <title>Bank</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +17,7 @@
   </head>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="index.html">Microfina</a>
+    <header class="app-header"><a class="app-header__logo" href="<?php echo base_url();?>dashboard">Bank</a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">

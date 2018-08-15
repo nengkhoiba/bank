@@ -21,9 +21,43 @@
       
       <div class="row">
         <div class="col-md-12">
+        	
           <div class="tile">
-            <div id="Mastercategory-body" class="tile-body">
-              
+          <div class="row">
+              <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Name</label>
+                  <input name="employee_qualification" style="margin-top: 10px;"
+					class="form-control" type="text" id="employee_name"
+					placeholder="Name"></input>
+                </div>
+                 <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Address</label>
+                  <input name="employee_qualification" style="margin-top: 10px;"
+					class="form-control" type="text" id="employee_address"
+					placeholder="Address"></input>
+                </div>
+                 <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Disignation</label>
+                  <select id="employee_martial_status" name="employee_designation" style="margin-top:10px;" class="form-control" >
+                  	<option class="form-control" value="">- Select -</option>
+                  	<option class="form-control" value="1">Admin</option>
+                  	<option class="form-control" value="2">Cassier</option>
+                  	<option class="form-control" value="3">Operator</option>
+                  	<option class="form-control" value="4">Cleark</option>
+                  	</select>
+                </div>
+          </div>
+          <div class="row">
+          	<div class="col-md-12" align="center">
+          	 <a onclick="searchs();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
+			</div>
+          </div>
+         
+          <br>
+          <div class="row"> 
+              	<div class="col-md-12">
+                	<div id="employee_table" class="tile-body"></div>
+                </div>
             </div>
           </div>
         </div>
@@ -32,6 +66,10 @@
 	  <?php $this->load->view('global/footer');?>
 
     <script type="text/javascript">
+    function searchs()
+    { 
+    	loadEmp();
+    }
     function loadEmp()
     { 
       var url = "<?php echo site_url('index.php/data_controller/loadEmp'); ?>"; 
@@ -45,7 +83,7 @@
         try{  
           if (response.success)
              { 
-            $('#Mastercategory-body').html(response.html);
+            $('#employee_table').html(response.html);
               $('#emp').DataTable();
               
              } else
@@ -67,7 +105,6 @@
        });
     }
     
-    loadEmp();  
       
     function addEmp(){  
     	if ($('#employee_name').val().trim() == '') { 

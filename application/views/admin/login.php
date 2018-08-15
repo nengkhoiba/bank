@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/main.css">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Login - Microfina</title>
+    <title>Login</title>
   </head>
   <body>
     <section class="material-half-bg">
@@ -16,7 +16,7 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>Microfina</h1>
+        <h1>Bank</h1>
       </div>
 	<?php if (!empty($msg)){?>
 	<div class="alert alert-danger"><?php echo $msg;?></div>

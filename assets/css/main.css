@@ -243,7 +243,7 @@ th {
 
 label {
   display: inline-block;
-  margin-bottom: 0.5rem;
+ 
 }
 
 button {
@@ -1680,8 +1680,7 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
-  vertical-align: top;
+  padding: 0.45rem;
   border-top: 1px solid #dee2e6;
 }
 
@@ -9467,6 +9466,9 @@ table.dataTable {
   margin-top: 6px !important;
   margin-bottom: 6px !important;
   max-width: none !important;
+ color: #949494;
+ font-family: 'open sans', sans-serif;
+ font-size: 12px;
 }
 
 table.dataTable td,
@@ -13573,7 +13575,6 @@ be a descendant of the grid when it is being dragged.
           flex: 1 0 auto;
   color: #fff;
   text-align: center;
-  font-family: 'Niconne';
   padding: 0 15px;
   font-size: 26px;
   font-weight: 400;
@@ -13593,8 +13594,8 @@ be a descendant of the grid when it is being dragged.
 
 .app-header__logo:focus, .app-header__logo:hover {
   text-decoration: none;
-  background-color: #009688;
-  color: #ffffff;
+  background-color:#ffffff ; 
+  color: #222d32;
 }
 
 .app-sidebar__toggle {
@@ -13883,7 +13884,7 @@ be a descendant of the grid when it is being dragged.
   background: #ffffff;
   border-left-color: #ffffff;
   text-decoration: none;
-  color: #222d32;
+  color: #585858;
 }
 
 .app-menu__icon {
@@ -14147,6 +14148,7 @@ be a descendant of the grid when it is being dragged.
   text-align: left;
   padding: 0;
   background-color: transparent;
+  color:#8a8989;
 }
 
 @media (max-width: 480px) {
@@ -14880,7 +14882,7 @@ be a descendant of the grid when it is being dragged.
 
 .login-content .logo {
   margin-bottom: 10px;
-  font-family: "Niconne";
+ 
   color: #000000;
 }
 
@@ -15273,4 +15275,34 @@ be a descendant of the grid when it is being dragged.
     left:50%;
     margin: -20px 0 0 -20px;
     z-index: 1000;
+}
+
+.btn-success
+{
+	color: #fff !important;
+    background-color: #26a69a !important;
+    border-color: #26a69a !important;
+    font-weight: 400 !important;
+    font-family: 'open sans', sans-serif !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    border-radius: 0px !important;
+	
+}
+.btn-danger
+{
+	color: #fff !important;
+    background-color: #ef5350 !important;
+    border-color: #ef5350 !important;
+    font-weight: 400 !important;
+    font-family: 'open sans', sans-serif !important;
+    font-size: 12px !important;
+    font-style: normal !important;
+    border-radius: 0px !important;
+	
+}
+
+.tile-body
+{
+	width:100%;	
 }
