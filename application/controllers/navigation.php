@@ -22,6 +22,8 @@ class Navigation extends CI_Controller {
 			}else{
 				echo "404";
 			}
+		}else{
+			redirect('login');
 		}
 	}
 	
