@@ -32,20 +32,25 @@ class Login extends CI_Controller {
         }
         else
         {
-            $email = $this->db->escape_str ( trim ( $_POST ['email'] ) );
-            $password = $this->db->escape_str ( trim ( $_POST ['password'] ) );
+            $email = $this->db->escape_str ( trim ( $this->input->post('email',true)));
+            $password = $this->db->escape_str ( trim ($this->input->post('password',true)));
             $authentication_data = $this->loginmodel->check_authentication ( $email, $password );
             if (sizeof ( $authentication_data ) == 1) {
+            	
+            	$EmpId = $authentication_data [0]->EmpID;
+                $Role = $authentication_data [0]->Role;
+                $RoleID = $authentication_data [0]->RoleID;
+                $Pass = $authentication_data [0]->Password;
+                $EmpName = $authentication_data [0]->EmpName;
+                $siteMap= $this->loginmodel->get_sitemap ($RoleID);
                 
-                $get_user_id = $authentication_data [0]->user_id;
-                $get_username = $authentication_data [0]->username;
-                $get_email = $authentication_data [0]->email;
                 $this->session->set_userdata ( 'loginStatus', TRUE );
-                $this->session->set_userdata ( 'userId', $get_user_id );
-                $this->session->set_userdata ( 'username', $get_username );
-                $this->session->set_userdata ( 'email', $get_email );
-                echo $this->session->userdata ( 'username' );
-                redirect ( 'employee' );
+                $this->session->set_userdata ( 'userId', $EmpId );
+                $this->session->set_userdata ( 'username', $EmpName );
+                $this->session->set_userdata ( 'Role', $Role );
+                $this->session->set_userdata ( 'SiteMap', $siteMap );
+                
+                redirect ( 'dashboard' );
             }
             else
             {

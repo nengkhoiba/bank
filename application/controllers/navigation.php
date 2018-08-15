@@ -5,7 +5,24 @@ class Navigation extends CI_Controller {
 
 	public function index()
 	{  
-		$this->load->view('login');
+		if($this->session->userdata('loginStatus')){
+			$sitemap=$this->session->userdata('SiteMap');
+			$slug=$this->input->get('q',true);
+			$view="";
+			$page=false;
+			foreach ($sitemap as $row){
+				if($slug==$row->PageSlug){
+					$view=$row->PageView;
+					$page=true;
+					break;
+				}
+			}
+			if($page){
+				$this->load->view($view);
+			}else{
+				echo "404";
+			}
+		}
 	}
 	
 	public function dashboard()
@@ -13,9 +30,5 @@ class Navigation extends CI_Controller {
 	    $this->load->view('admin/dashboard');
 	}
 		
-	public function employee()
-	{  
-		$this->load->view('admin/employee');
-	}
 		
 }

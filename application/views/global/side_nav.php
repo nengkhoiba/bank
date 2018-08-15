@@ -2,19 +2,15 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
       <ul class="app-menu">
-        <li><a class="app-menu__item" href="<?php echo base_url();?>dashboard"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-
-        <li><a class="app-menu__item active" href="<?php echo base_url();?>employee"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Employee Registration</span></a></li>
-
-		<li><a class="app-menu__item " href="<?php echo base_url();?>"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Customer Registration</span></a></li>
-
-		<li><a class="app-menu__item" href="<?php echo base_url();?>"><i class="app-menu__icon fa fa-gears"></i><span class="app-menu__label">Group Account</span></a></li>
-
-		
-
-    <li><a class="app-menu__item" href="<?php echo base_url();?>"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Loan  Section</span></a></li>
-        
-    <li><a class="app-menu__item" href="<?php echo base_url();?>"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Loan Recovery</span></a></li>
+      
+      <?php $sitemap=$sitemap=$this->session->userdata('SiteMap');
+      foreach ($sitemap as $row){
+      	?>
+      	<li><a class="app-menu__item " href="<?php echo base_url();?>navigation?q=<?php echo $row->PageSlug;?>"><i class="app-menu__icon <?php echo $row->PageIcon;?>"></i><span class="app-menu__label"><?php echo $row->PageTitle;?></span></a></li>	
+      	<?php
+      }
+      ?>
+      
         
       </ul>
     </aside>
