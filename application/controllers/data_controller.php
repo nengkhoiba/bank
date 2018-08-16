@@ -137,6 +137,8 @@ class Data_controller extends CI_Controller {
 
 	  echo json_encode($status) ; 
 	 }
+
+
 	 public function RemoveEmp()
 	{ 		
 		try {
@@ -187,6 +189,118 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+
+	public function addRole() 
+	{    
+	  $_POST = json_decode(trim(file_get_contents('php://input')), true);	
+	  $errorMSG ='';
+	try {
+		/* role title validation */
+		if (empty($_POST["role_title"])) {
+		    $errorMSG = " Title is required";
+		}
+				
+		   
+		$status = array("success"=>false,"msg"=>$errorMSG);
+		if(empty($errorMSG)){
+		    
+		    $role_title = $this->db->escape_str ( trim ( $_POST ['role_title'] ) );
+		    
+		  
+		   
+		    
+		    $result = $this->database->addRoleModel( $role_title);
+			if($result['code'] == 1){
+			  $status = array("success" => true,"msg" => "Save sucessfull!"); 
+			}else{
+			  $status = array("success" => false,"msg" => "Fail to save !!!"); 
+			}
+		}
+        } catch (Exception $ex) {
+            $status = array("success" => false,"msg" => $ex->getMessage());
+        }
+
+	  echo json_encode($status) ; 
+	 }
+
+	 public function updateRole() 
+		{    
+		  $_POST = json_decode(trim(file_get_contents('php://input')), true);	
+		  $errorMSG ='';
+		try {
+		    /* role title validation */
+		if (empty($_POST["role_title"])) {
+		    $errorMSG = " Title is required";
+		}
+	
+			
+			$status = array("success"=>false,"msg"=>$errorMSG);
+			if(empty($errorMSG)){	
+			    
+			    $role_id = $this->db->escape_str ( trim ( $_POST ['role_id'] ) );
+			     $role_title = $this->db->escape_str ( trim ( $_POST ['role_title'] ) );
+			
+		
+			
+			    $result = $this->database->updateRoleModel($role_title, $role_id);
+				if($result['code'] == 1)
+				{
+				  $status = array("success" => true,"msg" => "Update sucessfull!"); 
+				}
+				else
+				{
+				  $status = array("success" => false,"msg" => "Fail to Update !!!"); 
+				}
+			}
+	        } catch (Exception $ex) {
+	            $status = array("success" => false,"msg" => $ex->getMessage());
+	        }
+	
+		  echo json_encode($status) ; 
+	}
+
+	public function EditRole()
+	{ 	
+		try {
+			$Id =  $_POST['reqId'];
+			if($Id == ''){
+				$output = array(
+			        'msg'=> 'Resquest Error !!!',
+			        'success' =>false
+	    		);
+			}else{
+				$data['result'] = $this->database->GetRecordById($Id,'role'); 
+				$output = array(
+		        'html'=>$this->load->view('datafragment/Role_updateForm',$data, true),
+		        'success' =>true
+		    	);
+			}
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+
+
+	 public function RemoveRole()
+	{ 		
+		try {
+			$IdsArray = json_decode($_POST['dataArr'], TRUE);
+
+				$this->database->RemoveRecordById($IdsArray,'role');
+				$output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
 	}
 
 	public function EditEmp()

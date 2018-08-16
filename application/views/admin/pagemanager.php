@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addRoleform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteEmp()">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteRole()">Delete</button>
           </p>
         
       </div>
@@ -73,61 +73,17 @@
     }
     
       loadRole();
-    function addEmp(){  
-    	if ($('#employee_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Name is mandatory !');
-            $('#employee_name').focus();
+    function addRole(){  
+    	if ($('#role_title').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Title is mandatory !');
+            $('#role_title').focus();
             return;
         }
-        if ($('#employee_address').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Address is mandatory!');
-            $('#employee_address').focus();
-            return;
-        }
-        if ($('#employee_district').val().trim() == '') {
-            SetWarningMessageBox('warning', 'District is mandatory!');
-            $('#employee_district').focus();
-            return;
-        }
-        if ($('#employee_pincode').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Pincode is mandatory!');
-            $('#employee_pincode').focus();
-            return;
-        }
-        if ($('#employee_designation').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Designation is mandatory!');
-            $('#employee_designation').focus();
-            return;
-        }
-        if ($('#employee_gender').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Gender is mandatory!');
-            $('#employee_gender').focus();
-            return;
-        }
-        if ($('#employee_dob').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
-            $('#employee_dob').focus();
-            return;
-        }
-        if ($('#employee_qualification').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Qualification is mandatory!');
-            $('#employee_qualification').focus();
-            return;
-        }
-        if ($('#employee_martial_status').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Martial Status is mandatory!');
-            $('#employee_martial_status').focus();
-            return;
-        }
-        if ($('#fileUpload').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Image is mandatory!');
-            $('#file').focus();
-            return;
-        }
+       
         
-        var formData = $('form#MasEmpForms').serializeObject();
+        var formData = $('form#MasRoleForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addEmp';
+        var url = '<?php echo base_url();?>index.php/data_controller/addRole';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -140,9 +96,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasEmpformColap').empty(); 
-           loadEmp();
-           $('#emp').DataTable();
+           $('#MasRoleformColap').empty(); 
+           loadRole();
+           $('#role').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -194,9 +150,9 @@
     }
 
       
-    function editEmp($btn){  
+    function editRole($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditEmp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditRole';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -208,7 +164,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasEmpformColap').html(response.html);
+    				 $('#MasRoleformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -229,7 +185,7 @@
     function removeMasterRoleform(){ 
     	$('#MasRoleformColap').empty();
     }
-    function updateEmp(){  
+    function updateRole(){  
     	if ($('#role_title').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Title is mandatory !');
             $('#role_title').focus();
@@ -238,9 +194,9 @@
        
         
 
-        var formData = $('form#EmpFormUpdate').serializeObject();
+        var formData = $('form#RoleFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateEmp';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateRole';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -253,9 +209,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasEmpformColap').empty(); 
-				   loadEmp();
-				   $('#emp').DataTable();
+				   $('#MasRoleformColap').empty(); 
+				   loadRole();
+				   $('#role').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -272,7 +228,7 @@
 		  }
 		 });
 	}
-    function deleteEmp(){  
+    function deleteRole(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -290,7 +246,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveEmp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveRole';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -315,8 +271,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadEmp();
-      				   $('#Emp').DataTable();
+      				   loadRole();
+      				   $('#role').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);

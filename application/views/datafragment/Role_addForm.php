@@ -17,7 +17,7 @@
                
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="addEmp()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="addRole()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
                   <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#MasRoleForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
@@ -28,24 +28,3 @@
           </div>
         </div>
 
-<script>     
-$(document).ready(function (){
-var date = new Date();
-date.setDate(date.getDate()-1);            
-
-// allow to pick future date
-    // $('#employee_dob').datepicker({
-    // format: "dd/mm/yyyy"
-    // });
-// allow to pick future date
-
-var FromEndDate = new Date();
-$(function(){
-$('#employee_dob').datepicker({
-format: 'mm-dd-yyyy',
-endDate: FromEndDate, 
-autoclose: true
-});
-});
-});
-</script>

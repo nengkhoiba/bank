@@ -108,6 +108,57 @@ class Data_model extends CI_Model{
 		}
 	}
 	
+	/* Role Page Manager*/
+	function addRoleModel( $role_title )
+	{
+	         $data = array(
+	             'role'	=>  $role_title ,
+	             'isActive'=>  1,
+	         );
+	         
+	    $this->db->insert('role', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	   		
+		if($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return array('code' => 0);
+			
+		}
+		else
+		{
+		    $this->db->trans_commit();
+			return array('code' => 1);
+		}
+	}
+	
+
+	function updateRoleModel($role_title, $role_id)
+	{ 
+	  
+	        $data = array(
+	            'role'	=>  $role_title 
+	        );
+	      
+	    
+	    $this->db->where('ID',$role_id);
+	   $query = $this->db->update('role',$data);
+		
+		if($query)
+		{
+			return array('code' => 1);
+		}else
+		{
+			return array('code' => 0);
+		}
+	}
+
+
+
+
+
+
 
 }
     
