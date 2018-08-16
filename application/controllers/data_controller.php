@@ -32,6 +32,25 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 
+
+	public function loadRole()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('role');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/Role_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+
 	public function addEmp() 
 	{    
 	  $_POST = json_decode(trim(file_get_contents('php://input')), true);	
@@ -151,6 +170,25 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+
+	public function AddRoleform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                     'html'=>$this->load->view('datafragment/Role_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
 	public function EditEmp()
 	{ 	
 		try {
