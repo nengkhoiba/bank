@@ -13573,8 +13573,8 @@ be a descendant of the grid when it is being dragged.
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
-  color: #fff;
-  text-align: center;
+/*   color: #fff; */
+/*   text-align: center; */
   padding: 0 15px;
   font-size: 26px;
   font-weight: 400;
@@ -13588,7 +13588,7 @@ be a descendant of the grid when it is being dragged.
             flex: 0 0 auto;
     display: block;
     width: 230px;
-    background-color: #222d32;
+/*     background-color: #222d32; */
   }
 }
 
@@ -13601,11 +13601,12 @@ be a descendant of the grid when it is being dragged.
 .app-sidebar__toggle {
   padding: 0 15px;
   font-family: fontAwesome;
-  color: #222d32;
+  color: #ffffff;
   line-height: 2.4;
   -webkit-transition: background-color 0.3s ease;
   -o-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
+  background-color: #009688;
 }
 
 @media (max-width: 767px) {
@@ -13621,9 +13622,9 @@ be a descendant of the grid when it is being dragged.
   font-size: 21px;
 }
 
-.app-sidebar__toggle:focus, .app-sidebar__toggle:hover {
-  color: #fff;
-  background-color: #009688;
+.app-sidebar__toggle:hover {
+  color: #ffffff;
+  background-color: #ef5350;
   text-decoration: none;
 }
 
