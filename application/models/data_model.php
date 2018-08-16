@@ -42,17 +42,27 @@ class Data_model extends CI_Model{
 	             'isActive'=>  1,
 	         );
 	         
-	    $query = $this->db->insert('emp', $data);
-	    		
-		if($query)
+	    $this->db->insert('emp', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	   		
+		if($this->db->trans_status() === FALSE)
 		{
-			return array('code' => 1);
-			
-		}else
-		{
+		    $this->db->trans_rollback();
 			return array('code' => 0);
+			
+		}
+		else
+		{
+		    $this->db->trans_commit();
+			return array('code' => 1);
 		}
 	}
+	
+	
+	
+	
+	
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
 	{ 
 	    if($fileName == '') 
