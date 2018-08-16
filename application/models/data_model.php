@@ -55,6 +55,7 @@ class Data_model extends CI_Model{
 		else
 		{
 		    $this->db->trans_commit();
+		    $this->addLog("Add new Employee", "Employee name ".$employee_name." is added.");
 			return array('code' => 1);
 		}
 	}
@@ -96,7 +97,7 @@ class Data_model extends CI_Model{
 	        unlink("assets/upload/employee/".$previous_emp_image);
 	    }
 	    
-	    $this->db->where('ID',$emp_id);
+	   $this->db->where('ID',$emp_id);
 	   $query = $this->db->update('emp',$data);
 		
 		if($query)
@@ -111,10 +112,10 @@ class Data_model extends CI_Model{
 	/* Role Page Manager*/
 	function addRoleModel( $role_title )
 	{
-	         $data = array(
-	             'role'	=>  $role_title ,
-	             'isActive'=>  1,
-	         );
+         $data = array(
+             'role'	=>  $role_title,
+             'isActive'=>  1,
+         );
 	         
 	    $this->db->insert('role', $data);
 	    $lastID=$this->db->insert_id();
@@ -124,7 +125,6 @@ class Data_model extends CI_Model{
 		{
 		    $this->db->trans_rollback();
 			return array('code' => 0);
-			
 		}
 		else
 		{
@@ -137,13 +137,11 @@ class Data_model extends CI_Model{
 	function updateRoleModel($role_title, $role_id)
 	{ 
 	  
-	        $data = array(
-	            'role'	=>  $role_title 
-	        );
-	      
-	    
+        $data = array(
+            'role'	=>  $role_title 
+        );
 	    $this->db->where('ID',$role_id);
-	   $query = $this->db->update('role',$data);
+	    $query = $this->db->update('role',$data);
 		
 		if($query)
 		{
@@ -154,8 +152,48 @@ class Data_model extends CI_Model{
 		}
 	}
 
-
-
+	function addLog($logtitle,$logDescription){
+		$data = array(
+				'log_name'	=>  $logtitle ,
+				'log_detail'=>  $logDescription,
+				'ipaddress'=>   $this->get_client_ip(),
+				'user_id'=>     $this->session->userdata('userId') 
+		);	
+	 	$this->db->insert('log', $data);
+	    $lastID=$this->db->insert_id();
+	    
+		if($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return array('code' => 0);
+			
+		}
+		else
+		{
+		    $this->db->trans_commit();
+			return array('code' => 1);
+		}
+	}
+	function get_client_ip()
+	{
+		$ipaddress = '';
+		if (getenv('HTTP_CLIENT_IP'))
+			$ipaddress = getenv('HTTP_CLIENT_IP');
+			else if(getenv('HTTP_X_FORWARDED_FOR'))
+				$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+				else if(getenv('HTTP_X_FORWARDED'))
+					$ipaddress = getenv('HTTP_X_FORWARDED');
+					else if(getenv('HTTP_FORWARDED_FOR'))
+						$ipaddress = getenv('HTTP_FORWARDED_FOR');
+						else if(getenv('HTTP_FORWARDED'))
+							$ipaddress = getenv('HTTP_FORWARDED');
+							else if(getenv('REMOTE_ADDR'))
+								$ipaddress = getenv('REMOTE_ADDR');
+								else
+									$ipaddress = 'UNKNOWN';
+	
+									return $ipaddress;
+	}
 
 
 
