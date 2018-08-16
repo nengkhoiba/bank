@@ -95,3 +95,25 @@
             </div>
           </div>
         </div>
+
+<script>     
+$(document).ready(function (){
+var date = new Date();
+date.setDate(date.getDate()-1);            
+
+// allow to pick future date
+    // $('#employee_dob').datepicker({
+    // format: "dd/mm/yyyy"
+    // });
+// allow to pick future date
+
+var FromEndDate = new Date();
+$(function(){
+$('#employee_dob').datepicker({
+format: 'mm-dd-yyyy',
+endDate: FromEndDate, 
+autoclose: true
+});
+});
+});
+</script>

@@ -408,7 +408,7 @@
       }
       }); 
     } 
-
-    </script>
+</script>
+    
        </body>
 </html>
