@@ -3,6 +3,19 @@ class Data_model extends CI_Model{
 	
 // COMMON CODE Start HERE
 
+    function GetAllRecord($tabName)
+    {
+        //data is retrive from this query
+        $query = $this->db->get($tabName);
+        return $query->result_array();
+    }
+    
+    function GetSelectListById($id,$compare_id,$tabName)
+    {
+        $query = $this->db->get_where($tabName, array($compare_id => $id));
+        return $query->result_array();
+    }
+
 	function GetAllActiveRecord($tabName)  
 	{  
 	   //data is retrive from this query  
@@ -10,10 +23,10 @@ class Data_model extends CI_Model{
 	    return $query->result_array();  
 	} 
 	function GetRecordById($id,$tabName)  
-      { 
+    { 
          $query = $this->db->get_where($tabName, array('ID' => $id,'isActive' => 1)); 
          return $query->result_array();  
-      }
+    }
     function RemoveRecordById($ArrIds,$tblName)
 	{ 
 		foreach ($ArrIds as $id)
@@ -26,11 +39,14 @@ class Data_model extends CI_Model{
 
 // COMMON CODE END HERE
 
-	function addEmpModel( $employee_name, $employee_address, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName )
+	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName )
 	{
 	         $data = array(
 	             'name'	=>  $employee_name ,
 	             'address'=>  $employee_address,
+	             'country'=>  $employee_country,
+	             'state'=>  $employee_state,
+	             'city'=>  $employee_city,
 	             'district'=>  $employee_district,
 	             'pincode'=>  $employee_pincode,
 	             'designation'=>  $employee_designation,
@@ -43,14 +59,12 @@ class Data_model extends CI_Model{
 	         );
 	         
 	    $this->db->insert('emp', $data);
-	    $lastID=$this->db->insert_id();
-	    
-	   		
+	    $lastID=$this->db->insert_id();	    
+	   	
 		if($this->db->trans_status() === FALSE)
 		{
 		    $this->db->trans_rollback();
-			return array('code' => 0);
-			
+			return array('code' => 0);			
 		}
 		else
 		{
@@ -64,13 +78,16 @@ class Data_model extends CI_Model{
 	
 	
 	
-	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
+	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
 	{ 
 	    if($fileName == '') 
 	    {
 	        $data = array(
 	            'name'	=>  $employee_name ,
 	            'address'=>  $employee_address,
+	            'country'=>  $employee_country,
+	            'state'=>  $employee_state,
+	            'city'=>  $employee_city,
 	            'district'=>  $employee_district,
 	            'pincode'=>  $employee_pincode,
 	            'designation'=>  $employee_designation,
@@ -85,6 +102,9 @@ class Data_model extends CI_Model{
 	        $data = array(
 	            'name'	=>  $employee_name ,
 	            'address'=>  $employee_address,
+	            'country'=>  $employee_country,
+	            'state'=>  $employee_state,
+	            'city'=>  $employee_city,
 	            'district'=>  $employee_district,
 	            'pincode'=>  $employee_pincode,
 	            'designation'=>  $employee_designation,
@@ -98,15 +118,19 @@ class Data_model extends CI_Model{
 	    }
 	    
 	   $this->db->where('ID',$emp_id);
-	   $query = $this->db->update('emp',$data);
-		
-		if($query)
-		{
-			return array('code' => 1);
-		}else
-		{
-			return array('code' => 0);
-		}
+	   $this->db->update('emp',$data);
+	   
+	   if($this->db->trans_status() === FALSE)
+	   {
+	       $this->db->trans_rollback();
+	       return array('code' => 0);
+	   }
+	   else
+	   {
+	       $this->db->trans_commit();
+	       $this->addLog("Update existing Emp", "Employee name ".$employee_name." is updated.");
+	       return array('code' => 1);
+	   }
 	}
 	
 	/* Role Page Manager*/
@@ -120,17 +144,17 @@ class Data_model extends CI_Model{
 	    $this->db->insert('role', $data);
 	    $lastID=$this->db->insert_id();
 	    
-	   		
-		if($this->db->trans_status() === FALSE)
-		{
-		    $this->db->trans_rollback();
-			return array('code' => 0);
-		}
-		else
-		{
-		    $this->db->trans_commit();
-			return array('code' => 1);
-		}
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Role", "Role title ".$role_title." is added.");
+	        return array('code' => 1);
+	    }
 	}
 	
 
@@ -141,15 +165,19 @@ class Data_model extends CI_Model{
             'role'	=>  $role_title 
         );
 	    $this->db->where('ID',$role_id);
-	    $query = $this->db->update('role',$data);
-		
-		if($query)
-		{
-			return array('code' => 1);
-		}else
-		{
-			return array('code' => 0);
-		}
+	    $this->db->update('role',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Role", "New role title is ".$role_title."");
+	        return array('code' => 1);
+	    }
 	}
 
 	function addLog($logtitle,$logDescription){

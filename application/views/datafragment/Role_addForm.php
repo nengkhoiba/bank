@@ -3,7 +3,7 @@
           <div class="tile">
             <div class="tile-title-w-btn">
               <h3 class="title">Add New Role</h3>
-             <button onclick="removeMasterRoleform()" class="close" type="button" aria-label="Close" style="height: 28px;
+             <button onclick="removeMasterform('#MasRoleformColap')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
@@ -21,7 +21,7 @@
                   &nbsp;&nbsp;&nbsp;
                   <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#MasRoleForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterRoleform()"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasRoleformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
               </form>
             </div>

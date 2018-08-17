@@ -182,9 +182,7 @@
     		  }
     		 });
     } 
-    function removeMasterRoleform(){ 
-    	$('#MasRoleformColap').empty();
-    }
+   
     function updateRole(){  
     	if ($('#role_title').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Title is mandatory !');

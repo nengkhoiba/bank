@@ -117,6 +117,21 @@
             $('#employee_address').focus();
             return;
         }
+        if ($('#employee_country').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Country is mandatory!');
+            $('#employee_country').focus();
+            return;
+        }
+        if ($('#employee_state').val().trim() == '') {
+            SetWarningMessageBox('warning', 'State is mandatory!');
+            $('#employee_state').focus();
+            return;
+        }
+        if ($('#employee_city').val().trim() == '') {
+            SetWarningMessageBox('warning', 'City is mandatory!');
+            $('#employee_city').focus();
+            return;
+        }
         if ($('#employee_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#employee_district').focus();
@@ -259,9 +274,7 @@
     		  }
     		 });
     } 
-    function removeMasterEmpform(){ 
-    	$('#MasEmpformColap').empty();
-    }
+    
     function updateEmp(){  
     	if ($('#employee_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Name is mandatory !');
@@ -271,6 +284,21 @@
         if ($('#employee_address').val().trim() == '') {
             SetWarningMessageBox('warning', 'Address is mandatory!');
             $('#employee_address').focus();
+            return;
+        }
+        if ($('#employee_country').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Country is mandatory!');
+            $('#employee_country').focus();
+            return;
+        }
+        if ($('#employee_state').val().trim() == '') {
+            SetWarningMessageBox('warning', 'State is mandatory!');
+            $('#employee_state').focus();
+            return;
+        }
+        if ($('#employee_city').val().trim() == '') {
+            SetWarningMessageBox('warning', 'City is mandatory!');
+            $('#employee_city').focus();
             return;
         }
         if ($('#employee_district').val().trim() == '') {

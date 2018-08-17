@@ -28,6 +28,9 @@ var base_url = window.location.origin + '/' + window.location.pathname.split ('/
   };
 })(jQuery);
 
+function removeMasterform(form_id){ 
+	$(form_id).empty();
+}
 
 function checkAllCheckbox(t){  
     	if (t.is(':checked')) {
@@ -44,6 +47,7 @@ function clearAllFormValue(id)
     });
     
 }
+
 
 function resetAllFormValue(id)
 {	

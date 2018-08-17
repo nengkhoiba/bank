@@ -3,7 +3,7 @@
           <div class="tile">
             <div class="tile-title-w-btn">
               <h3 class="title">Add New Employee</h3>
-             <button onclick="removeMasterEmpform()" class="close" type="button" aria-label="Close" style="height: 28px;
+             <button onclick="removeMasterform('#MasEmpformColap')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
@@ -21,13 +21,30 @@
     				placeholder="Address"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">District</label>
-                  <select id="employee_district" name="employee_district" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Imphal West</option>
-                  	<option class="form-control" value="2">Imphal East</option>
-                  	<option class="form-control" value="3">Senapati</option>
+                  <label class="control-label">Country</label>
+                  	<select onchange="loadState($(this))" id="employee_country" name="employee_country" style="margin-top:10px;" class="form-control" >
+                        <!-- List of country -->
                   	</select>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">State</label>
+                  	<select onchange="loadCity($(this))" id="employee_state" name="employee_state" style="margin-top:10px;" class="form-control" >
+                  	     <option class="form-control" value="">- Select -</option>
+                  	     <!-- List of state -->
+                  	</select>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Cities</label>
+                  	<select id="employee_city" name="employee_city" style="margin-top:10px;" class="form-control" >
+                  	     <option class="form-control" value="">- Select -</option>
+                  	     <!-- List of state -->
+                  	</select>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">District</label>
+                  	<input name="employee_district" style="margin-top: 10px;"
+					class="form-control" type="text" id="employee_district"
+					placeholder="District"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Pincode</label>
@@ -89,14 +106,114 @@
                   &nbsp;&nbsp;&nbsp;
                   <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#MasEmpForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterEmpform()"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
               </form>
             </div>
           </div>
         </div>
 
-<script>     
+<script>
+function loadCountry()
+{ 
+  var url = "<?php echo site_url('index.php/data_controller/loadCountry'); ?>"; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,   
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $('#employee_country').html(response.html);              
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+loadCountry();
+
+
+function loadState($select){  
+	$reqestId =  $select.val(); 
+	var url = '<?php echo base_url();?>index.php/data_controller/loadState';
+	StartInsideLoading();
+	$.ajax({
+		  type: "post",
+		  url: url,
+		  cache: false,    
+		  data: {reqId:$reqestId},
+		  dataType: 'json',
+		  success: function(response){   
+		  try{  	 
+			   if (response.success)
+	           { 	
+				 $('#employee_state').html(response.html);
+	           } else
+	           { 
+	               SetWarningMessageBox('warning', response.msg);
+	           }
+		 StopInsideLoading();
+		  }catch(e) {  
+			  SetWarningMessageBox('warning', e);
+			  StopInsideLoading();
+		  }  
+		  },
+		  error: function(){      
+			  SetWarningMessageBox('warning', 'Error while request..');
+			  StopInsideLoading();
+		  }
+		 });
+} 
+
+function loadCity($select){  
+	$reqestId =  $select.val(); 
+	var url = '<?php echo base_url();?>index.php/data_controller/loadCity';
+	StartInsideLoading();
+	$.ajax({
+		  type: "post",
+		  url: url,
+		  cache: false,    
+		  data: {reqId:$reqestId},
+		  dataType: 'json',
+		  success: function(response){   
+		  try{  	 
+			   if (response.success)
+	           { 	
+				 $('#employee_city').html(response.html);
+	           } else
+	           { 
+	               SetWarningMessageBox('warning', response.msg);
+	           }
+		 StopInsideLoading();
+		  }catch(e) {  
+			  SetWarningMessageBox('warning', e);
+			  StopInsideLoading();
+		  }  
+		  },
+		  error: function(){      
+			  SetWarningMessageBox('warning', 'Error while request..');
+			  StopInsideLoading();
+		  }
+		 });
+}
+
+
 $(document).ready(function (){
 var date = new Date();
 date.setDate(date.getDate()-1);            
