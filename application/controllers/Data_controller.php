@@ -6,7 +6,7 @@ class Data_controller extends CI_Controller {
 	function __construct()
     {
     	parent::__construct();
-    	$this->load->model('data_model', 'database');
+    	$this->load->model('Data_model', 'database');
     	$this->load->library ( 'form_validation' );
     	$this->load->helper ( 'security' );
     }
