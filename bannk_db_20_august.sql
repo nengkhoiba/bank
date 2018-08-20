@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.1
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2018 at 02:01 PM
--- Server version: 5.6.25
--- PHP Version: 5.3.29
+-- Generation Time: Aug 20, 2018 at 03:56 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `bank_db`
@@ -27,16 +27,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `cities` (
-  `id` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `state_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48315 DEFAULT CHARSET=latin1;
+  `state_id` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48315 ;
 
 --
 -- Dumping data for table `cities`
 --
 
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (1, 'Bombuflat', 1),
 (2, 'Garacharma', 1),
 (3, 'Port Blair', 1),
@@ -2358,7 +2359,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (2319, 'Mauganj', 21),
 (2320, 'Meghnagar', 21),
 (2321, 'Mehara Gaon', 21);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (2322, 'Mehgaon', 21),
 (2323, 'Mhaugaon', 21),
 (2324, 'Mhow', 21),
@@ -4516,7 +4517,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (4476, 'Mandamarri', 36),
 (4477, 'Manuguru', 36),
 (4478, 'Medak', 36);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (4479, 'Medchal', 36),
 (4480, 'Miryalaguda', 36),
 (4481, 'Nagar Karnul', 36),
@@ -6667,7 +6668,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (6626, 'Gladstone', 269),
 (6627, 'Gold Coast', 269),
 (6628, 'Gowrie Junction', 269);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (6629, 'Gympie', 269),
 (6630, 'Helensvale', 269),
 (6631, 'Hervey Bay', 269),
@@ -8760,7 +8761,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (8718, 'Ibicarai', 516),
 (8719, 'Ibicui', 516),
 (8720, 'Ibipeba', 516);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (8721, 'Ibirapitanga', 516),
 (8722, 'Ibirataia', 516),
 (8723, 'Ibotirama', 516),
@@ -10758,7 +10759,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (10715, 'Saint-Cesaire', 673),
 (10716, 'Saint-Cyrill-de-Wendover', 673),
 (10717, 'Saint-Damase', 673);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (10718, 'Saint-Damien-de-Buckland', 673),
 (10719, 'Saint-Denis', 673),
 (10720, 'Saint-Donat-de-Montcalm', 673),
@@ -12861,7 +12862,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (12817, 'San Mateo', 781),
 (12818, 'San Miguel de Sema', 781),
 (12819, 'San Pablo de Borbur', 781);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (12820, 'Santa Maria', 781),
 (12821, 'Santa Rosa de Viterbo', 781),
 (12822, 'Santa Sofia', 781),
@@ -14892,7 +14893,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (14847, 'Jilove', 936),
 (14848, 'Jirkov', 936),
 (14849, 'Kadan', 936);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (14850, 'Klasterec nad Ohri', 936),
 (14851, 'Krupka', 936),
 (14852, 'Litomerice', 936),
@@ -16954,7 +16955,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (16908, 'Anjalankoski', 1162),
 (16909, 'Hamina', 1162),
 (16910, 'Kotka', 1162);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (16911, 'Kouvola', 1162),
 (16912, 'Kuusankoski', 1162),
 (16913, 'Valkeala', 1162),
@@ -18795,9 +18796,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (18748, 'Amerang', 1357),
 (18749, 'Ansbach', 1357),
 (18750, 'Aschaffenburg', 1357),
-(18751, 'Augsburg', 1357),
-(18752, 'Bad Aibling', 1357);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(18751, 'Augsburg', 1357);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(18752, 'Bad Aibling', 1357),
 (18753, 'Bad Kissingen', 1357),
 (18754, 'Bad Neustadt', 1357),
 (18755, 'Bad Reichenhall', 1357),
@@ -20724,10 +20725,10 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (20676, 'Upernavik', 1491),
 (20677, 'Upernavik Kujalleq', 1491),
 (20678, 'Ikerasak', 1492),
-(20679, 'Illorsuit', 1492),
+(20679, 'Illorsuit', 1492);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (20680, 'Niaqornat', 1492),
-(20681, 'Nuugaatsiaq', 1492);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(20681, 'Nuugaatsiaq', 1492),
 (20682, 'Qaarsut', 1492),
 (20683, 'Saattut', 1492),
 (20684, 'Ukkusissat', 1492),
@@ -22635,10 +22636,10 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (22586, 'Montebello sul Sangro', 1826),
 (22587, 'Monteferrante', 1826),
 (22588, 'Montelapiano', 1826),
-(22589, 'Montenerodomo', 1826),
+(22589, 'Montenerodomo', 1826);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (22590, 'Monteodorisio', 1826),
-(22591, 'Mozzagrogna', 1826);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(22591, 'Mozzagrogna', 1826),
 (22592, 'Orsogna', 1826),
 (22593, 'Ortona', 1826),
 (22594, 'Paglieta', 1826),
@@ -24512,10 +24513,10 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (24463, 'Sumoto', 1930),
 (24464, 'Taishi', 1930),
 (24465, 'Takarazuka', 1930),
-(24466, 'Takasago', 1930),
+(24466, 'Takasago', 1930);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (24467, 'Tatsuno', 1930),
-(24468, 'Toyooka', 1930);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(24468, 'Toyooka', 1930),
 (24469, 'Yamasaki', 1930),
 (24470, 'Yashiro', 1930),
 (24471, 'Yumesaki', 1930),
@@ -26527,9 +26528,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (26477, 'Wasserbillig', 2236),
 (26478, 'Wecker', 2236),
 (26479, 'Wecker-Gare', 2236),
-(26480, 'Weydig', 2236),
-(26481, 'Wormeldange', 2236);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(26480, 'Weydig', 2236);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(26481, 'Wormeldange', 2236),
 (26482, 'Wormeldange-Haut', 2236),
 (26483, 'Alzingen', 2237),
 (26484, 'Bereldange', 2237),
@@ -28406,9 +28407,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (28355, 'Temoaya', 2442),
 (28356, 'Tenancingo', 2442),
 (28357, 'Tenango de Arista', 2442),
-(28358, 'Tenango del Aire', 2442),
-(28359, 'Tenochtitlan', 2442);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(28358, 'Tenango del Aire', 2442);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(28359, 'Tenochtitlan', 2442),
 (28360, 'Teoloyucan', 2442),
 (28361, 'Teotihuacan', 2442),
 (28362, 'Tepeolulco', 2442),
@@ -30310,9 +30311,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (30258, 'Zandvoort', 2594),
 (30259, 'Zeevang', 2594),
 (30260, 'Zwaag', 2594),
-(30261, 'Zwanenburg', 2594),
-(30262, 'Almelo', 2595);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(30261, 'Zwanenburg', 2594);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(30262, 'Almelo', 2595),
 (30263, 'Bathmen', 2595),
 (30264, 'Borne', 2595),
 (30265, 'Dalfsen', 2595),
@@ -32294,10 +32295,10 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (32241, 'Manaoag', 2848),
 (32242, 'Mangaldan', 2848),
 (32243, 'San Fernando', 2848),
-(32244, 'Urdaneta', 2848),
+(32244, 'Urdaneta', 2848);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (32245, 'Vigan', 2848),
-(32246, 'Binan', 2849);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(32246, 'Binan', 2849),
 (32247, 'Laguna', 2849),
 (32248, 'Pangil', 2849),
 (32249, 'San Pedro', 2849),
@@ -34252,9 +34253,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (34198, 'Cobia', 2950),
 (34199, 'Cojasca', 2950),
 (34200, 'Comisani', 2950),
-(34201, 'Contesti', 2950),
-(34202, 'Corbii Mari', 2950);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(34201, 'Contesti', 2950);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(34202, 'Corbii Mari', 2950),
 (34203, 'Cornatelu', 2950),
 (34204, 'Cornesti', 2950),
 (34205, 'Costestii din Vale', 2950),
@@ -36219,9 +36220,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (36164, 'Surazh', 2986),
 (36165, 'Suzjomka', 2986),
 (36166, 'Trubchjovsk', 2986),
-(36167, 'Unecha', 2986),
-(36168, 'Zhukovka', 2986);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(36167, 'Unecha', 2986);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(36168, 'Zhukovka', 2986),
 (36169, 'Gusinoozjorsk', 2987),
 (36170, 'Kamensk', 2987),
 (36171, 'Kjahta', 2987),
@@ -38156,7 +38157,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (38100, 'Tzaneen', 3244),
 (38101, 'Botleng', 3245),
 (38102, 'Ekangala', 3245);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (38103, 'Embalenhle', 3245),
 (38104, 'Emjindini', 3245),
 (38105, 'Empuluzi', 3245),
@@ -40087,7 +40088,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (40030, '''Awsajah', 3636),
 (40031, 'Binzart', 3636),
 (40032, 'Ghar-al-Milh', 3636);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (40033, 'Manzil ''Abd-ar-Rahman', 3636),
 (40034, 'Manzil Bu Ruqaybah', 3636),
 (40035, 'Manzil Jamil', 3636),
@@ -42054,9 +42055,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (41996, 'Whitehaven', 3842),
 (41997, 'Whitley Bay', 3842),
 (41998, 'Wickford', 3842),
-(41999, 'Widnes', 3842),
-(42000, 'Wigan', 3842);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(41999, 'Widnes', 3842);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(42000, 'Wigan', 3842),
 (42001, 'Wigston', 3842),
 (42002, 'Wilmslow', 3842),
 (42003, 'Wimbourne Minster', 3842),
@@ -43938,9 +43939,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (43879, 'Sunrise', 3930),
 (43880, 'Sunset', 3930),
 (43881, 'Sweetwater', 3930),
-(43882, 'Tallahassee', 3930),
-(43883, 'Tamarac', 3930);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(43882, 'Tallahassee', 3930);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(43883, 'Tamarac', 3930),
 (43884, 'Tamiami', 3930),
 (43885, 'Tampa', 3930),
 (43886, 'Tarpon Springs', 3930),
@@ -45839,9 +45840,9 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (45779, 'Strongsville', 3959),
 (45780, 'Struthers', 3959),
 (45781, 'Sylvania', 3959),
-(45782, 'Tallmadge', 3959),
-(45783, 'Tiffin', 3959);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+(45782, 'Tallmadge', 3959);
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(45783, 'Tiffin', 3959),
 (45784, 'Toledo', 3959),
 (45785, 'Trotwood', 3959),
 (45786, 'Troy', 3959),
@@ -47773,7 +47774,7 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 (47712, 'Nutley', 3953),
 (47713, 'Mount Olive', 3953),
 (47714, 'Neptune', 3953);
-INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
+INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (47715, 'Pemberton Township', 3953),
 (47716, 'Lacey', 3953),
 (47717, 'Rahway', 3953),
@@ -48382,17 +48383,18 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `countries` (
-  `id` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `sortname` varchar(3) NOT NULL,
   `name` varchar(150) NOT NULL,
-  `phonecode` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8;
+  `phonecode` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=249 ;
 
 --
 -- Dumping data for table `countries`
 --
 
-INSERT INTO `countries` (`id`, `sortname`, `name`, `phonecode`) VALUES
+INSERT INTO `countries` (`ID`, `sortname`, `name`, `phonecode`) VALUES
 (1, 'AF', 'Afghanistan', 93),
 (2, 'AL', 'Albania', 355),
 (3, 'DZ', 'Algeria', 213),
@@ -48643,20 +48645,217 @@ INSERT INTO `countries` (`id`, `sortname`, `name`, `phonecode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `designation`
+--
+
+CREATE TABLE IF NOT EXISTS `designation` (
+  `ID` int(10) NOT NULL,
+  `title` int(200) NOT NULL,
+  `description` int(200) NOT NULL,
+  `added_on` timestamp NOT NULL,
+  `added_by` int(10) NOT NULL,
+  `modified_on` timestamp NOT NULL,
+  `modified_by` int(10) NOT NULL,
+  `isActive` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emp`
+--
+
+CREATE TABLE IF NOT EXISTS `emp` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  `country` int(11) NOT NULL,
+  `state` int(11) NOT NULL,
+  `city` int(11) NOT NULL,
+  `district` varchar(200) NOT NULL,
+  `pincode` int(11) NOT NULL,
+  `designation` varchar(200) NOT NULL,
+  `gender` varchar(50) NOT NULL,
+  `dob` varchar(100) NOT NULL,
+  `qualification` varchar(200) NOT NULL,
+  `martial_status` int(11) NOT NULL,
+  `image` varchar(10000) NOT NULL,
+  `isActive` bit(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `emp`
+--
+
+INSERT INTO `emp` (`ID`, `name`, `address`, `country`, `state`, `city`, `district`, `pincode`, `designation`, `gender`, `dob`, `qualification`, `martial_status`, `image`, `isActive`) VALUES
+(1, 'Nengkhoiba chungkham', 'Brahmapur chungkham leikai', 1, 58, 5973, '2', 795001, 'admin', '1', '15-12-1990', 'BE', 2, '1534341669_banner21.jpg', b'1'),
+(2, 'dsad', 'dasd', 0, 0, 0, '1', 1, 'dasd', '1', 'dsads', 'sadsad', 1, '1534320895_Roshni kumar.jpg', b'0'),
+(3, 'dsad', 'dsads', 0, 0, 0, '1', 3213213, 'dassadsad', '2', 'dsadsad', 'dsadsadsad', 1, '1534320850_Roshni kumar.jpg', b'0'),
+(4, 'sa', 'a', 0, 0, 0, '1', 32132132, '32132aSAs', '1', 'a', 'saSAsa', 1, '1534321909_incoteLogo.png', b'0'),
+(5, 'dsadsa', 'ds', 0, 0, 0, '1', 1, 'dsadsad', '1', 'dsadsad', 'dsadsad', 1, '1534321973_Fisher (1).jpg', b'0'),
+(6, 'dsadsad', 'a', 0, 0, 0, '2', 1, 'a', '1', 'dsadsa', 'a', 1, '1534322015_banner11.jpg', b'0'),
+(7, 'qq', 'dsadsad', 0, 0, 0, '2', 1, 'dsadsad', '1', 'sdadsad', 'dsadsad', 1, '1534335846_banner21.jpg', b'0'),
+(8, 'Test', 'Address', 0, 0, 0, '2', 1, 'dsadsad', '2', 'dsadsaaaaa', 'dsadsad', 3, '1534323009_banner11.jpg', b'1'),
+(9, 'dsadsa', 'dsadsad', 0, 0, 0, '1', 111111, 'dsadsad', '1', 'dsadsa', 'dsadsad', 2, '1534324130_Roshni kumar.jpg', b'0'),
+(10, 'dsadsad', 'dsadsad', 0, 0, 0, '2', 3213213, 'erwrewrew', '1', '08-08-2018', 'rewrewr', 1, '1534418268_mine_12_aug_2018.jpg', b'0'),
+(11, 'dsadsa', 'dsadsad', 0, 0, 6087, '1', 32131, 'dsadsad', '1', '08-15-2018', 'dsadsad', 1, '1534497952_banner21.jpg', b'0'),
+(12, 'dsadsa', 'dsadsad', 2, 91, 6050, '321321', 32131, 'dsadsad', '1', '08-15-2018', 'dsadsad', 1, '1534497966_banner21.jpg', b'1'),
+(13, 'dsadsa', 'dsadsad', 0, 0, 2904, '', 32131, 'dsadsad', '1', '08-15-2018', 'dsadsad', 1, '1534498059_banner21.jpg', b'1'),
+(14, 'dsadsa', 'dsadsad', 0, 0, 2491, '', 32131, 'dsadsad', '1', '08-15-2018', 'dsadsad', 1, '1534498161_banner21.jpg', b'1'),
+(15, 'dsadsa', 'dsadsad', 4, 164, 6430, '1', 1, 'dsadsad', '1', '08-15-2018', 'dsadsad', 2, '1534499477_banner21.jpg', b'1'),
+(16, 'dsadsad', 'a', 2, 89, 6048, '321321', 42134234, 'dsadsad', '1', '08-16-2018', 'saSAsa', 1, '1534503230_banner21.jpg', b'1'),
+(17, 'dsadsad', 'sdsadsad', 2, 91, 6050, 'dsadsada', 111111, 'dsdsad', '1', '08-14-2018', 'dsadsadad', 1, '1534504642_banner21.jpg', b'1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emp_login`
+--
+
+CREATE TABLE IF NOT EXISTS `emp_login` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(200) NOT NULL,
+  `password` varchar(300) NOT NULL,
+  `keycode` varchar(300) NOT NULL,
+  `role_id` int(10) NOT NULL,
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `emp_login`
+--
+
+INSERT INTO `emp_login` (`ID`, `username`, `password`, `keycode`, `role_id`, `isActive`) VALUES
+(1, 'admin@bank.com', '1', 'kjsagisgiagjks', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE IF NOT EXISTS `log` (
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
+  `log_name` varchar(200) NOT NULL,
+  `log_detail` varchar(500) NOT NULL,
+  `ipaddress` varchar(50) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`ID`, `log_name`, `log_detail`, `ipaddress`, `user_id`, `datetime`) VALUES
+(1, 'Add new Employee', 'Employee name dsadsa is added.', '127.0.0.1', 1, '2018-08-17 09:25:52'),
+(2, 'Add new Employee', 'Employee name dsadsa is added.', '127.0.0.1', 1, '2018-08-17 09:26:06'),
+(3, 'Add new Employee', 'Employee name dsadsa is added.', '127.0.0.1', 1, '2018-08-17 09:27:39'),
+(4, 'Add new Employee', 'Employee name dsadsa is added.', '127.0.0.1', 1, '2018-08-17 09:29:21'),
+(5, 'Add new Employee', 'Employee name dsadsa is added.', '127.0.0.1', 1, '2018-08-17 09:51:17'),
+(6, 'Add new Employee', 'Employee name dsadsad is added.', '127.0.0.1', 1, '2018-08-17 10:53:50'),
+(7, 'Add new Role', 'Role title dsadsadas is added.', '127.0.0.1', 1, '2018-08-17 11:09:21'),
+(8, 'Update existing Role', 'New role title Casier', '127.0.0.1', 1, '2018-08-17 11:13:49'),
+(9, 'Add new Employee', 'Employee name dsadsad is added.', '127.0.0.1', 1, '2018-08-17 11:17:22'),
+(10, 'Update existing Emp', 'Employee name dsadsa is updated.', '127.0.0.1', 1, '2018-08-17 11:18:39'),
+(11, 'Update existing Role', 'New role title is Casiers', '127.0.0.1', 1, '2018-08-17 11:19:15'),
+(12, 'Update existing Role', 'New role title is CASIER', '127.0.0.1', 1, '2018-08-17 11:30:58'),
+(13, 'Add new Role', 'Role title CLEARK is added.', '127.0.0.1', 1, '2018-08-17 11:39:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page_table`
+--
+
+CREATE TABLE IF NOT EXISTS `page_table` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `category` int(10) NOT NULL,
+  `sub_category` int(10) NOT NULL,
+  `page_title` varchar(100) NOT NULL,
+  `page_icon` varchar(100) NOT NULL,
+  `page_slug` varchar(500) NOT NULL,
+  `page_view` varchar(200) NOT NULL,
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `page_table`
+--
+
+INSERT INTO `page_table` (`ID`, `category`, `sub_category`, `page_title`, `page_icon`, `page_slug`, `page_view`, `isActive`) VALUES
+(1, 1, 0, 'Employee Registration', 'fa fa-pie-chart', 'vgfrdajqnmlkouytrmq6qk9mkajht', 'admin/employee', 1),
+(2, 2, 0, 'Page Manager', 'fa fa-gear', 'jyausyauytsuyabsiuioquoisu878qbsqh', 'admin/pagemanager', 1),
+(3, 3, 0, 'Customer Register', 'fa fa-gear', 'khafdlkfhlasdfhdsafoieryweoregjhfgsjdk67824376423sjagfkjdsfdsgfksdf', 'admin/customer_register', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `role` varchar(200) NOT NULL,
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`ID`, `role`, `isActive`) VALUES
+(1, 'ADMIN', 1),
+(2, 'MANAGER', 1),
+(3, 'CASIER', 1),
+(4, 'CLEARK', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `site_manager`
+--
+
+CREATE TABLE IF NOT EXISTS `site_manager` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) NOT NULL,
+  `page_id` int(10) NOT NULL,
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `site_manager`
+--
+
+INSERT INTO `site_manager` (`ID`, `role_id`, `page_id`, `isActive`) VALUES
+(1, 1, 1, 1),
+(2, 1, 2, 1),
+(3, 1, 3, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `states`
 --
 
 CREATE TABLE IF NOT EXISTS `states` (
-  `id` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `country_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=4121 DEFAULT CHARSET=latin1;
+  `country_id` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4121 ;
 
 --
 -- Dumping data for table `states`
 --
 
-INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
+INSERT INTO `states` (`ID`, `name`, `country_id`) VALUES
 (1, 'Andaman and Nicobar Islands', 101),
 (2, 'Andhra Pradesh', 101),
 (3, 'Arunachal Pradesh', 101),
@@ -50838,7 +51037,7 @@ INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
 (2179, 'Rivercess', 123),
 (2180, 'Sinoe', 123),
 (2181, 'Ajdabiya', 124);
-INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
+INSERT INTO `states` (`ID`, `name`, `country_id`) VALUES
 (2182, 'Fezzan', 124),
 (2183, 'Banghazi', 124),
 (2184, 'Darnah', 124),
@@ -52779,47 +52978,27 @@ INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
 (4119, 'Matabeleland South', 246),
 (4120, 'Midlands', 246);
 
---
--- Indexes for dumped tables
---
+-- --------------------------------------------------------
 
 --
--- Indexes for table `cities`
---
-ALTER TABLE `cities`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `countries`
---
-ALTER TABLE `countries`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `states`
---
-ALTER TABLE `states`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
+-- Table structure for table `user_tbl`
 --
 
+CREATE TABLE IF NOT EXISTS `user_tbl` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
 --
--- AUTO_INCREMENT for table `cities`
+-- Dumping data for table `user_tbl`
 --
-ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48315;
---
--- AUTO_INCREMENT for table `countries`
---
-ALTER TABLE `countries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=249;
---
--- AUTO_INCREMENT for table `states`
---
-ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4121;
+
+INSERT INTO `user_tbl` (`user_id`, `username`, `email`, `password`) VALUES
+(1, 'admin', 'admin@bank.com', '1');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
