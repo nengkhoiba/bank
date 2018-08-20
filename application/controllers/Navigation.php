@@ -26,7 +26,6 @@ class Navigation extends CI_Controller {
 			redirect('login');
 		}
 	}
-	
 	public function dashboard()
 	{
 	    $this->load->view('admin/dashboard');

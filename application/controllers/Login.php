@@ -16,6 +16,7 @@ class Login extends CI_Controller {
         $this->load->view('admin/login');
     }
 
+    
     public function login_form()
     {
         $data ['msg'] = "";

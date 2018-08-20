@@ -15,7 +15,6 @@ class Data_model extends CI_Model{
         $query = $this->db->get_where($tabName, array($compare_id => $id));
         return $query->result_array();
     }
-
 	function GetAllActiveRecord($tabName)  
 	{  
 	   //data is retrive from this query  

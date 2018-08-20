@@ -5,7 +5,6 @@ class Login_model extends CI_Model
 	{
 		parent::__construct ();
 	}
-	
 	// ================== CHECK USER EXIST OR NOT =========================
 	public function check_authentication($email, $password)
 	{
