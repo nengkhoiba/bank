@@ -22,7 +22,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $data['result']=$this->database->GetAllRecord('countries');
 	        $output = array(
-	            'html'=>$this->load->view('datafragment/Select_countryList',$data, true),
+	            'html'=>$this->load->view('datafragment/dropDown/Select_countryList',$data, true),
 	            'success' =>true
 	        );
 	    } catch (Exception $ex) {
@@ -47,7 +47,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result'] = $this->database->GetSelectListById($Id,'country_id','states');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/Select_stateList',$data, true),
+	                'html'=>$this->load->view('datafragment/dropDown/Select_stateList',$data, true),
 	                'success' =>true
 	            );
 	        }
@@ -72,7 +72,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result'] = $this->database->GetSelectListById($Id,'state_id','cities');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/Select_cityList',$data, true),
+	                'html'=>$this->load->view('datafragment/dropDown/Select_cityList',$data, true),
 	                'success' =>true
 	            );
 	        }
@@ -91,7 +91,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $data['result']=$this->database->GetAllActiveRecord('emp');
 	        $output = array(
-	            'html'=>$this->load->view('datafragment/Emp_table',$data, true),
+	            'html'=>$this->load->view('datafragment/dataTable/Emp_table',$data, true),
 	            'success' =>true
 	        );
 	    } catch (Exception $ex) {
@@ -109,7 +109,7 @@ class Data_controller extends CI_Controller {
 		try {
 			$data['result']=$this->database->GetAllActiveRecord('role');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/Role_table',$data, true),
+	        'html'=>$this->load->view('datafragment/dataTable/Role_table',$data, true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -128,52 +128,56 @@ class Data_controller extends CI_Controller {
 	    $errorMSG ='';
 	    try {
 	        /* name validation */
-	        if (empty($this->input->post("employee_name",true))) {
+	        if (empty($this->input->post('employee_name',true))) {
 	            $errorMSG = " Name is required";
 	        }
 	        /* address validation */
-	        elseif (empty($this->input->post("employee_address",true))) {
+	        elseif (empty($this->input->post('employee_address',true))) {
 	            $errorMSG .= " Address is required";
 	        }
 	        /* country validation */
-	        elseif (empty($this->input->post("employee_country",true))) {
+	        elseif (empty($this->input->post('employee_country',true))) {
 	            $errorMSG .= " Country is required";
 	        }
 	        /* state validation */
-	        elseif (empty($this->input->post("employee_state",true))) {
+	        elseif (empty($this->input->post('employee_state',true))) {
 	            $errorMSG .= " State is required";
 	        }
 	        /* city validation */
-	        elseif (empty($this->input->post("employee_city",true))) {
+	        elseif (empty($this->input->post('employee_city',true))) {
 	            $errorMSG .= " City is required";
 	        }
 	        /* district validation */
-	        elseif (empty($this->input->post("employee_district",true))) {
+	        elseif (empty($this->input->post('employee_district',true))) {
 	            $errorMSG .= " District is required";
 	        }
 	        /* pincode validation */
-	        elseif (empty($this->input->post("employee_pincode",true))) {
+	        elseif (empty($this->input->post('employee_pincode',true))) {
 	            $errorMSG .= " Pincode is required";
 	        }
 	        /* designation validation */
-	        elseif (empty($this->input->post("employee_designation",true))) {
+	        elseif (empty($this->input->post('employee_designation',true))) {
 	            $errorMSG .= " Designation is required";
 	        }
 	        /* gender validation */
-	        elseif (empty($this->input->post("employee_gender",true))) {
+	        elseif (empty($this->input->post('employee_gender',true))) {
 	            $errorMSG .= " Gender is required";
 	        }
 	        /* date of birth validation */
-	        elseif (empty($this->input->post("employee_dob",true))) {
+	        elseif (empty($this->input->post('employee_dob',true))) {
 	            $errorMSG .= " Date of Birth is required";
 	        }
 	        /* qualification validation */
-	        elseif (empty($this->input->post("employee_qualification",true))) {
+	        elseif (empty($this->input->post('employee_qualification',true))) {
 	            $errorMSG .= " Qualification is required";
 	        }
 	        /* martial status validation */
-	        elseif (empty($this->input->post("employee_martial_status",true))) {
+	        elseif (empty($this->input->post('employee_martial_status',true))) {
 	            $errorMSG .= " Martial Status is required";
+	        }
+	        /* Passport validation */
+	        elseif (empty($this->input->post('fileUpload',true))) {
+	            $errorMSG .= " Passport is required";
 	        }
 	        
 	        
@@ -244,7 +248,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	                 $data['result'] = '';
 	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/Emp_addForm',$data, true),
+	                 'html'=>$this->load->view('datafragment/addForm/Emp_addForm',$data, true),
 	                'success' =>true
 	            );
 	        
@@ -262,7 +266,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	                 $data['result'] = '';
 	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/Role_addForm',$data, true),
+	                 'html'=>$this->load->view('datafragment/addForm/Role_addForm',$data, true),
 	                'success' =>true
 	            );
 	        
@@ -356,7 +360,7 @@ class Data_controller extends CI_Controller {
 			}else{
 				$data['result'] = $this->database->GetRecordById($Id,'role'); 
 				$output = array(
-		        'html'=>$this->load->view('datafragment/Role_updateForm',$data, true),
+		        'html'=>$this->load->view('datafragment/updateForm/Role_updateForm',$data, true),
 		        'success' =>true
 		    	);
 			}
@@ -399,7 +403,7 @@ class Data_controller extends CI_Controller {
 			}else{
 				$data['result'] = $this->database->GetRecordById($Id,'emp'); 
 				$output = array(
-		        'html'=>$this->load->view('datafragment/Emp_updateForm',$data, true),
+		        'html'=>$this->load->view('datafragment/updateForm/Emp_updateForm',$data, true),
 		        'success' =>true
 		    	);
 			}
@@ -416,54 +420,54 @@ class Data_controller extends CI_Controller {
 		  $_POST = json_decode(trim(file_get_contents('php://input')), true);	
 		  $errorMSG ='';
 		try {
-		/* name validation */
-		if (empty($this->input->post("employee_name",true))) {
-		    $errorMSG = " Name is required";
-		}
-		/* address validation */
-		elseif (empty($this->input->post("employee_address",true))) {
-		    $errorMSG .= " Address is required";
-		}
-		/* country validation */
-		elseif (empty($this->input->post("employee_country",true))) {
-		    $errorMSG .= " Country is required";
-		}
-		/* state validation */
-		elseif (empty($this->input->post("employee_state",true))) {
-		    $errorMSG .= " State is required";
-		}
-		/* city validation */
-		elseif (empty($this->input->post("employee_city",true))) {
-		    $errorMSG .= " City is required";
-		}
-		/* district validation */
-		elseif (empty($this->input->post("employee_district",true))) {
-		    $errorMSG .= " District is required";
-		}
-		/* pincode validation */
-		elseif (empty($this->input->post("employee_pincode",true))) {
-		    $errorMSG .= " Pincode is required";
-		}
-		/* designation validation */
-		elseif (empty($this->input->post("employee_designation",true))) {
-		    $errorMSG .= " Designation is required";
-		}
-		/* gender validation */
-		elseif (empty($this->input->post("employee_gender",true))) {
-		    $errorMSG .= " Gender is required";
-		}
-		/* date of birth validation */
-		elseif (empty($this->input->post("employee_dob",true))) {
-		    $errorMSG .= " Date of Birth is required";
-		}
-		/* qualification validation */
-		elseif (empty($this->input->post("employee_qualification",true))) {
-		    $errorMSG .= " Qualification is required";
-		}
-		/* martial status validation */
-		elseif (empty($this->input->post("employee_martial_status",true))) {
-		    $errorMSG .= " Martial Status is required";
-		}
+		 /* name validation */
+	        if (empty($this->input->post('employee_name',true))) {
+	            $errorMSG = " Name is required";
+	        }
+	        /* address validation */
+	        elseif (empty($this->input->post('employee_address',true))) {
+	            $errorMSG .= " Address is required";
+	        }
+	        /* country validation */
+	        elseif (empty($this->input->post('employee_country',true))) {
+	            $errorMSG .= " Country is required";
+	        }
+	        /* state validation */
+	        elseif (empty($this->input->post('employee_state',true))) {
+	            $errorMSG .= " State is required";
+	        }
+	        /* city validation */
+	        elseif (empty($this->input->post('employee_city',true))) {
+	            $errorMSG .= " City is required";
+	        }
+	        /* district validation */
+	        elseif (empty($this->input->post('employee_district',true))) {
+	            $errorMSG .= " District is required";
+	        }
+	        /* pincode validation */
+	        elseif (empty($this->input->post('employee_pincode',true))) {
+	            $errorMSG .= " Pincode is required";
+	        }
+	        /* designation validation */
+	        elseif (empty($this->input->post('employee_designation',true))) {
+	            $errorMSG .= " Designation is required";
+	        }
+	        /* gender validation */
+	        elseif (empty($this->input->post('employee_gender',true))) {
+	            $errorMSG .= " Gender is required";
+	        }
+	        /* date of birth validation */
+	        elseif (empty($this->input->post('employee_dob',true))) {
+	            $errorMSG .= " Date of Birth is required";
+	        }
+	        /* qualification validation */
+	        elseif (empty($this->input->post('employee_qualification',true))) {
+	            $errorMSG .= " Qualification is required";
+	        }
+	        /* martial status validation */
+	        elseif (empty($this->input->post('employee_martial_status',true))) {
+	            $errorMSG .= " Martial Status is required";
+	        }
 		
 			
 			$status = array("success"=>false,"msg"=>$errorMSG);
