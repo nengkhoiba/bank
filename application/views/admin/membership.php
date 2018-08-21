@@ -287,7 +287,7 @@
     }
 
       
-    function editEmp($btn){  
+    function editMem($btn){  
     	$reqestId =  $btn.val(); 
     	var url = '<?php echo base_url();?>index.php/data_controller/EditEmp';
     	StartInsideLoading();
@@ -320,7 +320,7 @@
     		 });
     } 
     
-    function updateEmp(){  
+    function updateMem(){  
     	if ($('#employee_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Name is mandatory !');
             $('#employee_name').focus();
@@ -417,7 +417,7 @@
 		  }
 		 });
 	}
-    function deleteEmp(){  
+    function deleteMem(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {

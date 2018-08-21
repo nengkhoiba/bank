@@ -444,7 +444,7 @@ class Data_controller extends CI_Controller {
 	    $errorMSG ='';
 	    try {
 	        /* role title validation */
-	        if (empty($this->input->post("role_title",true))) {
+	        if (empty($this->input->post('role_title',true))) {
 	            $errorMSG = " Title is required";
 	        }
 	        
@@ -475,7 +475,7 @@ class Data_controller extends CI_Controller {
 	    $errorMSG ='';
 	    try {
 	        /* role title validation */
-	        if (empty($this->input->post("role_title",true))) {
+	        if (empty($this->input->post('role_title',true))) {
 	            $errorMSG = " Title is required";
 	        }
 	        
@@ -588,9 +588,10 @@ class Data_controller extends CI_Controller {
 	    $errorMSG ='';
 	    try {
 	        /* name validation */
-	        if (empty($this->input->post("role_title",true))) {
-	            $errorMSG = " Title is required";
+	        if (empty($this->input->post('member_name',true))) {
+	            $errorMSG = " Name is required";
 	        }
+	        
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
