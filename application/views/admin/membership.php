@@ -5,17 +5,17 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Customer Registration</li>
+          <li class="breadcrumb-item">Membership Form</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-              <a onclick="addCusform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteCus()">Delete</button>
+              <a onclick="addMemform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteMem()">Delete</button>
           </p>
         
       </div>
       
-      <div class="row" id="MasCusformColap">
+      <div class="row" id="MasMemformColap">
       </div>
      
       
@@ -26,19 +26,19 @@
           <div class="row">
               <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Name</label>
-                  <input name="customer_qualification" style="margin-top: 10px;"
-					class="form-control" type="text" id="customer_name"
+                  <input name="member_qualification" style="margin-top: 10px;"
+					class="form-control" type="text" id="member_name"
 					placeholder="Name"></input>
                 </div>
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Address</label>
-                  <input name="employee_qualification" style="margin-top: 10px;"
-					class="form-control" type="text" id="employee_address"
+                  <input name="member_address" style="margin-top: 10px;"
+					class="form-control" type="text" id="member_address"
 					placeholder="Address"></input>
                 </div>
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group</label>
-                  <select id="employee_martial_status" name="employee_designation" style="margin-top:10px;" class="form-control" >
+                  <select id="member_group" name="member_group" style="margin-top:10px;" class="form-control" >
                   	<option class="form-control" value="">- Select -</option>
                   	<option class="form-control" value="1">SHG1</option>
                   	<option class="form-control" value="2">SHG2</option>
@@ -56,7 +56,7 @@
           <br>
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="employee_table" class="tile-body"></div>
+                	<div id="member_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -70,9 +70,9 @@
     { 
     	loadEmp();
     }
-    function loadEmp()
+    function loadMem()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadEmp'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadMem'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -106,50 +106,50 @@
     }
     
       
-    function addEmp(){  
-    	if ($('#employee_name').val().trim() == '') { 
+    function addMem(){  
+    	if ($('#member_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Name is mandatory !');
-            $('#employee_name').focus();
+            $('#member_name').focus();
             return;
         }
-        if ($('#employee_address').val().trim() == '') {
+        if ($('#member_dob').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
+            $('#member_dob').focus();
+            return;
+        }
+        if ($('#member_gender').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Sex is mandatory!');
+            $('#member_gender').focus();
+            return;
+        }
+        if ($('#member_aadhaar').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Aadhaar No. is mandatory!');
+            $('#member_aadhaar').focus();
+            return;
+        }
+        if ($('#member_husband').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Husband Name is mandatory!');
+            $('#member_husband').focus();
+            return;
+        }
+        if ($('#member_address').val().trim() == '') {
             SetWarningMessageBox('warning', 'Address is mandatory!');
-            $('#employee_address').focus();
+            $('#member_address').focus();
             return;
         }
-        if ($('#employee_country').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Country is mandatory!');
-            $('#employee_country').focus();
+        if ($('#member_rural').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Rural is mandatory!');
+            $('#member_rural').focus();
             return;
         }
-        if ($('#employee_state').val().trim() == '') {
-            SetWarningMessageBox('warning', 'State is mandatory!');
-            $('#employee_state').focus();
+        if ($('#member_urban').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Urban is mandatory!');
+            $('#member_urban').focus();
             return;
         }
-        if ($('#employee_city').val().trim() == '') {
-            SetWarningMessageBox('warning', 'City is mandatory!');
-            $('#employee_city').focus();
-            return;
-        }
-        if ($('#employee_district').val().trim() == '') {
+        if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
-            $('#employee_district').focus();
-            return;
-        }
-        if ($('#employee_pincode').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Pincode is mandatory!');
-            $('#employee_pincode').focus();
-            return;
-        }
-        if ($('#employee_designation').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Designation is mandatory!');
-            $('#employee_designation').focus();
-            return;
-        }
-        if ($('#employee_gender').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Gender is mandatory!');
-            $('#employee_gender').focus();
+            $('#member_district').focus();
             return;
         }
         if ($('#employee_dob').val().trim() == '') {
@@ -157,14 +157,59 @@
             $('#employee_dob').focus();
             return;
         }
-        if ($('#employee_qualification').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Qualification is mandatory!');
-            $('#employee_qualification').focus();
+        if ($('#member_contact').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Contact No. is mandatory!');
+            $('#member_contact').focus();
             return;
         }
-        if ($('#employee_martial_status').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Martial Status is mandatory!');
-            $('#employee_martial_status').focus();
+        if ($('#member_bankaccount').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Account No. is mandatory!');
+            $('#member_bankaccount').focus();
+            return;
+        }
+        if ($('#member_bankbranch').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Branch Name is mandatory!');
+            $('#member_bankbranch').focus();
+            return;
+        }
+        if ($('#member_work').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Work Name is mandatory!');
+            $('#member_work').focus();
+            return;
+        }
+        if ($('#member_nominee').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Name is mandatory!');
+            $('#member_nominee').focus();
+            return;
+        }
+        if ($('#member_nomineeaadhaar').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Aadhaar No. is mandatory!');
+            $('#member_nomineeaadhaar').focus();
+            return;
+        }
+        if ($('#member_nomineeaddress').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Address is mandatory!');
+            $('#member_nomineeaddress').focus();
+            return;
+        }
+        if ($('#member_nomineerural').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
+            $('#member_nomineerural').focus();
+            return;
+        }
+        if ($('#member_nomineeurban').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
+            $('#member_nomineeurban').focus();
+            return;
+        }
+        if ($('#member_nomineedistrict').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee District is mandatory!');
+            $('#member_nomineedistrict').focus();
+            return;
+        }
+        if ($('#member_nomineecontact').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Contact No. is mandatory!');
+            $('#member_nomineecontact').focus();
             return;
         }
         if ($('#fileUpload').val().trim() == '') {
@@ -173,9 +218,9 @@
             return;
         }
         
-        var formData = $('form#MasEmpForms').serializeObject();
+        var formData = $('form#MasMemForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addEmp';
+        var url = '<?php echo base_url();?>index.php/data_controller/addMem';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -188,9 +233,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasEmpformColap').empty(); 
+           $('#MasMemformColap').empty(); 
            loadEmp();
-           $('#emp').DataTable();
+           $('#Mem').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -209,8 +254,8 @@
     }
 
 
-    function addEmpform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddEmpform';
+    function addMemform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddMemform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -222,7 +267,7 @@
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasEmpformColap').html(response.html);
+    				 $('#MasMemformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
