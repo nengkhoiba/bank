@@ -591,7 +591,91 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_name',true))) {
 	            $errorMSG = " Name is required";
 	        }
-	        
+	        /* dob validation */
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of Birth is required";
+	        }
+	        /* gender validation */
+	        if (empty($this->input->post('member_gender',true))) {
+	            $errorMSG = " Gender is required";
+	        }
+	        /* Aadhaar no. validation */
+	        if (empty($this->input->post('member_aadhaar',true))) {
+	            $errorMSG = " Aadhaar No. is required";
+	        }
+	        /* husband name validation */
+	        if (empty($this->input->post('member_husband',true))) {
+	            $errorMSG = " Husband name is required";
+	        }
+	        /* dob validation */
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of birth is required";
+	        }
+	        /* member address validation */
+	        if (empty($this->input->post('member_address',true))) {
+	            $errorMSG = " Member address is required";
+	        }
+	        /* member rural validation */
+	        if (empty($this->input->post('member_rural',true))) {
+	            $errorMSG = " Member rural is required";
+	        }
+	        /* member urban validation */
+	        if (empty($this->input->post('member_urban',true))) {
+	            $errorMSG = " Member urban is required";
+	        }
+	        /* member district validation */
+	        if (empty($this->input->post('member_district',true))) {
+	            $errorMSG = " Member district is required";
+	        }
+	        /* member dob validation */
+	        if (empty($this->input->post('employee_dob',true))) {
+	            $errorMSG = " Member date of birth is required";
+	        }
+	        /* member contact validation */
+	        if (empty($this->input->post('member_contact',true))) {
+	            $errorMSG = " Member contact no. is required";
+	        }
+	        /* member bank ac validation */
+	        if (empty($this->input->post('member_bankaccount',true))) {
+	            $errorMSG = " Member bank account no. is required";
+	        }
+	        /* member bank branch name validation */
+	        if (empty($this->input->post('member_bankbranch',true))) {
+	            $errorMSG = " Member bank branch name is required";
+	        }
+	        /* member work validation */
+	        if (empty($this->input->post('member_work',true))) {
+	            $errorMSG = " Member work is required";
+	        }
+	        /* nominee name validation */
+	        if (empty($this->input->post('member_nominee',true))) {
+	            $errorMSG = " Nominee name is required";
+	        }
+	        /* nominee aadhaar no. validation */
+	        if (empty($this->input->post('member_nomineeaadhaar',true))) {
+	            $errorMSG = " Aadhaar no. is required";
+	        }
+	        /* nominee address validation */
+	        if (empty($this->input->post('member_nomineeaddress',true))) {
+	            $errorMSG = " Nominee address is required";
+	        }
+	        /* nominee rural validation */
+	        if (empty($this->input->post('member_nomineerural',true))) {
+	            $errorMSG = " Nominee rural is required";
+	        }
+	        /* nominee urban validation */
+	        if (empty($this->input->post('member_nomineeurban',true))) {
+	            $errorMSG = " Nominee urban is required";
+	        }
+	        /* nominee district. validation */
+	        if (empty($this->input->post('member_nomineedistrict',true))) {
+	            $errorMSG = " Nominee district is required";
+	        }
+	        /* nominee contact validation */
+	        if (empty($this->input->post('member_nomineecontact',true))) {
+	            $errorMSG = " Nominee contact is required";
+	        }
+	              
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
