@@ -378,6 +378,9 @@ class Data_controller extends CI_Controller {
 	
 	
 	
+	
+	
+	
 	public function loadRole()
 	{ 	
 		try {
@@ -521,6 +524,12 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	
+	
+	
+	
+	
 	
 	public function loadMem()
 	{
@@ -675,16 +684,58 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineecontact',true))) {
 	            $errorMSG = " Nominee contact is required";
 	        }
+	        /* passport validation */
+	        elseif (empty($this->input->post('fileUpload',true))) {
+	            $errorMSG .= " Passport is required";
+	        }
 	              
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
+	            $member_name = $this->db->escape_str ( trim ( $this->input->post('member_name',true) ) );
+	            $member_dob = $this->db->escape_str ( trim ( $this->input->post('member_dob',true) ) );
+	            $member_gender = $this->db->escape_str ( trim ( $this->input->post('member_gender',true) ) );
+	            $member_aadhaar = $this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) );
+	            $member_husband = $this->db->escape_str ( trim ( $this->input->post('member_husband',true) ) );
+	            $member_address = $this->db->escape_str ( trim ( $this->input->post('member_address',true) ) );
+	            $member_rural = $this->db->escape_str ( trim ( $this->input->post('member_rural',true) ) );
+	            $member_urban = $this->db->escape_str ( trim ( $this->input->post('member_urban',true) ) );
+	            $member_district = $this->db->escape_str ( trim ( $this->input->post('member_district',true) ) );
+	            $member_contact = $this->db->escape_str ( trim ( $this->input->post('employee_dob',true) ) );
+	            $member_bankaccount = $this->db->escape_str ( trim ( $this->input->post('member_bankaccount',true) ) );
+	            $member_bankbranch = $this->db->escape_str ( trim ( $this->input->post('member_bankbranch',true) ) );
+	            $member_work = $this->db->escape_str ( trim ( $this->input->post('member_work',true) ) );
+	            $member_nominee = $this->db->escape_str ( trim ( $this->input->post('member_nominee',true) ) );
+	            $member_nomineeaadhaar = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaadhaar',true) ) );
+	            $member_nomineeaddress = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaddress',true) ) );
+	            $member_nomineerural = $this->db->escape_str ( trim ( $this->input->post('member_nomineerural',true) ) );
+	            $member_nomineeurban = $this->db->escape_str ( trim ( $this->input->post('member_nomineeurban',true) ) );
+	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
+	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
 	            
+	            if($this->input->post('fileUpload',true) != null)
+	            {
+	                $fileName = sanitize_filename ( $this->input->post('fileUploadName',true) );
+	                $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
+	                $file = urldecode ( $file );
+	                $file = str_replace ( 'data:image/png;base64,', '', $file );
+	                $file = str_replace ( 'data:image/jpeg;base64,', '', $file );
+	                $file = str_replace ( 'data:image/jpg;base64,', '', $file );
+	                $file = str_replace ( ' ', '+', $file );
+	                $file = base64_decode ( $file );
+	                $fileName = time() . '_' . $fileName;
+	                
+	                $ouputDir = "assets/upload/member/";
+	                file_put_contents ( $ouputDir . $fileName, $file );
+	            }
+	            else
+	            {
+	                $fileName = '';
+	            }
 	            
-	            $result = $this->database->addRoleModel( $role_title);
+	            $result = $this->database->addMemModel( $role_title);
 	            if($result['code'] == 1){
 	                $status = array("success" => true,"msg" => "Save sucessfull!");
 	            }else{
