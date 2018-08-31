@@ -377,10 +377,14 @@ class Data_controller extends CI_Controller {
 
 	
 	
+<<<<<<< HEAD
 	
 	
 	
 	
+=======
+	/*ROLE SECTION LOAD AND START HERE*/
+>>>>>>> 7b31ee59a4635508ccc4c8d6f15a7f8200476a97
 	public function loadRole()
 	{ 	
 		try {
@@ -398,6 +402,7 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
+	/*ROLE FORM LOAD*/
 	public function AddRoleform()
 	{
 	    try {
@@ -416,6 +421,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	/*ROLE EDIT SECTION*/
 	public function EditRole()
 	{
 	    try {
@@ -441,6 +447,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	/*ROLE DATA ADD*/
 	public function addRole()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -472,6 +479,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
+	/*ROLE UPDATE*/
 	public function updateRole()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -508,6 +516,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
+	/*ROLE DATA REMOVE*/
 	public function RemoveRole()
 	{
 	    try {
@@ -748,5 +757,164 @@ class Data_controller extends CI_Controller {
 	    
 	    echo json_encode($status) ;
 	}
-			
+	
+
+
+
+	/*DESIGNATION SECTION LOAD*/
+	public function loadDesign()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('designation');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Design_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	/*DESIGNATION FORM LOAD*/
+	public function AddDesignform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                 'html'=>$this->load->view('datafragment/addForm/Design_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*DESIGNATION EDIT SECTION*/
+	public function EditDesign()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'designation');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Design_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*DESIGNATION DATA ADD*/
+	public function addDesign()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* designation title validation */
+	        if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			 /* designation title validation */
+	        if (empty($this->input->post('design_description',true))) {
+	            $errorMSG = " Description is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
+				$design_description = $this->db->escape_str ( trim ( $this->input->post('design_description',true) ) );
+	            
+	            
+	            $result = $this->database->addDesignModel( $design_title,$design_description);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*DESIGNATION UPDATE*/
+	public function updateDesign()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* designation title validation */
+	        if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $design_id = $this->db->escape_str ( trim ( $this->input->post('design_id',true) ) );
+	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateDesignModel($design_title, $design_id);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*DESIGNATION DATA REMOVE*/
+	public function RemoveDesign()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'designation');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
+	
 }

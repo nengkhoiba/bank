@@ -38,6 +38,7 @@ class Data_model extends CI_Model{
 
 // COMMON CODE END HERE
 
+	/* EMPLOYEE DATA ADD */
 	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName )
 	{
 	         $data = array(
@@ -76,7 +77,7 @@ class Data_model extends CI_Model{
 	
 	
 	
-	
+		/* EMPLOYEE DATA UPDATE */
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
 	{ 
 	    if($fileName == '') 
@@ -132,7 +133,7 @@ class Data_model extends CI_Model{
 	   }
 	}
 	
-	/* Role Page Manager*/
+	/*PAGE MANAGER ROLE DATA ADD */
 	function addRoleModel( $role_title )
 	{
          $data = array(
@@ -156,7 +157,7 @@ class Data_model extends CI_Model{
 	    }
 	}
 	
-
+	/*PAGE MANAGER ROLE DATA UPDATE */
 	function updateRoleModel($role_title, $role_id)
 	{ 
 	  
@@ -175,6 +176,54 @@ class Data_model extends CI_Model{
 	    {
 	        $this->db->trans_commit();
 	        $this->addLog("Update existing Role", "New role title is ".$role_title."");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*DESIGNATION MANAGER DATA ADD */
+	function addDesignModel( $design_title,$design_description )
+	{
+         $data = array(
+             'title'	=>  $design_title,
+			  'description'	=>  $design_description,
+             'isActive'=>  1,
+         );
+	         
+	    $this->db->insert('designation', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Designation", "Designation title ".$design_title." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*DESIGNATION MANAGER ROLE DATA UPDATE */
+	function updateDesignModel($design_title, $design_id)
+	{ 
+	  
+        $data = array(
+            'title'	=>  $design_title 
+        );
+	    $this->db->where('ID',$design_id);
+	    $this->db->update('title',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Designation", "New designation title is ".$design_title."");
 	        return array('code' => 1);
 	    }
 	}
