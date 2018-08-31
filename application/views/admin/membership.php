@@ -49,7 +49,7 @@
           </div>
           <div class="row">
           	<div class="col-md-12" align="center">
-          	 <a onclick="searchs();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
+          	 <a onclick="loadMem();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
 			</div>
           </div>
          
@@ -66,10 +66,7 @@
 	  <?php $this->load->view('global/footer');?>
 
     <script type="text/javascript">
-    function searchs()
-    { 
-    	loadEmp();
-    }
+    
     function loadMem()
     { 
       var url = "<?php echo site_url('index.php/data_controller/loadMem'); ?>"; 
@@ -83,8 +80,8 @@
         try{  
           if (response.success)
              { 
-            $('#employee_table').html(response.html);
-              $('#emp').DataTable();
+            $('#member_table').html(response.html);
+              $('#mem').DataTable();
               
              } else
              { 
@@ -152,9 +149,9 @@
             $('#member_district').focus();
             return;
         }
-        if ($('#employee_dob').val().trim() == '') {
+        if ($('#member_dob').val().trim() == '') {
             SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
-            $('#employee_dob').focus();
+            $('#member_dob').focus();
             return;
         }
         if ($('#member_contact').val().trim() == '') {
@@ -234,7 +231,7 @@
              { 
            SetSucessMessageBox('Success', response.msg);
            $('#MasMemformColap').empty(); 
-           loadEmp();
+           loadMem();
            $('#Mem').DataTable();
              } else
              { 
@@ -287,9 +284,10 @@
     }
 
       
-    function editMem($btn){  
-    	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditEmp';
+    function editMem($btn){ 
+        
+    	$reqestId =  $btn.val();  
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditMemForm';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -301,7 +299,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasEmpformColap').html(response.html);
+    				 $('#MasMemformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -321,71 +319,116 @@
     } 
     
     function updateMem(){  
-    	if ($('#employee_name').val().trim() == '') { 
+    	if ($('#member_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Name is mandatory !');
-            $('#employee_name').focus();
+            $('#member_name').focus();
             return;
         }
-        if ($('#employee_address').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Address is mandatory!');
-            $('#employee_address').focus();
-            return;
-        }
-        if ($('#employee_country').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Country is mandatory!');
-            $('#employee_country').focus();
-            return;
-        }
-        if ($('#employee_state').val().trim() == '') {
-            SetWarningMessageBox('warning', 'State is mandatory!');
-            $('#employee_state').focus();
-            return;
-        }
-        if ($('#employee_city').val().trim() == '') {
-            SetWarningMessageBox('warning', 'City is mandatory!');
-            $('#employee_city').focus();
-            return;
-        }
-        if ($('#employee_district').val().trim() == '') {
-            SetWarningMessageBox('warning', 'District is mandatory!');
-            $('#employee_district').focus();
-            return;
-        }
-        if ($('#employee_pincode').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Pincode is mandatory!');
-            $('#employee_pincode').focus();
-            return;
-        }
-        if ($('#employee_designation').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Designation is mandatory!');
-            $('#employee_designation').focus();
-            return;
-        }
-        if ($('#employee_gender').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Gender is mandatory!');
-            $('#employee_gender').focus();
-            return;
-        }
-        if ($('#employee_dob').val().trim() == '') {
+        if ($('#member_dob').val().trim() == '') {
             SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
-            $('#employee_dob').focus();
+            $('#member_dob').focus();
             return;
         }
-        if ($('#employee_qualification').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Qualification is mandatory!');
-            $('#employee_qualification').focus();
+        if ($('#member_gender').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Sex is mandatory!');
+            $('#member_gender').focus();
             return;
         }
-        if ($('#employee_martial_status').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Martial Status is mandatory!');
-            $('#employee_martial_status').focus();
+        if ($('#member_aadhaar').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Aadhaar No. is mandatory!');
+            $('#member_aadhaar').focus();
+            return;
+        }
+        if ($('#member_husband').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Husband Name is mandatory!');
+            $('#member_husband').focus();
+            return;
+        }
+        if ($('#member_address').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Address is mandatory!');
+            $('#member_address').focus();
+            return;
+        }
+        if ($('#member_rural').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Rural is mandatory!');
+            $('#member_rural').focus();
+            return;
+        }
+        if ($('#member_urban').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Urban is mandatory!');
+            $('#member_urban').focus();
+            return;
+        }
+        if ($('#member_district').val().trim() == '') {
+            SetWarningMessageBox('warning', 'District is mandatory!');
+            $('#member_district').focus();
+            return;
+        }
+        if ($('#member_dob').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
+            $('#member_dob').focus();
+            return;
+        }
+        if ($('#member_contact').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Contact No. is mandatory!');
+            $('#member_contact').focus();
+            return;
+        }
+        if ($('#member_bankaccount').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Account No. is mandatory!');
+            $('#member_bankaccount').focus();
+            return;
+        }
+        if ($('#member_bankbranch').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Branch Name is mandatory!');
+            $('#member_bankbranch').focus();
+            return;
+        }
+        if ($('#member_work').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Work Name is mandatory!');
+            $('#member_work').focus();
+            return;
+        }
+        if ($('#member_nominee').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Name is mandatory!');
+            $('#member_nominee').focus();
+            return;
+        }
+        if ($('#member_nomineeaadhaar').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Aadhaar No. is mandatory!');
+            $('#member_nomineeaadhaar').focus();
+            return;
+        }
+        if ($('#member_nomineeaddress').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Address is mandatory!');
+            $('#member_nomineeaddress').focus();
+            return;
+        }
+        if ($('#member_nomineerural').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
+            $('#member_nomineerural').focus();
+            return;
+        }
+        if ($('#member_nomineeurban').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
+            $('#member_nomineeurban').focus();
+            return;
+        }
+        if ($('#member_nomineedistrict').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee District is mandatory!');
+            $('#member_nomineedistrict').focus();
+            return;
+        }
+        if ($('#member_nomineecontact').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Nominee Contact No. is mandatory!');
+            $('#member_nomineecontact').focus();
             return;
         }
         
 
-        var formData = $('form#EmpFormUpdate').serializeObject();
+        var formData = $('form#MemFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateEmp';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateMem';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -398,9 +441,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasEmpformColap').empty(); 
-				   loadEmp();
-				   $('#emp').DataTable();
+				   $('#MasMemformColap').empty(); 
+				   loadMem();
+				   $('#Mem').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -435,7 +478,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveEmp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveMem';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -460,8 +503,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadEmp();
-      				   $('#Emp').DataTable();
+      				   loadMem();
+      				   $('#Mem').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);

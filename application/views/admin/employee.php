@@ -49,7 +49,7 @@
           </div>
           <div class="row">
           	<div class="col-md-12" align="center">
-          	 <a onclick="searchs();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
+          	 <a onclick="loadEmp();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
 			</div>
           </div>
          
@@ -66,10 +66,7 @@
 	  <?php $this->load->view('global/footer');?>
 
     <script type="text/javascript">
-    function searchs()
-    { 
-    	loadEmp();
-    }
+   
     function loadEmp()
     { 
       var url = "<?php echo site_url('index.php/data_controller/loadEmp'); ?>"; 

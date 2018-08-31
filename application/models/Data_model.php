@@ -77,7 +77,7 @@ class Data_model extends CI_Model{
 	
 	
 	
-		/* EMPLOYEE DATA UPDATE */
+	/* EMPLOYEE DATA UPDATE */
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
 	{ 
 	    if($fileName == '') 
@@ -179,6 +179,129 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	
+	
+	
+	/*MEMBER DATA ADD */
+	function addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, 
+	    $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, 
+	    $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName)
+	{
+	    $data = array(
+	        'name'	=>  $member_name,
+	        'dob'	=>  $member_dob,
+	        'sex'	=>  $member_gender ,
+	        'aadhaar_no'=>  $member_aadhaar,
+	        'husband_name'=>  $member_husband,
+	        'parmanent_address'=>  $member_address,
+	        'rural'=>  $member_rural,
+	        'urban'=>  $member_urban,
+	        'district'=>  $member_district,
+	        'contact_no'=>  $member_contact,
+	        'bank_ac_no'=>  $member_bankaccount,
+	        'bank_branch'=>  $member_bankbranch,
+	        'work'	=>  $member_work ,
+	        'nominee_name'=>  $member_nominee,
+	        'nominee_aadhaar_no'=>  $member_nomineeaadhaar,
+	        'nominee_permanent_address'=>  $member_nomineeaddress,
+	        'nominee_rural'=>  $member_nomineerural,
+	        'nominee_urban'=>  $member_nomineeurban,
+	        'nominee_district'	=>  $member_nomineedistrict ,
+	        'nominee_contact_no'=>  $member_nomineecontact,
+	        'image'=>  $fileName,
+	        'isActive'=>  1
+	    );
+	    
+	    $this->db->insert('member', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Member", "Member name ".$member_name." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*MEMBER DATA UPDATE */
+	function updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName, $previous_mem_image)
+	{
+	    
+	    if($fileName == '')
+	    {
+	        $data = array(
+	            'name'	=>  $member_name,
+	            'dob'	=>  $member_dob,
+	            'sex'	=>  $member_gender ,
+	            'aadhaar_no'=>  $member_aadhaar,
+	            'husband_name'=>  $member_husband,
+	            'parmanent_address'=>  $member_address,
+	            'rural'=>  $member_rural,
+	            'urban'=>  $member_urban,
+	            'district'=>  $member_district,
+	            'contact_no'=>  $member_contact,
+	            'bank_ac_no'=>  $member_bankaccount,
+	            'bank_branch'=>  $member_bankbranch,
+	            'work'	=>  $member_work ,
+	            'nominee_name'=>  $member_nominee,
+	            'nominee_aadhaar_no'=>  $member_nomineeaadhaar,
+	            'nominee_permanent_address'=>  $member_nomineeaddress,
+	            'nominee_rural'=>  $member_nomineerural,
+	            'nominee_urban'=>  $member_nomineeurban,
+	            'nominee_district'	=>  $member_nomineedistrict ,
+	            'nominee_contact_no'=>  $member_nomineecontact
+	        );
+	    }
+	    else
+	    {
+	        $data = array(
+	            'name'	=>  $member_name,
+	            'dob'	=>  $member_dob,
+	            'sex'	=>  $member_gender ,
+	            'aadhaar_no'=>  $member_aadhaar,
+	            'husband_name'=>  $member_husband,
+	            'parmanent_address'=>  $member_address,
+	            'rural'=>  $member_rural,
+	            'urban'=>  $member_urban,
+	            'district'=>  $member_district,
+	            'contact_no'=>  $member_contact,
+	            'bank_ac_no'=>  $member_bankaccount,
+	            'bank_branch'=>  $member_bankbranch,
+	            'work'	=>  $member_work ,
+	            'nominee_name'=>  $member_nominee,
+	            'nominee_aadhaar_no'=>  $member_nomineeaadhaar,
+	            'nominee_permanent_address'=>  $member_nomineeaddress,
+	            'nominee_rural'=>  $member_nomineerural,
+	            'nominee_urban'=>  $member_nomineeurban,
+	            'nominee_district'	=>  $member_nomineedistrict ,
+	            'nominee_contact_no'=>  $member_nomineecontact,
+	            'image'=>  $fileName
+	        );
+	        unlink("assets/upload/member/".$previous_mem_image);
+	    }
+	    
+	    $this->db->where('ID',$mem_id);
+	    $this->db->update('member',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Mem", "Member name ".$member_name." is updated.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	
 	
 	/*DESIGNATION MANAGER DATA ADD */
 	function addDesignModel( $design_title,$design_description )

@@ -375,16 +375,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 
-	
-	
-<<<<<<< HEAD
-	
-	
-	
-	
-=======
-	/*ROLE SECTION LOAD AND START HERE*/
->>>>>>> 7b31ee59a4635508ccc4c8d6f15a7f8200476a97
+    /*ROLE SECTION LOAD AND START HERE*/
 	public function loadRole()
 	{ 	
 		try {
@@ -543,7 +534,7 @@ class Data_controller extends CI_Controller {
 	public function loadMem()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('emp');
+	        $data['result']=$this->database->GetAllActiveRecord('member');
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/Mem_table',$data, true),
 	            'success' =>true
@@ -585,7 +576,7 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'emp');
+	            $data['result'] = $this->database->GetRecordById($Id,'member');
 	            $output = array(
 	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
 	                'success' =>true
@@ -646,8 +637,8 @@ class Data_controller extends CI_Controller {
 	            $errorMSG = " Member district is required";
 	        }
 	        /* member dob validation */
-	        if (empty($this->input->post('employee_dob',true))) {
-	            $errorMSG = " Member date of birth is required";
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of birth is required";
 	        }
 	        /* member contact validation */
 	        if (empty($this->input->post('member_contact',true))) {
@@ -712,7 +703,7 @@ class Data_controller extends CI_Controller {
 	            $member_rural = $this->db->escape_str ( trim ( $this->input->post('member_rural',true) ) );
 	            $member_urban = $this->db->escape_str ( trim ( $this->input->post('member_urban',true) ) );
 	            $member_district = $this->db->escape_str ( trim ( $this->input->post('member_district',true) ) );
-	            $member_contact = $this->db->escape_str ( trim ( $this->input->post('employee_dob',true) ) );
+	            $member_contact = $this->db->escape_str ( trim ( $this->input->post('member_contact',true) ) );
 	            $member_bankaccount = $this->db->escape_str ( trim ( $this->input->post('member_bankaccount',true) ) );
 	            $member_bankbranch = $this->db->escape_str ( trim ( $this->input->post('member_bankbranch',true) ) );
 	            $member_work = $this->db->escape_str ( trim ( $this->input->post('member_work',true) ) );
@@ -744,7 +735,7 @@ class Data_controller extends CI_Controller {
 	                $fileName = '';
 	            }
 	            
-	            $result = $this->database->addMemModel( $role_title);
+	            $result = $this->database->addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName);
 	            if($result['code'] == 1){
 	                $status = array("success" => true,"msg" => "Save sucessfull!");
 	            }else{
@@ -756,6 +747,187 @@ class Data_controller extends CI_Controller {
 	    }
 	    
 	    echo json_encode($status) ;
+	}
+	
+	
+	
+	/*MEMBER UPDATE*/
+	public function updateMem()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* name validation */
+	        if (empty($this->input->post('member_name',true))) {
+	            $errorMSG = " Name is required";
+	        }
+	        /* dob validation */
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of Birth is required";
+	        }
+	        /* gender validation */
+	        if (empty($this->input->post('member_gender',true))) {
+	            $errorMSG = " Gender is required";
+	        }
+	        /* Aadhaar no. validation */
+	        if (empty($this->input->post('member_aadhaar',true))) {
+	            $errorMSG = " Aadhaar No. is required";
+	        }
+	        /* husband name validation */
+	        if (empty($this->input->post('member_husband',true))) {
+	            $errorMSG = " Husband name is required";
+	        }
+	        /* dob validation */
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of birth is required";
+	        }
+	        /* member address validation */
+	        if (empty($this->input->post('member_address',true))) {
+	            $errorMSG = " Member address is required";
+	        }
+	        /* member rural validation */
+	        if (empty($this->input->post('member_rural',true))) {
+	            $errorMSG = " Member rural is required";
+	        }
+	        /* member urban validation */
+	        if (empty($this->input->post('member_urban',true))) {
+	            $errorMSG = " Member urban is required";
+	        }
+	        /* member district validation */
+	        if (empty($this->input->post('member_district',true))) {
+	            $errorMSG = " Member district is required";
+	        }
+	        /* member dob validation */
+	        if (empty($this->input->post('member_dob',true))) {
+	            $errorMSG = " Date of birth is required";
+	        }
+	        /* member contact validation */
+	        if (empty($this->input->post('member_contact',true))) {
+	            $errorMSG = " Member contact no. is required";
+	        }
+	        /* member bank ac validation */
+	        if (empty($this->input->post('member_bankaccount',true))) {
+	            $errorMSG = " Member bank account no. is required";
+	        }
+	        /* member bank branch name validation */
+	        if (empty($this->input->post('member_bankbranch',true))) {
+	            $errorMSG = " Member bank branch name is required";
+	        }
+	        /* member work validation */
+	        if (empty($this->input->post('member_work',true))) {
+	            $errorMSG = " Member work is required";
+	        }
+	        /* nominee name validation */
+	        if (empty($this->input->post('member_nominee',true))) {
+	            $errorMSG = " Nominee name is required";
+	        }
+	        /* nominee aadhaar no. validation */
+	        if (empty($this->input->post('member_nomineeaadhaar',true))) {
+	            $errorMSG = " Aadhaar no. is required";
+	        }
+	        /* nominee address validation */
+	        if (empty($this->input->post('member_nomineeaddress',true))) {
+	            $errorMSG = " Nominee address is required";
+	        }
+	        /* nominee rural validation */
+	        if (empty($this->input->post('member_nomineerural',true))) {
+	            $errorMSG = " Nominee rural is required";
+	        }
+	        /* nominee urban validation */
+	        if (empty($this->input->post('member_nomineeurban',true))) {
+	            $errorMSG = " Nominee urban is required";
+	        }
+	        /* nominee district. validation */
+	        if (empty($this->input->post('member_nomineedistrict',true))) {
+	            $errorMSG = " Nominee district is required";
+	        }
+	        /* nominee contact validation */
+	        if (empty($this->input->post('member_nomineecontact',true))) {
+	            $errorMSG = " Nominee contact is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $mem_id = $this->db->escape_str ( trim ( $this->input->post('mem_id',true) ) );
+	            $previous_mem_image = $this->db->escape_str ( trim ( $this->input->post('previous_mem_image',true) ) );
+	            $member_name = $this->db->escape_str ( trim ( $this->input->post('member_name',true) ) );
+	            $member_dob = $this->db->escape_str ( trim ( $this->input->post('member_dob',true) ) );
+	            $member_gender = $this->db->escape_str ( trim ( $this->input->post('member_gender',true) ) );
+	            $member_aadhaar = $this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) );
+	            $member_husband = $this->db->escape_str ( trim ( $this->input->post('member_husband',true) ) );
+	            $member_address = $this->db->escape_str ( trim ( $this->input->post('member_address',true) ) );
+	            $member_rural = $this->db->escape_str ( trim ( $this->input->post('member_rural',true) ) );
+	            $member_urban = $this->db->escape_str ( trim ( $this->input->post('member_urban',true) ) );
+	            $member_district = $this->db->escape_str ( trim ( $this->input->post('member_district',true) ) );
+	            $member_contact = $this->db->escape_str ( trim ( $this->input->post('member_contact',true) ) );
+	            $member_bankaccount = $this->db->escape_str ( trim ( $this->input->post('member_bankaccount',true) ) );
+	            $member_bankbranch = $this->db->escape_str ( trim ( $this->input->post('member_bankbranch',true) ) );
+	            $member_work = $this->db->escape_str ( trim ( $this->input->post('member_work',true) ) );
+	            $member_nominee = $this->db->escape_str ( trim ( $this->input->post('member_nominee',true) ) );
+	            $member_nomineeaadhaar = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaadhaar',true) ) );
+	            $member_nomineeaddress = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaddress',true) ) );
+	            $member_nomineerural = $this->db->escape_str ( trim ( $this->input->post('member_nomineerural',true) ) );
+	            $member_nomineeurban = $this->db->escape_str ( trim ( $this->input->post('member_nomineeurban',true) ) );
+	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
+	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
+	            
+	            if($this->input->post('fileUpload',true) != null)
+	            {
+	                $fileName = sanitize_filename ( $this->input->post('fileUploadName',true) );
+	                $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
+	                $file = urldecode ( $file );
+	                $file = str_replace ( 'data:image/png;base64,', '', $file );
+	                $file = str_replace ( 'data:image/jpeg;base64,', '', $file );
+	                $file = str_replace ( 'data:image/jpg;base64,', '', $file );
+	                $file = str_replace ( ' ', '+', $file );
+	                $file = base64_decode ( $file );
+	                $fileName = time() . '_' . $fileName;
+	                
+	                $ouputDir = "assets/upload/member/";
+	                file_put_contents ( $ouputDir . $fileName, $file );
+	            }
+	            else
+	            {
+	                $fileName = '';
+	            }
+	            
+	            $result = $this->database->updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName, $previous_mem_image);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	
+	
+	/*MEMBER DATA REMOVE*/
+	public function RemoveMem()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'member');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
 	}
 	
 
