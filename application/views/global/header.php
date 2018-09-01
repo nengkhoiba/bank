@@ -6,7 +6,7 @@
     <!-- Twitter meta-->
     <meta property="twitter:card" content="summary_large_image">
     <!-- Open Graph Meta-->
-    <title>Bank</title>
+    <title></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +24,7 @@
   </head>
   <body class="app sidebar-mini rtl">
     <!-- Navbar-->
-    <header class="app-header"><a class="app-header__logo" href="<?php echo base_url();?>dashboard">Bank</a>
+    <header class="app-header"><a class="app-header__logo" href="<?php echo base_url();?>dashboard"></a>
       <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <!-- Navbar Right Menu-->
       <ul class="app-nav">

@@ -16,7 +16,7 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>Bank</h1>
+        <h1></h1>
       </div>
 	<?php if (!empty($msg)){?>
 	<div class="alert alert-danger"><?php echo $msg;?></div>
