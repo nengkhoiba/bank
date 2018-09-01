@@ -15,7 +15,7 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
-	//
+	
 	
 	public function loadCountry()
 	{
@@ -83,6 +83,24 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+	
+	public function loadAccountGrpUnder()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('account_group');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dropDown/Select_GrpUnder',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
 	}
 	
 	
@@ -1077,6 +1095,177 @@ class Data_controller extends CI_Controller {
 	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
 	        
 	        $this->database->RemoveRecordById($IdsArray,'designation');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	/*ACCOUNT GROUP LOAD*/
+	public function loadAccountGrp()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('account_group');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dataTable/AccountGrp_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP FORM LOAD*/
+	public function AddAccountGrpform()
+	{
+	    try {
+	        $data['result'] = '';
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/addForm/AccountGrp_addForm',$data, true),
+	            'success' =>true
+	        );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP EDIT SECTION*/
+	public function EditAccountGrp()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'account_group');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/account/updateForm/AccountGrp_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP DATA ADD*/
+	public function addAccountGrp()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account group name validation */
+	        if (empty($this->input->post('accountGrp_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account group under validation */
+	        if (empty($this->input->post('accountGrp_under',true))) {
+	            $errorMSG = " Group under is required";
+	        }
+	        /* account group nature validation */
+	        if (empty($this->input->post('accountGrp_nature',true))) {
+	            $errorMSG = " Group nature is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
+	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
+	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
+	            
+	            
+	            $result = $this->database->addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP UPDATE*/
+	public function updateAccountGrp()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account group name validation */
+	        if (empty($this->input->post('accountGrp_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account group under validation */
+	        if (empty($this->input->post('accountGrp_under',true))) {
+	            $errorMSG = " Group under is required";
+	        }
+	        /* account group nature validation */
+	        if (empty($this->input->post('accountGrp_nature',true))) {
+	            $errorMSG = " Group nature is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountGrp_id = $this->db->escape_str ( trim ( $this->input->post('accountGrp_id',true) ) );
+	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
+	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
+	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP DATA REMOVE*/
+	public function RemoveAccountGrp()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'account_group');
 	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
 	        
 	    } catch (Exception $ex) {

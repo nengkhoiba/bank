@@ -350,6 +350,59 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	
+	
+	
+	/*ACCOUNT GROUP DATA ADD */
+	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )
+	{
+	    $data = array(
+	        'Group_name'	=>  $accountGrp_name,
+	        'Group_under'	=>  $accountGrp_under,
+	        'Group_nature'	=>  $accountGrp_nature,
+	        'IsActive'=>  1,
+	    );
+	    
+	    $this->db->insert('account_group', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new account group name ", "Account Group Name ".$accountGrp_name." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*ACCOUNT GROUP DATA UPDATE */
+	function updateAccountGrpModel($accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
+	{
+	    
+	    $data = array(
+	        'Group_name'	=>  $accountGrp_name,
+	        'Group_under'	=>  $accountGrp_under,
+	        'Group_nature'	=>  $accountGrp_nature,
+	    );
+	    $this->db->where('ID',$accountGrp_id);
+	    $this->db->update('account_group',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Account Group Name", "New Account Group Name is ".$accountGrp_name."");
+	        return array('code' => 1);
+	    }
+	}
 
 	function addLog($logtitle,$logDescription){
 		$data = array(
