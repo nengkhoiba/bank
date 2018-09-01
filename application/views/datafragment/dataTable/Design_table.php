@@ -13,9 +13,9 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ( $result as $design_data) { ?>
+        <?php $count = 1; foreach ( $result as $design_data) { ?>
             <tr>
-                <td><?php echo $design_data['ID'];?></td>
+                <td><?php echo $count;?></td>
                 <td><?php echo $design_data['title'];?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
@@ -26,7 +26,7 @@
             	<button onclick="editDesign($(this))" value="<?php echo $design_data['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
 				</td>
 				</tr>
-        <?php } ?>
+        <?php $count ++;} ?>
         </tbody>
        
     </table>

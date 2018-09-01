@@ -70,23 +70,28 @@
        });
     }
     
-      loadDesign();
-    function addDesign(){  
-    	if ($('#design_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#design_title').focus();
+      loadAccountGrp();
+    function addAccountGrp(){  
+    	if ($('#accountGrp_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group name is mandatory !');
+            $('#accountGrp_name').focus();
             return;
         }
-		if ($('#design_description').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Description is mandatory !');
-            $('#design_description').focus();
+		if ($('#accountGrp_under').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group under is mandatory !');
+            $('#accountGrp_under').focus();
+            return;
+        }
+		if ($('#accountGrp_nature').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group nature is mandatory !');
+            $('#accountGrp_nature').focus();
             return;
         }
        
         
-        var formData = $('form#MasDesignForms').serializeObject();
+        var formData = $('form#MasAccountGrpForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addDesign';
+        var url = '<?php echo base_url();?>index.php/data_controller/addAccountGrp';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -99,9 +104,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasDesignformColap').empty(); 
-           loadDesign();
-           $('#design').DataTable();
+           $('#MasAccountGrpformColap').empty(); 
+           loadAccountGrp();
+           $('#AccountGrp').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -121,7 +126,7 @@
 
 
     function addAccountGrpform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddAccountGrp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddAccountGrpform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -133,7 +138,7 @@
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasDesignformColap').html(response.html);
+    				 $('#MasAccountGrpformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -153,9 +158,9 @@
     }
 
       
-    function editDesign($btn){  
+    function editAccountGrp($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditDesign';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditAccountGrp';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -167,7 +172,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasDesignformColap').html(response.html);
+    				 $('#MasAccountGrpformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -186,10 +191,20 @@
     		 });
     } 
    
-    function updateDesign(){  
-    	if ($('#design_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#design_title').focus();
+    function updateAccountGrp(){  
+    	if ($('#accountGrp_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group name is mandatory !');
+            $('#accountGrp_name').focus();
+            return;
+        }
+		if ($('#accountGrp_under').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group under is mandatory !');
+            $('#accountGrp_under').focus();
+            return;
+        }
+		if ($('#accountGrp_nature').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Group nature is mandatory !');
+            $('#accountGrp_nature').focus();
             return;
         }
        
@@ -197,7 +212,7 @@
 
         var formData = $('form#DesignFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateDesign';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateAccountGrp';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -210,9 +225,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasDesignformColap').empty(); 
-				   loadDesign();
-				   $('#design').DataTable();
+				   $('#MasAccountGrpformColap').empty(); 
+				   loadAccountGrp();
+				   $('#accountgrp').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -229,7 +244,7 @@
 		  }
 		 });
 	}
-    function deleteDesign(){  
+    function deleteAccountGrp(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -247,7 +262,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveDesign';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveAccountGrp';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -272,8 +287,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadDesign();
-      				   $('#design').DataTable();
+      				   loadAccountGrp();
+      				   $('#accountgrp').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);
