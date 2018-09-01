@@ -352,6 +352,55 @@ class Data_model extends CI_Model{
 	}
 	
 	
+		/*FINANCIAL DATA ADD */
+	function addFinancialModel( $financial_title,$financial_start,$financial_end)
+	{
+         $data = array(
+             'Financial_year'	=>  $financial_title,
+			  'Start_date'	=>  $financial_start,
+			  'End_date'	=>  $financial_end,			  
+             'isActive'=>  1,
+         );
+	         
+	    $this->db->insert('financial_year', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Financial Year", " Year title ".$financial_title." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*FINANCIAL YEAR DATA UPDATE */
+	function updateFinancialModel($financial_title,$financial_start,$financial_end)
+	{ 
+	  
+        $data = array(
+            'title'	=>  $design_title 
+        );
+	    $this->db->where('ID',$design_id);
+	    $this->db->update('designation',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Designation", "New designation title is ".$design_title."");
+	        return array('code' => 1);
+	    }
+	}
+	
 	
 	/*ACCOUNT GROUP DATA ADD */
 	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )

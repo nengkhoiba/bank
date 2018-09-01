@@ -622,15 +622,23 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('financial_title',true))) {
 	            $errorMSG = " Title is required";
 	        }
+			  if (empty($this->input->post('financial_start',true))) {
+	            $errorMSG = " Financial start date is required";
+	        }
+			  if (empty($this->input->post('financial_end',true))) {
+	            $errorMSG = " Financial dfsdend date is required";
+	        }
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
 	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
+				$financial_start = $this->db->escape_str ( trim ( $this->input->post('financial_start',true) ) );
+				$financial_end = $this->db->escape_str ( trim ( $this->input->post('financial_end',true) ) );
 	            
 	            
-	            $result = $this->database->addFinancialModel( $financial_title);
+	            $result = $this->database->addFinancialModel( $financial_title,$financial_start,$financial_end);
 	            if($result['code'] == 1){
 	                $status = array("success" => true,"msg" => "Save sucessfull!");
 	            }else{

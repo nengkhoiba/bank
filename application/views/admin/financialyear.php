@@ -105,7 +105,7 @@
              { 
            SetSucessMessageBox('Success', response.msg);
            $('#MasFinancialformColap').empty(); 
-           loadDesign();
+           loadFinancial();
            $('#financial').DataTable();
              } else
              { 
