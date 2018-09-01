@@ -15,7 +15,7 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
-	//
+	
 	
 	public function loadCountry()
 	{
@@ -83,6 +83,24 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+	
+	public function loadAccountGrpUnder()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('account_group');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dropDown/Select_GrpUnder',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
 	}
 	
 	
@@ -375,7 +393,9 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 
-    /*ROLE SECTION LOAD AND START HERE*/
+  
+
+  /*ROLE SECTION LOAD AND START HERE*/
 	public function loadRole()
 	{ 	
 		try {
@@ -509,6 +529,168 @@ class Data_controller extends CI_Controller {
 	
 	/*ROLE DATA REMOVE*/
 	public function RemoveRole()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'role');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	
+	
+
+  /*FINANCIAL YEAR SECTION LOAD AND START HERE*/
+	public function loadFinancial()
+	{ 
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('financial_year');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Financial_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	/*ROLE FORM LOAD*/
+	public function AddFinancialform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                 'html'=>$this->load->view('datafragment/addForm/Financial_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ROLE EDIT SECTION*/
+	public function EditFinancial()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'role');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Financial_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ROLE DATA ADD*/
+	public function addFinancial()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* role title validation */
+	        if (empty($this->input->post('financial_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			  if (empty($this->input->post('financial_start',true))) {
+	            $errorMSG = " Financial start date is required";
+	        }
+			  if (empty($this->input->post('financial_end',true))) {
+	            $errorMSG = " Financial dfsdend date is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
+				$financial_start = $this->db->escape_str ( trim ( $this->input->post('financial_start',true) ) );
+				$financial_end = $this->db->escape_str ( trim ( $this->input->post('financial_end',true) ) );
+	            
+	            
+	            $result = $this->database->addFinancialModel( $financial_title,$financial_start,$financial_end);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ROLE UPDATE*/
+	public function updateFinancial()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* role title validation */
+	        if (empty($this->input->post('financial_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $role_id = $this->db->escape_str ( trim ( $this->input->post('role_id',true) ) );
+	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateRoleModel($role_title, $role_id);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ROLE DATA REMOVE*/
+	public function RemoveFinancial()
 	{
 	    try {
 	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
@@ -1117,6 +1299,176 @@ class Data_controller extends CI_Controller {
 		echo $status;
 							
 	} 
+	/*ACCOUNT GROUP LOAD*/
+	public function loadAccountGrp()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('account_group');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dataTable/AccountGrp_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP FORM LOAD*/
+	public function AddAccountGrpform()
+	{
+	    try {
+	        $data['result'] = '';
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/addForm/AccountGrp_addForm',$data, true),
+	            'success' =>true
+	        );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP EDIT SECTION*/
+	public function EditAccountGrp()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'account_group');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/account/updateForm/AccountGrp_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP DATA ADD*/
+	public function addAccountGrp()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account group name validation */
+	        if (empty($this->input->post('accountGrp_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account group under validation */
+	        if (empty($this->input->post('accountGrp_under',true))) {
+	            $errorMSG = " Group under is required";
+	        }
+	        /* account group nature validation */
+	        if (empty($this->input->post('accountGrp_nature',true))) {
+	            $errorMSG = " Group nature is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
+	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
+	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
+	            
+	            
+	            $result = $this->database->addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP UPDATE*/
+	public function updateAccountGrp()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account group name validation */
+	        if (empty($this->input->post('accountGrp_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account group under validation */
+	        if (empty($this->input->post('accountGrp_under',true))) {
+	            $errorMSG = " Group under is required";
+	        }
+	        /* account group nature validation */
+	        if (empty($this->input->post('accountGrp_nature',true))) {
+	            $errorMSG = " Group nature is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountGrp_id = $this->db->escape_str ( trim ( $this->input->post('accountGrp_id',true) ) );
+	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
+	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
+	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP DATA REMOVE*/
+	public function RemoveAccountGrp()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'account_group');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
 
 	
 }

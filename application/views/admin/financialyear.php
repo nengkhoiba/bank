@@ -5,16 +5,16 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Account Group</li>
+          <li class="breadcrumb-item">Financial Year</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="addAccountGrpform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteAccountGrp()">Delete</button>
+            <a onclick="addFinancialform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteFinancial()">Delete</button>
         </p>
       </div>
       
-      <div class="row" id="MasAccountGrpformColap">
+      <div class="row" id="MasFinancialformColap">
       </div>
      
       <div class="row">
@@ -22,7 +22,7 @@
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="accountgrp_table" class="tile-body"></div>
+                	<div id="financial_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -35,9 +35,9 @@
    
     	
    
-    function loadAccountGrp()
+    function loadFinancial()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrp'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadFinancial'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -48,8 +48,8 @@
         try{  
           if (response.success)
              { 
-            $('#accountgrp_table').html(response.html);
-              $('#accountgrp').DataTable();
+            $('#financial_table').html(response.html);
+              $('#financial').DataTable();
               
              } else
              { 
@@ -70,28 +70,28 @@
        });
     }
     
-      loadAccountGrp();
-    function addAccountGrp(){  
-    	if ($('#accountGrp_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group name is mandatory !');
-            $('#accountGrp_name').focus();
+      loadFinancial();
+    function addFinancial(){  
+    	if ($('#financial_title').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Title is mandatory !');
+            $('#financial_title').focus();
             return;
         }
-		if ($('#accountGrp_under').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group under is mandatory !');
-            $('#accountGrp_under').focus();
+		if ($('#financial_start').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Financial start date is mandatory !');
+            $('#financial_start').focus();
             return;
         }
-		if ($('#accountGrp_nature').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group nature is mandatory !');
-            $('#accountGrp_nature').focus();
+		if ($('#financial_end').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Financial end date is mandatory !');
+            $('#financial_end').focus();
             return;
         }
        
         
-        var formData = $('form#MasAccountGrpForms').serializeObject();
+        var formData = $('form#MasFinancialForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addAccountGrp';
+        var url = '<?php echo base_url();?>index.php/data_controller/addFinancial';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -104,9 +104,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasAccountGrpformColap').empty(); 
-           loadAccountGrp();
-           $('#AccountGrp').DataTable();
+           $('#MasFinancialformColap').empty(); 
+           loadFinancial();
+           $('#financial').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -125,8 +125,8 @@
     }
 
 
-    function addAccountGrpform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddAccountGrpform';
+    function addFinancialform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddFinancialform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -138,7 +138,7 @@
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasAccountGrpformColap').html(response.html);
+    				 $('#MasFinancialformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -158,9 +158,9 @@
     }
 
       
-    function editAccountGrp($btn){  
+    function editFinancial($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditAccountGrp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditFinancial';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -172,7 +172,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasAccountGrpformColap').html(response.html);
+    				 $('#MasFinancialformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -191,28 +191,28 @@
     		 });
     } 
    
-    function updateAccountGrp(){  
-    	if ($('#accountGrp_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group name is mandatory !');
-            $('#accountGrp_name').focus();
+    function updateFinancial(){  
+    	if ($('#financial_title').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Title is mandatory !');
+            $('#financial_title').focus();
             return;
         }
-		if ($('#accountGrp_under').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group under is mandatory !');
-            $('#accountGrp_under').focus();
+			if ($('#financial_start').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Financial start date is mandatory !');
+            $('#financial_start').focus();
             return;
         }
-		if ($('#accountGrp_nature').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Group nature is mandatory !');
-            $('#accountGrp_nature').focus();
+			if ($('#financial_end').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Financial end date is mandatory !');
+            $('#financial_end').focus();
             return;
         }
        
         
 
-        var formData = $('form#DesignFormUpdate').serializeObject();
+        var formData = $('form#FinancialFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateAccountGrp';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateFinancial';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -225,9 +225,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasAccountGrpformColap').empty(); 
-				   loadAccountGrp();
-				   $('#accountgrp').DataTable();
+				   $('#MasFinancialformColap').empty(); 
+				   loadDesign();
+				   $('#financial').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -244,7 +244,7 @@
 		  }
 		 });
 	}
-    function deleteAccountGrp(){  
+    function deleteFinancial(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -262,7 +262,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveAccountGrp';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveFinancial';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -287,8 +287,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadAccountGrp();
-      				   $('#accountgrp').DataTable();
+      				   loadDesign();
+      				   $('#financial').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);

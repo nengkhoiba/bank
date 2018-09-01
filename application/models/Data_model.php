@@ -350,6 +350,108 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	
+	
+		/*FINANCIAL DATA ADD */
+	function addFinancialModel( $financial_title,$financial_start,$financial_end)
+	{
+         $data = array(
+             'Financial_year'	=>  $financial_title,
+			  'Start_date'	=>  $financial_start,
+			  'End_date'	=>  $financial_end,			  
+             'isActive'=>  1,
+         );
+	         
+	    $this->db->insert('financial_year', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Financial Year", " Year title ".$financial_title." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*FINANCIAL YEAR DATA UPDATE */
+	function updateFinancialModel($financial_title,$financial_start,$financial_end)
+	{ 
+	  
+        $data = array(
+            'title'	=>  $design_title 
+        );
+	    $this->db->where('ID',$design_id);
+	    $this->db->update('designation',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Designation", "New designation title is ".$design_title."");
+	        return array('code' => 1);
+	    }
+	}
+	
+	
+	/*ACCOUNT GROUP DATA ADD */
+	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )
+	{
+	    $data = array(
+	        'Group_name'	=>  $accountGrp_name,
+	        'Group_under'	=>  $accountGrp_under,
+	        'Group_nature'	=>  $accountGrp_nature,
+	        'IsActive'=>  1,
+	    );
+	    
+	    $this->db->insert('account_group', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new account group name ", "Account Group Name ".$accountGrp_name." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*ACCOUNT GROUP DATA UPDATE */
+	function updateAccountGrpModel($accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
+	{
+	    
+	    $data = array(
+	        'Group_name'	=>  $accountGrp_name,
+	        'Group_under'	=>  $accountGrp_under,
+	        'Group_nature'	=>  $accountGrp_nature,
+	    );
+	    $this->db->where('ID',$accountGrp_id);
+	    $this->db->update('account_group',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Account Group Name", "New Account Group Name is ".$accountGrp_name."");
+	        return array('code' => 1);
+	    }
+	}
 
 	function addLog($logtitle,$logDescription){
 		$data = array(

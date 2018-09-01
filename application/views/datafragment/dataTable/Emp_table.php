@@ -1,6 +1,7 @@
 <table id="emp" class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
+            	<th>Sl No</th>
                 <th>Name</th>
                 <th>Address</th>
                 <th>Pincode</th>
@@ -18,8 +19,9 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ( $result as $emp_data) { ?>
+        <?php $count = 1; foreach ( $result as $emp_data) { ?>
             <tr>
+            	<td><?php echo $count?></td>
                 <td><?php echo $emp_data['name']?></td>
                 <td><?php echo $emp_data['address']?></td>
                 <td><?php echo $emp_data['pincode']?></td>
@@ -35,7 +37,7 @@
             	<button onclick="editEmp($(this))" value="<?php echo $emp_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
 				</td>
 				</tr>
-        <?php } ?>
+        <?php $count ++;} ?>
         </tbody>
        
     </table>
