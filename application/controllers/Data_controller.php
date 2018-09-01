@@ -375,7 +375,9 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 
-    /*ROLE SECTION LOAD AND START HERE*/
+  
+
+  /*ROLE SECTION LOAD AND START HERE*/
 	public function loadRole()
 	{ 	
 		try {
@@ -509,6 +511,160 @@ class Data_controller extends CI_Controller {
 	
 	/*ROLE DATA REMOVE*/
 	public function RemoveRole()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'role');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	
+	
+
+  /*FINANCIAL YEAR SECTION LOAD AND START HERE*/
+	public function loadFinancial()
+	{ 
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('financial_year');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Financial_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	/*ROLE FORM LOAD*/
+	public function AddFinancialform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                 'html'=>$this->load->view('datafragment/addForm/Financial_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ROLE EDIT SECTION*/
+	public function EditFinancial()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'role');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Financial_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ROLE DATA ADD*/
+	public function addFinancial()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* role title validation */
+	        if (empty($this->input->post('financial_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
+	            
+	            
+	            $result = $this->database->addFinancialModel( $financial_title);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ROLE UPDATE*/
+	public function updateFinancial()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* role title validation */
+	        if (empty($this->input->post('financial_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $role_id = $this->db->escape_str ( trim ( $this->input->post('role_id',true) ) );
+	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateRoleModel($role_title, $role_id);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ROLE DATA REMOVE*/
+	public function RemoveFinancial()
 	{
 	    try {
 	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
