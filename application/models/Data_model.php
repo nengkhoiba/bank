@@ -336,7 +336,7 @@ class Data_model extends CI_Model{
             'title'	=>  $design_title 
         );
 	    $this->db->where('ID',$design_id);
-	    $this->db->update('title',$data);
+	    $this->db->update('designation',$data);
 	    
 	    if($this->db->trans_status() === FALSE)
 	    {

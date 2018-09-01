@@ -211,7 +211,7 @@
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasDesignformColap').empty(); 
-				   loadRole();
+				   loadDesign();
 				   $('#design').DataTable();
 	           } else
 	           { 
