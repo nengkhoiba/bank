@@ -5,16 +5,16 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Designation Manager</li>
+          <li class="breadcrumb-item">Account Group Manager</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="addDesignform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteDesign()">Delete</button>
+            <a onclick="addAccountGrpform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteAccountGrp()">Delete</button>
         </p>
       </div>
       
-      <div class="row" id="MasDesignformColap">
+      <div class="row" id="MasAccountGrpformColap">
       </div>
      
       <div class="row">
@@ -22,7 +22,7 @@
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="design_table" class="tile-body"></div>
+                	<div id="accountgrp_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -35,9 +35,9 @@
    
     	
    
-    function loadDesign()
+    function loadAccountGrp()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadDesign'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrp'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -48,8 +48,8 @@
         try{  
           if (response.success)
              { 
-            $('#design_table').html(response.html);
-              $('#design').DataTable();
+            $('#accountgrp_table').html(response.html);
+              $('#accountgrp').DataTable();
               
              } else
              { 
