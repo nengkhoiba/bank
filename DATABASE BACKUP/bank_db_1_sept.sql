@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2018 at 07:23 AM
+-- Generation Time: Sep 01, 2018 at 07:26 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -48950,7 +48950,7 @@ CREATE TABLE IF NOT EXISTS `page_table` (
 INSERT INTO `page_table` (`ID`, `category`, `sub_category`, `page_title`, `page_icon`, `page_slug`, `page_view`, `isActive`) VALUES
 (1, 1, 0, 'Employee Registration', 'fa fa-pie-chart', 'vgfrdajqnmlkouytrmq6qk9mkajht', 'admin/employee', 1),
 (2, 2, 0, 'Role Manager', 'fa fa-gear', 'jyausyauytsuyabsiuioquoisu878qbsqh', 'admin/pagemanager', 1),
-(3, 3, 0, 'Customer Registration', 'fa fa-gear', 'khafdlkfhlasdfhdsafoieryweoregjhfgsjdk67824376423sjagfkjdsfdsgfksdf', 'admin/membership', 1),
+(3, 3, 0, 'Member Registration', 'fa fa-gear', 'khafdlkfhlasdfhdsafoieryweoregjhfgsjdk67824376423sjagfkjdsfdsgfksdf', 'admin/membership', 1),
 (4, 4, 0, 'Designation Manager', 'fa fa-gear', 'sdfh87sdffgsjdk67824376423sjagfkjdsfdsgfksdf', 'admin/designationmanager', 1);
 
 -- --------------------------------------------------------
