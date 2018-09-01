@@ -5,7 +5,7 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Account Group Manager</li>
+          <li class="breadcrumb-item">Account Group</li>
         </ul>
 		</div>
 		<p class="bs-component">	
@@ -120,8 +120,8 @@
     }
 
 
-    function addDesignform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddDesignform';
+    function addAccountGrpform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddAccountGrp';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",

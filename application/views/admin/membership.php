@@ -81,7 +81,7 @@
           if (response.success)
              { 
             $('#member_table').html(response.html);
-              $('#mem').DataTable();
+              $('#Mem').DataTable();
               
              } else
              { 
