@@ -8,6 +8,8 @@
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/bootstrap-notify.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/sweetalert.min.js"></script>
+  <!-- Plugin for table to json -->
+     <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/jquery.tabletojson.min.js"></script>
   <!-- Page specific javascripts--> 
     <script src="<?php echo base_url();?>assets/js/main.js"></script>
     <script src="<?php echo base_url();?>assets/js/service.js"></script>
