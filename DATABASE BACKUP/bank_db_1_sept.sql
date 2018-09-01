@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.7
+-- version 4.1.14
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2018 at 04:50 AM
--- Server version: 5.6.37
--- PHP Version: 7.1.8
+-- Generation Time: Sep 01, 2018 at 07:23 AM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `bank_db`
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `account_group` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Group_name` varchar(200) NOT NULL,
   `Group_under` int(125) NOT NULL,
   `Group_nature` int(125) NOT NULL,
@@ -37,8 +37,12 @@ CREATE TABLE IF NOT EXISTS `account_group` (
   `Modified_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
   `Remark` varchar(200) NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Group_nature` (`Group_nature`),
+  KEY `Added_by` (`Added_by`),
+  KEY `Modified_by` (`Modified_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -47,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `account_group` (
 --
 
 CREATE TABLE IF NOT EXISTS `account_ledger` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Ledger` varchar(200) NOT NULL,
   `Open_balance` decimal(65,2) NOT NULL,
   `Group_ID` int(125) NOT NULL,
@@ -56,8 +60,12 @@ CREATE TABLE IF NOT EXISTS `account_ledger` (
   `Modified_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
   `Remark` varchar(200) NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Group_ID` (`Group_ID`),
+  KEY `Added_by` (`Added_by`),
+  KEY `Modified_by` (`Modified_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -66,10 +74,11 @@ CREATE TABLE IF NOT EXISTS `account_ledger` (
 --
 
 CREATE TABLE IF NOT EXISTS `account_nature` (
-  `ID` int(3) NOT NULL,
+  `ID` int(3) NOT NULL AUTO_INCREMENT,
   `Name` int(30) NOT NULL,
-  `isActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -78,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `account_nature` (
 --
 
 CREATE TABLE IF NOT EXISTS `branch` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Branch_name` varchar(200) NOT NULL,
   `Branch_code` varchar(100) NOT NULL,
   `Branch_address` varchar(200) NOT NULL,
@@ -87,8 +96,11 @@ CREATE TABLE IF NOT EXISTS `branch` (
   `Modified_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
   `Remark` varchar(200) NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Added_by` (`Added_by`),
+  KEY `Modified_by` (`Modified_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -97,10 +109,11 @@ CREATE TABLE IF NOT EXISTS `branch` (
 --
 
 CREATE TABLE IF NOT EXISTS `cities` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `state_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=48315 DEFAULT CHARSET=latin1;
+  `state_id` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48315 ;
 
 --
 -- Dumping data for table `cities`
@@ -18865,9 +18878,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (18748, 'Amerang', 1357),
 (18749, 'Ansbach', 1357),
 (18750, 'Aschaffenburg', 1357),
-(18751, 'Augsburg', 1357),
-(18752, 'Bad Aibling', 1357);
+(18751, 'Augsburg', 1357);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(18752, 'Bad Aibling', 1357),
 (18753, 'Bad Kissingen', 1357),
 (18754, 'Bad Neustadt', 1357),
 (18755, 'Bad Reichenhall', 1357),
@@ -20794,10 +20807,10 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (20676, 'Upernavik', 1491),
 (20677, 'Upernavik Kujalleq', 1491),
 (20678, 'Ikerasak', 1492),
-(20679, 'Illorsuit', 1492),
-(20680, 'Niaqornat', 1492),
-(20681, 'Nuugaatsiaq', 1492);
+(20679, 'Illorsuit', 1492);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(20680, 'Niaqornat', 1492),
+(20681, 'Nuugaatsiaq', 1492),
 (20682, 'Qaarsut', 1492),
 (20683, 'Saattut', 1492),
 (20684, 'Ukkusissat', 1492),
@@ -22705,10 +22718,10 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (22586, 'Montebello sul Sangro', 1826),
 (22587, 'Monteferrante', 1826),
 (22588, 'Montelapiano', 1826),
-(22589, 'Montenerodomo', 1826),
-(22590, 'Monteodorisio', 1826),
-(22591, 'Mozzagrogna', 1826);
+(22589, 'Montenerodomo', 1826);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(22590, 'Monteodorisio', 1826),
+(22591, 'Mozzagrogna', 1826),
 (22592, 'Orsogna', 1826),
 (22593, 'Ortona', 1826),
 (22594, 'Paglieta', 1826),
@@ -24582,10 +24595,10 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (24463, 'Sumoto', 1930),
 (24464, 'Taishi', 1930),
 (24465, 'Takarazuka', 1930),
-(24466, 'Takasago', 1930),
-(24467, 'Tatsuno', 1930),
-(24468, 'Toyooka', 1930);
+(24466, 'Takasago', 1930);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(24467, 'Tatsuno', 1930),
+(24468, 'Toyooka', 1930),
 (24469, 'Yamasaki', 1930),
 (24470, 'Yashiro', 1930),
 (24471, 'Yumesaki', 1930),
@@ -26597,9 +26610,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (26477, 'Wasserbillig', 2236),
 (26478, 'Wecker', 2236),
 (26479, 'Wecker-Gare', 2236),
-(26480, 'Weydig', 2236),
-(26481, 'Wormeldange', 2236);
+(26480, 'Weydig', 2236);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(26481, 'Wormeldange', 2236),
 (26482, 'Wormeldange-Haut', 2236),
 (26483, 'Alzingen', 2237),
 (26484, 'Bereldange', 2237),
@@ -28476,9 +28489,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (28355, 'Temoaya', 2442),
 (28356, 'Tenancingo', 2442),
 (28357, 'Tenango de Arista', 2442),
-(28358, 'Tenango del Aire', 2442),
-(28359, 'Tenochtitlan', 2442);
+(28358, 'Tenango del Aire', 2442);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(28359, 'Tenochtitlan', 2442),
 (28360, 'Teoloyucan', 2442),
 (28361, 'Teotihuacan', 2442),
 (28362, 'Tepeolulco', 2442),
@@ -30380,9 +30393,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (30258, 'Zandvoort', 2594),
 (30259, 'Zeevang', 2594),
 (30260, 'Zwaag', 2594),
-(30261, 'Zwanenburg', 2594),
-(30262, 'Almelo', 2595);
+(30261, 'Zwanenburg', 2594);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(30262, 'Almelo', 2595),
 (30263, 'Bathmen', 2595),
 (30264, 'Borne', 2595),
 (30265, 'Dalfsen', 2595),
@@ -32364,10 +32377,10 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (32241, 'Manaoag', 2848),
 (32242, 'Mangaldan', 2848),
 (32243, 'San Fernando', 2848),
-(32244, 'Urdaneta', 2848),
-(32245, 'Vigan', 2848),
-(32246, 'Binan', 2849);
+(32244, 'Urdaneta', 2848);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(32245, 'Vigan', 2848),
+(32246, 'Binan', 2849),
 (32247, 'Laguna', 2849),
 (32248, 'Pangil', 2849),
 (32249, 'San Pedro', 2849),
@@ -34322,9 +34335,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (34198, 'Cobia', 2950),
 (34199, 'Cojasca', 2950),
 (34200, 'Comisani', 2950),
-(34201, 'Contesti', 2950),
-(34202, 'Corbii Mari', 2950);
+(34201, 'Contesti', 2950);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(34202, 'Corbii Mari', 2950),
 (34203, 'Cornatelu', 2950),
 (34204, 'Cornesti', 2950),
 (34205, 'Costestii din Vale', 2950),
@@ -36289,9 +36302,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (36164, 'Surazh', 2986),
 (36165, 'Suzjomka', 2986),
 (36166, 'Trubchjovsk', 2986),
-(36167, 'Unecha', 2986),
-(36168, 'Zhukovka', 2986);
+(36167, 'Unecha', 2986);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(36168, 'Zhukovka', 2986),
 (36169, 'Gusinoozjorsk', 2987),
 (36170, 'Kamensk', 2987),
 (36171, 'Kjahta', 2987),
@@ -42124,9 +42137,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (41996, 'Whitehaven', 3842),
 (41997, 'Whitley Bay', 3842),
 (41998, 'Wickford', 3842),
-(41999, 'Widnes', 3842),
-(42000, 'Wigan', 3842);
+(41999, 'Widnes', 3842);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(42000, 'Wigan', 3842),
 (42001, 'Wigston', 3842),
 (42002, 'Wilmslow', 3842),
 (42003, 'Wimbourne Minster', 3842),
@@ -44008,9 +44021,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (43879, 'Sunrise', 3930),
 (43880, 'Sunset', 3930),
 (43881, 'Sweetwater', 3930),
-(43882, 'Tallahassee', 3930),
-(43883, 'Tamarac', 3930);
+(43882, 'Tallahassee', 3930);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(43883, 'Tamarac', 3930),
 (43884, 'Tamiami', 3930),
 (43885, 'Tampa', 3930),
 (43886, 'Tarpon Springs', 3930),
@@ -45909,9 +45922,9 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 (45779, 'Strongsville', 3959),
 (45780, 'Struthers', 3959),
 (45781, 'Sylvania', 3959),
-(45782, 'Tallmadge', 3959),
-(45783, 'Tiffin', 3959);
+(45782, 'Tallmadge', 3959);
 INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
+(45783, 'Tiffin', 3959),
 (45784, 'Toledo', 3959),
 (45785, 'Trotwood', 3959),
 (45786, 'Troy', 3959),
@@ -48452,11 +48465,12 @@ INSERT INTO `cities` (`ID`, `name`, `state_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `countries` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `sortname` varchar(3) NOT NULL,
   `name` varchar(150) NOT NULL,
-  `phonecode` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8;
+  `phonecode` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=247 ;
 
 --
 -- Dumping data for table `countries`
@@ -48717,15 +48731,16 @@ INSERT INTO `countries` (`ID`, `sortname`, `name`, `phonecode`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `designation` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL,
   `description` varchar(200) NOT NULL,
   `added_on` timestamp NOT NULL,
   `added_by` varchar(10) NOT NULL,
   `modified_on` timestamp NOT NULL,
   `modified_by` varchar(10) NOT NULL,
-  `isActive` int(1) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `isActive` int(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `designation`
@@ -48744,7 +48759,7 @@ INSERT INTO `designation` (`ID`, `title`, `description`, `added_on`, `added_by`,
 --
 
 CREATE TABLE IF NOT EXISTS `emp` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `address` varchar(500) NOT NULL,
   `country` int(11) NOT NULL,
@@ -48758,8 +48773,9 @@ CREATE TABLE IF NOT EXISTS `emp` (
   `qualification` varchar(200) NOT NULL,
   `martial_status` int(11) NOT NULL,
   `image` varchar(10000) NOT NULL,
-  `isActive` bit(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+  `isActive` bit(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `emp`
@@ -48791,13 +48807,14 @@ INSERT INTO `emp` (`ID`, `name`, `address`, `country`, `state`, `city`, `distric
 --
 
 CREATE TABLE IF NOT EXISTS `emp_login` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `username` varchar(200) NOT NULL,
   `password` varchar(300) NOT NULL,
   `keycode` varchar(300) NOT NULL,
   `role_id` int(10) NOT NULL,
-  `isActive` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `emp_login`
@@ -48813,7 +48830,7 @@ INSERT INTO `emp_login` (`ID`, `username`, `password`, `keycode`, `role_id`, `is
 --
 
 CREATE TABLE IF NOT EXISTS `financial_year` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Financial_year` varchar(125) NOT NULL,
   `Start_date` date NOT NULL,
   `End_date` date NOT NULL,
@@ -48821,8 +48838,11 @@ CREATE TABLE IF NOT EXISTS `financial_year` (
   `Added_on` timestamp NOT NULL,
   `Modified_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Added_by` (`Added_by`),
+  KEY `Modified_by` (`Modified_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -48831,13 +48851,14 @@ CREATE TABLE IF NOT EXISTS `financial_year` (
 --
 
 CREATE TABLE IF NOT EXISTS `log` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `log_name` varchar(200) NOT NULL,
   `log_detail` varchar(500) NOT NULL,
   `ipaddress` varchar(50) NOT NULL,
   `user_id` int(10) NOT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `log`
@@ -48861,7 +48882,48 @@ INSERT INTO `log` (`ID`, `log_name`, `log_detail`, `ipaddress`, `user_id`, `date
 (15, 'Add new Designation', 'Designation title ACCOUNTANT is added.', '127.0.0.1', 1, '2018-08-23 17:16:02'),
 (16, 'Add new Designation', 'Designation title TESTING is added.', '127.0.0.1', 1, '2018-08-26 15:57:55'),
 (17, 'Add new Designation', 'Designation title CASHIER is added.', '127.0.0.1', 1, '2018-08-26 16:22:56'),
-(18, 'Update existing Role', 'New role title is ADMIN test', '127.0.0.1', 1, '2018-08-26 17:44:58');
+(18, 'Update existing Role', 'New role title is ADMIN test', '127.0.0.1', 1, '2018-08-26 17:44:58'),
+(19, 'Add new Member', 'Member name rwer is added.', '127.0.0.1', 1, '2018-09-01 05:21:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member`
+--
+
+CREATE TABLE IF NOT EXISTS `member` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `dob` varchar(100) NOT NULL,
+  `sex` int(11) NOT NULL,
+  `aadhaar_no` int(11) NOT NULL,
+  `husband_name` varchar(200) NOT NULL,
+  `parmanent_address` varchar(300) NOT NULL,
+  `rural` varchar(100) NOT NULL,
+  `urban` varchar(200) NOT NULL,
+  `district` varchar(200) NOT NULL,
+  `contact_no` varchar(100) NOT NULL,
+  `bank_ac_no` varchar(100) NOT NULL,
+  `bank_branch` varchar(200) NOT NULL,
+  `work` varchar(200) NOT NULL,
+  `nominee_name` varchar(200) NOT NULL,
+  `nominee_aadhaar_no` int(11) NOT NULL,
+  `nominee_permanent_address` varchar(200) NOT NULL,
+  `nominee_rural` varchar(200) NOT NULL,
+  `nominee_urban` varchar(200) NOT NULL,
+  `nominee_district` varchar(200) NOT NULL,
+  `nominee_contact_no` int(11) NOT NULL,
+  `image` varchar(200) NOT NULL,
+  `isActive` int(11) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`ID`, `name`, `dob`, `sex`, `aadhaar_no`, `husband_name`, `parmanent_address`, `rural`, `urban`, `district`, `contact_no`, `bank_ac_no`, `bank_branch`, `work`, `nominee_name`, `nominee_aadhaar_no`, `nominee_permanent_address`, `nominee_rural`, `nominee_urban`, `nominee_district`, `nominee_contact_no`, `image`, `isActive`) VALUES
+(1, 'rwer', '08-30-2018', 1, 4324324, 'fdsfdsf', 'sdfdsf', 'dfdsfsdf', 'fdsfsdf', 'fddsfdsf', '423432', '5435435', '4', 'dfdsfsssfs', 'sadsad', 54354353, 'sfsdfsdfdsfds', '23535', 'asdsadsad', 'dsgdsgsdg', 4234234, '1535779293_banner11.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -48870,15 +48932,16 @@ INSERT INTO `log` (`ID`, `log_name`, `log_detail`, `ipaddress`, `user_id`, `date
 --
 
 CREATE TABLE IF NOT EXISTS `page_table` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `category` int(10) NOT NULL,
   `sub_category` int(10) NOT NULL,
   `page_title` varchar(100) NOT NULL,
   `page_icon` varchar(100) NOT NULL,
   `page_slug` varchar(500) NOT NULL,
   `page_view` varchar(200) NOT NULL,
-  `isActive` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `page_table`
@@ -48897,10 +48960,11 @@ INSERT INTO `page_table` (`ID`, `category`, `sub_category`, `page_title`, `page_
 --
 
 CREATE TABLE IF NOT EXISTS `role` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `role` varchar(200) NOT NULL,
-  `isActive` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `role`
@@ -48919,11 +48983,12 @@ INSERT INTO `role` (`ID`, `role`, `isActive`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `site_manager` (
-  `ID` int(10) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `role_id` int(10) NOT NULL,
   `page_id` int(10) NOT NULL,
-  `isActive` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `isActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `site_manager`
@@ -48942,10 +49007,11 @@ INSERT INTO `site_manager` (`ID`, `role_id`, `page_id`, `isActive`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `states` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `country_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=4121 DEFAULT CHARSET=latin1;
+  `country_id` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4121 ;
 
 --
 -- Dumping data for table `states`
@@ -53081,7 +53147,7 @@ INSERT INTO `states` (`ID`, `name`, `country_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `transaction_footer` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Voucher_no` varchar(100) NOT NULL,
   `Ledger_type` varchar(2) NOT NULL,
   `Ledger_id` int(100) NOT NULL,
@@ -53094,8 +53160,15 @@ CREATE TABLE IF NOT EXISTS `transaction_footer` (
   `Added_on` timestamp NOT NULL,
   `Modified_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Ledger_id` (`Ledger_id`),
+  KEY `FinancialYear_id` (`FinancialYear_id`),
+  KEY `Branch_id` (`Branch_id`),
+  KEY `Added_by` (`Added_by`),
+  KEY `Modified_by` (`Modified_by`),
+  KEY `Voucher_no` (`Voucher_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -53104,7 +53177,7 @@ CREATE TABLE IF NOT EXISTS `transaction_footer` (
 --
 
 CREATE TABLE IF NOT EXISTS `transaction_header` (
-  `ID` int(125) NOT NULL,
+  `ID` int(125) NOT NULL AUTO_INCREMENT,
   `Voucher_no` varchar(100) NOT NULL,
   `Acc_no` varchar(200) NOT NULL,
   `Amount` decimal(65,2) NOT NULL,
@@ -53120,8 +53193,15 @@ CREATE TABLE IF NOT EXISTS `transaction_header` (
   `Modifed_by` int(125) NOT NULL,
   `Modified_on` timestamp NOT NULL,
   `Remark` varchar(400) NOT NULL,
-  `IsActive` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `IsActive` int(1) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `Voucher_no_2` (`Voucher_no`),
+  KEY `Branch_id` (`Branch_id`),
+  KEY `Voucher_no` (`Voucher_no`),
+  KEY `FinancialYear_id` (`FinancialYear_id`),
+  KEY `Modifed_by` (`Modifed_by`),
+  KEY `Added_by` (`Added_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -53130,11 +53210,12 @@ CREATE TABLE IF NOT EXISTS `transaction_header` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_tbl` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `user_tbl`
@@ -53143,234 +53224,6 @@ CREATE TABLE IF NOT EXISTS `user_tbl` (
 INSERT INTO `user_tbl` (`user_id`, `username`, `email`, `password`) VALUES
 (1, 'admin', 'admin@bank.com', '1');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `account_group`
---
-ALTER TABLE `account_group`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Group_nature` (`Group_nature`),
-  ADD KEY `Added_by` (`Added_by`),
-  ADD KEY `Modified_by` (`Modified_by`);
-
---
--- Indexes for table `account_ledger`
---
-ALTER TABLE `account_ledger`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Group_ID` (`Group_ID`),
-  ADD KEY `Added_by` (`Added_by`),
-  ADD KEY `Modified_by` (`Modified_by`);
-
---
--- Indexes for table `account_nature`
---
-ALTER TABLE `account_nature`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `branch`
---
-ALTER TABLE `branch`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Added_by` (`Added_by`),
-  ADD KEY `Modified_by` (`Modified_by`);
-
---
--- Indexes for table `cities`
---
-ALTER TABLE `cities`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `countries`
---
-ALTER TABLE `countries`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `designation`
---
-ALTER TABLE `designation`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `emp`
---
-ALTER TABLE `emp`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `emp_login`
---
-ALTER TABLE `emp_login`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `financial_year`
---
-ALTER TABLE `financial_year`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Added_by` (`Added_by`),
-  ADD KEY `Modified_by` (`Modified_by`);
-
---
--- Indexes for table `log`
---
-ALTER TABLE `log`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `page_table`
---
-ALTER TABLE `page_table`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `site_manager`
---
-ALTER TABLE `site_manager`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `states`
---
-ALTER TABLE `states`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `transaction_footer`
---
-ALTER TABLE `transaction_footer`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Ledger_id` (`Ledger_id`),
-  ADD KEY `FinancialYear_id` (`FinancialYear_id`),
-  ADD KEY `Branch_id` (`Branch_id`),
-  ADD KEY `Added_by` (`Added_by`),
-  ADD KEY `Modified_by` (`Modified_by`),
-  ADD KEY `Voucher_no` (`Voucher_no`);
-
---
--- Indexes for table `transaction_header`
---
-ALTER TABLE `transaction_header`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `Voucher_no_2` (`Voucher_no`),
-  ADD KEY `Branch_id` (`Branch_id`),
-  ADD KEY `Voucher_no` (`Voucher_no`),
-  ADD KEY `FinancialYear_id` (`FinancialYear_id`),
-  ADD KEY `Modifed_by` (`Modifed_by`),
-  ADD KEY `Added_by` (`Added_by`);
-
---
--- Indexes for table `user_tbl`
---
-ALTER TABLE `user_tbl`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `account_group`
---
-ALTER TABLE `account_group`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `account_ledger`
---
-ALTER TABLE `account_ledger`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `account_nature`
---
-ALTER TABLE `account_nature`
-  MODIFY `ID` int(3) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `branch`
---
-ALTER TABLE `branch`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `cities`
---
-ALTER TABLE `cities`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=48315;
---
--- AUTO_INCREMENT for table `countries`
---
-ALTER TABLE `countries`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=247;
---
--- AUTO_INCREMENT for table `designation`
---
-ALTER TABLE `designation`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `emp`
---
-ALTER TABLE `emp`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT for table `emp_login`
---
-ALTER TABLE `emp_login`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `financial_year`
---
-ALTER TABLE `financial_year`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `log`
---
-ALTER TABLE `log`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT for table `page_table`
---
-ALTER TABLE `page_table`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `site_manager`
---
-ALTER TABLE `site_manager`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `states`
---
-ALTER TABLE `states`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4121;
---
--- AUTO_INCREMENT for table `transaction_footer`
---
-ALTER TABLE `transaction_footer`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `transaction_header`
---
-ALTER TABLE `transaction_header`
-  MODIFY `ID` int(125) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `user_tbl`
---
-ALTER TABLE `user_tbl`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
