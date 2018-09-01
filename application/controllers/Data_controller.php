@@ -15,7 +15,7 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
-	
+	//
 	
 	public function loadCountry()
 	{
