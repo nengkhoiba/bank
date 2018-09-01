@@ -5,16 +5,16 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Financial Year</li>
+          <li class="breadcrumb-item">Branch</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="addFinancialform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteFinancial()">Delete</button>
+            <a onclick="addBranchform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteBranch()">Delete</button>
         </p>
       </div>
       
-      <div class="row" id="MasFinancialformColap">
+      <div class="row" id="MasBranchformColap">
       </div>
      
       <div class="row">
@@ -22,7 +22,7 @@
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="financial_table" class="tile-body"></div>
+                	<div id="branch_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -35,9 +35,9 @@
    
     	
    
-    function loadFinancial()
+    function loadBranch()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadFinancial'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadBranch'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -48,8 +48,8 @@
         try{  
           if (response.success)
              { 
-            $('#financial_table').html(response.html);
-              $('#financial').DataTable();
+            $('#branch_table').html(response.html);
+              $('#branch').DataTable();
               
              } else
              { 
@@ -70,28 +70,28 @@
        });
     }
     
-      loadFinancial();
-    function addFinancial(){  
-    	if ($('#financial_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#financial_title').focus();
+      loadBranch();
+    function addBranch(){  
+    	if ($('#branch_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch name is mandatory !');
+            $('#branch_name').focus();
             return;
         }
-		if ($('#financial_start').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Financial start date is mandatory !');
-            $('#financial_start').focus();
+		if ($('#branch_code').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch code is mandatory !');
+            $('#branch_code').focus();
             return;
         }
-		if ($('#financial_end').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Financial end date is mandatory !');
-            $('#financial_end').focus();
+		if ($('#branch_address').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch address is mandatory !');
+            $('#branch_address').focus();
             return;
         }
        
         
-        var formData = $('form#MasFinancialForms').serializeObject();
+        var formData = $('form#MasBranchForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addFinancial';
+        var url = '<?php echo base_url();?>index.php/data_controller/addBranch';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -104,9 +104,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasFinancialformColap').empty(); 
-           loadFinancial();
-           $('#financial').DataTable();
+           $('#MasBranchformColap').empty(); 
+           loadBranch();
+           $('#Branch').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -125,8 +125,8 @@
     }
 
 
-    function addFinancialform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddFinancialform';
+    function addBranchform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddBranchform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -138,7 +138,7 @@
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasFinancialformColap').html(response.html);
+    				 $('#MasBranchformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -158,9 +158,9 @@
     }
 
       
-    function editFinancial($btn){  
+    function editBranch($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditFinancial';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditBranch';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -172,7 +172,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasFinancialformColap').html(response.html);
+    				 $('#MasBranchformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -191,27 +191,27 @@
     		 });
     } 
    
-    function updateFinancial(){  
-    	if ($('#financial_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#financial_title').focus();
+    function updateBranch(){  
+    	if ($('#branch_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch name is mandatory !');
+            $('#branch_name').focus();
             return;
         }
-			if ($('#financial_start').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Financial start date is mandatory !');
-            $('#financial_start').focus();
+			if ($('#branch_code').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch code is mandatory !');
+            $('#branch_code').focus();
             return;
         }
-			if ($('#financial_end').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Financial end date is mandatory !');
-            $('#financial_end').focus();
+			if ($('#branch_address').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch address is mandatory !');
+            $('#branch_address').focus();
             return;
         }
        
 
-        var formData = $('form#FinancialFormUpdate').serializeObject();
+        var formData = $('form#BranchFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateFinancial';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -224,9 +224,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasFinancialformColap').empty(); 
-				   loadFinancial();
-				   $('#financial').DataTable();
+				   $('#MasBranchformColap').empty(); 
+				   loadBranch();
+				   $('#branch').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -243,7 +243,7 @@
 		  }
 		 });
 	}
-    function deleteFinancial(){  
+    function deleteBranch(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -261,7 +261,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveFinancial';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveBranch';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -286,8 +286,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadFinancial();
-      				   $('#financial').DataTable();
+      				   loadBranch();
+      				   $('#branch').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);

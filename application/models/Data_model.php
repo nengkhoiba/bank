@@ -328,10 +328,9 @@ class Data_model extends CI_Model{
 	    }
 	}
 	
-	/*DESIGNATION MANAGER ROLE DATA UPDATE */
+	/*DESIGNATION MANAGER DATA UPDATE */
 	function updateDesignModel($design_title, $design_id)
-	{ 
-	  
+	{	  
         $data = array(
             'title'	=>  $design_title 
         );
@@ -354,7 +353,9 @@ class Data_model extends CI_Model{
 	
 		/*FINANCIAL DATA ADD */
 	function addFinancialModel( $financial_title,$financial_start,$financial_end)
-	{
+	{		
+		$financial_start = date("Y-m-d", strtotime($financial_start));
+		$financial_end = date("Y-m-d", strtotime($financial_end));
          $data = array(
              'Financial_year'	=>  $financial_title,
 			  'Start_date'	=>  $financial_start,
@@ -373,20 +374,25 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Add new Financial Year", " Year title ".$financial_title." is added.");
+	        $this->addLog("Add new Financial Year title ".$financial_title."  is added.");
 	        return array('code' => 1);
 	    }
 	}
 	
 	/*FINANCIAL YEAR DATA UPDATE */
-	function updateFinancialModel($financial_title,$financial_start,$financial_end)
+	function updateFinancialModel($financial_id,$financial_title,$financial_start,$financial_end)
 	{ 
+	
+		$financial_start = date("Y-m-d", strtotime($financial_start));
+		$financial_end = date("Y-m-d", strtotime($financial_end));
 	  
         $data = array(
-            'title'	=>  $design_title 
+            'Financial_year'=>  $financial_title,
+			'Start_date'=>  $financial_start,
+			'End_date'=>  $financial_end 			
         );
-	    $this->db->where('ID',$design_id);
-	    $this->db->update('designation',$data);
+	    $this->db->where('ID',$financial_id);
+	    $this->db->update('financial_year',$data);
 	    
 	    if($this->db->trans_status() === FALSE)
 	    {
@@ -396,7 +402,59 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Update existing Designation", "New designation title is ".$design_title."");
+	        $this->addLog("Update existing Financial year", "New Financial Year title is ".$financial_title."");
+	        return array('code' => 1);
+	    }
+	}
+	
+	
+	/*BRANCH DATA ADD */
+	function addBranchModel($branch_name,$branch_code,$branch_address)
+	{
+         $data = array(
+             'branch_name'	=>  $branch_name,
+			  'branch_code'	=>  $branch_code,
+			  'branch_address'	=>  $branch_address,			  
+             'isActive'=>  1,
+         );
+	         
+	    $this->db->insert('branch',$data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Branch  "," Branch name ".$branch_name."  is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*BRANCH DATA UPDATE */
+	function updateBranchModel($branch_id,$branch_name,$branch_code,$branch_address)
+	{ 
+	
+        $data = array(
+            'Branch_name'=>  $branch_name,
+			'Branch_code'=>  $branch_code,
+			'Branch_address'=>  $branch_address 			
+        );
+	    $this->db->where('ID',$branch_id);
+	    $this->db->update('branch',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Branch ", "New branch name is ".$branch_name."");
 	        return array('code' => 1);
 	    }
 	}

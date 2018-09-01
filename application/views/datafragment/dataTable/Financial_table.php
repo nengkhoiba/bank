@@ -20,9 +20,9 @@
             <tr>
                 <td><?php echo $financial_data['ID'];?></td>
                 <td><?php echo $financial_data['Financial_year'];?></td>
-				<td><?php echo $financial_data['Start_date'];?></td>
-				<td><?php echo $financial_data['End_date'];?></td>
-				<td><?php echo $financial_data['Added_on'];?></td>
+				<td><?php echo date("d-m-Y", strtotime($financial_data['Start_date'])) ;?></td>
+				<td><?php echo date("d-m-Y", strtotime($financial_data['End_date'])) ;?></td>
+				<td><?php echo date("d-m-Y h:i:s A", strtotime($financial_data['Added_on']));?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>

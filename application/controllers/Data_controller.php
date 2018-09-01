@@ -597,7 +597,7 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'role');
+	            $data['result'] = $this->database->GetRecordById($Id,'financial_year');
 	            $output = array(
 	                'html'=>$this->load->view('datafragment/updateForm/Financial_updateForm',$data, true),
 	                'success' =>true
@@ -612,7 +612,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ROLE DATA ADD*/
+	/*FINANCIAL DATA ADD*/
 	public function addFinancial()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -626,7 +626,7 @@ class Data_controller extends CI_Controller {
 	            $errorMSG = " Financial start date is required";
 	        }
 			  if (empty($this->input->post('financial_end',true))) {
-	            $errorMSG = " Financial dfsdend date is required";
+	            $errorMSG = " Financial end date is required";
 	        }
 	        
 	        
@@ -652,27 +652,34 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ROLE UPDATE*/
+	/*FINANCIAL UPDATE*/
 	public function updateFinancial()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
 	    $errorMSG ='';
 	    try {
-	        /* role title validation */
+	        /* financial title validation */
 	        if (empty($this->input->post('financial_title',true))) {
 	            $errorMSG = " Title is required";
 	        }
-	        
-	        
+			if (empty($this->input->post('financial_start',true))) {
+	            $errorMSG = " Financial start date is required";
+	        }
+			if (empty($this->input->post('financial_end',true))) {
+	            $errorMSG = " Financial end date is required";
+	        }
+						
+			        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $role_id = $this->db->escape_str ( trim ( $this->input->post('role_id',true) ) );
-	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
+	            $financial_id = $this->db->escape_str ( trim ( $this->input->post('financial_id',true) ) );
+	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
+				$financial_start = $this->db->escape_str ( trim ( $this->input->post('financial_start',true) ) );
+				$financial_end = $this->db->escape_str ( trim ( $this->input->post('financial_end',true) ) );
 	            
 	            
-	            
-	            $result = $this->database->updateRoleModel($role_title, $role_id);
+	            $result = $this->database->updateFinancialModel($financial_id, $financial_title,$financial_start,$financial_end);
 	            if($result['code'] == 1)
 	            {
 	                $status = array("success" => true,"msg" => "Update sucessfull!");
@@ -689,13 +696,14 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ROLE DATA REMOVE*/
+	
+	/*FINANCIAL DATA REMOVE*/
 	public function RemoveFinancial()
 	{
 	    try {
 	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
 	        
-	        $this->database->RemoveRecordById($IdsArray,'role');
+	        $this->database->RemoveRecordById($IdsArray,'financial_year');
 	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
 	        
 	    } catch (Exception $ex) {
@@ -707,6 +715,177 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	
+	
+  /*BRANCH LOAD AND START HERE*/
+	public function loadBranch()
+	{ 
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('branch');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Branch_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	/*BRANCH FORM LOAD*/
+	public function AddBranchform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                 'html'=>$this->load->view('datafragment/addForm/Branch_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*BRANCH EDIT SECTION*/
+	public function EditBranch()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'branch');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Branch_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*BRANCH DATA ADD*/
+	public function addBranch()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* Branch title validation */
+	        if (empty($this->input->post('branch_name',true))) {
+	            $errorMSG = " Branch name is required";
+	        }
+			  if (empty($this->input->post('branch_code',true))) {
+	            $errorMSG = " Branch code is required";
+	        }
+			  if (empty($this->input->post('branch_address',true))) {
+	            $errorMSG = " Branch address is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('branch_name',true) ) );
+				$branch_code = $this->db->escape_str ( trim ( $this->input->post('branch_code',true) ) );
+				$branch_address = $this->db->escape_str ( trim ( $this->input->post('branch_address',true) ) );
+	           
+	            
+	            $result = $this->database->addBranchModel($branch_name,$branch_code,$branch_address);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*BRANCH UPDATE*/
+	public function updateBranch()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* Branch name validation */
+	        if (empty($this->input->post('branch_name',true))) {
+	            $errorMSG = " Branch name is required";
+	        }
+			if (empty($this->input->post('branch_code',true))) {
+	            $errorMSG = " Branch code is required";
+	        }
+			if (empty($this->input->post('branch_address',true))) {
+	            $errorMSG = " Branch address is required";
+	        }
+			if (empty($this->input->post('branch_id',true))) {
+	            $errorMSG = " Branch ID is missing";
+	        }
+						
+			        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $branch_id = $this->db->escape_str ( trim ( $this->input->post('branch_id',true) ) );
+	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('branch_name',true) ) );
+				$branch_code = $this->db->escape_str ( trim ( $this->input->post('branch_code',true) ) );
+				$branch_address = $this->db->escape_str ( trim ( $this->input->post('branch_address',true) ) );
+	            
+	            
+	            $result = $this->database->updateBranchModel($branch_id,$branch_name,$branch_code,$branch_address);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*BRANCH DATA REMOVE*/
+	public function RemoveBranch()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'branch');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+
 	
 	
 	

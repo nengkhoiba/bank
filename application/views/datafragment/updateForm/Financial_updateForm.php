@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="DesignFormUpdate">
+		<form class="row" id="FinancialFormUpdate">
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="financial_id" id="financial_id_upt" value="<?php echo $row['ID'];?>">
 		
@@ -18,14 +18,14 @@
 			
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Start date</label>
-                  <input name="financial_start" value="<?php echo $row['Start_date'];?>" style="margin-top: 10px;"
+                  <input name="financial_start" value="<?php echo date("d-m-Y", strtotime($row['Start_date']));?>" style="margin-top: 10px;"
 					class="form-control" type="text" id="financial_start"
 					placeholder="Financial start date"></input>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">End date</label>
-                  <input name="financial_end" value="<?php echo $row['End_date'];?>" style="margin-top: 10px;"
+                  <input name="financial_end" value="<?php echo date("d-m-Y", strtotime($row['End_date']));?>" style="margin-top: 10px;"
 					class="form-control" type="text" id="financial_end"
 					placeholder="Financial end date"></input>
                 </div>
@@ -44,3 +44,33 @@
 		           </div>
           </div>
         </div>   
+
+		
+
+<script>
+
+$(document).ready(function (){
+var date = new Date();
+date.setDate(date.getDate()-1);            
+
+// allow to pick future date
+    // $('#employee_dob').datepicker({
+    // format: "dd/mm/yyyy"
+    // });
+// allow to pick future date
+
+var FromEndDate = new Date();
+$(function(){
+$('#financial_start').datepicker({
+format: 'dd-mm-yyyy',
+//endDate: FromEndDate, 
+autoclose: true
+});
+$('#financial_end').datepicker({
+format: 'dd-mm-yyyy',
+//endDate: FromEndDate, 
+autoclose: true
+});
+});
+});
+</script>

@@ -44,8 +44,6 @@
 
 <script>
 
-
-
 $(document).ready(function (){
 var date = new Date();
 date.setDate(date.getDate()-1);            
@@ -59,22 +57,15 @@ date.setDate(date.getDate()-1);
 var FromEndDate = new Date();
 $(function(){
 $('#financial_start').datepicker({
-format: 'mm-dd-yyyy',
-endDate: FromEndDate, 
+format: 'dd-mm-yyyy',
+//endDate: FromEndDate, 
+autoclose: true
+});
+$('#financial_end').datepicker({
+format: 'dd-mm-yyyy',
+//endDate: FromEndDate, 
 autoclose: true
 });
 });
-
-
-var date = new Date();
-date.setDate(date.getDate()-1);            
-
-//allow to pick future date
-    $('#financial_end').datepicker({
-    format: "dd/mm/yyyy"
-    });
-//allow to pick future date
-
-
 });
 </script>
