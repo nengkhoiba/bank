@@ -106,7 +106,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasAccountGrpformColap').empty(); 
            loadAccountGrp();
-           $('#AccountGrp').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -227,7 +226,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasAccountGrpformColap').empty(); 
 				   loadAccountGrp();
-				   $('#accountgrp').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

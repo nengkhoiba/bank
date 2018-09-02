@@ -13,24 +13,25 @@
 		
 			<div class="form-group col-md-4 align-self-end">
 				<label class="control-label">Designation Title</label>
-				<input value="<?php echo $row['title'];?>" name="design_title" style="margin-top: 10px;"	class="form-control" type="text" id="design_title" placeholder="Designation Title"></input>
+				<input value="<?php echo $row['title'];?>" name="design_title" style="margin-top: 10px;"	class="form-control name" type="text" id="design_title" placeholder="Designation Title"></input>
 			</div>
 			
 			<div class="form-group col-md-4 align-self-end">
 				<label class="control-label">Description</label>
-				<textarea  name="design_description" style="margin-top: 10px;"	class="form-control" type="text" id="design_description" placeholder="Description"><?php echo $row['description'];?></textarea>
+				<textarea  name="design_description" rows="1" style="margin-top: 10px;"	class="form-control name" type="text" id="design_description" placeholder="Description"><?php echo $row['description'];?></textarea>
 			</div>
                
          
 		                <div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateDesign()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+		                  <button onclick="updateDesign()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
 		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#DesignFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#DesignFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasDesignformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasDesignformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
 		              </form>
 		           </div>
           </div>
         </div>   
+<script src="<?php echo base_url();?>assets/js/validation.js"></script> 

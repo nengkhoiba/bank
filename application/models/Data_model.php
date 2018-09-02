@@ -185,7 +185,7 @@ class Data_model extends CI_Model{
 	/*MEMBER DATA ADD */
 	function addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, 
 	    $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, 
-	    $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName)
+	    $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
 	{
 	    $data = array(
 	        'name'	=>  $member_name,
@@ -208,7 +208,6 @@ class Data_model extends CI_Model{
 	        'nominee_urban'=>  $member_nomineeurban,
 	        'nominee_district'	=>  $member_nomineedistrict ,
 	        'nominee_contact_no'=>  $member_nomineecontact,
-	        'image'=>  $fileName,
 	        'IsActive'=>  1
 	    );
 	    
@@ -229,11 +228,8 @@ class Data_model extends CI_Model{
 	}
 	
 	/*MEMBER DATA UPDATE */
-	function updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName, $previous_mem_image)
+	function updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
 	{
-	    
-	    if($fileName == '')
-	    {
 	        $data = array(
 	            'name'	=>  $member_name,
 	            'dob'	=>  $member_dob,
@@ -256,34 +252,6 @@ class Data_model extends CI_Model{
 	            'nominee_district'	=>  $member_nomineedistrict ,
 	            'nominee_contact_no'=>  $member_nomineecontact
 	        );
-	    }
-	    else
-	    {
-	        $data = array(
-	            'name'	=>  $member_name,
-	            'dob'	=>  $member_dob,
-	            'sex'	=>  $member_gender ,
-	            'aadhaar_no'=>  $member_aadhaar,
-	            'husband_name'=>  $member_husband,
-	            'parmanent_address'=>  $member_address,
-	            'rural'=>  $member_rural,
-	            'urban'=>  $member_urban,
-	            'district'=>  $member_district,
-	            'contact_no'=>  $member_contact,
-	            'bank_ac_no'=>  $member_bankaccount,
-	            'bank_branch'=>  $member_bankbranch,
-	            'work'	=>  $member_work ,
-	            'nominee_name'=>  $member_nominee,
-	            'nominee_aadhaar_no'=>  $member_nomineeaadhaar,
-	            'nominee_permanent_address'=>  $member_nomineeaddress,
-	            'nominee_rural'=>  $member_nomineerural,
-	            'nominee_urban'=>  $member_nomineeurban,
-	            'nominee_district'	=>  $member_nomineedistrict ,
-	            'nominee_contact_no'=>  $member_nomineecontact,
-	            'image'=>  $fileName
-	        );
-	        unlink("assets/upload/member/".$previous_mem_image);
-	    }
 	    
 	    $this->db->where('ID',$mem_id);
 	    $this->db->update('customer',$data);
@@ -481,7 +449,7 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Add new account group name ", "Account Group Name ".$accountGrp_name." is added.");
+	        $this->addLog("Add new account group ", "Account Group Name ".$accountGrp_name." is added.");
 	        return array('code' => 1);
 	    }
 	}
@@ -506,11 +474,73 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Update existing Account Group Name", "New Account Group Name is ".$accountGrp_name."");
+	        $this->addLog("Update existing Account Group", "New Account Group Name is ".$accountGrp_name."");
+	        return array('code' => 1);
+	    }
+	}
+	
+	
+	/*ACCOUNT LEDGER DATA ADD */
+	function addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
+	{
+	    $data = array(
+	        'Ledger'	=>  $accountLedger_name,
+	        'Group_ID'	=>  $accountLedger_grpUnder,
+	        'Open_balance'	=>  $accountLedger_open,
+	        'IsActive'=>  1,
+	    );
+	    
+	    $this->db->insert('account_ledger', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new account ledger ", "Account Ledger Name ".$accountLedger_name." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*ACCOUNT LEDGER DATA UPDATE */
+	function updateAccountLedgerModel( $accountLedger_id,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
+	{
+	    
+	    $data = array(
+	        'Ledger'	=>  $accountLedger_name,
+	        'Group_ID'	=>  $accountLedger_grpUnder,
+	        'Open_balance'	=>  $accountLedger_open,
+	    );
+	    $this->db->where('ID',$accountLedger_id);
+	    $this->db->update('account_ledger',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Account Ledger", "New Account Ledger Name is ".$accountLedger_name."");
 	        return array('code' => 1);
 	    }
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	function addLog($logtitle,$logDescription){
 		$data = array(
 				'log_name'	=>  $logtitle ,

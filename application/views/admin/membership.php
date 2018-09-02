@@ -179,11 +179,7 @@
             $('#member_nomineecontact').focus();
             return;
         }
-        if ($('#fileUpload').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Image is mandatory!');
-            $('#file').focus();
-            return;
-        }
+        
         
         var formData = $('form#MasMemForms').serializeObject();
         var dataString = JSON.stringify(formData);

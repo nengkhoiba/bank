@@ -11,7 +11,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group Name</label>
                   <input name="accountGrp_name" style="margin-top: 10px;"
-    				class="form-control" type="text" id="accountGrp_name"
+    				class="form-control name" type="text" id="accountGrp_name"
     				placeholder="Group Name"></input>
                 </div>
 				 <div class="form-group col-md-4 align-self-end">
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-        
+<script src="<?php echo base_url();?>assets/js/validation.js"></script>        
 <script type="text/javascript">
 function loadAccountGrpUnder()
 { 

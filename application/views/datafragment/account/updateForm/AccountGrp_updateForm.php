@@ -14,7 +14,7 @@
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group Name</label>
                   <input name="accountGrp_name" value="<?php echo $row['Group_name'];?>" style="margin-top: 10px;"
-    				class="form-control" type="text" id="accountGrp_name"
+    				class="form-control name" type="text" id="accountGrp_name"
     				placeholder="Group Name"></input>
                 </div>
 				 <div class="form-group col-md-4 align-self-end">
@@ -32,19 +32,19 @@
                
          
 		                <div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateAccountGrp()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+		                  <button onclick="updateAccountGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
 		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#AccountGrpFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#AccountGrpFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasAccountGrpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasAccountGrpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
 		              </form>
 		           </div>
           </div>
         </div>  
-        
-        <script type="text/javascript">
+<script src="<?php echo base_url();?>assets/js/validation.js"></script>         
+<script type="text/javascript">
 function loadAccountGrpUnder()
 { 
   var url = "<?php echo site_url('index.php/data_controller/loadAccountGrpUnder'); ?>"; 

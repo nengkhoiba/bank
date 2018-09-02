@@ -11,7 +11,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Name of Applicant</label>
                   <input name="member_name" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_name"
+    				class="form-control name" type="text" id="member_name"
     				placeholder="Name"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -32,19 +32,19 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
                   <input name="member_aadhaar" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_aadhaar"
+    				class="form-control number" type="text" id="member_aadhaar"
     				placeholder="Aadhaar Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Husband Name/Father Name</label>
                   	<input name="member_husband" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_husband"
+    				class="form-control name" type="text" id="member_husband"
     				placeholder="Husband Name"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Permanent Address</label>
                   	<input name="member_address" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_address"
+    				class="form-control address" type="text" id="member_address"
     				placeholder="Permanent Address"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -62,31 +62,31 @@
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
                   	<input name="member_district" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_district"
+					class="form-control address" type="text" id="member_district"
 					placeholder="District"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
                   <input name="member_contact" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_contact"
+					class="form-control number" type="text" id="member_contact"
 					placeholder="Contact Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank A/C Number (if any)</label>
                   <input name="member_bankaccount" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_bankaccount"
+					class="form-control number" type="text" id="member_bankaccount"
 					placeholder="Bank Account Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank Branch</label>
                   <input name="member_bankbranch" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_bankbranch"
+					class="form-control name" type="text" id="member_bankbranch"
 					placeholder="Bank Branch"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Name of the Work/Business/Profession</label>
                   <input name="member_work" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_work"
+					class="form-control name" type="text" id="member_work"
 					placeholder="Work/Business/Profession"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -98,13 +98,13 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
                   <input name="member_nomineeaadhaar" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineeaadhaar"
+    				class="form-control name" type="text" id="member_nomineeaadhaar"
     				placeholder="Aadhaar Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Permanent Address</label>
                   	<input name="member_nomineeaddress" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineeaddress"
+    				class="form-control address" type="text" id="member_nomineeaddress"
     				placeholder="Permanent Address"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -122,39 +122,29 @@
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
                   	<input name="member_nomineedistrict" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_nomineedistrict"
+					class="form-control address" type="text" id="member_nomineedistrict"
 					placeholder="District"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
                   <input name="member_nomineecontact" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_nomineecontact"
+					class="form-control number" type="text" id="member_nomineecontact"
 					placeholder="Contact Number"></input>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Select Passport</label>
-                  <input class="form-control" onchange="imagetoBase64(this)" id="file"
-					style="margin-top: 10px;" type="file"></input> <input
-					type="hidden" name="fileUpload" id="fileUpload"> <input
-					type="hidden" name="fileUploadName" id="fileUploadName">
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label"></label>
-                  <img id="imgThumb" height="80" class="img-responsive" style="" src="<?php echo base_url();?>assets/img/NoImage.png">
-                </div>
+              
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="addMem()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="addMem()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#MasMemForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasMemForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasMemformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasMemformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
               </form>
             </div>
           </div>
         </div>
-
+<script src="<?php echo base_url();?>assets/js/validation.js"></script> 
 <script>
 $(document).ready(function (){
 var date = new Date();

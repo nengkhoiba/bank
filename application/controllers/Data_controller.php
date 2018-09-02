@@ -1063,10 +1063,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineecontact',true))) {
 	            $errorMSG = " Nominee contact is required";
 	        }
-	        /* passport validation */
-	        elseif (empty($this->input->post('fileUpload',true))) {
-	            $errorMSG .= " Passport is required";
-	        }
+	        
 	              
 	        
 	        
@@ -1093,28 +1090,8 @@ class Data_controller extends CI_Controller {
 	            $member_nomineeurban = $this->db->escape_str ( trim ( $this->input->post('member_nomineeurban',true) ) );
 	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
 	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
-	            
-	            if($this->input->post('fileUpload',true) != null)
-	            {
-	                $fileName = sanitize_filename ( $this->input->post('fileUploadName',true) );
-	                $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
-	                $file = urldecode ( $file );
-	                $file = str_replace ( 'data:image/png;base64,', '', $file );
-	                $file = str_replace ( 'data:image/jpeg;base64,', '', $file );
-	                $file = str_replace ( 'data:image/jpg;base64,', '', $file );
-	                $file = str_replace ( ' ', '+', $file );
-	                $file = base64_decode ( $file );
-	                $fileName = time() . '_' . $fileName;
-	                
-	                $ouputDir = "assets/upload/member/";
-	                file_put_contents ( $ouputDir . $fileName, $file );
-	            }
-	            else
-	            {
-	                $fileName = '';
-	            }
-	            
-	            $result = $this->database->addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName);
+	           	            
+	            $result = $this->database->addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
 	            if($result['code'] == 1){
 	                $status = array("success" => true,"msg" => "Save sucessfull!");
 	            }else{
@@ -1252,27 +1229,8 @@ class Data_controller extends CI_Controller {
 	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
 	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
 	            
-	            if($this->input->post('fileUpload',true) != null)
-	            {
-	                $fileName = sanitize_filename ( $this->input->post('fileUploadName',true) );
-	                $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
-	                $file = urldecode ( $file );
-	                $file = str_replace ( 'data:image/png;base64,', '', $file );
-	                $file = str_replace ( 'data:image/jpeg;base64,', '', $file );
-	                $file = str_replace ( 'data:image/jpg;base64,', '', $file );
-	                $file = str_replace ( ' ', '+', $file );
-	                $file = base64_decode ( $file );
-	                $fileName = time() . '_' . $fileName;
-	                
-	                $ouputDir = "assets/upload/member/";
-	                file_put_contents ( $ouputDir . $fileName, $file );
-	            }
-	            else
-	            {
-	                $fileName = '';
-	            }
-	            
-	            $result = $this->database->updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact, $fileName, $previous_mem_image);
+	            	            
+	            $result = $this->database->updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
 	            if($result['code'] == 1)
 	            {
 	                $status = array("success" => true,"msg" => "Update sucessfull!");
@@ -1496,6 +1454,8 @@ class Data_controller extends CI_Controller {
 		echo $status;
 							
 	} 
+	
+	
 	/*ACCOUNT GROUP LOAD*/
 	public function loadAccountGrp()
 	{
@@ -1665,6 +1625,179 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	
+	/*ACCOUNT LEDGER LOAD*/
+	public function loadAccountLedger()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('account_ledger');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dataTable/AccountLedger_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT LEDGER FORM LOAD*/
+	public function AddAccountLedgerform()
+	{
+	    try {
+	        $data['result'] = '';
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/addForm/AccountLedger_addForm',$data, true),
+	            'success' =>true
+	        );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT LEDGER EDIT SECTION*/
+	public function EditAccountLedger()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'account_ledger');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/account/updateForm/AccountLedger_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ACCOUNT GROUP DATA ADD*/
+	public function addAccountLedger()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account ledger name validation */
+	        if (empty($this->input->post('accountLedger_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account ledger under validation */
+	        if (empty($this->input->post('accountLedger_grpUnder',true))) {
+	            $errorMSG = " Account group under is required";
+	        }
+	        /* account ledger open validation */
+	        if (empty($this->input->post('accountLedger_open',true))) {
+	            $errorMSG = " Opening balance is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountLedger_name = $this->db->escape_str ( trim ( $this->input->post('accountLedger_name',true) ) );
+	            $accountLedger_grpUnder = $this->db->escape_str ( trim ( $this->input->post('accountLedger_grpUnder',true) ) );
+	            $accountLedger_open = $this->db->escape_str ( trim ( $this->input->post('accountLedger_open',true) ) );
+	            
+	            
+	            $result = $this->database->addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP UPDATE*/
+	public function updateAccountLedger()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* account ledger name validation */
+	        if (empty($this->input->post('accountLedger_name',true))) {
+	            $errorMSG = " Group name is required";
+	        }
+	        /* account ledger under validation */
+	        if (empty($this->input->post('accountLedger_grpUnder',true))) {
+	            $errorMSG = " Account group under is required";
+	        }
+	        /* account ledger open validation */
+	        if (empty($this->input->post('accountLedger_open',true))) {
+	            $errorMSG = " Opening balance is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $accountLedger_id = $this->db->escape_str ( trim ( $this->input->post('accountLedger_id',true) ) );
+	            $accountLedger_name = $this->db->escape_str ( trim ( $this->input->post('accountLedger_name',true) ) );
+	            $accountLedger_grpUnder = $this->db->escape_str ( trim ( $this->input->post('accountLedger_grpUnder',true) ) );
+	            $accountLedger_open = $this->db->escape_str ( trim ( $this->input->post('accountLedger_open',true) ) );
+	            
+	            
+	            
+	            $result = $this->database->updateAccountLedgerModel( $accountLedger_id,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ACCOUNT GROUP DATA REMOVE*/
+	public function RemoveAccountLedger()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'account_ledger');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
 
 
 	

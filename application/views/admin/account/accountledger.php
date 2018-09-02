@@ -5,37 +5,36 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Role Manager</li>
+          <li class="breadcrumb-item">Account Ledger</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-              <a onclick="addRoleform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteRole()">Delete</button>
-          </p>
-        
+            <a onclick="addAccountLedgerform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteAccountLedger()">Delete</button>
+        </p>
       </div>
       
-      <div class="row" id="MasRoleformColap">
+      <div class="row" id="MasAccountLedgerformColap">
       </div>
      
-      
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="role_table" class="tile-body"></div>
+                	<div id="accountledger_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
         </div>
       </div>
     </main>
-	  <?php $this->load->view('global/footer');?>
+<?php $this->load->view('global/footer');?>
+
 <script type="text/javascript">
-function loadRole()
+function loadAccountLedger()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadRole'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadAccountLedger'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -46,8 +45,8 @@ function loadRole()
         try{  
           if (response.success)
              { 
-            $('#role_table').html(response.html);
-              $('#role').DataTable();
+            $('#accountledger_table').html(response.html);
+              $('#accountledger').DataTable();
               
              } else
              { 
@@ -67,19 +66,29 @@ function loadRole()
         }
        });
     }
-    
-      loadRole();
-    function addRole(){  
-    	if ($('#role_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#role_title').focus();
+	loadAccountLedger();
+	
+    function addAccountLedger(){  
+    	if ($('#accountLedger_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Ledger name is mandatory !');
+            $('#accountLedger_name').focus();
+            return;
+        }
+		if ($('#accountLedger_grpUnder').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Account group under is mandatory !');
+            $('#accountLedger_grpUnder').focus();
+            return;
+        }
+		if ($('#accountLedger_open').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Opening balance is mandatory !');
+            $('#accountLedger_open').focus();
             return;
         }
        
         
-        var formData = $('form#MasRoleForms').serializeObject();
+        var formData = $('form#MasAccountLedgerForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addRole';
+        var url = '<?php echo base_url();?>index.php/data_controller/addAccountLedger';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -92,9 +101,8 @@ function loadRole()
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasRoleformColap').empty(); 
-           loadRole();
-           $('#role').DataTable();
+           $('#MasAccountLedgerformColap').empty(); 
+           loadAccountLedger();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -113,8 +121,8 @@ function loadRole()
     }
 
 
-    function addRoleform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddRoleform';
+    function addAccountLedgerform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddAccountLedgerform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -126,7 +134,7 @@ function loadRole()
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasRoleformColap').html(response.html);
+    				 $('#MasAccountLedgerformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -146,9 +154,9 @@ function loadRole()
     }
 
       
-    function editRole($btn){  
+    function editAccountLedger($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditRole';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditAccountLedger';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -160,7 +168,7 @@ function loadRole()
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasRoleformColap').html(response.html);
+    				 $('#MasAccountLedgerformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -179,18 +187,28 @@ function loadRole()
     		 });
     } 
    
-    function updateRole(){  
-    	if ($('#role_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#role_title').focus();
+    function updateAccountLedger(){  
+    	if ($('#accountLedger_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Ledger name is mandatory !');
+            $('#accountLedger_name').focus();
+            return;
+        }
+		if ($('#accountLedger_grpUnder').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Account group under is mandatory !');
+            $('#accountLedger_grpUnder').focus();
+            return;
+        }
+		if ($('#accountLedger_open').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Opening balance is mandatory !');
+            $('#accountLedger_open').focus();
             return;
         }
        
         
 
-        var formData = $('form#RoleFormUpdate').serializeObject();
+        var formData = $('form#AccountLedgerFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateRole';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateAccountLedger';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -203,9 +221,8 @@ function loadRole()
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasRoleformColap').empty(); 
-				   loadRole();
-				   $('#role').DataTable();
+				   $('#MasAccountLedgerformColap').empty(); 
+				   loadAccountLedger();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -222,7 +239,7 @@ function loadRole()
 		  }
 		 });
 	}
-    function deleteRole(){  
+    function deleteAccountLedger(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -240,7 +257,7 @@ function loadRole()
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveRole';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveAccountLedger';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -265,8 +282,7 @@ function loadRole()
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadRole();
-      				   $('#role').DataTable();
+      				   loadAccountLedger();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);
