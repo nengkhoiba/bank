@@ -17,14 +17,13 @@
 				 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group Under</label>
                   <select id="accountGrp_under" name="accountGrp_under" style="margin-top:10px;" class="form-control" >
-                        <!-- List of country -->
+                        <!-- List of account group under -->
                   	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group Nature</label>
                   <select id="accountGrp_nature" name="accountGrp_nature" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Liability</option>
+                  	<!-- List of account group nature -->
                   </select>
                 </div>
                
@@ -75,5 +74,39 @@ function loadAccountGrpUnder()
    });
 } 
 loadAccountGrpUnder();
+
+function loadAccountGrpNature()
+{ 
+  var url = "<?php echo site_url('index.php/data_controller/loadAccountGrpNature'); ?>"; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,   
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $('#accountGrp_nature').html(response.html);              
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+loadAccountGrpNature();
 </script>
 

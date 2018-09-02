@@ -88,9 +88,27 @@ class Data_controller extends CI_Controller {
 	public function loadAccountGrpUnder()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllRecord('account_group');
+	        $data['result']=$this->database->GetAllActiveRecord('account_group');
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/account/dropDown/Select_GrpUnder',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
+	public function loadAccountGrpNature()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('account_nature');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/account/dropDown/Select_GrpNature',$data, true),
 	            'success' =>true
 	        );
 	    } catch (Exception $ex) {
@@ -895,7 +913,7 @@ class Data_controller extends CI_Controller {
 	public function loadMem()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('member');
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/Mem_table',$data, true),
 	            'success' =>true
@@ -937,7 +955,7 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'member');
+	            $data['result'] = $this->database->GetRecordById($Id,'customer');
 	            $output = array(
 	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
 	                'success' =>true
@@ -1279,7 +1297,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
 	        
-	        $this->database->RemoveRecordById($IdsArray,'member');
+	        $this->database->RemoveRecordById($IdsArray,'customer');
 	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
 	        
 	    } catch (Exception $ex) {

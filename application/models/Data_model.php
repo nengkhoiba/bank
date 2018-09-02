@@ -18,19 +18,19 @@ class Data_model extends CI_Model{
 	function GetAllActiveRecord($tabName)  
 	{  
 	   //data is retrive from this query  
-	    $query = $this->db->get_where($tabName, array('isActive' => 1)); 
+	    $query = $this->db->get_where($tabName, array('IsActive' => 1)); 
 	    return $query->result_array();  
 	} 
 	function GetRecordById($id,$tabName)  
     { 
-         $query = $this->db->get_where($tabName, array('ID' => $id,'isActive' => 1)); 
+         $query = $this->db->get_where($tabName, array('ID' => $id,'IsActive' => 1)); 
          return $query->result_array();  
     }
     function RemoveRecordById($ArrIds,$tblName)
 	{ 
 		foreach ($ArrIds as $id)
 		{ 	    
-			$this->db->set('isActive', 0);  //Set the column name and which value to set..
+			$this->db->set('IsActive', 0);  //Set the column name and which value to set..
 			$this->db->where('ID', $id); //set column_name and value in which row need to update
 			$this->db->update($tblName); //Set your table name
 		}
@@ -55,7 +55,7 @@ class Data_model extends CI_Model{
 	             'qualification'	=>  $employee_qualification ,
 	             'martial_status'=>  $employee_martial_status,
 	             'image'=>  $fileName,
-	             'isActive'=>  1,
+	             'IsActive'=>  1,
 	         );
 	         
 	    $this->db->insert('emp', $data);
@@ -209,10 +209,10 @@ class Data_model extends CI_Model{
 	        'nominee_district'	=>  $member_nomineedistrict ,
 	        'nominee_contact_no'=>  $member_nomineecontact,
 	        'image'=>  $fileName,
-	        'isActive'=>  1
+	        'IsActive'=>  1
 	    );
 	    
-	    $this->db->insert('member', $data);
+	    $this->db->insert('customer', $data);
 	    $lastID=$this->db->insert_id();
 	    
 	    if($this->db->trans_status() === FALSE)
@@ -286,7 +286,7 @@ class Data_model extends CI_Model{
 	    }
 	    
 	    $this->db->where('ID',$mem_id);
-	    $this->db->update('member',$data);
+	    $this->db->update('customer',$data);
 	    
 	    if($this->db->trans_status() === FALSE)
 	    {
@@ -309,7 +309,7 @@ class Data_model extends CI_Model{
          $data = array(
              'title'	=>  $design_title,
 			  'description'	=>  $design_description,
-             'isActive'=>  1,
+             'IsActive'=>  1,
          );
 	         
 	    $this->db->insert('designation', $data);
@@ -360,7 +360,7 @@ class Data_model extends CI_Model{
              'Financial_year'	=>  $financial_title,
 			  'Start_date'	=>  $financial_start,
 			  'End_date'	=>  $financial_end,			  
-             'isActive'=>  1,
+             'IsActive'=>  1,
          );
 	         
 	    $this->db->insert('financial_year', $data);
@@ -415,7 +415,7 @@ class Data_model extends CI_Model{
              'branch_name'	=>  $branch_name,
 			  'branch_code'	=>  $branch_code,
 			  'branch_address'	=>  $branch_address,			  
-             'isActive'=>  1,
+             'IsActive'=>  1,
          );
 	         
 	    $this->db->insert('branch',$data);
@@ -487,7 +487,7 @@ class Data_model extends CI_Model{
 	}
 	
 	/*ACCOUNT GROUP DATA UPDATE */
-	function updateAccountGrpModel($accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
+	function updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
 	{
 	    
 	    $data = array(
