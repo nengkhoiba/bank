@@ -51,21 +51,22 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Rural</label>
-                  	<input name="member_rural" value="<?php echo $row['rural'];?>" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_rural"
+    			  <input onclick="ruralurban($(this))" <?php if($row['rural'] == 1) echo 'checked';?> class="pull-right" type="radio" value="1" name="rural_urban">
+    			  <input name="member_rural" value="<?php if($row['rural'] == 1) echo '1';?>" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_rural"
     				placeholder="Rural"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Urban</label>
-                  	<input name="member_urban" value="<?php echo $row['urban'];?>" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_urban"
-    				placeholder="Urban"></input>
+    			  <br>
+    			  <label class="control-label">Urban</label>
+                  <input onclick="ruralurban($(this))" <?php if($row['urban'] == 1) echo 'checked';?> class="pull-right" type="radio" value="2" name="rural_urban">
+                  <input name="member_urban" value="<?php if($row['urban'] == 1) echo '1';?>" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_urban"
+    				placeholder="Rural"></input>
                 </div>
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
-                  	<input name="member_district" value="<?php echo $row['district'];?>" style="margin-top: 10px;"
-					class="form-control address" type="text" id="member_district"
-					placeholder="District"></input>
+                  	<select id="member_district" name="member_district" style="margin-top:10px;" class="form-control" >
+                        <!-- List of district -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
@@ -110,22 +111,23 @@
     				placeholder="Permanent Address"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Rural</label>
-                  	<input name="member_nomineerural" value="<?php echo $row['nominee_rural'];?>" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineerural"
+                <label class="control-label">Rural</label>
+    			  <input onclick="nomineeruralurban($(this))" <?php if($row['nominee_rural'] == 1) echo 'checked';?> class="pull-right" type="radio" value="1" name="nominee_rural_urban">
+    			  <input name="member_nomineerural" value="<?php if($row['nominee_rural'] == 1) echo '1';?>" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_nomineerural"
     				placeholder="Rural"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Urban</label>
-                  	<input name="member_nomineeurban" value="<?php echo $row['nominee_urban'];?>" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineeurban"
-    				placeholder="Urban"></input>
+    			  <br>
+    			  <label class="control-label">Urban</label>
+                  <input onclick="nomineeruralurban($(this))" <?php if($row['nominee_urban'] == 1) echo 'checked';?> class="pull-right" type="radio" value="2" name="nominee_rural_urban">
+                  <input name="member_nomineeurban" value="<?php if($row['nominee_urban'] == 1) echo '1';?>" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_nomineeurban"
+    				placeholder="Rural"></input>
                 </div>
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
-                  	<input name="member_nomineedistrict" value="<?php echo $row['nominee_district'];?>" style="margin-top: 10px;"
-					class="form-control address" type="text" id="member_nomineedistrict"
-					placeholder="District"></input>
+                  	<select id="member_nomineedistrict" name="member_nomineedistrict" style="margin-top:10px;" class="form-control" >
+                        <!-- List of district -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
@@ -148,9 +150,36 @@
         </div>  
 <script src="<?php echo base_url();?>assets/js/validation.js"></script>  
 <script> 
-function loadCountry()
+function ruralurban($radio){
+	$value =  $radio.val();
+	if ($value == 1)
+		{
+		$("#member_rural").val(1);
+		$("#member_urban").val(0)
+		}
+	else
+		{
+		$("#member_rural").val(0);
+		$("#member_urban").val(1)
+		}
+	}
+function nomineeruralurban($radio){
+    $value =  $radio.val();
+    if ($value == 1)
+    	{
+    	$("#member_nomineerural").val(1);
+    	$("#member_nomineeurban").val(0)
+    	}
+    else
+    	{
+    	$("#member_nomineerural").val(0);
+    	$("#member_nomineeurban").val(1)
+    	}
+    }
+
+function loadDistrict()
 { 
-  var url = "<?php echo site_url('index.php/data_controller/loadCountry'); ?>"; 
+  var url = "<?php echo site_url('index.php/data_controller/loadDistrict'); ?>"; 
   StartInsideLoading();
   $.ajax({
     type: "post",
@@ -161,7 +190,8 @@ function loadCountry()
     try{  
       if (response.success)
          { 
-        $('#employee_country').html(response.html);              
+        $('#member_district').html(response.html); 
+        $('#member_nomineedistrict').html(response.html);             
          } else
          { 
              SetWarningMessageBox('warning', response.msg);
@@ -180,92 +210,26 @@ function loadCountry()
     }
    });
 } 
-loadCountry();
-
-
-function loadState($select){  
-	$reqestId =  $select.val(); 
-	var url = '<?php echo base_url();?>index.php/data_controller/loadState';
-	StartInsideLoading();
-	$.ajax({
-		  type: "post",
-		  url: url,
-		  cache: false,    
-		  data: {reqId:$reqestId},
-		  dataType: 'json',
-		  success: function(response){   
-		  try{  	 
-			   if (response.success)
-	           { 	
-				 $('#employee_state').html(response.html);
-	           } else
-	           { 
-	               SetWarningMessageBox('warning', response.msg);
-	           }
-		 StopInsideLoading();
-		  }catch(e) {  
-			  SetWarningMessageBox('warning', e);
-			  StopInsideLoading();
-		  }  
-		  },
-		  error: function(){      
-			  SetWarningMessageBox('warning', 'Error while request..');
-			  StopInsideLoading();
-		  }
-		 });
-} 
-
-function loadCity($select){  
-	$reqestId =  $select.val(); 
-	var url = '<?php echo base_url();?>index.php/data_controller/loadCity';
-	StartInsideLoading();
-	$.ajax({
-		  type: "post",
-		  url: url,
-		  cache: false,    
-		  data: {reqId:$reqestId},
-		  dataType: 'json',
-		  success: function(response){   
-		  try{  	 
-			   if (response.success)
-	           { 	
-				 $('#employee_city').html(response.html);
-	           } else
-	           { 
-	               SetWarningMessageBox('warning', response.msg);
-	           }
-		 StopInsideLoading();
-		  }catch(e) {  
-			  SetWarningMessageBox('warning', e);
-			  StopInsideLoading();
-		  }  
-		  },
-		  error: function(){      
-			  SetWarningMessageBox('warning', 'Error while request..');
-			  StopInsideLoading();
-		  }
-		 });
-}
-
+loadDistrict();
 
 $(document).ready(function (){
-var date = new Date();
-date.setDate(date.getDate()-1);            
+	var date = new Date();
+	date.setDate(date.getDate()-1);            
 
-// allow to pick future date
-    // $('#employee_dob').datepicker({
-    // format: "dd/mm/yyyy"
-    // });
-// allow to pick future date
+	// allow to pick future date
+	    // $('#employee_dob').datepicker({
+	    // format: "dd/mm/yyyy"
+	    // });
+	// allow to pick future date
 
-var FromEndDate = new Date();
-$(function(){
-$('#employee_dob').datepicker({
-format: 'mm-dd-yyyy',
-endDate: FromEndDate, 
-autoclose: true
-});
-});
-});
+	var FromEndDate = new Date();
+	$(function(){
+	$('#member_dob').datepicker({
+	format: 'mm-dd-yyyy',
+	endDate: FromEndDate, 
+	autoclose: true
+	});
+	});
+	});
 </script> 
         

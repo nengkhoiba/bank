@@ -16,6 +16,23 @@ class Data_controller extends CI_Controller {
 		$this->load->view('login');
 	}
 	
+	public function loadDistrict()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('district');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_districtList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
 	
 	public function loadCountry()
 	{
@@ -1003,14 +1020,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_address',true))) {
 	            $errorMSG = " Member address is required";
 	        }
-	        /* member rural validation */
-	        if (empty($this->input->post('member_rural',true))) {
-	            $errorMSG = " Member rural is required";
-	        }
-	        /* member urban validation */
-	        if (empty($this->input->post('member_urban',true))) {
-	            $errorMSG = " Member urban is required";
-	        }
+	        
 	        /* member district validation */
 	        if (empty($this->input->post('member_district',true))) {
 	            $errorMSG = " Member district is required";
@@ -1047,15 +1057,8 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineeaddress',true))) {
 	            $errorMSG = " Nominee address is required";
 	        }
-	        /* nominee rural validation */
-	        if (empty($this->input->post('member_nomineerural',true))) {
-	            $errorMSG = " Nominee rural is required";
-	        }
-	        /* nominee urban validation */
-	        if (empty($this->input->post('member_nomineeurban',true))) {
-	            $errorMSG = " Nominee urban is required";
-	        }
-	        /* nominee district. validation */
+	        
+	        /* nominee district validation */
 	        if (empty($this->input->post('member_nomineedistrict',true))) {
 	            $errorMSG = " Nominee district is required";
 	        }
@@ -1141,14 +1144,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_address',true))) {
 	            $errorMSG = " Member address is required";
 	        }
-	        /* member rural validation */
-	        if (empty($this->input->post('member_rural',true))) {
-	            $errorMSG = " Member rural is required";
-	        }
-	        /* member urban validation */
-	        if (empty($this->input->post('member_urban',true))) {
-	            $errorMSG = " Member urban is required";
-	        }
+	        
 	        /* member district validation */
 	        if (empty($this->input->post('member_district',true))) {
 	            $errorMSG = " Member district is required";
@@ -1185,15 +1181,8 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineeaddress',true))) {
 	            $errorMSG = " Nominee address is required";
 	        }
-	        /* nominee rural validation */
-	        if (empty($this->input->post('member_nomineerural',true))) {
-	            $errorMSG = " Nominee rural is required";
-	        }
-	        /* nominee urban validation */
-	        if (empty($this->input->post('member_nomineeurban',true))) {
-	            $errorMSG = " Nominee urban is required";
-	        }
-	        /* nominee district. validation */
+	        
+	        /* nominee district validation */
 	        if (empty($this->input->post('member_nomineedistrict',true))) {
 	            $errorMSG = " Nominee district is required";
 	        }

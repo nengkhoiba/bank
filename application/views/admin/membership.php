@@ -104,16 +104,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -159,16 +150,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();
@@ -315,16 +297,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -370,16 +343,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();
