@@ -23,37 +23,7 @@
         <div class="col-md-12">
         	
           <div class="tile">
-          <div class="row">
-              <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Name</label>
-                  <input name="member_qualification" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_name"
-					placeholder="Name"></input>
-                </div>
-                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Address</label>
-                  <input name="member_address" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_address"
-					placeholder="Address"></input>
-                </div>
-                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Group</label>
-                  <select id="member_group" name="member_group" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">SHG1</option>
-                  	<option class="form-control" value="2">SHG2</option>
-                  	<option class="form-control" value="3">SHG3</option>
-                  	<option class="form-control" value="4">SHG4</option>
-                  	</select>
-                </div>
-          </div>
-          <div class="row">
-          	<div class="col-md-12" align="center">
-          	 <a onclick="loadMem();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
-			</div>
-          </div>
-         
-          <br>
+           
           <div class="row"> 
               	<div class="col-md-12">
                 	<div id="member_table" class="tile-body"></div>
@@ -101,7 +71,7 @@
         }
        });
     }
-    
+    loadMem();  
       
     function addMem(){  
     	if ($('#member_name').val().trim() == '') { 
