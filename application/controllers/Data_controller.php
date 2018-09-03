@@ -1460,7 +1460,8 @@ class Data_controller extends CI_Controller {
 									"TransactionID"=>"RD87191212",
 									"Naration"=>"This is naration",
 									"TransactionType"=>"R",
-									"IsManual"=>"1"),"footer"=>array(
+									"IsManual"=>"1"),
+				      "footer"=>array(
 									array(
 									"Ledger_type"=>"CR",
 									"Ledger_id"=>"1",
