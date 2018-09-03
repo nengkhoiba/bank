@@ -106,7 +106,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasAccountGrpformColap').empty(); 
            loadAccountGrp();
-           $('#AccountGrp').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -210,7 +209,7 @@
        
         
 
-        var formData = $('form#DesignFormUpdate').serializeObject();
+        var formData = $('form#AccountGrpFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateAccountGrp';
         StartInsideLoading();
@@ -227,7 +226,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasAccountGrpformColap').empty(); 
 				   loadAccountGrp();
-				   $('#accountgrp').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

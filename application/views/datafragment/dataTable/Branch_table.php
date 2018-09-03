@@ -16,9 +16,9 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ( $result as $branch_data) { ?>
+        <?php $count = 1; foreach ( $result as $branch_data) { ?>
             <tr>
-                <td><?php echo $branch_data['ID'];?></td>
+                <td><?php echo $count;?></td>
                 <td><?php echo $branch_data['Branch_name'];?></td>
 				<td><?php echo $branch_data['Branch_code'];?></td>
 				<td><?php echo $branch_data['Branch_address'];?></td>
@@ -33,7 +33,7 @@
             	<button onclick="editBranch($(this))" value="<?php echo $branch_data['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
 				</td>
 				</tr>
-        <?php } ?>
+        <?php $count ++; } ?>
         </tbody>
        
     </table>

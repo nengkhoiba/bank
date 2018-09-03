@@ -106,11 +106,11 @@
                
 		                 
 		                <div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateEmp()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+		                  <button onclick="updateEmp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
 		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#EmpFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#EmpFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
 		              </form>

@@ -102,11 +102,11 @@
                 </div>
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="addEmp()" class="btn btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="addEmp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-secondary" href="#" onclick="resetAllFormValue('#MasEmpForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasEmpForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
               </form>
             </div>

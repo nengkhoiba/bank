@@ -5,7 +5,7 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Membership Form</li>
+          <li class="breadcrumb-item">Membership Registration</li>
         </ul>
 		</div>
 		<p class="bs-component">	
@@ -23,37 +23,7 @@
         <div class="col-md-12">
         	
           <div class="tile">
-          <div class="row">
-              <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Name</label>
-                  <input name="member_qualification" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_name"
-					placeholder="Name"></input>
-                </div>
-                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Address</label>
-                  <input name="member_address" style="margin-top: 10px;"
-					class="form-control" type="text" id="member_address"
-					placeholder="Address"></input>
-                </div>
-                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Group</label>
-                  <select id="member_group" name="member_group" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">SHG1</option>
-                  	<option class="form-control" value="2">SHG2</option>
-                  	<option class="form-control" value="3">SHG3</option>
-                  	<option class="form-control" value="4">SHG4</option>
-                  	</select>
-                </div>
-          </div>
-          <div class="row">
-          	<div class="col-md-12" align="center">
-          	 <a onclick="loadMem();" style="color:#fff" align="center" class="btn btn-sm btn-success">Search</a>
-			</div>
-          </div>
-         
-          <br>
+           
           <div class="row"> 
               	<div class="col-md-12">
                 	<div id="member_table" class="tile-body"></div>
@@ -101,7 +71,7 @@
         }
        });
     }
-    
+    loadMem();  
       
     function addMem(){  
     	if ($('#member_name').val().trim() == '') { 
@@ -134,16 +104,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -189,16 +150,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();
@@ -209,11 +161,7 @@
             $('#member_nomineecontact').focus();
             return;
         }
-        if ($('#fileUpload').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Image is mandatory!');
-            $('#file').focus();
-            return;
-        }
+        
         
         var formData = $('form#MasMemForms').serializeObject();
         var dataString = JSON.stringify(formData);
@@ -349,16 +297,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -404,16 +343,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();

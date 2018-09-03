@@ -15,9 +15,9 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach ( $result as $accountGrp_data) { ?>
+        <?php $count = 1; foreach ( $result as $accountGrp_data) { ?>
             <tr>
-                <td><?php echo $accountGrp_data['ID'];?></td>
+                <td><?php echo $count;?></td>
                 <td><?php echo $accountGrp_data['Group_name'];?></td>
                 <td><?php echo $accountGrp_data['Group_under'];?></td>
                 <td><?php echo $accountGrp_data['Group_nature'];?></td>
@@ -30,7 +30,7 @@
             	<button onclick="editAccountGrp($(this))" value="<?php echo $accountGrp_data['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
 				</td>
 				</tr>
-        <?php } ?>
+        <?php $count ++; } ?>
         </tbody>
        
     </table>

@@ -5,26 +5,24 @@
         <div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item">Role Manager</li>
+          <li class="breadcrumb-item">Loan Master</li>
         </ul>
 		</div>
 		<p class="bs-component">	
-              <a onclick="addRoleform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteRole()">Delete</button>
-          </p>
-        
+            <a onclick="addLoanmasterform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteLoanmaster()">Delete</button>
+        </p>
       </div>
       
-      <div class="row" id="MasRoleformColap">
+      <div class="row" id="MasLoanmasterformColap">
       </div>
      
-      
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="role_table" class="tile-body"></div>
+                	<div id="loanmaster_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -32,10 +30,14 @@
       </div>
     </main>
 	  <?php $this->load->view('global/footer');?>
-<script type="text/javascript">
-function loadRole()
+
+    <script type="text/javascript">
+   
+    	
+   
+    function loadLoanmaster()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadRole'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadLoanmaster'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -46,8 +48,8 @@ function loadRole()
         try{  
           if (response.success)
              { 
-            $('#role_table').html(response.html);
-              $('#role').DataTable();
+            $('#loanmaster_table').html(response.html);
+              $('#loanmaster').DataTable();
               
              } else
              { 
@@ -68,18 +70,54 @@ function loadRole()
        });
     }
     
-      loadRole();
-    function addRole(){  
-    	if ($('#role_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#role_title').focus();
+      loadLoanmaster();
+    function addLoanmaster(){  
+    	if ($('#loanmaster_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan name is mandatory !');
+            $('#loanmaster_name').focus();
+            return;
+        }
+		if ($('#loanmaster_pc').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan PC is mandatory !');
+            $('#loanmaster_pc').focus();
+            return;
+        }
+		if ($('#loanmaster_pc_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan PC type is mandatory !');
+            $('#loanmaster_pc_type').focus();
+            return;
+        }
+		
+			if ($('#loanmaster_tenure_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan Tenure type is mandatory !');
+            $('#loanmaster_tenure_type').focus();
+            return;
+        }
+			if ($('#loanmaster_tenure_min').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan tenure Min amount is mandatory !');
+            $('#loanmaster_tenure_min').focus();
+            return;
+        }
+			if ($('#loanmaster_tenure_max').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan tenure Max amount is mandatory !');
+            $('#loanmaster_tenure_max').focus();
+            return;
+        }
+			if ($('#loanmaster_min_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan Min amount is mandatory !');
+            $('#loanmaster_min_amount').focus();
+            return;
+        }
+			if ($('#loanmaster_max_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan Max amount is mandatory !');
+            $('#loanmaster_max_amount').focus();
             return;
         }
        
         
-        var formData = $('form#MasRoleForms').serializeObject();
+        var formData = $('form#MasLoanmasterForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addRole';
+        var url = '<?php echo base_url();?>index.php/data_controller/addBranch';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -92,9 +130,9 @@ function loadRole()
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasRoleformColap').empty(); 
-           loadRole();
-           $('#role').DataTable();
+           $('#MasBranchformColap').empty(); 
+           loadBranch();
+           $('#Branch').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -113,8 +151,8 @@ function loadRole()
     }
 
 
-    function addRoleform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddRoleform';
+    function addBranchform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddBranchform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -126,7 +164,7 @@ function loadRole()
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasRoleformColap').html(response.html);
+    				 $('#MasBranchformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -146,9 +184,9 @@ function loadRole()
     }
 
       
-    function editRole($btn){  
+    function editBranch($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditRole';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditBranch';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -160,7 +198,7 @@ function loadRole()
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasRoleformColap').html(response.html);
+    				 $('#MasBranchformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -179,18 +217,27 @@ function loadRole()
     		 });
     } 
    
-    function updateRole(){  
-    	if ($('#role_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#role_title').focus();
+    function updateBranch(){  
+    	if ($('#branch_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch name is mandatory !');
+            $('#branch_name').focus();
+            return;
+        }
+			if ($('#branch_code').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch code is mandatory !');
+            $('#branch_code').focus();
+            return;
+        }
+			if ($('#branch_address').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Branch address is mandatory !');
+            $('#branch_address').focus();
             return;
         }
        
-        
 
-        var formData = $('form#RoleFormUpdate').serializeObject();
+        var formData = $('form#BranchFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateRole';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -203,9 +250,9 @@ function loadRole()
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasRoleformColap').empty(); 
-				   loadRole();
-				   $('#role').DataTable();
+				   $('#MasBranchformColap').empty(); 
+				   loadBranch();
+				   $('#branch').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -222,7 +269,7 @@ function loadRole()
 		  }
 		 });
 	}
-    function deleteRole(){  
+    function deleteBranch(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
@@ -240,7 +287,7 @@ function loadRole()
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveRole';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveBranch';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -265,8 +312,8 @@ function loadRole()
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadRole();
-      				   $('#role').DataTable();
+      				   loadBranch();
+      				   $('#branch').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);
