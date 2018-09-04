@@ -72,19 +72,19 @@
     
       loadLoanmaster();
     function addLoanmaster(){  
-    	if ($('#loanmaster_name').val().trim() == '') { 
+    	if ($('#loanmaster_loan_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan name is mandatory !');
-            $('#loanmaster_name').focus();
+            $('#loanmaster_loan_name').focus();
             return;
         }
-		if ($('#loanmaster_pc').val().trim() == '') { 
+		if ($('#loanmaster_loan_pc').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan PC is mandatory !');
-            $('#loanmaster_pc').focus();
+            $('#loanmaster_loan_pc').focus();
             return;
         }
-		if ($('#loanmaster_pc_type').val().trim() == '') { 
+		if ($('#loanmaster_loan_pc_type').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan PC type is mandatory !');
-            $('#loanmaster_pc_type').focus();
+            $('#loanmaster_loan_pc_type').focus();
             return;
         }
 		
@@ -113,11 +113,21 @@
             $('#loanmaster_max_amount').focus();
             return;
         }
+			if ($('#loanmaster_income_ledger').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Income ledger is mandatory !');
+            $('#loanmaster_income_ledger').focus();
+            return;
+        }
+			if ($('#loanmaster_expense_ledger').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Expences ledger is mandatory !');
+            $('#loanmaster_expense_ledger').focus();
+            return;
+        }
        
         
         var formData = $('form#MasLoanmasterForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addBranch';
+        var url = '<?php echo base_url();?>index.php/data_controller/addLoanmaster';
      StartInsideLoading();
      $.ajax({
       type: "post",
@@ -130,9 +140,9 @@
          if (response.success)
              { 
            SetSucessMessageBox('Success', response.msg);
-           $('#MasBranchformColap').empty(); 
-           loadBranch();
-           $('#Branch').DataTable();
+           $('#MasLoanmasterformColap').empty(); 
+           loadLoanmaster();
+           $('#Loanmaster').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -151,8 +161,8 @@
     }
 
 
-    function addBranchform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddBranchform';
+    function addLoanmasterform(){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/AddLoanmasterform';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -164,7 +174,7 @@
     			 //  var result = jQuery.parseJSON(data);
     			   if (response.success)
     	           { 	
-    				 $('#MasBranchformColap').html(response.html);
+    				 $('#MasLoanmasterformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -184,9 +194,9 @@
     }
 
       
-    function editBranch($btn){  
+    function editLoanmaster($btn){  
     	$reqestId =  $btn.val(); 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditBranch';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditLoanmaster';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -198,7 +208,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasBranchformColap').html(response.html);
+    				 $('#MasLoanmasterformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -217,27 +227,66 @@
     		 });
     } 
    
-    function updateBranch(){  
-    	if ($('#branch_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Branch name is mandatory !');
-            $('#branch_name').focus();
+    function updateLoanmaster(){  
+    	if ($('#loanmaster_loan_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan name is mandatory !');
+            $('#loanmaster_loan_name').focus();
             return;
         }
-			if ($('#branch_code').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Branch code is mandatory !');
-            $('#branch_code').focus();
+			if ($('#loanmaster_loan_pc').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan PC is mandatory !');
+            $('#loanmaster_loan_pc').focus();
             return;
         }
-			if ($('#branch_address').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Branch address is mandatory !');
-            $('#branch_address').focus();
+			if ($('#loanmaster_loan_pc_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan PC type is mandatory !');
+            $('#loanmaster_loan_pc_type').focus();
             return;
         }
+		
+			if ($('#loanmaster_tenure_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan tenure type is mandatory !');
+            $('#loanmaster_tenure_type').focus();
+            return;
+        }
+		
+			if ($('#loanmaster_tenure_min').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Tenure min is mandatory !');
+            $('#loanmaster_tenure_min').focus();
+            return;
+        }
+		
+			if ($('#loanmaster_tenure_max').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Tenure max is mandatory !');
+            $('#loanmaster_tenure_max').focus();
+            return;
+        }
+			if ($('#loanmaster_min_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Min amount is mandatory !');
+            $('#loanmaster_min_amount').focus();
+            return;
+        }
+			if ($('#loanmaster_max_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Max amount is mandatory !');
+            $('#loanmaster_max_amount').focus();
+            return;
+        }
+			if ($('#loanmaster_income_ledger').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Income ledger is mandatory !');
+            $('#loanmaster_income_ledger').focus();
+            return;
+        }
+			if ($('#loanmaster_expense_ledger').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Expences ledger is mandatory !');
+            $('#loanmaster_expense_ledger').focus();
+            return;
+        }
+				
        
 
-        var formData = $('form#BranchFormUpdate').serializeObject();
+        var formData = $('form#LoanmasterFormUpdate').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateLoanmaster';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -250,9 +299,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasBranchformColap').empty(); 
-				   loadBranch();
-				   $('#branch').DataTable();
+				   $('#MasLoanmasterformColap').empty(); 
+				   loadLoanmaster();
+				   $('#loanmaster').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -269,11 +318,11 @@
 		  }
 		 });
 	}
-    function deleteBranch(){  
+    function deleteLoanmaster(){  
 
        // Checking all category data are deleted
     	if (!$( ".checkbox" ).length) {
-    		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
+    		SetWarningMessageBox('warning', 'No Item left to Delete !!!'); 
     		return;
     	}
     	
@@ -287,7 +336,7 @@
 	              selected_value.push($(this).val());
 	          });
 	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveBranch';
+    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveLoanmaster';
     	var dataString = JSON.stringify(selected_value);
     swal({
       title: "Are you sure?",
@@ -312,8 +361,8 @@
       			   if (response.success)
       	           { 
       				   SetSucessMessageBox('Success', response.msg);
-      				   loadBranch();
-      				   $('#branch').DataTable();
+      				   loadLoanmaster();
+      				   $('#loanmaster').DataTable();
       	           } else
       	           { 
       	               SetWarningMessageBox('warning', response.msg);

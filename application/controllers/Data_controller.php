@@ -735,6 +735,235 @@ class Data_controller extends CI_Controller {
 	
 	
 	
+
+  /*FINANCIAL YEAR SECTION LOAD AND START HERE*/
+	public function loadLoanmaster()
+	{ 
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('loan_master');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Loanmaster_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	/*ROLE FORM LOAD*/
+	public function AddLoanmasterform()
+	{
+	    try {
+	                 $data['result'] = '';
+	                 $output = array(
+	                 'html'=>$this->load->view('datafragment/addForm/Loanmaster_addForm',$data, true),
+	                'success' =>true
+	            );
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ROLE EDIT SECTION*/
+	public function EditLoanmaster()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'loan_master');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Loanmaster_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*FINANCIAL DATA ADD*/
+	public function addLoanmaster()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* Loan name validation */
+	        if (empty($this->input->post('loanmaster_loan_name',true))) {
+	            $errorMSG = " Loan name is required";
+	        }
+			  if (empty($this->input->post('loanmaster_loan_pc',true))) {
+	            $errorMSG = " Loan PC is required";
+	        }
+			  if (empty($this->input->post('loanmaster_loan_pc_type',true))) {
+	            $errorMSG = " Loan PC type is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_type',true))) {
+	            $errorMSG = " Loan tenure type is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_min',true))) {
+	            $errorMSG = " Loan tenure min is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_max',true))) {
+	            $errorMSG = " Loan tenure max is required";
+	        }
+			 if (empty($this->input->post('loanmaster_min_amount',true))) {
+	            $errorMSG = " Loan min amount is required";
+	        }
+			 if (empty($this->input->post('loanmaster_max_amount',true))) {
+	            $errorMSG = " Loan max amount is required";
+	        }
+			 if (empty($this->input->post('loanmaster_income_ledger',true))) {
+	            $errorMSG = " Income ledger is required";
+	        }
+			
+			 if (empty($this->input->post('loanmaster_expense_ledger',true))) {
+	            $errorMSG = " Expense ledger is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $loanmaster_loan_name = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_name',true) ) );
+				$loanmaster_loan_pc = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc',true) ) );
+				$loanmaster_loan_pc_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc_type',true) ) );
+				$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+				$loanmaster_tenure_min = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_min',true) ) );
+				$loanmaster_tenure_max = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_max',true) ) );
+				$loanmaster_min_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_min_amount',true) ) );
+				$loanmaster_max_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_max_amount',true) ) );
+				$loanmaster_income_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_income_ledger',true) ) );
+				$loanmaster_expense_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_expense_ledger',true) ) );
+	            
+	            
+	            $result = $this->database->addLoanmasterModel( $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*FINANCIAL UPDATE*/
+	public function updateLoanmaster()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* Loan name validation */
+	        if (empty($this->input->post('loanmaster_loan_name',true))) {
+	            $errorMSG = " Loan name is required";
+	        }
+			  if (empty($this->input->post('loanmaster_loan_pc',true))) {
+	            $errorMSG = " Loan PC is required";
+	        }
+			  if (empty($this->input->post('loanmaster_loan_pc_type',true))) {
+	            $errorMSG = " Loan PC type is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_type',true))) {
+	            $errorMSG = " Loan tenure type is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_min',true))) {
+	            $errorMSG = " Loan tenure min is required";
+	        }
+			 if (empty($this->input->post('loanmaster_tenure_max',true))) {
+	            $errorMSG = " Loan tenure max is required";
+	        }
+			 if (empty($this->input->post('loanmaster_min_amount',true))) {
+	            $errorMSG = " Loan min amount is required";
+	        }
+			 if (empty($this->input->post('loanmaster_max_amount',true))) {
+	            $errorMSG = " Loan max amount is required";
+	        }
+			 if (empty($this->input->post('loanmaster_income_ledger',true))) {
+	            $errorMSG = " Income ledger is required";
+	        }
+			
+			 if (empty($this->input->post('loanmaster_expense_ledger',true))) {
+	            $errorMSG = " Expense ledger is required";
+	        }
+						
+			        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $loanmaster_loan_name = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_name',true) ) );
+				$loanmaster_loan_pc = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc',true) ) );
+				$loanmaster_loan_pc_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc_type',true) ) );
+				$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+				$loanmaster_tenure_min = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_min',true) ) );
+				$loanmaster_tenure_max = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_max',true) ) );
+				$loanmaster_min_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_min_amount',true) ) );
+				$loanmaster_max_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_max_amount',true) ) );
+				$loanmaster_income_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_income_ledger',true) ) );
+				$loanmaster_expense_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_expense_ledger',true) ) );
+	            
+	            
+	            $result = $this->database->updateLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	
+	/*FINANCIAL DATA REMOVE*/
+	public function RemoveLoanmaster()
+	{
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordById($IdsArray,'loan_master');
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	
+	
+	
+	
   /*BRANCH LOAD AND START HERE*/
 	public function loadBranch()
 	{ 

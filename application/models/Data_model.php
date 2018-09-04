@@ -376,6 +376,76 @@ class Data_model extends CI_Model{
 	}
 	
 	
+	
+		/*FINANCIAL DATA ADD */
+	function addLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
+	{	
+
+		
+         $data = array(
+             'Loan_name'	=> $loanmaster_loan_name,
+			'Loan_pc'	=>$loanmaster_loan_pc,
+			'Loan_pc_type'	=>$loanmaster_loan_pc_type,
+			'Tenure_type'	=>$loanmaster_tenure_type,
+			'Tenure_min'	=>$loanmaster_tenure_min,
+			'Tenure_max'	=>$loanmaster_tenure_max,
+			'Min_amount'	=>$loanmaster_min_amount,
+			'Min_amount'	=>$loanmaster_max_amount,
+			'Income_ledger'	=>$loanmaster_income_ledger,
+			'Expense_ledger'=>$loanmaster_expense_ledger,		  
+			 'Branch_id'=>  1,
+			  'Added_by'=>  1,
+			  'Added_on'=>  1,
+			 'IsActive'=>  1,
+         );
+	         
+	    $this->db->insert('loan_master', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+		
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Loan name","Loan name is ".$loanmaster_loan_name."  is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*LOANMASTER DATA UPDATE */
+	function updateLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
+	{ 
+	
+	
+        $data = array(
+            'Financial_year'=>  $financial_title,
+			'Start_date'=>  $financial_start,
+			'End_date'=>  $financial_end 			
+        );
+	    $this->db->where('ID',$loanmaster_id);
+	    $this->db->update('loan_master',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing Loan details", "New Loan title is ".$loanmaster_loan_name."");
+	        return array('code' => 1);
+	    }
+	}
+	
+	
+	
+	
+	
 	/*BRANCH DATA ADD */
 	function addBranchModel($branch_name,$branch_code,$branch_address)
 	{
