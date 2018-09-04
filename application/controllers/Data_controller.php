@@ -1821,7 +1821,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result'] = $this->database->GetRecordById($Id,'customer');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
+	                'html'=>$this->load->view('datafragment/updateForm/CustomerDocUpload_addForm',$data, true),
 	                'success' =>true
 	            );
 	        }
