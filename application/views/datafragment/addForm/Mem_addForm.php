@@ -23,10 +23,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Sex</label>
                   <select id="member_gender" name="member_gender" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Male</option>
-                  	<option class="form-control" value="2">Female</option>
-                  	<option class="form-control" value="3">Other</option>
+                        <!-- list of  gender -->
                   </select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -49,21 +46,23 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Rural</label>
-                  	<input name="member_rural" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_rural"
+    			  <input onclick="ruralurban($(this))" checked class="pull-right" type="radio" value="1" name="rural_urban">
+    			  <input name="member_rural" value="1" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_rural"
+    				placeholder="Rural"></input>
+    			  <br>
+    			  <label class="control-label">Urban</label>
+                  <input onclick="ruralurban($(this))" class="pull-right" type="radio" value="2" name="rural_urban">
+                  <input name="member_urban" value="0" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_urban"
     				placeholder="Rural"></input>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Urban</label>
-                  	<input name="member_urban" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_urban"
-    				placeholder="Urban"></input>
-                </div>
+                
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
-                  	<input name="member_district" style="margin-top: 10px;"
-					class="form-control address" type="text" id="member_district"
-					placeholder="District"></input>
+                  <select id="member_district" name="member_district" style="margin-top:10px;" class="form-control" >
+                        <!-- List of district -->
+                  </select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
@@ -72,12 +71,17 @@
 					placeholder="Contact Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Bank Account (if any)</label>
+                  <span style="margin-left: 2rem">Yes <input onclick="bank($(this))" id="isbank" type="radio" checked value="1" name="isbank"></span>
+                  <span class="pull-right">No <input onclick="bank($(this))" type="radio" value="2" name="isbank"></span>
+                </div>
+                <div id="bankAccountNo" class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank A/C Number (if any)</label>
                   <input name="member_bankaccount" style="margin-top: 10px;"
 					class="form-control number" type="text" id="member_bankaccount"
 					placeholder="Bank Account Number"></input>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
+                <div id="bankBranchName" class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank Branch</label>
                   <input name="member_bankbranch" style="margin-top: 10px;"
 					class="form-control name" type="text" id="member_bankbranch"
@@ -109,21 +113,23 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Rural</label>
-                  	<input name="member_nomineerural" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineerural"
+    			  <input onclick="nomineeruralurban($(this))" checked class="pull-right" type="radio" value="1" name="nominee_rural_urban">
+    			  <input name="member_nomineerural" value="1" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_nomineerural"
+    				placeholder="Rural"></input>
+    			  <br>
+    			  <label class="control-label">Urban</label>
+                  <input onclick="nomineeruralurban($(this))" class="pull-right" type="radio" value="2" name="nominee_rural_urban">
+                  <input name="member_nomineeurban" value="0" style="margin-top: 10px;"
+    				class="form-control" type="hidden" id="member_nomineeurban"
     				placeholder="Rural"></input>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Urban</label>
-                  	<input name="member_nomineeurban" style="margin-top: 10px;"
-    				class="form-control" type="text" id="member_nomineeurban"
-    				placeholder="Urban"></input>
-                </div>
+                
                  <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
-                  	<input name="member_nomineedistrict" style="margin-top: 10px;"
-					class="form-control address" type="text" id="member_nomineedistrict"
-					placeholder="District"></input>
+                  <select id="member_nomineedistrict" name="member_nomineedistrict" style="margin-top:10px;" class="form-control" >
+                        <!-- List of district -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
@@ -146,6 +152,118 @@
         </div>
 <script src="<?php echo base_url();?>assets/js/validation.js"></script> 
 <script>
+function ruralurban($radio){
+	$value =  $radio.val();
+if ($value == 1)
+	{
+	$("#member_rural").val(1);
+	$("#member_urban").val(0)
+	}
+else
+	{
+	$("#member_rural").val(0);
+	$("#member_urban").val(1)
+	}
+}
+
+function nomineeruralurban($radio){
+	$value =  $radio.val();
+if ($value == 1)
+	{
+	$("#member_nomineerural").val(1);
+	$("#member_nomineeurban").val(0)
+	}
+else
+	{
+	$("#member_nomineerural").val(0);
+	$("#member_nomineeurban").val(1)
+	}
+}
+
+function bank($radio){
+	$value =  $radio.val();
+if ($value == 1)
+	{
+	$('#bankAccountNo').show();
+	$('#bankBranchName').show();
+	}
+else
+	{
+	$('#bankAccountNo').hide();
+	$('#bankBranchName').hide();
+	}
+}
+
+function loadGender()
+{ 
+  var url = "<?php echo site_url('index.php/data_controller/loadGender'); ?>"; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,   
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $('#member_gender').html(response.html);             
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+loadGender();
+
+function loadDistrict()
+{ 
+  var url = "<?php echo site_url('index.php/data_controller/loadDistrict'); ?>"; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,   
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $('#member_district').html(response.html); 
+        $('#member_nomineedistrict').html(response.html);             
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+loadDistrict();
+
+
 $(document).ready(function (){
 var date = new Date();
 date.setDate(date.getDate()-1);            

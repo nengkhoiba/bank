@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addMemform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteMem()">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteitem('RemoveMem',loadMem())">Delete</button>
           </p>
         
       </div>
@@ -104,16 +104,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -129,15 +120,18 @@
             $('#member_contact').focus();
             return;
         }
-        if ($('#member_bankaccount').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Account No. is mandatory!');
-            $('#member_bankaccount').focus();
-            return;
-        }
-        if ($('#member_bankbranch').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Branch Name is mandatory!');
-            $('#member_bankbranch').focus();
-            return;
+        if ($('#isbank').val().trim() == 1)
+        {
+            if ($('#member_bankaccount').val().trim() == '') {
+                SetWarningMessageBox('warning', 'Account No. is mandatory!');
+                $('#member_bankaccount').focus();
+                return;
+            }
+            if ($('#member_bankbranch').val().trim() == '') {
+                SetWarningMessageBox('warning', 'Branch Name is mandatory!');
+                $('#member_bankbranch').focus();
+                return;
+            }
         }
         if ($('#member_work').val().trim() == '') {
             SetWarningMessageBox('warning', 'Work Name is mandatory!');
@@ -159,16 +153,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();
@@ -315,16 +300,7 @@
             $('#member_address').focus();
             return;
         }
-        if ($('#member_rural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Rural is mandatory!');
-            $('#member_rural').focus();
-            return;
-        }
-        if ($('#member_urban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Urban is mandatory!');
-            $('#member_urban').focus();
-            return;
-        }
+        
         if ($('#member_district').val().trim() == '') {
             SetWarningMessageBox('warning', 'District is mandatory!');
             $('#member_district').focus();
@@ -339,7 +315,7 @@
             SetWarningMessageBox('warning', 'Contact No. is mandatory!');
             $('#member_contact').focus();
             return;
-        }
+        }        
         if ($('#member_bankaccount').val().trim() == '') {
             SetWarningMessageBox('warning', 'Account No. is mandatory!');
             $('#member_bankaccount').focus();
@@ -370,16 +346,7 @@
             $('#member_nomineeaddress').focus();
             return;
         }
-        if ($('#member_nomineerural').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Rural is mandatory!');
-            $('#member_nomineerural').focus();
-            return;
-        }
-        if ($('#member_nomineeurban').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Urban is mandatory!');
-            $('#member_nomineeurban').focus();
-            return;
-        }
+        
         if ($('#member_nomineedistrict').val().trim() == '') {
             SetWarningMessageBox('warning', 'Nominee District is mandatory!');
             $('#member_nomineedistrict').focus();
@@ -490,6 +457,69 @@
       }
       }); 
     } 
+
+    function deleteitem(controllerName,loadFunctionName){
+        // Checking all category data are deleted
+     	if (!$( ".checkbox" ).length) {
+     		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
+     		return;
+     	}
+     	
+     	var selected_value = []; // initialize empty array 
+     	if ($('.checkbox:checked').length == 0 )
+         {
+     		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
+     		return;
+    	    } else {
+    	    	$(".checkbox:checked").each(function(){
+    	              selected_value.push($(this).val());
+    	          });
+    	    }	
+     	var url = datacontroller+controllerName;
+     	var dataString = JSON.stringify(selected_value);
+     swal({
+       title: "Are you sure?",
+       //text: "You will not be able to recover this imaginary file!",
+       //type: "warning",
+       showCancelButton: true,
+       confirmButtonText: "Yes, Delete it!",
+       cancelButtonText: "No, cancel plx!",
+       closeOnConfirm: true,
+       closeOnCancel: true
+       }, function(isConfirm) {
+       if (isConfirm) {
+       StartInsideLoading();  
+         	$.ajax({
+       		  type: "post",
+       		  url: url,
+       		  cache: false,    
+       		  data: {dataArr:dataString},
+       		  dataType: 'json',
+       		  success: function(response){   
+       		  try{  	
+       			   if (response.success)
+       	           { 
+       				   SetSucessMessageBox('Success', response.msg);
+       				   loadFunctionName;
+       	           } else
+       	           { 
+       	               SetWarningMessageBox('warning', response.msg);
+       	               //StopInsideLoading();
+       	           }
+       		  StopInsideLoading();
+       		  }catch(e) {  
+       			  SetWarningMessageBox('warning', e);
+       			  StopInsideLoading();
+       		  }  
+       		  },
+       		  error: function(){      
+       			  SetWarningMessageBox('warning', 'Error while request..');
+       			  StopInsideLoading();
+       		  }
+       		 });
+       }
+       }); 
+     } 
 </script>
     
        </body>

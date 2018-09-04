@@ -74,6 +74,9 @@ function resetAllFormValue(id)
   		}
   	});   
 }
+
+
+
 function SetWarningMessageBox(type,msg){
       	$.notify({
       		title: "<strong>"+type+"</strong> : ",

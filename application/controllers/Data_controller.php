@@ -17,6 +17,62 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
+	
+// 	LOAD DROP DOWN DATA SECTION START HERE -- Written by William
+	public function loadDocType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('document_type');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_docList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
+	public function loadGender()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('gender_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_genderList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
+	public function loadDistrict()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('district');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_districtList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 	public function loadCountry()
 	{
 	    try {
@@ -120,7 +176,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	    
 	}
-	
+// 	LOAD DROP DOWN DATA SECTION END HERE -- Written by William
 	
 	public function loadEmp()
 	{
@@ -1114,7 +1170,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*BRANCH DATA REMOVE*/
+	/*BRANCH DATA REMOVE */
 	public function RemoveBranch()
 	{
 	    try {
@@ -1134,11 +1190,7 @@ class Data_controller extends CI_Controller {
 	
 
 	
-	
-	
-	
-	
-	
+// 	LOAD MEMBER DATA -- Written by William
 	public function loadMem()
 	{
 	    try {
@@ -1156,6 +1208,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+// 	ADD MEMBER FORM -- Written by William
 	public function AddMemform()
 	{
 	    try {
@@ -1174,6 +1227,8 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	
+// 	EDIT MEMBER FORM -- Written by William
 	public function EditMemForm()
 	{
 	    try {
@@ -1199,6 +1254,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+// 	ADD MEMBER -- Written by William
 	public function addMem()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1232,14 +1288,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_address',true))) {
 	            $errorMSG = " Member address is required";
 	        }
-	        /* member rural validation */
-	        if (empty($this->input->post('member_rural',true))) {
-	            $errorMSG = " Member rural is required";
-	        }
-	        /* member urban validation */
-	        if (empty($this->input->post('member_urban',true))) {
-	            $errorMSG = " Member urban is required";
-	        }
+	        
 	        /* member district validation */
 	        if (empty($this->input->post('member_district',true))) {
 	            $errorMSG = " Member district is required";
@@ -1276,15 +1325,8 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineeaddress',true))) {
 	            $errorMSG = " Nominee address is required";
 	        }
-	        /* nominee rural validation */
-	        if (empty($this->input->post('member_nomineerural',true))) {
-	            $errorMSG = " Nominee rural is required";
-	        }
-	        /* nominee urban validation */
-	        if (empty($this->input->post('member_nomineeurban',true))) {
-	            $errorMSG = " Nominee urban is required";
-	        }
-	        /* nominee district. validation */
+	        
+	        /* nominee district validation */
 	        if (empty($this->input->post('member_nomineedistrict',true))) {
 	            $errorMSG = " Nominee district is required";
 	        }
@@ -1336,7 +1378,7 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	/*MEMBER UPDATE*/
+	/*MEMBER UPDATE -- Written by William*/
 	public function updateMem()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1370,14 +1412,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_address',true))) {
 	            $errorMSG = " Member address is required";
 	        }
-	        /* member rural validation */
-	        if (empty($this->input->post('member_rural',true))) {
-	            $errorMSG = " Member rural is required";
-	        }
-	        /* member urban validation */
-	        if (empty($this->input->post('member_urban',true))) {
-	            $errorMSG = " Member urban is required";
-	        }
+	        
 	        /* member district validation */
 	        if (empty($this->input->post('member_district',true))) {
 	            $errorMSG = " Member district is required";
@@ -1414,15 +1449,8 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineeaddress',true))) {
 	            $errorMSG = " Nominee address is required";
 	        }
-	        /* nominee rural validation */
-	        if (empty($this->input->post('member_nomineerural',true))) {
-	            $errorMSG = " Nominee rural is required";
-	        }
-	        /* nominee urban validation */
-	        if (empty($this->input->post('member_nomineeurban',true))) {
-	            $errorMSG = " Nominee urban is required";
-	        }
-	        /* nominee district. validation */
+	        
+	        /* nominee district validation */
 	        if (empty($this->input->post('member_nomineedistrict',true))) {
 	            $errorMSG = " Nominee district is required";
 	        }
@@ -1436,7 +1464,6 @@ class Data_controller extends CI_Controller {
 	        if(empty($errorMSG)){
 	            
 	            $mem_id = $this->db->escape_str ( trim ( $this->input->post('mem_id',true) ) );
-	            $previous_mem_image = $this->db->escape_str ( trim ( $this->input->post('previous_mem_image',true) ) );
 	            $member_name = $this->db->escape_str ( trim ( $this->input->post('member_name',true) ) );
 	            $member_dob = $this->db->escape_str ( trim ( $this->input->post('member_dob',true) ) );
 	            $member_gender = $this->db->escape_str ( trim ( $this->input->post('member_gender',true) ) );
@@ -1478,7 +1505,7 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	/*MEMBER DATA REMOVE*/
+	/*MEMBER DATA REMOVE -- Written by William*/
 	public function RemoveMem()
 	{
 	    try {
@@ -1665,7 +1692,8 @@ class Data_controller extends CI_Controller {
 									"TransactionID"=>"RD87191212",
 									"Naration"=>"This is naration",
 									"TransactionType"=>"R",
-									"IsManual"=>"1"),"footer"=>array(
+									"IsManual"=>"1"),
+				      "footer"=>array(
 									array(
 									"Ledger_type"=>"CR",
 									"Ledger_id"=>"1",
@@ -1685,7 +1713,7 @@ class Data_controller extends CI_Controller {
 	} 
 	
 	
-	/*ACCOUNT GROUP LOAD*/
+	/*ACCOUNT GROUP LOAD -- Written by William*/
 	public function loadAccountGrp()
 	{
 	    try {
@@ -1703,7 +1731,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP FORM LOAD*/
+	/*ACCOUNT GROUP FORM LOAD -- Written by William*/
 	public function AddAccountGrpform()
 	{
 	    try {
@@ -1722,7 +1750,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP EDIT SECTION*/
+	/*ACCOUNT GROUP EDIT SECTION -- Written by William*/
 	public function EditAccountGrp()
 	{
 	    try {
@@ -1748,7 +1776,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD*/
+	/*ACCOUNT GROUP DATA ADD -- Written by William*/
 	public function addAccountGrp()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1790,7 +1818,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP UPDATE*/
+	/*ACCOUNT GROUP UPDATE  -- Written by William*/
 	public function updateAccountGrp()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1837,7 +1865,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP DATA REMOVE*/
+	/*ACCOUNT GROUP DATA REMOVE -- Written by William*/
 	public function RemoveAccountGrp()
 	{
 	    try {
@@ -1856,7 +1884,7 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
-	/*ACCOUNT LEDGER LOAD*/
+	/*ACCOUNT LEDGER LOAD -- Written by William*/
 	public function loadAccountLedger()
 	{
 	    try {
@@ -1874,7 +1902,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT LEDGER FORM LOAD*/
+	/*ACCOUNT LEDGER FORM LOAD -- Written by William*/
 	public function AddAccountLedgerform()
 	{
 	    try {
@@ -1893,7 +1921,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT LEDGER EDIT SECTION*/
+	/*ACCOUNT LEDGER EDIT SECTION -- Written by William*/
 	public function EditAccountLedger()
 	{
 	    try {
@@ -1919,7 +1947,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD*/
+	/*ACCOUNT GROUP DATA ADD -- Written by William*/
 	public function addAccountLedger()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1961,7 +1989,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP UPDATE*/
+	/*ACCOUNT GROUP UPDATE -- Written by William*/
 	public function updateAccountLedger()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -2026,8 +2054,94 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	/*CUSTOMER DOCUMENT UPLOAD TABLE LOAD -- Written by William*/
+	public function loadCustomerDocUpload()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerDocUpload_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
-
+	/*ADD CUSTOMER DOCUMENT -- Written by William*/
+	public function AddCustomerDocUploadForm()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'customer');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/CustomerDocUpload_addForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*UPDATE CUSTOMER DOCUMENT -- Written by William*/
+	public function updateCustomerDoc()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* customer doc type validation */
+	        if (empty($this->input->post('customer_doc_type',true))) {
+	            $errorMSG = " Document type is required";
+	        }
+	        /* file type validation */
+	        if (empty($this->input->post('customer_doc_filetype',true))) {
+	            $errorMSG = " File type of Birth is required";
+	        }
+	        /* file validation */
+	        if (empty($this->input->post('fileUpload',true))) {
+	            $errorMSG = " File is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $customer_id = $this->db->escape_str ( trim ( $this->input->post('customer_id',true) ) );
+	            $customer_doc_type = $this->db->escape_str ( trim ( $this->input->post('customer_doc_type',true) ) );
+	            $customer_doc_filetype = $this->db->escape_str ( trim ( $this->input->post('customer_doc_filetype',true) ) );
+	            $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
+	            
+	            $result = $this->database->addCustomerDoc($customer_id, $customer_doc_type, $customer_doc_filetype,$file);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
 
 	
 }

@@ -1,7 +1,7 @@
 <?php
 class Data_model extends CI_Model{
 	
-// COMMON CODE Start HERE
+    // COMMON CODE START HERE  -- Written by William
 
     function GetAllRecord($tabName)
     {
@@ -36,9 +36,9 @@ class Data_model extends CI_Model{
 		}
 	}
 
-// COMMON CODE END HERE
+	// COMMON CODE END HERE  -- Written by William
 
-	/* EMPLOYEE DATA ADD */
+	/* EMPLOYEE DATA ADD  -- Written by William */
 	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName )
 	{
 	         $data = array(
@@ -77,7 +77,7 @@ class Data_model extends CI_Model{
 	
 	
 	
-	/* EMPLOYEE DATA UPDATE */
+	/* EMPLOYEE DATA UPDATE  -- Written by William */
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
 	{ 
 	    if($fileName == '') 
@@ -182,7 +182,7 @@ class Data_model extends CI_Model{
 	
 	
 	
-	/*MEMBER DATA ADD */
+	/*MEMBER DATA ADD  -- Written by William */
 	function addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, 
 	    $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, 
 	    $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
@@ -227,7 +227,7 @@ class Data_model extends CI_Model{
 	    }
 	}
 	
-	/*MEMBER DATA UPDATE */
+	/*MEMBER DATA UPDATE  -- Written by William */
 	function updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
 	{
 	        $data = array(
@@ -498,7 +498,7 @@ class Data_model extends CI_Model{
 	}
 	
 	
-	/*ACCOUNT GROUP DATA ADD */
+	/*ACCOUNT GROUP DATA ADD  -- Written by William */
 	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )
 	{
 	    $data = array(
@@ -524,7 +524,7 @@ class Data_model extends CI_Model{
 	    }
 	}
 	
-	/*ACCOUNT GROUP DATA UPDATE */
+	/*ACCOUNT GROUP DATA UPDATE  -- Written by William */
 	function updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
 	{
 	    
@@ -550,7 +550,7 @@ class Data_model extends CI_Model{
 	}
 	
 	
-	/*ACCOUNT LEDGER DATA ADD */
+	/*ACCOUNT LEDGER DATA ADD  -- Written by William */
 	function addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
 	{
 	    $data = array(
@@ -576,7 +576,7 @@ class Data_model extends CI_Model{
 	    }
 	}
 	
-	/*ACCOUNT LEDGER DATA UPDATE */
+	/*ACCOUNT LEDGER DATA UPDATE  -- Written by William*/
 	function updateAccountLedgerModel( $accountLedger_id,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
 	{
 	    
@@ -602,7 +602,32 @@ class Data_model extends CI_Model{
 	}
 
 	
-	
+	/*CUSTOMER DOCUMENT DATA ADD  -- Written by William */
+	function addCustomerDoc($customer_id, $customer_doc_type, $customer_doc_filetype,$file)
+	{
+	    $data = array(
+	        'Cus_id'	=>  $customer_id,
+	        'doc_type'	=>  $customer_doc_type,
+	        'file_type'	=>  $customer_doc_filetype ,
+	        'files'=>  $file,
+	        'IsActive'=>  1
+	    );
+	    
+	    $this->db->insert('customer_document', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Document", "Customer ID ".$customer_id." is updated.");
+	        return array('code' => 1);
+	    }
+	}
 	
 	
 	
