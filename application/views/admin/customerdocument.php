@@ -10,7 +10,7 @@
 		</div>
       </div>
       
-      <div class="row" id="MasMemformColap">
+      <div class="row" id="MasCustumerDocUploadformColap">
       </div>
      
       
@@ -84,7 +84,7 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasMemformColap').html(response.html);
+    				 $('#MasCustumerDocUploadformColap').html(response.html);
                      $(window).scrollTop(0);
     	           } else
     	           { 

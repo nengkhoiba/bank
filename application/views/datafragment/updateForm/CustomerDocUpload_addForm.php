@@ -3,11 +3,11 @@
           <div class="tile">
             <div class="tile-title-w-btn">
               <h3 class="title">Add Document</h3>
-             <button class="close"  href="" onclick="removeMasterform('#MasMemformColap')" type="button" aria-label="Close" style="height: 28px;
+             <button class="close"  href="" onclick="removeMasterform('#MasCustumerDocUploadformColap')" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="MemFormUpdate">
+		<form class="row" id="CustomerDocUploadForm">
 		<?php  foreach ($result as $row)   { ?>
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Customer ID</label>
@@ -86,9 +86,9 @@
 		                <div class="form-group col-md-4 align-self-end">
 		                  <button onclick="updateMem()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
 		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MemFormUpdate')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasMemformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasCustumerDocUploadformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
 		              </form>
