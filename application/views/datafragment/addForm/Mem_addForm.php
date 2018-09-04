@@ -74,12 +74,17 @@
 					placeholder="Contact Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Bank Account (if any)</label>
+                  <span style="margin-left: 2rem">Yes <input onclick="bank($(this))" id="isbank" type="radio" checked value="1" name="isbank"></span>
+                  <span class="pull-right">No <input onclick="bank($(this))" type="radio" value="2" name="isbank"></span>
+                </div>
+                <div id="bankAccountNo" class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank A/C Number (if any)</label>
                   <input name="member_bankaccount" style="margin-top: 10px;"
 					class="form-control number" type="text" id="member_bankaccount"
 					placeholder="Bank Account Number"></input>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
+                <div id="bankBranchName" class="form-group col-md-4 align-self-end">
                   <label class="control-label">Bank Branch</label>
                   <input name="member_bankbranch" style="margin-top: 10px;"
 					class="form-control name" type="text" id="member_bankbranch"
@@ -175,6 +180,20 @@ else
 	{
 	$("#member_nomineerural").val(0);
 	$("#member_nomineeurban").val(1)
+	}
+}
+
+function bank($radio){
+	$value =  $radio.val();
+if ($value == 1)
+	{
+	$('#bankAccountNo').show();
+	$('#bankBranchName').show();
+	}
+else
+	{
+	$('#bankAccountNo').hide();
+	$('#bankBranchName').hide();
 	}
 }
 

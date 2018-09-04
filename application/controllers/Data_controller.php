@@ -16,6 +16,9 @@ class Data_controller extends CI_Controller {
 		$this->load->view('login');
 	}
 	
+	
+	
+// 	LOAD DROP DOWN DATA SECTION START HERE -- Written by William
 	public function loadDistrict()
 	{
 	    try {
@@ -137,7 +140,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	    
 	}
-	
+// 	LOAD DROP DOWN DATA SECTION END HERE -- Written by William
 	
 	public function loadEmp()
 	{
@@ -902,7 +905,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*BRANCH DATA REMOVE*/
+	/*BRANCH DATA REMOVE */
 	public function RemoveBranch()
 	{
 	    try {
@@ -922,11 +925,7 @@ class Data_controller extends CI_Controller {
 	
 
 	
-	
-	
-	
-	
-	
+// 	LOAD MEMBER DATA -- Written by William
 	public function loadMem()
 	{
 	    try {
@@ -944,6 +943,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+// 	ADD MEMBER FORM -- Written by William
 	public function AddMemform()
 	{
 	    try {
@@ -962,6 +962,8 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	
+// 	EDIT MEMBER FORM -- Written by William
 	public function EditMemForm()
 	{
 	    try {
@@ -987,6 +989,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+// 	ADD MEMBER -- Written by William
 	public function addMem()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1110,7 +1113,7 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	/*MEMBER UPDATE*/
+	/*MEMBER UPDATE -- Written by William*/
 	public function updateMem()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1238,7 +1241,7 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	/*MEMBER DATA REMOVE*/
+	/*MEMBER DATA REMOVE -- Written by William*/
 	public function RemoveMem()
 	{
 	    try {
@@ -1446,7 +1449,7 @@ class Data_controller extends CI_Controller {
 	} 
 	
 	
-	/*ACCOUNT GROUP LOAD*/
+	/*ACCOUNT GROUP LOAD -- Written by William*/
 	public function loadAccountGrp()
 	{
 	    try {
@@ -1464,7 +1467,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP FORM LOAD*/
+	/*ACCOUNT GROUP FORM LOAD -- Written by William*/
 	public function AddAccountGrpform()
 	{
 	    try {
@@ -1483,7 +1486,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP EDIT SECTION*/
+	/*ACCOUNT GROUP EDIT SECTION -- Written by William*/
 	public function EditAccountGrp()
 	{
 	    try {
@@ -1509,7 +1512,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD*/
+	/*ACCOUNT GROUP DATA ADD -- Written by William*/
 	public function addAccountGrp()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1551,7 +1554,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP UPDATE*/
+	/*ACCOUNT GROUP UPDATE  -- Written by William*/
 	public function updateAccountGrp()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1598,7 +1601,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP DATA REMOVE*/
+	/*ACCOUNT GROUP DATA REMOVE -- Written by William*/
 	public function RemoveAccountGrp()
 	{
 	    try {
@@ -1617,7 +1620,7 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
-	/*ACCOUNT LEDGER LOAD*/
+	/*ACCOUNT LEDGER LOAD -- Written by William*/
 	public function loadAccountLedger()
 	{
 	    try {
@@ -1635,7 +1638,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT LEDGER FORM LOAD*/
+	/*ACCOUNT LEDGER FORM LOAD -- Written by William*/
 	public function AddAccountLedgerform()
 	{
 	    try {
@@ -1654,7 +1657,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT LEDGER EDIT SECTION*/
+	/*ACCOUNT LEDGER EDIT SECTION -- Written by William*/
 	public function EditAccountLedger()
 	{
 	    try {
@@ -1680,7 +1683,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD*/
+	/*ACCOUNT GROUP DATA ADD -- Written by William*/
 	public function addAccountLedger()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1722,7 +1725,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP UPDATE*/
+	/*ACCOUNT GROUP UPDATE -- Written by William*/
 	public function updateAccountLedger()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -1787,8 +1790,49 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	/*CUSTOMER DOCUMENT UPLOAD TABLE LOAD -- Written by William*/
+	public function loadCustomerDocUpload()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerDocUpload_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
-
+	/*ADD CUSTOMER DOCUMENT -- Written by William*/
+	public function AddCustomerDocUploadForm()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetRecordById($Id,'customer');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
 	
 }
