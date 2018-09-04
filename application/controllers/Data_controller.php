@@ -19,6 +19,24 @@ class Data_controller extends CI_Controller {
 	
 	
 // 	LOAD DROP DOWN DATA SECTION START HERE -- Written by William
+	public function loadDocType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('document_type');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_docList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 	public function loadDistrict()
 	{
 	    try {

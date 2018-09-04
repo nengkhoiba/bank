@@ -53,16 +53,13 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select Document Type</label>
-                  <select id="member_gender" name="member_gender" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Photo</option>
-                  	<option class="form-control" value="2">PAN</option>
-                  	<option class="form-control" value="3">Aadhaar</option>
-                  </select>
+                  <select id="customer_doc_type" name="customer_doc_type" style="margin-top:10px;" class="form-control" >
+                        <!-- List of document -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select File Type</label>
-                  <select id="member_gender" name="member_gender" style="margin-top:10px;" class="form-control" >
+                  <select id="customer_doc_filetype" name="customer_doc_filetype" style="margin-top:10px;" class="form-control" >
                   	<option class="form-control" value="">- Select -</option>
                   	<option class="form-control" value="1">JPG/JPEG</option>
                   	<option class="form-control" value="2">PDF</option>
@@ -95,38 +92,10 @@
 		           </div>
           </div>
         </div>  
-<script src="<?php echo base_url();?>assets/js/validation.js"></script>  
 <script> 
-function ruralurban($radio){
-	$value =  $radio.val();
-	if ($value == 1)
-		{
-		$("#member_rural").val(1);
-		$("#member_urban").val(0)
-		}
-	else
-		{
-		$("#member_rural").val(0);
-		$("#member_urban").val(1)
-		}
-	}
-function nomineeruralurban($radio){
-    $value =  $radio.val();
-    if ($value == 1)
-    	{
-    	$("#member_nomineerural").val(1);
-    	$("#member_nomineeurban").val(0)
-    	}
-    else
-    	{
-    	$("#member_nomineerural").val(0);
-    	$("#member_nomineeurban").val(1)
-    	}
-    }
-
-function loadDistrict()
+function loadDocType()
 { 
-  var url = "<?php echo site_url('index.php/data_controller/loadDistrict'); ?>"; 
+  var url = "<?php echo site_url('index.php/data_controller/loadDocType'); ?>"; 
   StartInsideLoading();
   $.ajax({
     type: "post",
@@ -137,8 +106,7 @@ function loadDistrict()
     try{  
       if (response.success)
          { 
-        $('#member_district').html(response.html); 
-        $('#member_nomineedistrict').html(response.html);             
+        $('#customer_doc_type').html(response.html);             
          } else
          { 
              SetWarningMessageBox('warning', response.msg);
@@ -157,26 +125,7 @@ function loadDistrict()
     }
    });
 } 
-loadDistrict();
+loadDocType();
 
-$(document).ready(function (){
-	var date = new Date();
-	date.setDate(date.getDate()-1);            
-
-	// allow to pick future date
-	    // $('#employee_dob').datepicker({
-	    // format: "dd/mm/yyyy"
-	    // });
-	// allow to pick future date
-
-	var FromEndDate = new Date();
-	$(function(){
-	$('#member_dob').datepicker({
-	format: 'mm-dd-yyyy',
-	endDate: FromEndDate, 
-	autoclose: true
-	});
-	});
-	});
 </script> 
         
