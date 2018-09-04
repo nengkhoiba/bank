@@ -37,6 +37,24 @@ class Data_controller extends CI_Controller {
 	    
 	}
 	
+	public function loadGender()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllRecord('gender_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_genderList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 	public function loadDistrict()
 	{
 	    try {

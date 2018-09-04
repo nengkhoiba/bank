@@ -23,10 +23,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Sex</label>
                   <select id="member_gender" name="member_gender" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Male</option>
-                  	<option class="form-control" value="2">Female</option>
-                  	<option class="form-control" value="3">Other</option>
+                        <!-- list of  gender -->
                   </select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -65,7 +62,7 @@
                   <label class="control-label">District</label>
                   <select id="member_district" name="member_district" style="margin-top:10px;" class="form-control" >
                         <!-- List of district -->
-                  	</select>
+                  </select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Contact Number</label>
@@ -197,6 +194,39 @@ else
 	}
 }
 
+function loadGender()
+{ 
+  var url = "<?php echo site_url('index.php/data_controller/loadGender'); ?>"; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,   
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $('#member_gender').html(response.html);             
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+loadGender();
 
 function loadDistrict()
 { 
