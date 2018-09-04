@@ -9,12 +9,7 @@
             <div class="tile-body">
 		<form class="row" id="CustomerDocUploadForm">
 		<?php  foreach ($result as $row)   { ?>
-				<div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Customer ID</label>
-                  <input name="customer_id" disabled value="<?php echo $row['ID'];?>" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_id"
-    				placeholder="Customer ID"></input>
-                </div>
+                  <input name="customer_id" value="<?php echo $row['ID'];?>" type="hidden"></input>
 		        <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Name of Applicant</label>
                   <input name="customer_name" disabled value="<?php echo $row['name'];?>" style="margin-top: 10px;"
@@ -69,8 +64,7 @@
                   <label class="control-label">Select File</label>
                   <input class="form-control" onchange="imagetoBase64(this)" id="file"
 					style="margin-top: 10px;" type="file"></input> <input
-					type="hidden" name="fileUpload" id="fileUpload"> <input
-					type="hidden" name="fileUploadName" id="fileUploadName">
+					type="hidden" name="fileUpload" id="fileUpload">
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label"></label>
@@ -81,7 +75,7 @@
                           
 		                 
 		                <div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateMem()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+		                  <button onclick="addDoc()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
 		                   &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;

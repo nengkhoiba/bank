@@ -1235,7 +1235,6 @@ class Data_controller extends CI_Controller {
 	        if(empty($errorMSG)){
 	            
 	            $mem_id = $this->db->escape_str ( trim ( $this->input->post('mem_id',true) ) );
-	            $previous_mem_image = $this->db->escape_str ( trim ( $this->input->post('previous_mem_image',true) ) );
 	            $member_name = $this->db->escape_str ( trim ( $this->input->post('member_name',true) ) );
 	            $member_dob = $this->db->escape_str ( trim ( $this->input->post('member_dob',true) ) );
 	            $member_gender = $this->db->escape_str ( trim ( $this->input->post('member_gender',true) ) );
@@ -1868,6 +1867,51 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+	
+	/*UPDATE CUSTOMER DOCUMENT -- Written by William*/
+	public function updateCustomerDoc()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* customer doc type validation */
+	        if (empty($this->input->post('customer_doc_type',true))) {
+	            $errorMSG = " Document type is required";
+	        }
+	        /* file type validation */
+	        if (empty($this->input->post('customer_doc_filetype',true))) {
+	            $errorMSG = " File type of Birth is required";
+	        }
+	        /* file validation */
+	        if (empty($this->input->post('fileUpload',true))) {
+	            $errorMSG = " File is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $customer_id = $this->db->escape_str ( trim ( $this->input->post('customer_id',true) ) );
+	            $customer_doc_type = $this->db->escape_str ( trim ( $this->input->post('customer_doc_type',true) ) );
+	            $customer_doc_filetype = $this->db->escape_str ( trim ( $this->input->post('customer_doc_filetype',true) ) );
+	            $file = $this->db->escape_str ( trim ( $this->input->post('fileUpload',true) ) );
+	            
+	            $result = $this->database->addCustomerDoc($customer_id, $customer_doc_type, $customer_doc_filetype,$file);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
 	}
 
 	

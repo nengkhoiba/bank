@@ -69,7 +69,7 @@
     loadCustomer();  
     
       
-    function addDoc($btn){ 
+    function addDocForm($btn){ 
         
     	$reqestId =  $btn.val();  
     	var url = '<?php echo base_url();?>index.php/data_controller/AddCustomerDocUploadForm';
@@ -103,99 +103,27 @@
     		 });
     } 
     
-    function updateMem(){  
-    	if ($('#member_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Name is mandatory !');
-            $('#member_name').focus();
+    function addDoc(){  
+    	if ($('#customer_doc_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Document type is mandatory !');
+            $('#customer_doc_type').focus();
             return;
         }
-        if ($('#member_dob').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
-            $('#member_dob').focus();
+        if ($('#customer_doc_filetype').val().trim() == '') {
+            SetWarningMessageBox('warning', 'File type is mandatory!');
+            $('#customer_doc_filetype').focus();
             return;
         }
-        if ($('#member_gender').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Sex is mandatory!');
-            $('#member_gender').focus();
+        if ($('#file').val().trim() == '') {
+            SetWarningMessageBox('warning', 'File is mandatory!');
+            $('#file').focus();
             return;
         }
-        if ($('#member_aadhaar').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Aadhaar No. is mandatory!');
-            $('#member_aadhaar').focus();
-            return;
-        }
-        if ($('#member_husband').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Husband Name is mandatory!');
-            $('#member_husband').focus();
-            return;
-        }
-        if ($('#member_address').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Address is mandatory!');
-            $('#member_address').focus();
-            return;
-        }
-        
-        if ($('#member_district').val().trim() == '') {
-            SetWarningMessageBox('warning', 'District is mandatory!');
-            $('#member_district').focus();
-            return;
-        }
-        if ($('#member_dob').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Date of Birth is mandatory!');
-            $('#member_dob').focus();
-            return;
-        }
-        if ($('#member_contact').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Contact No. is mandatory!');
-            $('#member_contact').focus();
-            return;
-        }        
-        if ($('#member_bankaccount').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Account No. is mandatory!');
-            $('#member_bankaccount').focus();
-            return;
-        }
-        if ($('#member_bankbranch').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Branch Name is mandatory!');
-            $('#member_bankbranch').focus();
-            return;
-        }
-        if ($('#member_work').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Work Name is mandatory!');
-            $('#member_work').focus();
-            return;
-        }
-        if ($('#member_nominee').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Name is mandatory!');
-            $('#member_nominee').focus();
-            return;
-        }
-        if ($('#member_nomineeaadhaar').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Aadhaar No. is mandatory!');
-            $('#member_nomineeaadhaar').focus();
-            return;
-        }
-        if ($('#member_nomineeaddress').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Address is mandatory!');
-            $('#member_nomineeaddress').focus();
-            return;
-        }
-        
-        if ($('#member_nomineedistrict').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee District is mandatory!');
-            $('#member_nomineedistrict').focus();
-            return;
-        }
-        if ($('#member_nomineecontact').val().trim() == '') {
-            SetWarningMessageBox('warning', 'Nominee Contact No. is mandatory!');
-            $('#member_nomineecontact').focus();
-            return;
-        }
-        
+               
 
-        var formData = $('form#MemFormUpdate').serializeObject();
+        var formData = $('form#CustomerDocUploadForm').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateMem';
+        var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerDoc';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -208,9 +136,8 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasMemformColap').empty(); 
-				   loadMem();
-				   $('#Mem').DataTable();
+				   $('#MasCustumerDocUploadformColap').empty(); 
+				   loadCustomer();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

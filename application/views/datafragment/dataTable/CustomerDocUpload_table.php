@@ -22,7 +22,7 @@
                 <td><?php echo $mem_data['aadhaar_no']?></td>
                 <td><?php echo $mem_data['district']?></td>
                 <td>
-            	<button onclick="addDoc($(this))" value="<?php echo $mem_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-file"></i></button>
+            	<button onclick="addDocForm($(this))" value="<?php echo $mem_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-file"></i></button>
 				</td>
 				</tr>
         <?php $count ++;  } ?>

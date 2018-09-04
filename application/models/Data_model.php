@@ -532,7 +532,32 @@ class Data_model extends CI_Model{
 	}
 
 	
-	
+	/*CUSTOMER DOCUMENT DATA ADD  -- Written by William */
+	function addCustomerDoc($customer_id, $customer_doc_type, $customer_doc_filetype,$file)
+	{
+	    $data = array(
+	        'Cus_id'	=>  $customer_id,
+	        'doc_type'	=>  $customer_doc_type,
+	        'file_type'	=>  $customer_doc_filetype ,
+	        'files'=>  $file,
+	        'IsActive'=>  1
+	    );
+	    
+	    $this->db->insert('customer_document', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Document", "Customer ID ".$customer_id." is updated.");
+	        return array('code' => 1);
+	    }
+	}
 	
 	
 	
