@@ -1321,7 +1321,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_aadhaar',true))) {
 	            $errorMSG = " Aadhaar No. is required";
 	        }
-	        
+	        /* Aadhaar no. already used or not check */
 	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
 	        if (sizeof ( $check ) == 1) {
 	            $errorMSG = " Aadhaar No. is already used";
@@ -1448,6 +1448,11 @@ class Data_controller extends CI_Controller {
 	        /* Aadhaar no. validation */
 	        if (empty($this->input->post('member_aadhaar',true))) {
 	            $errorMSG = " Aadhaar No. is required";
+	        }
+	        /* Aadhaar no. already used or not check */
+	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
+	        if (sizeof ( $check ) == 1) {
+	            $errorMSG = " Aadhaar No. is already used";
 	        }
 	        /* husband name validation */
 	        if (empty($this->input->post('member_husband',true))) {
