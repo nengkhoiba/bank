@@ -177,6 +177,51 @@ class Data_controller extends CI_Controller {
 	    
 	}
 // 	LOAD DROP DOWN DATA SECTION END HERE -- Written by William
+
+/* Check aadhaar number already exists or not */
+	public function checkAadhaar()
+	{
+	    
+	    
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $check = $this->database->CheckAadhaarNo($Id);
+	            if (sizeof ( $check ) == 1) {
+	            $output = array(
+	                'msg'=> ' Aadhaar No. is already used',
+	                'success' => false
+	            );
+	            }
+	            else
+	            {
+	                $output = array(
+	                    'msg'=> 'Valid Aadhaar No.',
+	                    'success' => true
+	                );
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	    
+	        $Id =  $this->input->post('reqId',true);
+	        $check = $this->database->CheckAadhaarNo($Id);
+            if (sizeof ( $check ) == 1) {
+                $errorMSG = " Aadhaar No. is already used";
+            }
+	}
+
 	
 	public function loadEmp()
 	{
@@ -1276,6 +1321,11 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_aadhaar',true))) {
 	            $errorMSG = " Aadhaar No. is required";
 	        }
+	        
+	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
+	        if (sizeof ( $check ) == 1) {
+	            $errorMSG = " Aadhaar No. is already used";
+	        }
 	        /* husband name validation */
 	        if (empty($this->input->post('member_husband',true))) {
 	            $errorMSG = " Husband name is required";
@@ -1334,8 +1384,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineecontact',true))) {
 	            $errorMSG = " Nominee contact is required";
 	        }
-	        
-	              
+	               
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);

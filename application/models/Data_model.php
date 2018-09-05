@@ -35,6 +35,11 @@ class Data_model extends CI_Model{
 			$this->db->update($tblName); //Set your table name
 		}
 	}
+	function CheckAadhaarNo($aadhaar_no)
+	{
+	    $query = $this->db->get_where('customer', array('aadhaar_no' => $aadhaar_no));
+	    return $query->result ();
+	}
 
 	// COMMON CODE END HERE  -- Written by William
 
