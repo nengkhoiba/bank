@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addMemform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteitem('RemoveMem',loadMem())">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveMem','loadMem()')">Delete</button>
           </p>
         
       </div>
@@ -392,134 +392,7 @@
 			  StopInsideLoading();
 		  }
 		 });
-	}
-    function deleteMem(){  
-
-       // Checking all category data are deleted
-    	if (!$( ".checkbox" ).length) {
-    		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
-    		return;
-    	}
-    	
-    	var selected_value = []; // initialize empty array 
-    	if ($('.checkbox:checked').length == 0 )
-        {
-    		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
-    		return;
-	    } else {
-	    	$(".checkbox:checked").each(function(){
-	              selected_value.push($(this).val());
-	          });
-	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveMem';
-    	var dataString = JSON.stringify(selected_value);
-    swal({
-      title: "Are you sure?",
-      //text: "You will not be able to recover this imaginary file!",
-      //type: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Delete it!",
-      cancelButtonText: "No, cancel plx!",
-      closeOnConfirm: true,
-      closeOnCancel: true
-      }, function(isConfirm) {
-      if (isConfirm) {
-      StartInsideLoading();  
-        	$.ajax({
-      		  type: "post",
-      		  url: url,
-      		  cache: false,    
-      		  data: {dataArr:dataString},
-      		  dataType: 'json',
-      		  success: function(response){   
-      		  try{  	
-      			   if (response.success)
-      	           { 
-      				   SetSucessMessageBox('Success', response.msg);
-      				   loadMem();
-      				   $('#Mem').DataTable();
-      	           } else
-      	           { 
-      	               SetWarningMessageBox('warning', response.msg);
-      	               //StopInsideLoading();
-      	           }
-      		  StopInsideLoading();
-      		  }catch(e) {  
-      			  SetWarningMessageBox('warning', e);
-      			  StopInsideLoading();
-      		  }  
-      		  },
-      		  error: function(){      
-      			  SetWarningMessageBox('warning', 'Error while request..');
-      			  StopInsideLoading();
-      		  }
-      		 });
-      }
-      }); 
-    } 
-
-    function deleteitem(controllerName,loadFunctionName){
-        // Checking all category data are deleted
-     	if (!$( ".checkbox" ).length) {
-     		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
-     		return;
-     	}
-     	
-     	var selected_value = []; // initialize empty array 
-     	if ($('.checkbox:checked').length == 0 )
-         {
-     		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
-     		return;
-    	    } else {
-    	    	$(".checkbox:checked").each(function(){
-    	              selected_value.push($(this).val());
-    	          });
-    	    }	
-     	var url = datacontroller+controllerName;
-     	var dataString = JSON.stringify(selected_value);
-     swal({
-       title: "Are you sure?",
-       //text: "You will not be able to recover this imaginary file!",
-       //type: "warning",
-       showCancelButton: true,
-       confirmButtonText: "Yes, Delete it!",
-       cancelButtonText: "No, cancel plx!",
-       closeOnConfirm: true,
-       closeOnCancel: true
-       }, function(isConfirm) {
-       if (isConfirm) {
-       StartInsideLoading();  
-         	$.ajax({
-       		  type: "post",
-       		  url: url,
-       		  cache: false,    
-       		  data: {dataArr:dataString},
-       		  dataType: 'json',
-       		  success: function(response){   
-       		  try{  	
-       			   if (response.success)
-       	           { 
-       				   SetSucessMessageBox('Success', response.msg);
-       				   loadFunctionName;
-       	           } else
-       	           { 
-       	               SetWarningMessageBox('warning', response.msg);
-       	               //StopInsideLoading();
-       	           }
-       		  StopInsideLoading();
-       		  }catch(e) {  
-       			  SetWarningMessageBox('warning', e);
-       			  StopInsideLoading();
-       		  }  
-       		  },
-       		  error: function(){      
-       			  SetWarningMessageBox('warning', 'Error while request..');
-       			  StopInsideLoading();
-       		  }
-       		 });
-       }
-       }); 
-     } 
+	} 
 </script>
     
        </body>

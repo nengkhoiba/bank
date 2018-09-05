@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addBranchform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteBranch()">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveBranch','loadBranch()')">Delete</button>
         </p>
       </div>
       
@@ -106,7 +106,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasBranchformColap').empty(); 
            loadBranch();
-           $('#Branch').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -226,7 +225,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasBranchformColap').empty(); 
 				   loadBranch();
-				   $('#branch').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -243,70 +241,6 @@
 		  }
 		 });
 	}
-    function deleteBranch(){  
-
-       // Checking all category data are deleted
-    	if (!$( ".checkbox" ).length) {
-    		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
-    		return;
-    	}
-    	
-    	var selected_value = []; // initialize empty array 
-    	if ($('.checkbox:checked').length == 0 )
-        {
-    		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
-    		return;
-	    } else {
-	    	$(".checkbox:checked").each(function(){
-	              selected_value.push($(this).val());
-	          });
-	    }	
-    	var url = '<?php echo base_url();?>index.php/data_controller/RemoveBranch';
-    	var dataString = JSON.stringify(selected_value);
-    swal({
-      title: "Are you sure?",
-      //text: "You will not be able to recover this imaginary file!",
-      //type: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Delete it!",
-      cancelButtonText: "No, cancel plx!",
-      closeOnConfirm: true,
-      closeOnCancel: true
-      }, function(isConfirm) {
-      if (isConfirm) {
-      StartInsideLoading();  
-        	$.ajax({
-      		  type: "post",
-      		  url: url,
-      		  cache: false,    
-      		  data: {dataArr:dataString},
-      		  dataType: 'json',
-      		  success: function(response){   
-      		  try{  	
-      			   if (response.success)
-      	           { 
-      				   SetSucessMessageBox('Success', response.msg);
-      				   loadBranch();
-      				   $('#branch').DataTable();
-      	           } else
-      	           { 
-      	               SetWarningMessageBox('warning', response.msg);
-      	               //StopInsideLoading();
-      	           }
-      		  StopInsideLoading();
-      		  }catch(e) {  
-      			  SetWarningMessageBox('warning', e);
-      			  StopInsideLoading();
-      		  }  
-      		  },
-      		  error: function(){      
-      			  SetWarningMessageBox('warning', 'Error while request..');
-      			  StopInsideLoading();
-      		  }
-      		 });
-      }
-      }); 
-    } 
 </script>
     
        </body>
