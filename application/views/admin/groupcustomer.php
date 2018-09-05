@@ -132,7 +132,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasBranchformColap').empty(); 
            loadBranch();
-           $('#Branch').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -252,7 +251,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasBranchformColap').empty(); 
 				   loadBranch();
-				   $('#branch').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

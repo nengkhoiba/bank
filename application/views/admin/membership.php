@@ -183,7 +183,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasMemformColap').empty(); 
            loadMem();
-           $('#Mem').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -376,7 +375,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasMemformColap').empty(); 
 				   loadMem();
-				   $('#Mem').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

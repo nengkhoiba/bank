@@ -106,7 +106,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasFinancialformColap').empty(); 
            loadFinancial();
-           $('#financial').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -226,7 +225,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasFinancialformColap').empty(); 
 				   loadFinancial();
-				   $('#financial').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

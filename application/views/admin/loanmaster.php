@@ -142,7 +142,6 @@
            SetSucessMessageBox('Success', response.msg);
            $('#MasLoanmasterformColap').empty(); 
            loadLoanmaster();
-           $('#Loanmaster').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -301,7 +300,6 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasLoanmasterformColap').empty(); 
 				   loadLoanmaster();
-				   $('#loanmaster').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);

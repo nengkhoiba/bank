@@ -94,7 +94,6 @@ function loadRole()
            SetSucessMessageBox('Success', response.msg);
            $('#MasRoleformColap').empty(); 
            loadRole();
-           $('#role').DataTable();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -205,7 +204,6 @@ function loadRole()
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#MasRoleformColap').empty(); 
 				   loadRole();
-				   $('#role').DataTable();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
