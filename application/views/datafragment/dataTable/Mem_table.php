@@ -11,7 +11,7 @@
                 <th>
                 <div class="animated-checkbox">
               	<label>
-                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text"></span>
+                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Delete All</span>
               	</label>
             	</div>
             	</th>
