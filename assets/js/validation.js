@@ -40,14 +40,4 @@ $('.email').keypress(function (e) {
     return false;
 });
 
-$('.pc').keypress(function (e) {
-    var regex = new RegExp("^[0-9 . %\b]+$");
-    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-    if (regex.test(str)) {
-        return true;
-    }
-    e.preventDefault();
-    return false;
-});
-
 // Validation end here

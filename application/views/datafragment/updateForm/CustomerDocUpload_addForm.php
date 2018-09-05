@@ -10,42 +10,7 @@
 		<form class="row" id="CustomerDocUploadForm">
 		<?php  foreach ($result as $row)   { ?>
                   <input name="customer_id" value="<?php echo $row['ID'];?>" type="hidden"></input>
-		        <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Name of Applicant</label>
-                  <input name="customer_name" disabled value="<?php echo $row['name'];?>" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_name"
-    				placeholder="Name"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Address</label>
-                  	<input name="customer_address" disabled value="<?php echo $row['parmanent_address'];?>" style="margin-top: 10px;"
-    				class="form-control address" type="text" id="customer_address"
-    				placeholder="Address"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Contact Number</label>
-                  <input name="customer_contact" disabled value="<?php echo $row['contact_no'];?>" style="margin-top: 10px;"
-					class="form-control number" type="text" id="customer_contact"
-					placeholder="Contact Number"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Sex</label>
-                  <input name="customer_sex" disabled value="<?php echo $row['sex'];?>" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_sex"
-    				placeholder="Sex"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Aadhaar No.</label>
-                  <input name="customer_aadhaar" disabled value="<?php echo $row['aadhaar_no'];?>" style="margin-top: 10px;"
-    				class="form-control number" type="text" id="customer_aadhaar"
-    				placeholder="Aadhaar Number"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">District</label>
-                  <input name="customer_district" disabled value="<?php echo $row['district'];?>" style="margin-top: 10px;"
-    				class="form-control number" type="text" id="customer_district"
-    				placeholder="Aadhaar Number"></input>
-                </div>
+		        
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select Document Type</label>
                   <select id="customer_doc_type" name="customer_doc_type" style="margin-top:10px;" class="form-control" >
