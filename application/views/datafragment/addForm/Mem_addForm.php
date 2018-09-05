@@ -277,10 +277,12 @@ function checkAadhaar($btn){
 		  success: function(response){   
 		  try{  	 
 			   if (response.success)
-	           {		           
+	           {
+			   SetWarningMessageBox('warning', response.msg);
+	           $('#member_aadhaar').val('');		           
 	           } else
 	           { 
-	               SetWarningMessageBox('warning', response.msg);
+	               SetSucessMessageBox('success', response.msg);
 	           }
 		 StopInsideLoading();
 		  }catch(e) {  

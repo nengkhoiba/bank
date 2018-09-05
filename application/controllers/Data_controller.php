@@ -195,14 +195,14 @@ class Data_controller extends CI_Controller {
 	            if (sizeof ( $check ) == 1) {
 	            $output = array(
 	                'msg'=> ' Aadhaar No. is already used',
-	                'success' => false
+	                'success' => true
 	            );
 	            }
 	            else
 	            {
 	                $output = array(
 	                    'msg'=> 'Valid Aadhaar No.',
-	                    'success' => true
+	                    'success' => false
 	                );
 	            }
 	        }

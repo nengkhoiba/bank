@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
-                  <input name="member_aadhaar" onfocusout="checkAadhaar($(this))" value="<?php echo $row['aadhaar_no'];?>" style="margin-top: 10px;"
+                  <input name="member_aadhaar" value="<?php echo $row['aadhaar_no'];?>" style="margin-top: 10px;"
     				class="form-control number" type="text" id="member_aadhaar"
     				placeholder="Aadhaar Number"></input>
                 </div>
@@ -256,10 +256,12 @@ function checkAadhaar($btn){
 		  success: function(response){   
 		  try{  	 
 			   if (response.success)
-	           {		           
+	           {
+			   SetWarningMessageBox('warning', response.msg);
+	           $('#member_aadhaar').val('');		           
 	           } else
 	           { 
-	               SetWarningMessageBox('warning', response.msg);
+	               SetSucessMessageBox('success', response.msg);
 	           }
 		 StopInsideLoading();
 		  }catch(e) {  
