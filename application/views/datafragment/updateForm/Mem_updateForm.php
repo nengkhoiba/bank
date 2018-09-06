@@ -243,39 +243,6 @@ function loadDistrict()
 } 
 loadDistrict();
 
-function checkAadhaar($btn){  
-	$reqestId =  $btn.val(); 
-	var url = '<?php echo base_url();?>index.php/data_controller/checkAadhaar';
-	StartInsideLoading();
-	$.ajax({
-		  type: "post",
-		  url: url,
-		  cache: false,    
-		  data: {reqId:$reqestId},
-		  dataType: 'json',
-		  success: function(response){   
-		  try{  	 
-			   if (response.success)
-	           {
-			   SetWarningMessageBox('warning', response.msg);
-	           $('#member_aadhaar').val('');		           
-	           } else
-	           { 
-	               SetSucessMessageBox('success', response.msg);
-	           }
-		 StopInsideLoading();
-		  }catch(e) {  
-			  SetWarningMessageBox('warning', e);
-			  StopInsideLoading();
-		  }  
-		  },
-		  error: function(){      
-			  SetWarningMessageBox('warning', 'Error while request..');
-			  StopInsideLoading();
-		  }
-		 });
-}
-
 $(document).ready(function (){
 	var date = new Date();
 	date.setDate(date.getDate()-1);            

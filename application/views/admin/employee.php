@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addEmpform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveEmp','loadEmp()')">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('emp','loadEmp()')">Delete</button>
           </p>
         
       </div>

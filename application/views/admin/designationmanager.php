@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addDesignform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveDesign','loadDesign()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesign()')">Delete</button>
         </p>
       </div>
       

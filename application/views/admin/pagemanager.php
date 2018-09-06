@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addRoleform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveRole','loadRole()')">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('role','loadRole()')">Delete</button>
           </p>
         
       </div>

@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addLoanmasterform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveLoanmaster','loadLoanmaster()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('loan_master','loadLoanmaster()')">Delete</button>
         </p>
       </div>
       

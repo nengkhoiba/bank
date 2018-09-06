@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
               <a onclick="addMemform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveMem','loadMem()')">Delete</button>
+              <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('customer','loadMem()')">Delete</button>
           </p>
         
       </div>

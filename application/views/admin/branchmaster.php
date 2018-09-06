@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addBranchform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveBranch','loadBranch()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('branch','loadBranch()')">Delete</button>
         </p>
       </div>
       

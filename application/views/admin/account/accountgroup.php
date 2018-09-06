@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addAccountGrpform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveAccountGrp','loadAccountGrp()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('account_group','loadAccountGrp()')">Delete</button>
         </p>
       </div>
       

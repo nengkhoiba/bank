@@ -75,7 +75,7 @@ function resetAllFormValue(id)
   	});   
 }
 
-function deleteItem(controllerName,loadFunctionName){
+function deleteItem(tableName,loadFunctionName){
 	var callFunc=new Function(loadFunctionName)
     // Checking all category data are deleted
  	if (!$( ".checkbox" ).length) {
@@ -93,7 +93,7 @@ function deleteItem(controllerName,loadFunctionName){
 	              selected_value.push($(this).val());
 	          });
 	    }	
- 	var url = datacontroller+controllerName;
+ 	var url = window.location.origin+'/bank/index.php/data_controller/Remove';
  	var dataString = JSON.stringify(selected_value);
  swal({
    title: "Are you sure?",
@@ -111,7 +111,7 @@ function deleteItem(controllerName,loadFunctionName){
    		  type: "post",
    		  url: url,
    		  cache: false,    
-   		  data: {dataArr:dataString},
+   		  data: {dataArr:dataString,table:tableName},
    		  dataType: 'json',
    		  success: function(response){   
    		  try{  	

@@ -28,9 +28,10 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
-                  <input name="member_aadhaar" onfocusout="checkAadhaar($(this))" style="margin-top: 10px;"
+                  <input name="member_aadhaar" max-length="12" onfocusout="checkAadhaar($(this))" style="margin-top: 10px;"
     				class="form-control number" type="text" id="member_aadhaar"
     				placeholder="Aadhaar Number"></input>
+    				<p>Test</p>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Husband Name/Father Name</label>
@@ -266,6 +267,12 @@ loadDistrict();
 
 function checkAadhaar($btn){  
 	$reqestId =  $btn.val(); 
+	if ($reqestId == '')
+    {
+	SetWarningMessageBox('warning', 'Aadhaar No. is mandatory!');		           
+    }
+	else
+	{ 
 	var url = '<?php echo base_url();?>index.php/data_controller/checkAadhaar';
 	StartInsideLoading();
 	$.ajax({
@@ -279,7 +286,8 @@ function checkAadhaar($btn){
 			   if (response.success)
 	           {
 			   SetWarningMessageBox('warning', response.msg);
-	           $('#member_aadhaar').val('');		           
+	           $('#member_aadhaar').val('');
+	           $('#member_aadhaar').focus();		           
 	           } else
 	           { 
 	               SetSucessMessageBox('success', response.msg);
@@ -296,7 +304,7 @@ function checkAadhaar($btn){
 		  }
 		 });
 }
-
+}
 
 $(document).ready(function (){
 var date = new Date();

@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addAccountLedgerform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('RemoveAccountLedger','loadAccountLedger()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('account_ledger','loadAccountLedger()')">Delete</button>
         </p>
       </div>
       
