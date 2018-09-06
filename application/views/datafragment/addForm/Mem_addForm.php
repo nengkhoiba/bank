@@ -28,10 +28,9 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
-                  <input name="member_aadhaar" max-length="12" onfocusout="checkAadhaar($(this))" style="margin-top: 10px;"
+                  <input name="member_aadhaar" maxlength="12" onfocusout="checkAadhaar($(this))" style="margin-top: 10px;"
     				class="form-control number" type="text" id="member_aadhaar"
     				placeholder="Aadhaar Number"></input>
-    				<p>Test</p>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Husband Name/Father Name</label>

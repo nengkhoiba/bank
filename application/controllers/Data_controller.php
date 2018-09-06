@@ -213,14 +213,14 @@ class Data_controller extends CI_Controller {
 	            $check = $this->database->CheckAadhaarNo($Id);
 	            if (sizeof ( $check ) == 1) {
 	            $output = array(
-	                'msg'=> ' Aadhaar No. is already used',
+	                'msg'=> ' Aadhaar No. is already used !',
 	                'success' => true
 	            );
 	            }
 	            else
 	            {
 	                $output = array(
-	                    'msg'=> 'Valid Aadhaar No.',
+	                    'msg'=> 'Aadhaar No. has been accepted',
 	                    'success' => false
 	                );
 	            }
