@@ -194,6 +194,42 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	    
 	}
+	
+	public function loadLoanPcType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('pc_type_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_loanPcType',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	public function loadLoanTenureType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('tenure_type_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_loanTenureType',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 // 	LOAD DROP DOWN DATA SECTION END HERE -- Written by William
 
 	
