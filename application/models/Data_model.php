@@ -422,9 +422,19 @@ class Data_model extends CI_Model{
 	
 	
         $data = array(
-            'Financial_year'=>  $financial_title,
-			'Start_date'=>  $financial_start,
-			'End_date'=>  $financial_end 			
+           'Loan_name'	=> $loanmaster_loan_name,
+			'Loan_pc'	=>$loanmaster_loan_pc,
+			'Loan_pc_type'	=>$loanmaster_loan_pc_type,
+			'Tenure_type'	=>$loanmaster_tenure_type,
+			'Tenure_min'	=>$loanmaster_tenure_min,
+			'Tenure_max'	=>$loanmaster_tenure_max,
+			'Min_amount'	=>$loanmaster_min_amount,
+			'Min_amount'	=>$loanmaster_max_amount,
+			'Income_ledger'	=>$loanmaster_income_ledger,
+			'Expense_ledger'=>$loanmaster_expense_ledger,
+		  	 'Branch_id'=>  1,
+			  'Modified_by'=>  1,
+			 'IsActive'=>  1,
         );
 	    $this->db->where('ID',$loanmaster_id);
 	    $this->db->update('loan_master',$data);
@@ -441,6 +451,7 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	
 	
 	
 	
