@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="MemFormUpdate">
+            <?php echo form_open_multipart('',array('id'=>'MemFormUpdate','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="mem_id" id="mem_id_upt" value="<?php echo $row['ID'];?>">
 		                <div class="form-group col-md-4 align-self-end">
@@ -141,108 +141,12 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasMemformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>  
 <script src="<?php echo base_url();?>assets/js/validation.js"></script>  
 <script> 
-function ruralurban($radio){
-	$value =  $radio.val();
-	if ($value == 1)
-		{
-		$("#member_rural").val(1);
-		$("#member_urban").val(0)
-		}
-	else
-		{
-		$("#member_rural").val(0);
-		$("#member_urban").val(1)
-		}
-	}
-function nomineeruralurban($radio){
-    $value =  $radio.val();
-    if ($value == 1)
-    	{
-    	$("#member_nomineerural").val(1);
-    	$("#member_nomineeurban").val(0)
-    	}
-    else
-    	{
-    	$("#member_nomineerural").val(0);
-    	$("#member_nomineeurban").val(1)
-    	}
-    }
-
-function loadGender()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadGender'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#member_gender').html(response.html);             
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadGender();
-
-function loadDistrict()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadDistrict'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#member_district').html(response.html); 
-        $('#member_nomineedistrict').html(response.html);             
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadDistrict();
-
 $(document).ready(function (){
 	var date = new Date();
 	date.setDate(date.getDate()-1);            

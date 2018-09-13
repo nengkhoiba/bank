@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <form class="row" id="MasAccountLedgerForms">
+            <?php echo form_open_multipart('',array('id'=>'MasAccountLedgerForms','class'=>'row'))?>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Ledger Name</label>
                   <input name="accountLedger_name" style="margin-top: 10px;"
@@ -35,7 +35,7 @@
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasAccountLedgerformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
-              </form>
+              <?php echo form_close() ?>
             </div>
           </div>
         </div>

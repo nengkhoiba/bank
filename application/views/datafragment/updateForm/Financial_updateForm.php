@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="FinancialFormUpdate">
+            <?php echo form_open_multipart('',array('id'=>'FinancialFormUpdate','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="financial_id" id="financial_id_upt" value="<?php echo $row['ID'];?>">
 		
@@ -40,7 +40,7 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasFinancialformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>   

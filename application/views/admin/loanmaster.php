@@ -175,6 +175,8 @@
     	           { 	
     				 $('#MasLoanmasterformColap').html(response.html);
                      $(window).scrollTop(0);
+                     loadDropDown('','pc_type_master','#loanmaster_loan_pc_type');
+    				 loadDropDown('','tenure_type_master','#loanmaster_tenure_type');
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -209,6 +211,8 @@
     	           { 	
     				 $('#MasLoanmasterformColap').html(response.html);
                      $(window).scrollTop(0);
+                     loadDropDown(response.selectedPc,'pc_type_master','#loanmaster_loan_pc_type');
+    				 loadDropDown(response.selectedTenure,'tenure_type_master','#loanmaster_tenure_type');
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);

@@ -37,6 +37,27 @@ class Data_controller extends CI_Controller {
 	// 	COMMON REMOVE ITEM END HERE -- Written by William
 	
 // 	LOAD DROP DOWN DATA SECTION START HERE -- Written by William
+	public function loadDropDown()
+	{
+	    try {
+	        $tblName =  $this->input->post('tblName',true);
+	        $selectedVal =  $this->input->post('selectedVal',true);
+	        $data['result']=$this->database->GetAllRecord($tblName);
+	        $data['selectedVal']=$selectedVal;
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_optionList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 	public function loadDocType()
 	{
 	    try {
@@ -889,6 +910,8 @@ class Data_controller extends CI_Controller {
 	            $data['result'] = $this->database->GetRecordById($Id,'loan_master');
 	            $output = array(
 	                'html'=>$this->load->view('datafragment/updateForm/Loanmaster_updateForm',$data, true),
+	                'selectedPc'=>$data['result'][0]['Loan_pc_type'],
+	                'selectedTenure'=>$data['result'][0]['Tenure_type'],
 	                'success' =>true
 	            );
 	        }
@@ -1250,6 +1273,9 @@ class Data_controller extends CI_Controller {
 	            $data['result'] = $this->database->GetRecordById($Id,'customer');
 	            $output = array(
 	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
+	                'selectedGender'=>$data['result'][0]['sex'],
+	                'selectedMemDistrict'=>$data['result'][0]['district'],
+	                'selectedMemNomineeDistrict'=>$data['result'][0]['nominee_district'],
 	                'success' =>true
 	            );
 	        }

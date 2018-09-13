@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="AccountLedgerFormUpdate">
+            <?php echo form_open_multipart('',array('id'=>'AccountLedgerFormUpdate','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="accountLedger_id" id="accountLedger_id_upt" value="<?php echo $row['ID'];?>">
 		
@@ -39,7 +39,7 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasAccountLedgerformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>  

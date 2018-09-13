@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="DesignFormUpdate">
+            <?php echo form_open_multipart('',array('id'=>'DesignFormUpdate','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="design_id" id="design_id_upt" value="<?php echo $row['ID'];?>">
 		
@@ -30,7 +30,7 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasDesignformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>   

@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="CustomerDocUploadForm">
+            <?php echo form_open_multipart('',array('id'=>'CustomerDocUploadForm','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
                   <input name="customer_id" value="<?php echo $row['ID'];?>" type="hidden"></input>
 		        
@@ -47,44 +47,8 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasCustumerDocUploadformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>  
-<script> 
-function loadDocType()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadDocType'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#customer_doc_type').html(response.html);             
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadDocType();
-
-</script> 
         

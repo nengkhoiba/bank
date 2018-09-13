@@ -243,3 +243,38 @@ reader.onloadend=function()
 } 
 
 
+
+function loadDropDown(selectedValue,tableName,appendID)
+{ 
+  var url = window.location.origin+'/bank/index.php/data_controller/loadDropDown'; 
+  StartInsideLoading();
+  $.ajax({
+    type: "post",
+    url: url,
+    cache: false,
+    data: {tblName:tableName,selectedVal:selectedValue},
+    dataType: 'json', 
+    success: function(response){ 
+    try{  
+      if (response.success)
+         { 
+        $(appendID).html(response.html);             
+         } else
+         { 
+             SetWarningMessageBox('warning', response.msg);
+            
+         }
+     StopInsideLoading();
+     
+     }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      } 
+    },
+    error: function(){      
+      SetWarningMessageBox('warning', 'Error while request..');
+      StopInsideLoading();
+    }
+   });
+} 
+

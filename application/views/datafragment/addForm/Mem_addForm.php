@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <form class="row" id="MasMemForms">
+            <?php echo form_open_multipart('',array('id'=>'MasMemForms','class'=>'row'))?>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Name of Applicant</label>
                   <input name="member_name" style="margin-top: 10px;"
@@ -102,7 +102,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
                   <input name="member_nomineeaadhaar" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="member_nomineeaadhaar"
+    				class="form-control number" type="text" id="member_nomineeaadhaar"
     				placeholder="Aadhaar Number"></input>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -146,7 +146,7 @@
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasMemformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
-              </form>
+               <?php echo form_close() ?>
             </div>
           </div>
         </div>
@@ -193,75 +193,6 @@ else
 	$('#bankBranchName').hide();
 	}
 }
-
-function loadGender()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadGender'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#member_gender').html(response.html);             
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadGender();
-
-function loadDistrict()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadDistrict'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#member_district').html(response.html); 
-        $('#member_nomineedistrict').html(response.html);             
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadDistrict();
 
 
 function checkAadhaar($btn){  

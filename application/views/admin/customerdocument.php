@@ -86,6 +86,8 @@
     	           { 	
     				 $('#MasCustumerDocUploadformColap').html(response.html);
                      $(window).scrollTop(0);
+                     loadDropDown('','customer_document','#customer_doc_type');
+                     loadDropDown('','document_type','#customer_doc_type');
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);

@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-		<form class="row" id="EmpFormUpdate">
+            <?php echo form_open_multipart('',array('id'=>'EmpFormUpdate','class'=>'row'))?>
 		<?php  foreach ($result as $row)   { ?>
 		<input type="hidden" name="emp_id" id="emp_id_upt" value="<?php echo $row['ID'];?>">
 		<input type="hidden" name="previous_emp_image" id="previous_emp_image" value="<?php echo $row['image'];?>">
@@ -113,7 +113,7 @@
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasEmpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>
 		    <?php  } ?>             
-		              </form>
+		              <?php echo form_close() ?>
 		           </div>
           </div>
         </div>   

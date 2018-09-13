@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <form class="row" id="MasAccountGrpForms">
+            <?php echo form_open_multipart('',array('id'=>'MasAccountGrpForms','class'=>'row'))?>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Group Name</label>
                   <input name="accountGrp_name" style="margin-top: 10px;"
@@ -35,7 +35,7 @@
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasAccountGrpformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
-              </form>
+              <?php echo form_close() ?>
             </div>
           </div>
         </div>

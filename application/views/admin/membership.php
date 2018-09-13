@@ -51,7 +51,7 @@
           if (response.success)
              { 
             $('#member_table').html(response.html);
-              $('#Mem').DataTable();
+            $('#Mem').DataTable();
               
              } else
              { 
@@ -216,6 +216,9 @@
     	           { 	
     				 $('#MasMemformColap').html(response.html);
                      $(window).scrollTop(0);
+                     loadDropDown('','gender_master','#member_gender');
+    				 loadDropDown('','district','#member_district');
+    				 loadDropDown('','district','#member_nomineedistrict');
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -250,6 +253,10 @@
     			   if (response.success)
     	           { 	
     				 $('#MasMemformColap').html(response.html);
+    				 $(window).scrollTop(0);
+    				 loadDropDown(response.selectedGender,'gender_master','#member_gender');
+    				 loadDropDown(response.selectedMemDistrict,'district','#member_district');
+    				 loadDropDown(response.selectedMemNomineeDistrict,'district','#member_nomineedistrict');
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -391,6 +398,39 @@
 		  }
 		 });
 	} 
+
+
+
+
+    function ruralurban($radio){
+    	$value =  $radio.val();
+    	if ($value == 1)
+    		{
+    		$("#member_rural").val(1);
+    		$("#member_urban").val(0)
+    		}
+    	else
+    		{
+    		$("#member_rural").val(0);
+    		$("#member_urban").val(1)
+    		}
+    	}
+    function nomineeruralurban($radio){
+        $value =  $radio.val();
+        if ($value == 1)
+        	{
+        	$("#member_nomineerural").val(1);
+        	$("#member_nomineeurban").val(0)
+        	}
+        else
+        	{
+        	$("#member_nomineerural").val(0);
+        	$("#member_nomineeurban").val(1)
+        	}
+        }
+
+     
+    
 </script>
     
        </body>

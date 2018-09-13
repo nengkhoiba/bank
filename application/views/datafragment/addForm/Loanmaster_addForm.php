@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <form class="row" id="MasLoanmasterForms">
+            <?php echo form_open_multipart('',array('id'=>'MasLoanmasterForms','class'=>'row'))?>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan Name</label>
                   <input name="loanmaster_loan_name" style="margin-top: 10px;"
@@ -85,76 +85,8 @@
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasLoanmasterformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
-              </form>
+              <?php echo form_close() ?>
             </div>
           </div>
         </div>
 <script src="<?php echo base_url();?>assets/js/validation.js"></script> 
-<script>
-function loadLoanPcType()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadLoanPcType'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#loanmaster_loan_pc_type').html(response.html);              
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadLoanPcType();
-function loadLoanTenureType()
-{ 
-  var url = "<?php echo site_url('index.php/data_controller/loadLoanTenureType'); ?>"; 
-  StartInsideLoading();
-  $.ajax({
-    type: "post",
-    url: url,
-    cache: false,   
-    dataType: 'json', 
-    success: function(response){ 
-    try{  
-      if (response.success)
-         { 
-        $('#loanmaster_tenure_type').html(response.html);              
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
-     StopInsideLoading();
-     
-     }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      } 
-    },
-    error: function(){      
-      SetWarningMessageBox('warning', 'Error while request..');
-      StopInsideLoading();
-    }
-   });
-} 
-loadLoanTenureType();
-</script>

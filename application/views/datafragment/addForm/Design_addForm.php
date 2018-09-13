@@ -7,7 +7,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <form class="row" id="MasDesignForms">
+            <?php echo form_open_multipart('',array('id'=>'MasDesignForms','class'=>'row'))?>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Designation Title</label>
                   <input name="design_title" style="margin-top: 10px;"
@@ -29,7 +29,7 @@
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasDesignformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
-              </form>
+              <?php echo form_close() ?>
             </div>
           </div>
         </div>
