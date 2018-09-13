@@ -9,13 +9,43 @@
         </ul>
 		</div>
 		<p class="bs-component">	
-              <a onclick="addRoleform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
+              <a onclick="addRoleform($(this))" style="color:#fff" class="btn btn-sm btn-success">New</a>
               <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('role','loadRole()')">Delete</button>
           </p>
         
       </div>
       
-      <div class="row" id="MasRoleformColap">
+      <div class="row" id="formContainer" style="display:none;">
+      <div class="clearix"></div>
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-title-w-btn">
+              <h3 class="title">Add/Update Role</h3>
+             <button onclick="removeMasterform('#formContainer')" class="close" type="button" aria-label="Close" style="height: 28px;
+              width: 36px;"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="tile-body">
+            <?php echo form_open_multipart('',array('id'=>'MasRoleForms','class'=>'row'))?>
+            <input id="postType" name="postType" type="hidden">
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Role Title</label>
+                  <input name="role_title" style="margin-top: 10px;"
+    				class="form-control name" type="text" id="role_title"
+    				placeholder="Title"></input>
+                </div>
+               
+                
+                <div class="form-group col-md-4 align-self-end">
+                  <button onclick="updateRole()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  &nbsp;&nbsp;&nbsp;
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasRoleForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                &nbsp;&nbsp;&nbsp;
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+                </div>
+              <?php echo form_close() ?>
+            </div>
+          </div>
+        </div>
       </div>
      
       
@@ -69,84 +99,20 @@ function loadRole()
     }
     
       loadRole();
-    function addRole(){  
-    	if ($('#role_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#role_title').focus();
-            return;
+
+
+ 
+    function addRoleform($btn){  
+    	$reqestId =  $btn.val();
+    	if($reqestId == 0)
+    	{
+    		$('#postType').val(0);
+    		$('#role_title').val('');
+        	$('#formContainer').show();
+        	$(window).scrollTop(0);
         }
-       
-        
-        var formData = $('form#MasRoleForms').serializeObject();
-        var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/addRole';
-     StartInsideLoading();
-     $.ajax({
-      type: "post",
-      url: url,
-      cache: false,    
-      data: dataString,
-      dataType: 'json',
-      success: function(response){   
-      try{ 
-         if (response.success)
-             { 
-           SetSucessMessageBox('Success', response.msg);
-           $('#MasRoleformColap').empty(); 
-           loadRole();
-             } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);
-             }
-      StopInsideLoading();
-      }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      }  
-      },
-      error: function(){      
-        SetWarningMessageBox('warning', 'Error while request..');
-        StopInsideLoading();
-      }
-     });
-    }
-
-
-    function addRoleform(){ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddRoleform';
-    	StartInsideLoading();
-    	$.ajax({
-    		  type: "post",
-    		  url: url,
-    		  cache: false,
-    		  dataType: 'json',
-    		  success: function(response){   
-    		  try{  	 
-    			 //  var result = jQuery.parseJSON(data);
-    			   if (response.success)
-    	           { 	
-    				 $('#MasRoleformColap').html(response.html);
-                     $(window).scrollTop(0);
-    	           } else
-    	           { 
-    	               SetWarningMessageBox('warning', response.msg);
-    	           }
-    		  StopInsideLoading();
-    		  }catch(e) {  
-    			  SetWarningMessageBox('warning', e);
-    			  StopInsideLoading();
-    		  }  
-    		  },
-    		  error: function(){      
-    			  SetWarningMessageBox('warning', 'Error while request..');
-    			  StopInsideLoading();
-    		  }
-    		 });
-    }
-
-      
-    function editRole($btn){  
-    	$reqestId =  $btn.val(); 
+    	else
+    	{ 
     	var url = '<?php echo base_url();?>index.php/data_controller/EditRole';
     	StartInsideLoading();
     	$.ajax({
@@ -159,7 +125,9 @@ function loadRole()
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#MasRoleformColap').html(response.html);
+    				$('#postType').val(response.json[0].ID);
+				    $('#role_title').val(response.json[0].role);
+   				    $('#formContainer').show();
                      $(window).scrollTop(0);
     	           } else
     	           { 
@@ -176,6 +144,7 @@ function loadRole()
     			  StopInsideLoading();
     		  }
     		 });
+    	}
     } 
    
     function updateRole(){  
@@ -185,9 +154,7 @@ function loadRole()
             return;
         }
        
-        
-
-        var formData = $('form#RoleFormUpdate').serializeObject();
+        var formData = $('form#MasRoleForms').serializeObject();
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateRole';
         StartInsideLoading();
