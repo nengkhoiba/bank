@@ -302,10 +302,11 @@ class Data_model extends CI_Model{
 	}
 	
 	/*DESIGNATION MANAGER DATA UPDATE */
-	function updateDesignModel($design_title, $design_id)
+	function updateDesignModel($design_title,$deg_desc, $design_id)
 	{	  
         $data = array(
-            'title'	=>  $design_title 
+            'title'	=>  $design_title ,
+        	'description'=>$deg_desc
         );
 	    $this->db->where('ID',$design_id);
 	    $this->db->update('designation',$data);

@@ -1596,9 +1596,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'designation');
+	            $data = $this->database->GetRecordById($Id,'designation');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Design_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -1612,7 +1612,7 @@ class Data_controller extends CI_Controller {
 	}
 	
 	/*DESIGNATION DATA ADD*/
-	public function addDesign()
+	public function UpdateDesignation()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
 	    $errorMSG ='';
@@ -1630,16 +1630,30 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
+	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
 				$design_description = $this->db->escape_str ( trim ( $this->input->post('design_description',true) ) );
+				if($postype==0){
+					$result = $this->database->addDesignModel( $design_title,$design_description);
+					if($result['code'] == 1){
+						$status = array("success" => true,"msg" => "Save sucessfull!");
+					}else{
+						$status = array("success" => false,"msg" => "Fail to save !!!");
+					}
+				}else{
+					$result = $this->database->updateDesignModel($design_title,$design_description, $postype);
+					if($result['code'] == 1)
+					{
+						$status = array("success" => true,"msg" => "Update sucessfull!");
+					}
+					else
+					{
+						$status = array("success" => false,"msg" => "Fail to Update !!!");
+					}
+				}
+				
 	            
 	            
-	            $result = $this->database->addDesignModel( $design_title,$design_description);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());
