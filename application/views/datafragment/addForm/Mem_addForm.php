@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Aadhaar No.</label>
-                  <input name="member_aadhaar" style="margin-top: 10px;"
+                  <input name="member_aadhaar" maxlength="12" onfocusout="checkAadhaar($(this))" style="margin-top: 10px;"
     				class="form-control number" type="text" id="member_aadhaar"
     				placeholder="Aadhaar Number"></input>
                 </div>
@@ -263,6 +263,47 @@ function loadDistrict()
 } 
 loadDistrict();
 
+
+function checkAadhaar($btn){  
+	$reqestId =  $btn.val(); 
+	if ($reqestId == '')
+    {
+	SetWarningMessageBox('warning', 'Aadhaar No. is mandatory!');		           
+    }
+	else
+	{ 
+	var url = '<?php echo base_url();?>index.php/data_controller/checkAadhaar';
+	StartInsideLoading();
+	$.ajax({
+		  type: "post",
+		  url: url,
+		  cache: false,    
+		  data: {reqId:$reqestId},
+		  dataType: 'json',
+		  success: function(response){   
+		  try{  	 
+			   if (response.success)
+	           {
+			   SetWarningMessageBox('warning', response.msg);
+	           $('#member_aadhaar').val('');
+	           $('#member_aadhaar').focus();		           
+	           } else
+	           { 
+	               SetSucessMessageBox('success', response.msg);
+	           }
+		 StopInsideLoading();
+		  }catch(e) {  
+			  SetWarningMessageBox('warning', e);
+			  StopInsideLoading();
+		  }  
+		  },
+		  error: function(){      
+			  SetWarningMessageBox('warning', 'Error while request..');
+			  StopInsideLoading();
+		  }
+		 });
+}
+}
 
 $(document).ready(function (){
 var date = new Date();

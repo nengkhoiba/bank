@@ -15,8 +15,26 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
-	
-	
+
+// 	COMMON REMOVE ITEM START HERE -- Written by William
+	public function Remove()
+	{
+	    
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        $tableName = $this->input->post('table',true);
+	        $this->database->RemoveRecordById($IdsArray,$tableName);
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	// 	COMMON REMOVE ITEM END HERE -- Written by William
 	
 // 	LOAD DROP DOWN DATA SECTION START HERE -- Written by William
 	public function loadDocType()
@@ -176,7 +194,89 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	    
 	}
+	
+	public function loadLoanPcType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('pc_type_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_loanPcType',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	public function loadLoanTenureType()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('tenure_type_master');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_loanTenureType',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
 // 	LOAD DROP DOWN DATA SECTION END HERE -- Written by William
+
+	
+/* Check aadhaar number already exists or not */
+	public function checkAadhaar()
+	{
+	    
+	    
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' => false
+	            );
+	        }else{
+	            $check = $this->database->CheckAadhaarNo($Id);
+	            if (sizeof ( $check ) == 1) {
+	            $output = array(
+	                'msg'=> ' Aadhaar No. is already used !',
+	                'success' => true
+	            );
+	            }
+	            else
+	            {
+	                $output = array(
+	                    'msg'=> 'Aadhaar No. has been accepted',
+	                    'success' => false
+	                );
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	    
+	        $Id =  $this->input->post('reqId',true);
+	        $check = $this->database->CheckAadhaarNo($Id);
+            if (sizeof ( $check ) == 1) {
+                $errorMSG = " Aadhaar No. is already used";
+            }
+	}
+
 	
 	public function loadEmp()
 	{
@@ -450,23 +550,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 		
-	public function RemoveEmp()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'emp');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-
+	
   
 
   /*ROLE SECTION LOAD AND START HERE*/
@@ -600,25 +684,6 @@ class Data_controller extends CI_Controller {
 	    
 	    echo json_encode($status) ;
 	}
-	
-	/*ROLE DATA REMOVE*/
-	public function RemoveRole()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'role');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
 	
 	
 	
@@ -768,25 +833,6 @@ class Data_controller extends CI_Controller {
 	    }
 	    
 	    echo json_encode($status) ;
-	}
-	
-	
-	/*FINANCIAL DATA REMOVE*/
-	public function RemoveFinancial()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'financial_year');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
 	}
 	
 	
@@ -996,27 +1042,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	
-	/*FINANCIAL DATA REMOVE*/
-	public function RemoveLoanmaster()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'loan_master');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
-	
-	
+
 	
 	
 	
@@ -1170,24 +1196,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*BRANCH DATA REMOVE */
-	public function RemoveBranch()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'branch');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
 
 	
 // 	LOAD MEMBER DATA -- Written by William
@@ -1276,6 +1284,11 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_aadhaar',true))) {
 	            $errorMSG = " Aadhaar No. is required";
 	        }
+	        /* Aadhaar no. already used or not check */
+	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
+	        if (sizeof ( $check ) == 1) {
+	            $errorMSG = " Aadhaar No. is already used";
+	        }
 	        /* husband name validation */
 	        if (empty($this->input->post('member_husband',true))) {
 	            $errorMSG = " Husband name is required";
@@ -1334,8 +1347,7 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('member_nomineecontact',true))) {
 	            $errorMSG = " Nominee contact is required";
 	        }
-	        
-	              
+	               
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
@@ -1399,6 +1411,11 @@ class Data_controller extends CI_Controller {
 	        /* Aadhaar no. validation */
 	        if (empty($this->input->post('member_aadhaar',true))) {
 	            $errorMSG = " Aadhaar No. is required";
+	        }
+	        /* Aadhaar no. already used or not check */
+	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
+	        if (sizeof ( $check ) == 1) {
+	            $errorMSG = " Aadhaar No. is already used";
 	        }
 	        /* husband name validation */
 	        if (empty($this->input->post('member_husband',true))) {
@@ -1504,27 +1521,6 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
-	
-	/*MEMBER DATA REMOVE -- Written by William*/
-	public function RemoveMem()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'customer');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
-
-
 
 	/*DESIGNATION SECTION LOAD*/
 	public function loadDesign()
@@ -1663,23 +1659,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*DESIGNATION DATA REMOVE*/
-	public function RemoveDesign()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'designation');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	public function test(){
 		$this->load->model('Account_model', 'db_model');
@@ -1865,23 +1844,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP DATA REMOVE -- Written by William*/
-	public function RemoveAccountGrp()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'account_group');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	
 	/*ACCOUNT LEDGER LOAD -- Written by William*/
@@ -2036,23 +1998,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*ACCOUNT GROUP DATA REMOVE*/
-	public function RemoveAccountLedger()
-	{
-	    try {
-	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
-	        
-	        $this->database->RemoveRecordById($IdsArray,'account_ledger');
-	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
+	
 	
 	/*CUSTOMER DOCUMENT UPLOAD TABLE LOAD -- Written by William*/
 	public function loadCustomerDocUpload()

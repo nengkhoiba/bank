@@ -20,7 +20,7 @@
     <!-- date picker css -->
     <link type="text/css" media="all" rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" />
     <script src='<?php echo base_url();?>assets/js/bootstrap-datepicker.js'></script>
-    <script> var datacontroller = '<?php echo base_url();?>index.php/data_controller/'; </script>
+    <script src='<?php echo base_url();?>assets/js/angular.min.js'></script>
     
   </head>
   <body class="app sidebar-mini rtl">
