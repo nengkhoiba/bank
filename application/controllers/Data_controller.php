@@ -1548,6 +1548,29 @@ class Data_controller extends CI_Controller {
 	
 	
 
+	
+		/*Self Helf Group SHG SECTION LOAD*/
+	public function loadShgmaster()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Shgmaster_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	
+	
+	
+	
 	/*DESIGNATION SECTION LOAD*/
 	public function loadDesign()
 	{ 	

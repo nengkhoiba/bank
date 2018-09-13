@@ -3,10 +3,11 @@
             <tr>
                 <th>Sl. No.</th>
                 <th>Name</th>
+				 <th>Description</th>
                 <th>
                 <div class="animated-checkbox">
               	<label>
-                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Delete All</span>
+                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Select all</span>
               	</label>
             	</div>
             	</th>
@@ -17,6 +18,7 @@
             <tr>
                 <td><?php echo $count;?></td>
                 <td><?php echo $design_data['title'];?></td>
+				<td><?php echo $design_data['description'];?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>
