@@ -12,8 +12,9 @@
      <script type="text/javascript" src="<?php echo base_url();?>assets/js/plugins/jquery.tabletojson.min.js"></script>
   <!-- Page specific javascripts--> 
     <script src="<?php echo base_url();?>assets/js/main.js"></script>
-    <script src="<?php echo base_url();?>assets/js/service.js"></script>
     <script src="<?php echo base_url();?>assets/js/common.js"></script>
+    
+	<script src="<?php echo base_url();?>assets/js/validation.js"></script>
     <!-- for date picker -->
     
 

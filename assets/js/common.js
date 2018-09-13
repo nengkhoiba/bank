@@ -28,8 +28,8 @@ var base_url = window.location.origin + '/' + window.location.pathname.split ('/
   };
 })(jQuery);
 
-function removeMasterform(form_id){ 
-	$(form_id).empty();
+function removeMasterform(form_id){
+	$(form_id).hide();
 }
 
 function checkAllCheckbox(t){  

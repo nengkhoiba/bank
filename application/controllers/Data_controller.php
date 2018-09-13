@@ -1566,24 +1566,6 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
-	/*DESIGNATION FORM LOAD*/
-	public function AddDesignform()
-	{
-	    try {
-	                 $data['result'] = '';
-	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/addForm/Design_addForm',$data, true),
-	                'success' =>true
-	            );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	/*DESIGNATION EDIT SECTION*/
 	public function EditDesign()
@@ -1633,6 +1615,7 @@ class Data_controller extends CI_Controller {
 	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
 				$design_description = $this->db->escape_str ( trim ( $this->input->post('design_description',true) ) );
+				
 				if($postype==0){
 					$result = $this->database->addDesignModel( $design_title,$design_description);
 					if($result['code'] == 1){

@@ -9,8 +9,8 @@
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="addDesignform()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesign()')">Delete</button>
+            <a onclick="loadDesignationForm($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesignnation()')">Delete</button>
         </p>
       </div>
       
@@ -19,8 +19,8 @@
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-title-w-btn">
-              <h3 class="title">Add New Designation</h3>
-             <button onclick="removeMasterform()" class="close" type="button" aria-label="Close" style="height: 28px;
+              <h3 class="title">Add/Update Designation</h3>
+             <button onclick="removeMasterform('#formContainer')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
@@ -41,11 +41,11 @@
                
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="UpdateDeg()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="UpdateDesignation()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
                   <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasDesignForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#MasDesignformColap')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
               <?php echo form_close() ?>
             </div>
@@ -65,13 +65,12 @@
         </div>
       </div>
     </main>
-	  <?php $this->load->view('global/footer');?>
-	<script src="<?php echo base_url();?>assets/js/validation.js"></script> 
+	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
    
     	
    
-    function loadDesign()
+    function loadDesignnation()
     { 
       var url = "<?php echo site_url('index.php/data_controller/loadDesign'); ?>"; 
       StartInsideLoading();
@@ -105,66 +104,20 @@
         }
        });
     }
-    
-      loadDesign();
-    function UpdateDeg(){  
-    	if ($('#design_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#design_title').focus();
-            return;
+    loadDesignnation();
+
+
+    function loadDesignationForm($formType){  
+    	$reqestId =  $formType.val();
+    	if($reqestId == 0)
+    	{
+    		$('#postType').val(0);
+    		$('#deg_title').val('');
+    		$('#deg_desc').val('');
+        	$('#formContainer').show();
         }
-		if ($('#design_description').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Description is mandatory !');
-            $('#design_description').focus();
-            return;
-        }
-       
-        var formData = $('form#MasDesignForms').serializeObject();
-        var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/UpdateDesignation';
-        
-     StartInsideLoading();
-     $.ajax({
-      type: "post",
-      url: url,
-      cache: false,    
-      data: dataString,
-      dataType: 'json',
-      success: function(response){   
-      try{ 
-         if (response.success)
-             { 
-           SetSucessMessageBox('Success', response.msg);
-           $('#formContainer').hide();
-           loadDesign();
-             } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);
-             }
-      StopInsideLoading();
-      }catch(e) {  
-        SetWarningMessageBox('warning', e);
-        StopInsideLoading();
-      }  
-      },
-      error: function(){      
-        SetWarningMessageBox('warning', 'Error while request..');
-        StopInsideLoading();
-      }
-     });
-    }
-
-
-    function addDesignform(){ 
-    	$('#postType').val('0');
-		$('#deg_title').val('');
-		$('#deg_desc').val('');
-    	$('#formContainer').show();
-    }
-
-      
-    function editDesign($btn){  
-    	$reqestId =  $btn.val(); 
+    	else
+    	{
     	var url = '<?php echo base_url();?>index.php/data_controller/EditDesign';
     	StartInsideLoading();
     	$.ajax({
@@ -176,8 +129,7 @@
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
-    	           { 	
-        	            console.log(response.json);
+    	           { 
 						$('#postType').val(response.json[0].ID);
 						$('#deg_title').val(response.json[0].title);
 						$('#deg_desc').val(response.json[0].description);
@@ -199,11 +151,61 @@
     			  StopInsideLoading();
     		  }
     		 });
+    	}
     } 
-   
-    function removeMasterform(){
-    	$('#formContainer').hide();
+    
+
+    function UpdateDesignation(){ 
+    	if ($('#deg_title').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Title is mandatory !');
+            $('#deg_title').focus();
+            return;
         }
+		if ($('#deg_desc').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Description is mandatory !');
+            $('#deg_desc').focus();
+            return;
+        }
+       
+        var formData = $('form#MasDesignForms').serializeObject();
+        var dataString = JSON.stringify(formData);
+        var url = '<?php echo base_url();?>index.php/data_controller/UpdateDesignation';
+        
+     StartInsideLoading();
+     $.ajax({
+      type: "post",
+      url: url,
+      cache: false,    
+      data: dataString,
+      dataType: 'json',
+      success: function(response){   
+      try{ 
+         if (response.success)
+             { 
+           SetSucessMessageBox('Success', response.msg);
+           $('#formContainer').hide();
+           loadDesignnation();
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+             }
+      StopInsideLoading();
+      }catch(e) {  
+        SetWarningMessageBox('warning', e);
+        StopInsideLoading();
+      }  
+      },
+      error: function(){      
+        SetWarningMessageBox('warning', 'Error while request..');
+        StopInsideLoading();
+      }
+     });
+    }
+
+      
+    
+   
+  
 </script>
     
        </body>
