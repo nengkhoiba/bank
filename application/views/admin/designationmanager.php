@@ -108,7 +108,16 @@
     
       loadDesign();
     function UpdateDeg(){  
-    	
+    	if ($('#design_title').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Title is mandatory !');
+            $('#design_title').focus();
+            return;
+        }
+		if ($('#design_description').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Description is mandatory !');
+            $('#design_description').focus();
+            return;
+        }
        
         var formData = $('form#MasDesignForms').serializeObject();
         var dataString = JSON.stringify(formData);
