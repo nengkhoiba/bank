@@ -9,7 +9,7 @@
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="loadDesignationForm($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <a onclick="addDesignationform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
             <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesignnation()')">Delete</button>
         </p>
       </div>
@@ -107,14 +107,15 @@
     loadDesignnation();
 
 
-    function loadDesignationForm($formType){  
-    	$reqestId =  $formType.val();
+    function addDesignationform($btn){  
+    	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
     		$('#postType').val(0);
     		$('#deg_title').val('');
     		$('#deg_desc').val('');
         	$('#formContainer').show();
+        	$(window).scrollTop(0);
         }
     	else
     	{
@@ -133,14 +134,14 @@
 						$('#postType').val(response.json[0].ID);
 						$('#deg_title').val(response.json[0].title);
 						$('#deg_desc').val(response.json[0].description);
-					
-    				   $('#formContainer').show();
-                     $(window).scrollTop(0);
-    	           } else
+    				    $('#formContainer').show();
+    				    $(window).scrollTop(0);
+    	           } 
+    	           else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
     	           }
-    		 StopInsideLoading();
+    		  StopInsideLoading();
     		  }catch(e) {  
     			  SetWarningMessageBox('warning', e);
     			  StopInsideLoading();

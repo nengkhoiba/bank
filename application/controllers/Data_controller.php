@@ -592,24 +592,6 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
-	/*ROLE FORM LOAD*/
-	public function AddRoleform()
-	{
-	    try {
-	                 $data['result'] = '';
-	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/addForm/Role_addForm',$data, true),
-	                'success' =>true
-	            );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	/*ROLE EDIT SECTION*/
 	public function EditRole()
@@ -622,9 +604,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'role');
+	            $data = $this->database->GetRecordById($Id,'role');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Role_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -638,38 +620,6 @@ class Data_controller extends CI_Controller {
 	}
 	
 	/*ROLE DATA ADD*/
-	public function addRole()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* role title validation */
-	        if (empty($this->input->post('role_title',true))) {
-	            $errorMSG = " Title is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
-	            
-	            
-	            $result = $this->database->addRoleModel( $role_title);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
-	
-	/*ROLE UPDATE*/
 	public function updateRole()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -683,21 +633,29 @@ class Data_controller extends CI_Controller {
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
-	            
-	            $role_id = $this->db->escape_str ( trim ( $this->input->post('role_id',true) ) );
+            if($this->db->escape_str (trim($this->input->post('postType',true))) == 0)
+            {
 	            $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
-	            
-	            
-	            
-	            $result = $this->database->updateRoleModel($role_title, $role_id);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            $result = $this->database->addRoleModel( $role_title);
+	            if($result['code'] == 1){
+	                $status = array("success" => true,"msg" => "Save sucessfull!");
+	            }else{
+	                $status = array("success" => false,"msg" => "Fail to save !!!");
 	            }
-	            else
-	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
-	            }
+            }
+            else {
+                $role_id = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+                $role_title = $this->db->escape_str ( trim ( $this->input->post('role_title',true) ) );
+                $result = $this->database->updateRoleModel($role_title, $role_id);
+                if($result['code'] == 1)
+                {
+                    $status = array("success" => true,"msg" => "Update sucessfull!");
+                }
+                else
+                {
+                    $status = array("success" => false,"msg" => "Fail to Update !!!");
+                }                
+            }
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());
