@@ -61,9 +61,9 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">District</label>
-                  	<input name="employee_district" style="margin-top: 10px;"
-					class="form-control" type="text" id="employee_district"
-					placeholder="District"></input>
+                  <select id="employee_district" name="employee_district" style="margin-top:10px;" class="form-control" >
+                  	<!-- list of  district -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Pincode</label>
@@ -73,17 +73,14 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Designation</label>
-                  <input name="employee_designation" style="margin-top: 10px;"
-					class="form-control" type="text" id="employee_designation"
-					placeholder="Designation"></input>
+                  <select id="employee_designation" name="employee_designation" style="margin-top:10px;" class="form-control" >
+                  	<!-- list of  designation -->
+                  	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Gender</label>
                   <select id="employee_gender" name="employee_gender" style="margin-top:10px;" class="form-control" >
-                  	<option class="form-control" value="">- Select -</option>
-                  	<option class="form-control" value="1">Male</option>
-                  	<option class="form-control" value="2">Female</option>
-                  	<option class="form-control" value="3">Other</option>
+                  	<!-- list of  gender -->
                   	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -106,6 +103,12 @@
                   	<option class="form-control" value="2">Married</option>
                   	<option class="form-control" value="3">Divorce</option>
                   	<option class="form-control" value="4">Widow</option>
+                  	</select>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Branch</label>
+                  <select id="employee_branch" name="employee_branch" style="margin-top:10px;" class="form-control" >
+                  	<!-- list of  branch -->
                   	</select>
                 </div>
                
@@ -177,10 +180,7 @@
     }
     loadEmp();
     
-      
-    
-
-      
+   
     function addEmpform($btn){  
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
@@ -188,13 +188,14 @@
     		$('#postType').val(0);
     		$('#employee_name').val('');
     		$('#employee_address').val('');
-			$('#employee_district').val('');
+    		loadDropDown('','district','#employee_district');
 			$('#employee_pincode').val('');
-			$('#employee_designation').val('');
-			$('#employee_gender').val('');
+			loadDropDown('','designation','#employee_designation');
+			loadDropDown('','gender_master','#employee_gender');
 			$('#employee_dob').val('');
 			$('#employee_qualification').val('');
 			$('#employee_martial_status').val('');
+			loadDropDown('','branch','#employee_branch');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
@@ -215,20 +216,21 @@
     				   $('#postType').val(response.json[0].ID);
     				   	$('#employee_name').val(response.json[0].name);
     		    		$('#employee_address').val(response.json[0].address);
-    					$('#employee_district').val(response.json[0].district);
+    		    		loadDropDown(response.json[0].district,'district','#employee_district');
     					$('#employee_pincode').val(response.json[0].pincode);
-    					$('#employee_designation').val(response.json[0].designation);
-    					$('#employee_gender').val(response.json[0].gender);
+    					loadDropDown(response.json[0].designation,'designation','#employee_designation');
+    					loadDropDown(response.json[0].gender,'gender_master','#employee_gender');
     					$('#employee_dob').val(response.json[0].dob);
     					$('#employee_qualification').val(response.json[0].qualification);
     					$('#employee_martial_status').val(response.json[0].martial_status);
+    					loadDropDown(response.json[0].Branch_id,'branch','#employee_branch');
     		        	$('#formContainer').show();
     		        	$(window).scrollTop(0);
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
     	           }
-    		 StopInsideLoading();
+    		  StopInsideLoading();
     		  }catch(e) {  
     			  SetWarningMessageBox('warning', e);
     			  StopInsideLoading();
@@ -301,6 +303,11 @@
         if ($('#employee_martial_status').val().trim() == '') {
             SetWarningMessageBox('warning', 'Martial Status is mandatory!');
             $('#employee_martial_status').focus();
+            return;
+        }
+        if ($('#employee_branch').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Branch Name is mandatory!');
+            $('#employee_branch').focus();
             return;
         }
         

@@ -113,7 +113,7 @@
     	{
     		$('#postType').val(0);
     		$('#design_title').val('');
-    		$('#design_title').val('');
+    		$('#design_description').val('');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
@@ -132,8 +132,8 @@
     			   if (response.success)
     	           { 
 						$('#postType').val(response.json[0].ID);
-						$('#design_title').val(response.json[0].title);
-						$('#design_title').val(response.json[0].description);
+						$('#design_title').val(response.json[0].Name);
+						$('#design_description').val(response.json[0].description);
     				    $('#formContainer').show();
     				    $(window).scrollTop(0);
     	           } 
