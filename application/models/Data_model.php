@@ -763,6 +763,24 @@ class Data_model extends CI_Model{
 									return $ipaddress;
 	}
 
+	function get_member_registration($branch_id){
+		$sql="SELECT cus.ID,
+				cus.name,
+				cus.parmanent_address,
+				cus.contact_no,
+				cus.aadhaar_no,
+				gm.Name AS sex,
+				dst.Name AS district
+				FROM customer cus
+				LEFT JOIN gender_master gm on gm.ID=cus.sex
+				LEFT JOIN district dst on dst.ID=cus.district
+				
+				WHERE cus.IsActive=1
+				AND cus.Branch_id=$branch_id
+				";
+		$query=$this->db->query($sql);
+		return $query->result_array();
+	}
 
 
 

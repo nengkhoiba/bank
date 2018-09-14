@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Data_controller extends CI_Controller {
-
+	
 	function __construct()
     {
     	parent::__construct();
@@ -10,8 +10,8 @@ class Data_controller extends CI_Controller {
     	$this->load->library ( 'form_validation' );
     	$this->load->helper ( 'security' );
     	if($this->session->userdata('loginStatus')){
-    		$branch_id=$this->session->userdata('Branch_id');
-    		$Financial_id=$this->session->userdata('Financial_id');
+    		$GLOBALS['branch_id']=$this->session->userdata('Branch_id');
+    		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
     	}else{
     		$output = array('success' =>false, 'msg'=> "EXP");
     		echo json_encode($output);
@@ -1020,7 +1020,7 @@ class Data_controller extends CI_Controller {
 	public function loadMem()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $data['result']=$this->database->get_member_registration($GLOBALS['branch_id']);
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/Mem_table',$data, true),
 	            'success' =>true
@@ -1792,5 +1792,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 
+	
 	
 }
