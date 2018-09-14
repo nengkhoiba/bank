@@ -9,7 +9,7 @@
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="loadShgmasterForm($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <a onclick="addShgmasterform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
             <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('shg_master','loadShgmaster()')">Delete</button>
         </p>
       </div>
@@ -44,12 +44,6 @@
     				class="form-control name" rows="1" type="text" id="shg_address"
     				placeholder="Address"></input>
                 </div>
-				<div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Contact No.</label>
-                  <input id="contact_no" name="contact_no" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="contact_no"
-    				placeholder="Contact No."></input>
-                </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Area</label>
@@ -57,6 +51,19 @@
     				class="form-control name" rows="1" type="text" id="shg_area"
     				placeholder="SHG Area"></input>
                 </div>
+				<div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Max Member</label>
+                  <input id="shg_member_count" name="shg_member_count" style="margin-top: 10px;"
+    				class="form-control name" rows="1" type="text" id="shg_member_count"
+    				placeholder="Max Member"></input>
+                </div>
+				<div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Remark</label>
+                  <input id="shg_extra" name="shg_extra" style="margin-top: 10px;"
+    				class="form-control name" rows="1" type="text" id="shg_extra"
+    				placeholder="Remark"></input>
+                </div>
+				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Remark</label>
                   <input id="shg_remark" name="shg_remark" style="margin-top: 10px;"
@@ -108,7 +115,7 @@
         try{  
           if (response.success)
              { 
-            $('#Shgmaster_table').html(response.html);
+            $('#shgmaster_table').html(response.html);
               $('#shgmaster').DataTable();
               
              } else
@@ -132,18 +139,25 @@
     loadShgmaster();
 
 
-    function loadShgmasterForm($formType){  
-    	$reqestId =  $formType.val();
+	
+	
+    function addShgmasterform($btn){  
+    	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
     		$('#postType').val(0);
-    		$('#deg_title').val('');
-    		$('#deg_desc').val('');
-        	$('#formContainer').show();
+    		$('#shg_code').val('');
+    		$('#shg_name').val('');
+			$('#shg_address').val('');
+			$('#shg_area').val('');
+			$('#shg_member_count').val('');
+			$('#shg_name').val('');
+        	$('#shg_address').show();
+        	$(window).scrollTop(0);
         }
     	else
     	{
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditDesign';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditShgmaster';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -158,14 +172,14 @@
 						$('#postType').val(response.json[0].ID);
 						$('#deg_title').val(response.json[0].title);
 						$('#deg_desc').val(response.json[0].description);
-					
-    				   $('#formContainer').show();
-                     $(window).scrollTop(0);
-    	           } else
+    				    $('#formContainer').show();
+    				    $(window).scrollTop(0);
+    	           } 
+    	           else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
     	           }
-    		 StopInsideLoading();
+    		  StopInsideLoading();
     		  }catch(e) {  
     			  SetWarningMessageBox('warning', e);
     			  StopInsideLoading();
@@ -178,7 +192,9 @@
     		 });
     	}
     } 
-    
+	
+	
+   
 
     function UpdateDesignation(){ 
     	if ($('#deg_title').val().trim() == '') { 
