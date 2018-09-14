@@ -28,13 +28,13 @@
             	<input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Designation Title</label>
-                  <input id="deg_title" name="design_title" style="margin-top: 10px;"
+                  <input name="design_title" style="margin-top: 10px;"
     				class="form-control name" type="text" id="design_title"
     				placeholder="Designation Title"></input>
                 </div>
 				 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Designation Description</label>
-                  <textarea id="deg_desc" name="design_description" style="margin-top: 10px;"
+                  <textarea name="design_description" style="margin-top: 10px;"
     				class="form-control name" rows="1" type="text" id="design_description"
     				placeholder="Description"></textarea>
                 </div>
@@ -112,8 +112,8 @@
     	if($reqestId == 0)
     	{
     		$('#postType').val(0);
-    		$('#deg_title').val('');
-    		$('#deg_desc').val('');
+    		$('#design_title').val('');
+    		$('#design_title').val('');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
@@ -132,8 +132,8 @@
     			   if (response.success)
     	           { 
 						$('#postType').val(response.json[0].ID);
-						$('#deg_title').val(response.json[0].title);
-						$('#deg_desc').val(response.json[0].description);
+						$('#design_title').val(response.json[0].title);
+						$('#design_title').val(response.json[0].description);
     				    $('#formContainer').show();
     				    $(window).scrollTop(0);
     	           } 
@@ -157,14 +157,14 @@
     
 
     function UpdateDesignation(){ 
-    	if ($('#deg_title').val().trim() == '') { 
+    	if ($('#design_title').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#deg_title').focus();
+            $('#design_title').focus();
             return;
         }
-		if ($('#deg_desc').val().trim() == '') { 
+		if ($('#design_title').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Description is mandatory !');
-            $('#deg_desc').focus();
+            $('#design_title').focus();
             return;
         }
        
