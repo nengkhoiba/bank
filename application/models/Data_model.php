@@ -348,7 +348,7 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Add new Financial Year title ".$financial_title."  is added.");
+	        $this->addLog("Add new Financial year", "Financial year title ".$financial_title." is added.");
 	        return array('code' => 1);
 	    }
 	}

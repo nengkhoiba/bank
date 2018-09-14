@@ -169,7 +169,7 @@ function loadRole()
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasRoleformColap').empty(); 
+				   $('#formContainer').hide(); 
 				   loadRole();
 	           } else
 	           { 

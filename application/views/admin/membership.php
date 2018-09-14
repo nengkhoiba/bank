@@ -417,7 +417,7 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#MasMemformColap').empty(); 
+				   $('#formContainer').hide(); 
 				   loadMem();
 	           } else
 	           { 
