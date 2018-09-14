@@ -255,7 +255,7 @@ class Data_model extends CI_Model{
 	}
 	
 	
-	
+	//DESIGNATION start here
 	/*DESIGNATION MANAGER DATA ADD */
 	function addDesignModel( $design_title,$design_description )
 	{
@@ -303,7 +303,74 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	//DESIGNATION END HERE
+
+
+
+	//SHG START HERE
+	function addShgmasterModel(  $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra )
+	{
+         $data = array(
+            'Group_code'=>  $shg_code,
+		    'Group_name'=>  $shg_name,
+			'Address'	=>  $shg_address,
+			'Area'		=>  $shg_area,
+			'Member_count'=>  $shg_member_count,
+			'Extra'		=>  $shg_extra,
+			'Branch_id'	=> '1',
+			'Added_by'	=> '1',
+			'Added_on'	=> '1',			
+            'IsActive'	=> '1',
+         );
+	         
+	    $this->db->insert('shg_master', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new SHG Group", "Group Name ".$shg_name." is added.");
+	        return array('code' => 1);
+	    }
+	}
 	
+	/*DESIGNATION MANAGER DATA UPDATE */
+	function updateShgmasterModel( $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra , $shg_master_id)
+	{	  
+        $data = array(
+             'Group_code'=>  $shg_code,
+		    'Group_name'=>  $shg_name,
+			'Address'	=>  $shg_address,
+			'Area'		=>  $shg_area,
+			'Member_count'=>  $shg_member_count,
+			'Extra'		=>  $shg_extra,
+			'Modified_by'	=> '1',
+			'Modified_on'	=> '1',			
+			'Remark'	=> '1',						
+            'IsActive'	=> '1',
+        );
+	    $this->db->where('ID',$shg_master_id);
+	    $this->db->update('shg_master',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing SHG Group", "New SHG Group title is ".$shg_name."");
+	        return array('code' => 1);
+	    }
+	}
+
+	//SHG END HERE
 	
 		/*FINANCIAL DATA ADD */
 	function addFinancialModel( $financial_title,$financial_start,$financial_end)
@@ -676,6 +743,24 @@ class Data_model extends CI_Model{
 									return $ipaddress;
 	}
 
+	function get_member_registration($branch_id){
+		$sql="SELECT cus.ID,
+				cus.name,
+				cus.parmanent_address,
+				cus.contact_no,
+				cus.aadhaar_no,
+				gm.Name AS sex,
+				dst.Name AS district
+				FROM customer cus
+				LEFT JOIN gender_master gm on gm.ID=cus.sex
+				LEFT JOIN district dst on dst.ID=cus.district
+				
+				WHERE cus.IsActive=1
+				AND cus.Branch_id=$branch_id
+				";
+		$query=$this->db->query($sql);
+		return $query->result_array();
+	}
 
 
 

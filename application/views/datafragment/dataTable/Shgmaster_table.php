@@ -28,8 +28,8 @@
 				<td><?php echo $shgmaster_data['Address'];?></td>
 				<td><?php echo $shgmaster_data['Area'];?></td>
 				<td><?php echo $shgmaster_data['Member_count'];?></td>
-				<td><?php echo $shgmaster_data['Extra'];?></td>
 				<td><?php echo $shgmaster_data['Branch_id'];?></td>
+				<td><?php echo $shgmaster_data['Extra'];?></td>
 				<td><?php echo date("d-m-Y h:i:s A", strtotime($shgmaster_data['Added_on']));?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">

@@ -2,13 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Data_controller extends CI_Controller {
-
+	
 	function __construct()
     {
     	parent::__construct();
     	$this->load->model('Data_model', 'database');
     	$this->load->library ( 'form_validation' );
     	$this->load->helper ( 'security' );
+    	if($this->session->userdata('loginStatus')){
+    		$GLOBALS['branch_id']=$this->session->userdata('Branch_id');
+    		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
+    	}else{
+    		$output = array('success' =>false, 'msg'=> "EXP");
+    		echo json_encode($output);
+    		return;
+    	}
     }
 	
 	public function index()
@@ -909,7 +917,7 @@ class Data_controller extends CI_Controller {
 	public function loadMem()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $data['result']=$this->database->get_member_registration($GLOBALS['branch_id']);
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/Mem_table',$data, true),
 	            'success' =>true
@@ -1152,40 +1160,46 @@ class Data_controller extends CI_Controller {
 	    $errorMSG ='';
 	    try {
 	        /* designation title validation */
-	        if (empty($this->input->post('design_title',true))) {
-	            $errorMSG = " Title is required";
+	        if (empty($this->input->post('shg_code',true))) {
+	            $errorMSG = " SHG Code is required";
 	        }
-			 if (empty($this->input->post('design_title',true))) {
-	            $errorMSG = " Title is required";
+			 if (empty($this->input->post('shg_name',true))) {
+	            $errorMSG = " SHG Name is required";
 	        }
-			 if (empty($this->input->post('design_title',true))) {
-	            $errorMSG = " Title is required";
+			 if (empty($this->input->post('shg_address',true))) {
+	            $errorMSG = " Address is required";
 	        }
-			 if (empty($this->input->post('design_title',true))) {
-	            $errorMSG = " Title is required";
+			 if (empty($this->input->post('shg_area',true))) {
+	            $errorMSG = " Area is required";
 	        }
-			 /* designation title validation */
-	        if (empty($this->input->post('design_description',true))) {
-	            $errorMSG = " Description is required";
+			 if (empty($this->input->post('shg_member_count',true))) {
+	            $errorMSG = " Max member is required";
 	        }
+			
+			
 	        
 	        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
-	            
+	    				
 	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
-	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
-				$design_description = $this->db->escape_str ( trim ( $this->input->post('design_description',true) ) );
+	            $shg_code = $this->db->escape_str ( trim ( $this->input->post('shg_code',true) ) );
+				$shg_name = $this->db->escape_str ( trim ( $this->input->post('shg_name',true) ) );
+				$shg_address = $this->db->escape_str ( trim ( $this->input->post('shg_address',true) ) );
+				$shg_area = $this->db->escape_str ( trim ( $this->input->post('shg_area',true) ) );
+				$shg_member_count = $this->db->escape_str ( trim ( $this->input->post('shg_member_count',true) ) );
+				$shg_extra = $this->db->escape_str ( trim ( $this->input->post('shg_extra',true) ) );
+			
 				
 				if($postype==0){
-					$result = $this->database->addDesignModel( $design_title,$design_description);
+					$result = $this->database->addShgmasterModel( $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra);
 					if($result['code'] == 1){
 						$status = array("success" => true,"msg" => "Save sucessfull!");
 					}else{
 						$status = array("success" => false,"msg" => "Fail to save !!!");
 					}
 				}else{
-					$result = $this->database->updateDesignModel($design_title,$design_description, $postype);
+					$result = $this->database->updateShgmasterModel( $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra,$postype);
 					if($result['code'] == 1)
 					{
 						$status = array("success" => true,"msg" => "Update sucessfull!");
@@ -1675,5 +1689,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 
+	
 	
 }

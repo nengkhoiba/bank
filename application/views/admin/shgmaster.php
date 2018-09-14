@@ -29,7 +29,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">SHG Code</label>
                   <input id="shg_code" name="shg_code" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="shg_code"
+    				class="form-control text_number" type="text" id="shg_code"
     				placeholder="SHG Code"></input>
                 </div>
 				 <div class="form-group col-md-4 align-self-end">
@@ -40,36 +40,31 @@
                 </div>
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Address</label>
-                  <input id="shg_address" name="shg_address" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="shg_address"
+                  <input  name="shg_address" style="margin-top: 10px;"
+    				class="form-control text_number"  type="text" id="shg_address"
     				placeholder="Address"></input>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Area</label>
-                  <input id="shg_area" name="shg_area" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="shg_area"
+                  <input  name="shg_area" style="margin-top: 10px;"
+    				class="form-control text_number"  type="text" id="shg_area"
     				placeholder="SHG Area"></input>
                 </div>
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Max Member</label>
-                  <input id="shg_member_count" name="shg_member_count" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="shg_member_count"
+                  <input  name="shg_member_count" style="margin-top: 10px;"
+    				class="form-control number"  type="text" id="shg_member_count"
     				placeholder="Max Member"></input>
                 </div>
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Remark</label>
-                  <input id="shg_extra" name="shg_extra" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="shg_extra"
+                  <input  name="shg_extra" style="margin-top: 10px;"
+    				class="form-control text_number" type="text" id="shg_extra"
     				placeholder="Remark"></input>
                 </div>
 				
-				<div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Remark</label>
-                  <input id="shg_remark" name="shg_remark" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="shg_remark"
-    				placeholder="SHG Remark"></input>
-                </div>
+			
                
                 
                 <div class="form-group col-md-4 align-self-end">
@@ -151,8 +146,8 @@
 			$('#shg_address').val('');
 			$('#shg_area').val('');
 			$('#shg_member_count').val('');
-			$('#shg_name').val('');
-        	$('#shg_address').show();
+			$('#shg_extra').val('');
+        	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
     	else
@@ -170,9 +165,13 @@
     			   if (response.success)
     	           { 
 						$('#postType').val(response.json[0].ID);
-						$('#deg_title').val(response.json[0].title);
-						$('#deg_desc').val(response.json[0].description);
-    				    $('#formContainer').show();
+						$('#shg_code').val(response.json[0].Group_code);
+						$('#shg_name').val(response.json[0].Group_name);
+						$('#shg_address').val(response.json[0].Address);
+						$('#shg_area').val(response.json[0].Area);
+						$('#shg_member_count').val(response.json[0].Member_count);
+						$('#shg_extra').val(response.json[0].Extra);
+						$('#formContainer').show();
     				    $(window).scrollTop(0);
     	           } 
     	           else
@@ -196,21 +195,37 @@
 	
    
 
-    function UpdateDesignation(){ 
-    	if ($('#deg_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#deg_title').focus();
+    function UpdateShgmaster(){ 
+    	if ($('#shg_code').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'SHG Code is mandatory !');
+            $('#shg_code').focus();
             return;
         }
-		if ($('#deg_desc').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Description is mandatory !');
-            $('#deg_desc').focus();
+		if ($('#shg_name').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'SHG Name is mandatory !');
+            $('#shg_name').focus();
             return;
         }
+		if ($('#shg_address').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Address is mandatory !');
+            $('#shg_address').focus();
+            return;
+        }
+		if ($('#shg_area').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Area is mandatory !');
+            $('#shg_area').focus();
+            return;
+        }
+		if ($('#shg_member_count').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Max Member is mandatory !');
+            $('#shg_member_count').focus();
+            return;
+        }
+		
        
-        var formData = $('form#MasDesignForms').serializeObject();
+        var formData = $('form#MasShgmasterForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/UpdateDesignation';
+        var url = '<?php echo base_url();?>index.php/data_controller/UpdateShgmaster';
         
      StartInsideLoading();
      $.ajax({
@@ -225,7 +240,7 @@
              { 
            SetSucessMessageBox('Success', response.msg);
            $('#formContainer').hide();
-           loadDesignnation();
+           loadShgmaster();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -242,7 +257,6 @@
       }
      });
     }
-
       
     
    

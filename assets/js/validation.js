@@ -30,6 +30,16 @@ $('.address').keypress(function (e) {
     return false;
 });
 
+$('.text_number').keypress(function (e) {
+    var regex = new RegExp("^[0-9 a-z A-Z -- . ,\b]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+        return true;
+    }
+    e.preventDefault();
+    return false;
+});
+
 $('.email').keypress(function (e) {
     var regex = new RegExp("^[0-9 a-z A-Z -- . @\b]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
