@@ -14,7 +14,7 @@
         </p>
       </div>
       
-      <div class="row" id="formContainer">
+      <div class="row" id="formContainer" style="display: none">
       <div class="clearix"></div>
         <div class="col-md-12">
           <div class="tile">
@@ -286,7 +286,7 @@
 				
        
 
-        var formData = $('form#LoanmasterFormUpdate').serializeObject();
+        var formData = $('form#MasLoanmasterForms').serializeObject();
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateLoanmaster';
         StartInsideLoading();
