@@ -1204,7 +1204,7 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	
+	//SHG SECTION START HERE
 		/*Self Helf Group SHG SECTION LOAD*/
 	public function loadShgmaster()
 	{ 	
@@ -1223,12 +1223,6 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
-	
-	
-	
-	
-
-
 		
 	/*SHG EDIT SECTION*/
 	public function EditShgmaster()
@@ -1326,6 +1320,27 @@ class Data_controller extends CI_Controller {
 	//SHG GROUP END HERE
 	
 	
+	//SHG GROUP MEMBER ADD START HERE
+
+				/*Self Helf Group SHG MEMBER ADD SECTION LOAD*/
+	public function loadManageshg()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Mem_shg_group_select_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	//SHG GROUP MEMBER ADD END HERE
 	
 		/*DESIGNATION SECTION LOAD*/
 	public function loadDesign()

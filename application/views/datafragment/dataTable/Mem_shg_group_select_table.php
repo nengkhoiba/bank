@@ -1,4 +1,4 @@
-<table id="Mem" class="table table-hover" style="font-size:13px">
+<table id="manageshg" class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
             	<th>Sl No</th>
@@ -8,6 +8,7 @@
                 <th>Sex</th>               
                 <th>Aadhaar No</th>
                 <th>District</th>
+				 <th>Action</th>
                 <th>
                 <div class="animated-checkbox">
               	<label>
@@ -27,6 +28,12 @@
                 <td><?php echo $mem_data['sex']?></td>
                 <td><?php echo $mem_data['aadhaar_no']?></td>
                 <td><?php echo $mem_data['district']?></td>
+				<td>
+						<p class="bs-component">	
+							<a onclick="addShgmasterform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">Add</a>
+							<a onclick="addShgmasterform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-primary">View</a>
+						</p>	
+				</td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>
