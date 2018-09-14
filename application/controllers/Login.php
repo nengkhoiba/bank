@@ -25,6 +25,7 @@ class Login extends CI_Controller {
     
     public function index()
     {
+    	//$this->session->sess_destroy();
         $this->form_validation->set_rules ( "email", "Email", 'trim|required|xss_clean' );
         $this->form_validation->set_rules ( "password", "Password", 'trim|required|xss_clean' );
         if ($this->form_validation->run () == FALSE)
@@ -43,6 +44,8 @@ class Login extends CI_Controller {
                 $RoleID = $authentication_data [0]->RoleID;
                 $Pass = $authentication_data [0]->Password;
                 $EmpName = $authentication_data [0]->EmpName;
+                $Branch_id = $authentication_data [0]->Branch_id;
+                $Financial_id = $authentication_data [0]->Financial_id;
                 $siteMap= $this->loginmodel->get_sitemap ($RoleID);
                 
                 $this->session->set_userdata ( 'loginStatus', TRUE );
@@ -50,6 +53,8 @@ class Login extends CI_Controller {
                 $this->session->set_userdata ( 'username', $EmpName );
                 $this->session->set_userdata ( 'Role', $Role );
                 $this->session->set_userdata ( 'SiteMap', $siteMap );
+                $this->session->set_userdata ( 'Branch_id', $Branch_id );
+                $this->session->set_userdata ( 'Financial_id', $Financial_id );
                 
                 redirect ( 'dashboard' );
             }

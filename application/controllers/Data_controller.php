@@ -9,6 +9,14 @@ class Data_controller extends CI_Controller {
     	$this->load->model('Data_model', 'database');
     	$this->load->library ( 'form_validation' );
     	$this->load->helper ( 'security' );
+    	if($this->session->userdata('loginStatus')){
+    		$branch_id=$this->session->userdata('Branch_id');
+    		$Financial_id=$this->session->userdata('Financial_id');
+    	}else{
+    		$output = array('success' =>false, 'msg'=> "EXP");
+    		echo json_encode($output);
+    		return;
+    	}
     }
 	
 	public function index()
