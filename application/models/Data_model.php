@@ -348,7 +348,7 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Add new Financial Year title ".$financial_title."  is added.");
+	        $this->addLog("Add new Financial year", "Financial year title ".$financial_title." is added.");
 	        return array('code' => 1);
 	    }
 	}
@@ -423,7 +423,7 @@ class Data_model extends CI_Model{
 	}
 	
 	/*LOANMASTER DATA UPDATE */
-	function updateLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
+	function updateLoanmasterModel($loanmaster_id, $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
 	{ 
 	
 	

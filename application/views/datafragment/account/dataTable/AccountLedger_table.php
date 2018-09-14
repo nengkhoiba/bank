@@ -27,7 +27,7 @@
                 <input class="checkbox" type="checkbox" value="<?php echo $accountLedger_data['ID'];?>"><span class="label-text"></span>
               	</label>
             	</div>
-            	<button onclick="editAccountLedger($(this))" value="<?php echo $accountLedger_data['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
+            	<button onclick="addAccountLedgerform($(this))" value="<?php echo $accountLedger_data['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
 				</td>
 				</tr>
         <?php $count ++; } ?>

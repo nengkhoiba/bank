@@ -685,24 +685,7 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
-	/*ROLE FORM LOAD*/
-	public function AddFinancialform()
-	{
-	    try {
-	                 $data['result'] = '';
-	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/addForm/Financial_addForm',$data, true),
-	                'success' =>true
-	            );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
+	
 	
 	/*ROLE EDIT SECTION*/
 	public function EditFinancial()
@@ -715,9 +698,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'financial_year');
+	            $data = $this->database->GetRecordById($Id,'financial_year');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Financial_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -730,45 +713,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*FINANCIAL DATA ADD*/
-	public function addFinancial()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* role title validation */
-	        if (empty($this->input->post('financial_title',true))) {
-	            $errorMSG = " Title is required";
-	        }
-			  if (empty($this->input->post('financial_start',true))) {
-	            $errorMSG = " Financial start date is required";
-	        }
-			  if (empty($this->input->post('financial_end',true))) {
-	            $errorMSG = " Financial end date is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
-				$financial_start = $this->db->escape_str ( trim ( $this->input->post('financial_start',true) ) );
-				$financial_end = $this->db->escape_str ( trim ( $this->input->post('financial_end',true) ) );
-	            
-	            
-	            $result = $this->database->addFinancialModel( $financial_title,$financial_start,$financial_end);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
 	
 	/*FINANCIAL UPDATE*/
 	public function updateFinancial()
@@ -791,21 +735,32 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $financial_id = $this->db->escape_str ( trim ( $this->input->post('financial_id',true) ) );
+	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $financial_title = $this->db->escape_str ( trim ( $this->input->post('financial_title',true) ) );
 				$financial_start = $this->db->escape_str ( trim ( $this->input->post('financial_start',true) ) );
 				$financial_end = $this->db->escape_str ( trim ( $this->input->post('financial_end',true) ) );
 	            
-	            
-	            $result = $this->database->updateFinancialModel($financial_id, $financial_title,$financial_start,$financial_end);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
-	            }
-	            else
-	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
-	            }
+				if($postType == 0)
+				{
+    				$result = $this->database->addFinancialModel( $financial_title,$financial_start,$financial_end);
+    				if($result['code'] == 1){
+    				    $status = array("success" => true,"msg" => "Save sucessfull!");
+    				}else{
+    				    $status = array("success" => false,"msg" => "Fail to save !!!");
+    				}
+				}
+				else 
+				{
+    				$result = $this->database->updateFinancialModel($postType, $financial_title,$financial_start,$financial_end);
+    	            if($result['code'] == 1)
+    	            {
+    	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            }
+    	            else
+    	            {
+    	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            }
+				}
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());
@@ -834,25 +789,7 @@ class Data_controller extends CI_Controller {
         }
     	 echo json_encode($output);
 	}
-	
-	/*ROLE FORM LOAD*/
-	public function AddLoanmasterform()
-	{
-	    try {
-	                 $data['result'] = '';
-	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/addForm/Loanmaster_addForm',$data, true),
-	                'success' =>true
-	            );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
+
 	
 	/*ROLE EDIT SECTION*/
 	public function EditLoanmaster()
@@ -865,11 +802,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'loan_master');
+	            $data = $this->database->GetRecordById($Id,'loan_master');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Loanmaster_updateForm',$data, true),
-	                'selectedPc'=>$data['result'][0]['Loan_pc_type'],
-	                'selectedTenure'=>$data['result'][0]['Tenure_type'],
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -882,74 +817,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*FINANCIAL DATA ADD*/
-	public function addLoanmaster()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* Loan name validation */
-	        if (empty($this->input->post('loanmaster_loan_name',true))) {
-	            $errorMSG = " Loan name is required";
-	        }
-			  if (empty($this->input->post('loanmaster_loan_pc',true))) {
-	            $errorMSG = " Loan PC is required";
-	        }
-			  if (empty($this->input->post('loanmaster_loan_pc_type',true))) {
-	            $errorMSG = " Loan PC type is required";
-	        }
-			 if (empty($this->input->post('loanmaster_tenure_type',true))) {
-	            $errorMSG = " Loan tenure type is required";
-	        }
-			 if (empty($this->input->post('loanmaster_tenure_min',true))) {
-	            $errorMSG = " Loan tenure min is required";
-	        }
-			 if (empty($this->input->post('loanmaster_tenure_max',true))) {
-	            $errorMSG = " Loan tenure max is required";
-	        }
-			 if (empty($this->input->post('loanmaster_min_amount',true))) {
-	            $errorMSG = " Loan min amount is required";
-	        }
-			 if (empty($this->input->post('loanmaster_max_amount',true))) {
-	            $errorMSG = " Loan max amount is required";
-	        }
-			 if (empty($this->input->post('loanmaster_income_ledger',true))) {
-	            $errorMSG = " Income ledger is required";
-	        }
-			
-			 if (empty($this->input->post('loanmaster_expense_ledger',true))) {
-	            $errorMSG = " Expense ledger is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $loanmaster_loan_name = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_name',true) ) );
-				$loanmaster_loan_pc = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc',true) ) );
-				$loanmaster_loan_pc_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc_type',true) ) );
-				$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
-				$loanmaster_tenure_min = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_min',true) ) );
-				$loanmaster_tenure_max = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_max',true) ) );
-				$loanmaster_min_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_min_amount',true) ) );
-				$loanmaster_max_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_max_amount',true) ) );
-				$loanmaster_income_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_income_ledger',true) ) );
-				$loanmaster_expense_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_expense_ledger',true) ) );
-	            
-	            
-	            $result = $this->database->addLoanmasterModel( $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
 	
 	/*FINANCIAL UPDATE*/
 	public function updateLoanmaster()
@@ -994,6 +861,7 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
+	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $loanmaster_loan_name = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_name',true) ) );
 				$loanmaster_loan_pc = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc',true) ) );
 				$loanmaster_loan_pc_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_loan_pc_type',true) ) );
@@ -1005,16 +873,27 @@ class Data_controller extends CI_Controller {
 				$loanmaster_income_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_income_ledger',true) ) );
 				$loanmaster_expense_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_expense_ledger',true) ) );
 	            
-	            
-	            $result = $this->database->updateLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
-	            }
-	            else
-	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
-	            }
+				if($postType ==0)
+				{
+    				$result = $this->database->addLoanmasterModel( $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+    				if($result['code'] == 1){
+    				    $status = array("success" => true,"msg" => "Save sucessfull!");
+    				}else{
+    				    $status = array("success" => false,"msg" => "Fail to save !!!");
+    				}
+				}
+				else 
+				{
+				    $result = $this->database->updateLoanmasterModel($postType,$loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+    	            if($result['code'] == 1)
+    	            {
+    	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            }
+    	            else
+    	            {
+    	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            }
+				}
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());
@@ -1044,26 +923,7 @@ class Data_controller extends CI_Controller {
         }
     	 echo json_encode($output);
 	}
-	
-	/*BRANCH FORM LOAD*/
-	public function AddBranchform()
-	{
-	    try {
-	                 $data['result'] = '';
-	                 $output = array(
-	                 'html'=>$this->load->view('datafragment/addForm/Branch_addForm',$data, true),
-	                'success' =>true
-	            );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
+
 	/*BRANCH EDIT SECTION*/
 	public function EditBranch()
 	{
@@ -1075,9 +935,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'branch');
+	            $data = $this->database->GetRecordById($Id,'branch');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Branch_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -1090,45 +950,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*BRANCH DATA ADD*/
-	public function addBranch()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* Branch title validation */
-	        if (empty($this->input->post('branch_name',true))) {
-	            $errorMSG = " Branch name is required";
-	        }
-			  if (empty($this->input->post('branch_code',true))) {
-	            $errorMSG = " Branch code is required";
-	        }
-			  if (empty($this->input->post('branch_address',true))) {
-	            $errorMSG = " Branch address is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('branch_name',true) ) );
-				$branch_code = $this->db->escape_str ( trim ( $this->input->post('branch_code',true) ) );
-				$branch_address = $this->db->escape_str ( trim ( $this->input->post('branch_address',true) ) );
-	           
-	            
-	            $result = $this->database->addBranchModel($branch_name,$branch_code,$branch_address);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
 	
 	/*BRANCH UPDATE*/
 	public function updateBranch()
@@ -1146,29 +967,37 @@ class Data_controller extends CI_Controller {
 			if (empty($this->input->post('branch_address',true))) {
 	            $errorMSG = " Branch address is required";
 	        }
-			if (empty($this->input->post('branch_id',true))) {
-	            $errorMSG = " Branch ID is missing";
-	        }
 						
 			        
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $branch_id = $this->db->escape_str ( trim ( $this->input->post('branch_id',true) ) );
+	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('branch_name',true) ) );
 				$branch_code = $this->db->escape_str ( trim ( $this->input->post('branch_code',true) ) );
 				$branch_address = $this->db->escape_str ( trim ( $this->input->post('branch_address',true) ) );
 	            
-	            
-	            $result = $this->database->updateBranchModel($branch_id,$branch_name,$branch_code,$branch_address);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
-	            }
-	            else
-	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
-	            }
+				if($postType == 0)
+				{
+    				$result = $this->database->addBranchModel($branch_name,$branch_code,$branch_address);
+    				if($result['code'] == 1){
+    				    $status = array("success" => true,"msg" => "Save sucessfull!");
+    				}else{
+    				    $status = array("success" => false,"msg" => "Fail to save !!!");
+    				}
+				}
+				else
+				{
+				    $result = $this->database->updateBranchModel($postType,$branch_name,$branch_code,$branch_address);
+    	            if($result['code'] == 1)
+    	            {
+    	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            }
+    	            else
+    	            {
+    	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            }
+				}
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());
@@ -1197,26 +1026,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-// 	ADD MEMBER FORM -- Written by William
-	public function AddMemform()
-	{
-	    try {
-	        $data['result'] = '';
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/addForm/Mem_addForm',$data, true),
-	            'success' =>true
-	        );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
-	
 // 	EDIT MEMBER FORM -- Written by William
 	public function EditMemForm()
 	{
@@ -1228,12 +1037,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'customer');
+	            $data = $this->database->GetRecordById($Id,'customer');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/updateForm/Mem_updateForm',$data, true),
-	                'selectedGender'=>$data['result'][0]['sex'],
-	                'selectedMemDistrict'=>$data['result'][0]['district'],
-	                'selectedMemNomineeDistrict'=>$data['result'][0]['nominee_district'],
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -1246,8 +1052,8 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-// 	ADD MEMBER -- Written by William
-	public function addMem()
+// 	UPDATE MEMBER -- Written by William
+	public function updateMem()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
 	    $errorMSG ='';
@@ -1357,144 +1163,27 @@ class Data_controller extends CI_Controller {
 	            $member_nomineeurban = $this->db->escape_str ( trim ( $this->input->post('member_nomineeurban',true) ) );
 	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
 	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
-	           	            
-	            $result = $this->database->addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
-	
-	
-	
-	/*MEMBER UPDATE -- Written by William*/
-	public function updateMem()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* name validation */
-	        if (empty($this->input->post('member_name',true))) {
-	            $errorMSG = " Name is required";
-	        }
-	        /* dob validation */
-	        if (empty($this->input->post('member_dob',true))) {
-	            $errorMSG = " Date of Birth is required";
-	        }
-	        /* gender validation */
-	        if (empty($this->input->post('member_gender',true))) {
-	            $errorMSG = " Gender is required";
-	        }
-	        /* Aadhaar no. validation */
-	        if (empty($this->input->post('member_aadhaar',true))) {
-	            $errorMSG = " Aadhaar No. is required";
-	        }
-	        /* Aadhaar no. already used or not check */
-	        $check = $this->database->CheckAadhaarNo($this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) ));
-	        if (sizeof ( $check ) == 1) {
-	            $errorMSG = " Aadhaar No. is already used";
-	        }
-	        /* husband name validation */
-	        if (empty($this->input->post('member_husband',true))) {
-	            $errorMSG = " Husband name is required";
-	        }
-	        /* dob validation */
-	        if (empty($this->input->post('member_dob',true))) {
-	            $errorMSG = " Date of birth is required";
-	        }
-	        /* member address validation */
-	        if (empty($this->input->post('member_address',true))) {
-	            $errorMSG = " Member address is required";
-	        }
-	        
-	        /* member district validation */
-	        if (empty($this->input->post('member_district',true))) {
-	            $errorMSG = " Member district is required";
-	        }
-	        /* member dob validation */
-	        if (empty($this->input->post('member_dob',true))) {
-	            $errorMSG = " Date of birth is required";
-	        }
-	        /* member contact validation */
-	        if (empty($this->input->post('member_contact',true))) {
-	            $errorMSG = " Member contact no. is required";
-	        }
-	        /* member bank ac validation */
-	        if (empty($this->input->post('member_bankaccount',true))) {
-	            $errorMSG = " Member bank account no. is required";
-	        }
-	        /* member bank branch name validation */
-	        if (empty($this->input->post('member_bankbranch',true))) {
-	            $errorMSG = " Member bank branch name is required";
-	        }
-	        /* member work validation */
-	        if (empty($this->input->post('member_work',true))) {
-	            $errorMSG = " Member work is required";
-	        }
-	        /* nominee name validation */
-	        if (empty($this->input->post('member_nominee',true))) {
-	            $errorMSG = " Nominee name is required";
-	        }
-	        /* nominee aadhaar no. validation */
-	        if (empty($this->input->post('member_nomineeaadhaar',true))) {
-	            $errorMSG = " Aadhaar no. is required";
-	        }
-	        /* nominee address validation */
-	        if (empty($this->input->post('member_nomineeaddress',true))) {
-	            $errorMSG = " Nominee address is required";
-	        }
-	        
-	        /* nominee district validation */
-	        if (empty($this->input->post('member_nomineedistrict',true))) {
-	            $errorMSG = " Nominee district is required";
-	        }
-	        /* nominee contact validation */
-	        if (empty($this->input->post('member_nomineecontact',true))) {
-	            $errorMSG = " Nominee contact is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $mem_id = $this->db->escape_str ( trim ( $this->input->post('mem_id',true) ) );
-	            $member_name = $this->db->escape_str ( trim ( $this->input->post('member_name',true) ) );
-	            $member_dob = $this->db->escape_str ( trim ( $this->input->post('member_dob',true) ) );
-	            $member_gender = $this->db->escape_str ( trim ( $this->input->post('member_gender',true) ) );
-	            $member_aadhaar = $this->db->escape_str ( trim ( $this->input->post('member_aadhaar',true) ) );
-	            $member_husband = $this->db->escape_str ( trim ( $this->input->post('member_husband',true) ) );
-	            $member_address = $this->db->escape_str ( trim ( $this->input->post('member_address',true) ) );
-	            $member_rural = $this->db->escape_str ( trim ( $this->input->post('member_rural',true) ) );
-	            $member_urban = $this->db->escape_str ( trim ( $this->input->post('member_urban',true) ) );
-	            $member_district = $this->db->escape_str ( trim ( $this->input->post('member_district',true) ) );
-	            $member_contact = $this->db->escape_str ( trim ( $this->input->post('member_contact',true) ) );
-	            $member_bankaccount = $this->db->escape_str ( trim ( $this->input->post('member_bankaccount',true) ) );
-	            $member_bankbranch = $this->db->escape_str ( trim ( $this->input->post('member_bankbranch',true) ) );
-	            $member_work = $this->db->escape_str ( trim ( $this->input->post('member_work',true) ) );
-	            $member_nominee = $this->db->escape_str ( trim ( $this->input->post('member_nominee',true) ) );
-	            $member_nomineeaadhaar = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaadhaar',true) ) );
-	            $member_nomineeaddress = $this->db->escape_str ( trim ( $this->input->post('member_nomineeaddress',true) ) );
-	            $member_nomineerural = $this->db->escape_str ( trim ( $this->input->post('member_nomineerural',true) ) );
-	            $member_nomineeurban = $this->db->escape_str ( trim ( $this->input->post('member_nomineeurban',true) ) );
-	            $member_nomineedistrict = $this->db->escape_str ( trim ( $this->input->post('member_nomineedistrict',true) ) );
-	            $member_nomineecontact = $this->db->escape_str ( trim ( $this->input->post('member_nomineecontact',true) ) );
-	            
-	            	            
-	            $result = $this->database->updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
-	            }
+	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            if($postype == 0)
+	           	{
+    	            $result = $this->database->addMemModel( $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
+    	            if($result['code'] == 1){
+    	                $status = array("success" => true,"msg" => "Save sucessfull!");
+    	            }else{
+    	                $status = array("success" => false,"msg" => "Fail to save !!!");
+    	            }
+	           	}
 	            else
 	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	                $result = $this->database->updateMemModel($postype, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact);
+	                if($result['code'] == 1)
+	                {
+	                    $status = array("success" => true,"msg" => "Update sucessfull!");
+	                }
+	                else
+	                {
+	                    $status = array("success" => false,"msg" => "Fail to Update !!!");
+	                }
 	            }
 	        }
 	    } catch (Exception $ex) {
@@ -1505,7 +1194,8 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
-
+	
+	
 	
 		/*Self Helf Group SHG SECTION LOAD*/
 	public function loadShgmaster()
@@ -1641,7 +1331,7 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	/*DESIGNATION EDIT SECTION*/
-	public function EditDesign()
+	public function EditDesignation()
 	{
 	    try {
 	        $Id =  $this->input->post('reqId',true);
@@ -1806,24 +1496,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP FORM LOAD -- Written by William*/
-	public function AddAccountGrpform()
-	{
-	    try {
-	        $data['result'] = '';
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/account/addForm/AccountGrp_addForm',$data, true),
-	            'success' =>true
-	        );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	/*ACCOUNT GROUP EDIT SECTION -- Written by William*/
 	public function EditAccountGrp()
@@ -1836,9 +1508,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'account_group');
+	            $data = $this->database->GetRecordById($Id,'account_group');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/account/updateForm/AccountGrp_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -1851,47 +1523,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD -- Written by William*/
-	public function addAccountGrp()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* account group name validation */
-	        if (empty($this->input->post('accountGrp_name',true))) {
-	            $errorMSG = " Group name is required";
-	        }
-	        /* account group under validation */
-	        if (empty($this->input->post('accountGrp_under',true))) {
-	            $errorMSG = " Group under is required";
-	        }
-	        /* account group nature validation */
-	        if (empty($this->input->post('accountGrp_nature',true))) {
-	            $errorMSG = " Group nature is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
-	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
-	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
-	            
-	            
-	            $result = $this->database->addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
+	
 	
 	/*ACCOUNT GROUP UPDATE  -- Written by William*/
 	public function updateAccountGrp()
@@ -1916,21 +1548,32 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $accountGrp_id = $this->db->escape_str ( trim ( $this->input->post('accountGrp_id',true) ) );
+	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $accountGrp_name = $this->db->escape_str ( trim ( $this->input->post('accountGrp_name',true) ) );
 	            $accountGrp_under = $this->db->escape_str ( trim ( $this->input->post('accountGrp_under',true) ) );
 	            $accountGrp_nature = $this->db->escape_str ( trim ( $this->input->post('accountGrp_nature',true) ) );
 	            
-	            
-	            
-	            $result = $this->database->updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature);
-	            if($result['code'] == 1)
+	            if($postType == 0)
 	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            $result = $this->database->addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature);
+    	            if($result['code'] == 1){
+    	                $status = array("success" => true,"msg" => "Save sucessfull!");
+    	            }else{
+    	                $status = array("success" => false,"msg" => "Fail to save !!!");
+    	            }
 	            }
+	            
 	            else
 	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	                $result = $this->database->updateAccountGrpModel( $postType,$accountGrp_name,$accountGrp_under,$accountGrp_nature);
+    	            if($result['code'] == 1)
+    	            {
+    	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            }
+    	            else
+    	            {
+    	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            }
 	            }
 	        }
 	    } catch (Exception $ex) {
@@ -1960,25 +1603,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT LEDGER FORM LOAD -- Written by William*/
-	public function AddAccountLedgerform()
-	{
-	    try {
-	        $data['result'] = '';
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/account/addForm/AccountLedger_addForm',$data, true),
-	            'success' =>true
-	        );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
 	/*ACCOUNT LEDGER EDIT SECTION -- Written by William*/
 	public function EditAccountLedger()
 	{
@@ -1990,9 +1614,9 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data['result'] = $this->database->GetRecordById($Id,'account_ledger');
+	            $data = $this->database->GetRecordById($Id,'account_ledger');
 	            $output = array(
-	                'html'=>$this->load->view('datafragment/account/updateForm/AccountLedger_updateForm',$data, true),
+	                'json'=>$data,
 	                'success' =>true
 	            );
 	        }
@@ -2005,47 +1629,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	/*ACCOUNT GROUP DATA ADD -- Written by William*/
-	public function addAccountLedger()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* account ledger name validation */
-	        if (empty($this->input->post('accountLedger_name',true))) {
-	            $errorMSG = " Group name is required";
-	        }
-	        /* account ledger under validation */
-	        if (empty($this->input->post('accountLedger_grpUnder',true))) {
-	            $errorMSG = " Account group under is required";
-	        }
-	        /* account ledger open validation */
-	        if (empty($this->input->post('accountLedger_open',true))) {
-	            $errorMSG = " Opening balance is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $accountLedger_name = $this->db->escape_str ( trim ( $this->input->post('accountLedger_name',true) ) );
-	            $accountLedger_grpUnder = $this->db->escape_str ( trim ( $this->input->post('accountLedger_grpUnder',true) ) );
-	            $accountLedger_open = $this->db->escape_str ( trim ( $this->input->post('accountLedger_open',true) ) );
-	            
-	            
-	            $result = $this->database->addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
-	            if($result['code'] == 1){
-	                $status = array("success" => true,"msg" => "Save sucessfull!");
-	            }else{
-	                $status = array("success" => false,"msg" => "Fail to save !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
 	
 	/*ACCOUNT GROUP UPDATE -- Written by William*/
 	public function updateAccountLedger()
@@ -2070,21 +1653,31 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $accountLedger_id = $this->db->escape_str ( trim ( $this->input->post('accountLedger_id',true) ) );
+	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
 	            $accountLedger_name = $this->db->escape_str ( trim ( $this->input->post('accountLedger_name',true) ) );
 	            $accountLedger_grpUnder = $this->db->escape_str ( trim ( $this->input->post('accountLedger_grpUnder',true) ) );
 	            $accountLedger_open = $this->db->escape_str ( trim ( $this->input->post('accountLedger_open',true) ) );
 	            
-	            
-	            
-	            $result = $this->database->updateAccountLedgerModel( $accountLedger_id,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
-	            if($result['code'] == 1)
+	            if($postType == 0)
 	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            $result = $this->database->addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
+    	            if($result['code'] == 1){
+    	                $status = array("success" => true,"msg" => "Save sucessfull!");
+    	            }else{
+    	                $status = array("success" => false,"msg" => "Fail to save !!!");
+    	            }
 	            }
 	            else
 	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            $result = $this->database->updateAccountLedgerModel( $postType,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open);
+    	            if($result['code'] == 1)
+    	            {
+    	                $status = array("success" => true,"msg" => "Update sucessfull!");
+    	            }
+    	            else
+    	            {
+    	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+    	            }
 	            }
 	        }
 	    } catch (Exception $ex) {
