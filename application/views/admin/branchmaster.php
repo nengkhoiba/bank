@@ -143,7 +143,7 @@
     			   if (response.success)
     	           { 	
         				$('#postType').val(response.json[0].ID);
-    					$('#branch_name').val(response.json[0].Branch_name);
+    					$('#branch_name').val(response.json[0].Name);
     					$('#branch_code').val(response.json[0].Branch_code);
     					$('#branch_address').val(response.json[0].Branch_address);
        				    $('#formContainer').show();
