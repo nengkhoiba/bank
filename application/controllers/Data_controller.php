@@ -12,6 +12,7 @@ class Data_controller extends CI_Controller {
     	if($this->session->userdata('loginStatus')){
     		$GLOBALS['branch_id']=$this->session->userdata('Branch_id');
     		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
+    		$GLOBALS['Added_by']=$this->session->userdata('userId');
     	}else{
     		$output = array('success' =>false, 'msg'=> "EXP");
     		echo json_encode($output);
