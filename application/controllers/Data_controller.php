@@ -1219,7 +1219,101 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	/*DESIGNATION SECTION LOAD*/
+
+
+		
+	/*SHG EDIT SECTION*/
+	public function EditShgmaster()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'shg_master');
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*SHG DATA ADD*/
+	public function UpdateShgmaster()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* designation title validation */
+	        if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			 if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			 if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			 if (empty($this->input->post('design_title',true))) {
+	            $errorMSG = " Title is required";
+	        }
+			 /* designation title validation */
+	        if (empty($this->input->post('design_description',true))) {
+	            $errorMSG = " Description is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
+				$design_description = $this->db->escape_str ( trim ( $this->input->post('design_description',true) ) );
+				
+				if($postype==0){
+					$result = $this->database->addDesignModel( $design_title,$design_description);
+					if($result['code'] == 1){
+						$status = array("success" => true,"msg" => "Save sucessfull!");
+					}else{
+						$status = array("success" => false,"msg" => "Fail to save !!!");
+					}
+				}else{
+					$result = $this->database->updateDesignModel($design_title,$design_description, $postype);
+					if($result['code'] == 1)
+					{
+						$status = array("success" => true,"msg" => "Update sucessfull!");
+					}
+					else
+					{
+						$status = array("success" => false,"msg" => "Fail to Update !!!");
+					}
+				}
+				
+	            
+	            
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	//SHG GROUP END HERE
+	
+	
+	
+		/*DESIGNATION SECTION LOAD*/
 	public function loadDesign()
 	{ 	
 		try {
@@ -1236,8 +1330,6 @@ class Data_controller extends CI_Controller {
         }
     	 echo json_encode($output);
 	}
-	
-	
 	/*DESIGNATION EDIT SECTION*/
 	public function EditDesignation()
 	{
