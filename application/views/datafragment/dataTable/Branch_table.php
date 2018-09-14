@@ -19,7 +19,7 @@
         <?php $count = 1; foreach ( $result as $branch_data) { ?>
             <tr>
                 <td><?php echo $count;?></td>
-                <td><?php echo $branch_data['Branch_name'];?></td>
+                <td><?php echo $branch_data['Name'];?></td>
 				<td><?php echo $branch_data['Branch_code'];?></td>
 				<td><?php echo $branch_data['Branch_address'];?></td>
 				

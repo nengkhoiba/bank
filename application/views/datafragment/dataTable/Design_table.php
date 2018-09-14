@@ -17,7 +17,7 @@
         <?php $count = 1; foreach ( $result as $design_data) { ?>
             <tr>
                 <td><?php echo $count;?></td>
-                <td><?php echo $design_data['title'];?></td>
+                <td><?php echo $design_data['Name'];?></td>
 				<td><?php echo $design_data['description'];?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">

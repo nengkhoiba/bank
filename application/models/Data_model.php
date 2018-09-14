@@ -44,7 +44,7 @@ class Data_model extends CI_Model{
 	// COMMON CODE END HERE  -- Written by William
 
 	/* EMPLOYEE DATA ADD  -- Written by William */
-	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName )
+	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{
 	         $data = array(
 	             'name'	=>  $employee_name ,
@@ -59,7 +59,7 @@ class Data_model extends CI_Model{
 	             'dob'=>  $employee_dob,
 	             'qualification'	=>  $employee_qualification ,
 	             'martial_status'=>  $employee_martial_status,
-	             'image'=>  $fileName,
+	             'Branch_id'=>  $employee_branch,
 	             'IsActive'=>  1,
 	         );
 	         
@@ -83,27 +83,8 @@ class Data_model extends CI_Model{
 	
 	
 	/* EMPLOYEE DATA UPDATE  -- Written by William */
-	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status, $fileName, $previous_emp_image)
+	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{ 
-	    if($fileName == '') 
-	    {
-	        $data = array(
-	            'name'	=>  $employee_name ,
-	            'address'=>  $employee_address,
-	            'country'=>  $employee_country,
-	            'state'=>  $employee_state,
-	            'city'=>  $employee_city,
-	            'district'=>  $employee_district,
-	            'pincode'=>  $employee_pincode,
-	            'designation'=>  $employee_designation,
-	            'gender'=>  $employee_gender,
-	            'dob'=>  $employee_dob,
-	            'qualification'	=>  $employee_qualification ,
-	            'martial_status'=>  $employee_martial_status
-	        );
-	    }
-	    else 
-	    {
 	        $data = array(
 	            'name'	=>  $employee_name ,
 	            'address'=>  $employee_address,
@@ -117,11 +98,10 @@ class Data_model extends CI_Model{
 	            'dob'=>  $employee_dob,
 	            'qualification'	=>  $employee_qualification ,
 	            'martial_status'=>  $employee_martial_status,
-	            'image'=>  $fileName
+	            'Branch_id'=>  $employee_branch
 	        );
-	        unlink("assets/upload/employee/".$previous_emp_image);
-	    }
-	    
+	   
+	       
 	   $this->db->where('ID',$emp_id);
 	   $this->db->update('emp',$data);
 	   
@@ -280,7 +260,7 @@ class Data_model extends CI_Model{
 	function addDesignModel( $design_title,$design_description )
 	{
          $data = array(
-             'title'	=>  $design_title,
+             'Name'	=>  $design_title,
 			  'description'	=>  $design_description,
              'IsActive'=>  1,
          );
@@ -305,7 +285,7 @@ class Data_model extends CI_Model{
 	function updateDesignModel($design_title,$deg_desc, $design_id)
 	{	  
         $data = array(
-            'title'	=>  $design_title ,
+            'Name'	=>  $design_title ,
         	'description'=>$deg_desc
         );
 	    $this->db->where('ID',$design_id);
@@ -534,7 +514,7 @@ class Data_model extends CI_Model{
 	function addBranchModel($branch_name,$branch_code,$branch_address)
 	{
          $data = array(
-             'branch_name'	=>  $branch_name,
+             'Name'	=>  $branch_name,
 			  'branch_code'	=>  $branch_code,
 			  'branch_address'	=>  $branch_address,			  
              'IsActive'=>  1,
@@ -561,7 +541,7 @@ class Data_model extends CI_Model{
 	{ 
 	
         $data = array(
-            'Branch_name'=>  $branch_name,
+            'Name'=>  $branch_name,
 			'Branch_code'=>  $branch_code,
 			'Branch_address'=>  $branch_address 			
         );
@@ -763,6 +743,24 @@ class Data_model extends CI_Model{
 									return $ipaddress;
 	}
 
+	function get_member_registration($branch_id){
+		$sql="SELECT cus.ID,
+				cus.name,
+				cus.parmanent_address,
+				cus.contact_no,
+				cus.aadhaar_no,
+				gm.Name AS sex,
+				dst.Name AS district
+				FROM customer cus
+				LEFT JOIN gender_master gm on gm.ID=cus.sex
+				LEFT JOIN district dst on dst.ID=cus.district
+				
+				WHERE cus.IsActive=1
+				AND cus.Branch_id=$branch_id
+				";
+		$query=$this->db->query($sql);
+		return $query->result_array();
+	}
 
 
 
