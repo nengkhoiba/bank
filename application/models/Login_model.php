@@ -13,7 +13,9 @@ class Login_model extends CI_Model
 		role.role AS Role,
 		role.ID AS RoleID,
 		empLogin.password AS Password,
-		emp.name AS EmpName
+		emp.name AS EmpName,
+		emp.Branch_id AS Branch_id,
+		(select ID FROM financial_year WHERE YEAR(Start_date)-1 < YEAR(NOW()) AND YEAR(End_date)+1 > YEAR(NOW()) LIMIT 1) AS Financial_id
 		FROM emp_login empLogin
 		LEFT JOIN role role ON role.ID=empLogin.role_id
 		LEFT JOIN emp emp ON emp.ID=empLogin.ID
