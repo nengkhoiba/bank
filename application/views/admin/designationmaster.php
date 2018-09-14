@@ -119,7 +119,7 @@
         }
     	else
     	{
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditDesign';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditDesignation';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
