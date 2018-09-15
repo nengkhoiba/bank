@@ -12,6 +12,23 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+ 
+ /*CUSTOME STYLE START HERE */
+ 
+ 
+ .modal-dialog {
+  max-width: 97% !important;
+  height: auto;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  border-radius: 0;
+}
+ 
+ /*CUSTOME STYLE END HERE*/
+ 
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

@@ -1224,9 +1224,25 @@ class Data_controller extends CI_Controller {
 	public function loadManageshg()
 	{ 	
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
 			$output = array(
 	        'html'=>$this->load->view('datafragment/dataTable/Mem_shg_group_select_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+		public function loadMember_list_group()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Memlist_group_table',$data, true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {

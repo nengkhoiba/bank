@@ -8,12 +8,35 @@
           <li class="breadcrumb-item">SHG Master</li>
         </ul>
 		</div>
-		<p class="bs-component">	
-            <a onclick="addShgmasterform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('shg_master','loadShgmaster()')">Delete</button>
-        </p>
       </div>
-      
+	  
+	  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div align="right">
+			<p class="bs-component" >	
+				<a onclick="addBranchform($(this))" style="color:#fff" class="btn btn-sm btn-success">Add Member</a>
+				<button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('branch','loadBranch()')">Delete</button>
+			</p>
+		</div>	  
+	  <div class="" id="member_data"></div>
+	  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	  
       <div class="row" id="formContainer" style="display:none;">
       <div class="clearix"></div>
         <div class="col-md-12">
@@ -63,9 +86,6 @@
     				class="form-control text_number" type="text" id="shg_extra"
     				placeholder="Remark"></input>
                 </div>
-				
-			
-               
                 
                 <div class="form-group col-md-4 align-self-end">
                   <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
@@ -132,6 +152,42 @@
        });
     }
     loadManageshg();
+	
+	  function loadMember_list_group()
+    { 
+      var url = "<?php echo site_url('index.php/data_controller/loadMember_list_group'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#member_data').html(response.html);
+              $('#member_list_group').DataTable();
+              
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+    loadMember_list_group();
 
 
 	/*
