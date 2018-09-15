@@ -175,7 +175,7 @@ var size=element.files[0].size;
 var fileName = document.getElementById("file").value;
 var idxDot = fileName.lastIndexOf(".") + 1;
 var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-if (extFile=="png" || extFile=="jpg" || extFile=="jpeg")
+if (extFile=="png" || extFile=="jpg" || extFile=="jpeg" || extFile=="pdf")
 {
   if(size > 2000000)
   {
@@ -189,7 +189,7 @@ if (extFile=="png" || extFile=="jpg" || extFile=="jpeg")
 else
 {
   document.getElementById('file').value=null;
-    SetWarningMessageBox('warning', 'Only png/jpg/jpeg files are allowed!');
+    SetWarningMessageBox('warning', 'Only png/jpg/jpeg/pdf files are allowed!');
     throw new Error();
 }
 //File type & size check end
@@ -213,7 +213,7 @@ var size=element.files[0].size;
 var fileName = document.getElementById("file_upt").value;
 var idxDot = fileName.lastIndexOf(".") + 1;
 var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-if (extFile=="png" || extFile=="jpg" || extFile=="jpeg")
+if (extFile=="png" || extFile=="jpg" || extFile=="jpeg" || extFile=="pdf")
 {
   if(size > 2000000)
   {
@@ -227,7 +227,7 @@ if (extFile=="png" || extFile=="jpg" || extFile=="jpeg")
 else
 {
   document.getElementById('file_upt').value=null;
-  SetWarningMessageBox('warning', 'Only png/jpg/jpeg files are allowed!');
+  SetWarningMessageBox('warning', 'Only png/jpg/jpeg/pdf files are allowed!');
     throw new Error();
 }
 //File type & size check end

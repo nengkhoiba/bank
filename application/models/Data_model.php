@@ -40,6 +40,68 @@ class Data_model extends CI_Model{
 	    $query = $this->db->get_where('customer', array('aadhaar_no' => $aadhaar_no));
 	    return $query->result ();
 	}
+	
+	function addLog($logtitle,$logDescription){
+	    $data = array(
+	        'log_name'	=>  $logtitle ,
+	        'log_detail'=>  $logDescription,
+	        'ipaddress'=>   $this->get_client_ip(),
+	        'user_id'=>     $this->session->userdata('userId')
+	    );
+	    $this->db->insert('log', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	        
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        return array('code' => 1);
+	    }
+	}
+	function get_client_ip()
+	{
+	    $ipaddress = '';
+	    if (getenv('HTTP_CLIENT_IP'))
+	        $ipaddress = getenv('HTTP_CLIENT_IP');
+	        else if(getenv('HTTP_X_FORWARDED_FOR'))
+	            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+	            else if(getenv('HTTP_X_FORWARDED'))
+	                $ipaddress = getenv('HTTP_X_FORWARDED');
+	                else if(getenv('HTTP_FORWARDED_FOR'))
+	                    $ipaddress = getenv('HTTP_FORWARDED_FOR');
+	                    else if(getenv('HTTP_FORWARDED'))
+	                        $ipaddress = getenv('HTTP_FORWARDED');
+	                        else if(getenv('REMOTE_ADDR'))
+	                            $ipaddress = getenv('REMOTE_ADDR');
+	                            else
+	                                $ipaddress = 'UNKNOWN';
+	                                
+	                                return $ipaddress;
+	}
+	
+	function get_member_registration($branch_id){
+	    $sql="SELECT cus.ID,
+				cus.name,
+				cus.parmanent_address,
+				cus.contact_no,
+				cus.aadhaar_no,
+				gm.Name AS sex,
+				dst.Name AS district
+				FROM customer cus
+				LEFT JOIN gender_master gm on gm.ID=cus.sex
+				LEFT JOIN district dst on dst.ID=cus.district
+				
+				WHERE cus.IsActive=1
+				AND cus.Branch_id=$branch_id
+				";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
 
 	// COMMON CODE END HERE  -- Written by William
 
@@ -562,117 +624,16 @@ class Data_model extends CI_Model{
 	}
 	
 	
-	/*ACCOUNT GROUP DATA ADD  -- Written by William */
-	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )
-	{
-	    $data = array(
-	        'Group_name'	=>  $accountGrp_name,
-	        'Group_under'	=>  $accountGrp_under,
-	        'Group_nature'	=>  $accountGrp_nature,
-	        'IsActive'=>  1,
-	    );
-	    
-	    $this->db->insert('account_group', $data);
-	    $lastID=$this->db->insert_id();
-	    
-	    if($this->db->trans_status() === FALSE)
-	    {
-	        $this->db->trans_rollback();
-	        return array('code' => 0);
-	    }
-	    else
-	    {
-	        $this->db->trans_commit();
-	        $this->addLog("Add new account group ", "Account Group Name ".$accountGrp_name." is added.");
-	        return array('code' => 1);
-	    }
-	}
 	
-	/*ACCOUNT GROUP DATA UPDATE  -- Written by William */
-	function updateAccountGrpModel( $accountGrp_id,$accountGrp_name,$accountGrp_under,$accountGrp_nature)
-	{
-	    
-	    $data = array(
-	        'Group_name'	=>  $accountGrp_name,
-	        'Group_under'	=>  $accountGrp_under,
-	        'Group_nature'	=>  $accountGrp_nature,
-	    );
-	    $this->db->where('ID',$accountGrp_id);
-	    $this->db->update('account_group',$data);
-	    
-	    if($this->db->trans_status() === FALSE)
-	    {
-	        $this->db->trans_rollback();
-	        return array('code' => 0);
-	    }
-	    else
-	    {
-	        $this->db->trans_commit();
-	        $this->addLog("Update existing Account Group", "New Account Group Name is ".$accountGrp_name."");
-	        return array('code' => 1);
-	    }
-	}
-	
-	
-	/*ACCOUNT LEDGER DATA ADD  -- Written by William */
-	function addAccountLedgerModel( $accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
-	{
-	    $data = array(
-	        'Ledger'	=>  $accountLedger_name,
-	        'Group_ID'	=>  $accountLedger_grpUnder,
-	        'Open_balance'	=>  $accountLedger_open,
-	        'IsActive'=>  1,
-	    );
-	    
-	    $this->db->insert('account_ledger', $data);
-	    $lastID=$this->db->insert_id();
-	    
-	    if($this->db->trans_status() === FALSE)
-	    {
-	        $this->db->trans_rollback();
-	        return array('code' => 0);
-	    }
-	    else
-	    {
-	        $this->db->trans_commit();
-	        $this->addLog("Add new account ledger ", "Account Ledger Name ".$accountLedger_name." is added.");
-	        return array('code' => 1);
-	    }
-	}
-	
-	/*ACCOUNT LEDGER DATA UPDATE  -- Written by William*/
-	function updateAccountLedgerModel( $accountLedger_id,$accountLedger_name,$accountLedger_grpUnder,$accountLedger_open)
-	{
-	    
-	    $data = array(
-	        'Ledger'	=>  $accountLedger_name,
-	        'Group_ID'	=>  $accountLedger_grpUnder,
-	        'Open_balance'	=>  $accountLedger_open,
-	    );
-	    $this->db->where('ID',$accountLedger_id);
-	    $this->db->update('account_ledger',$data);
-	    
-	    if($this->db->trans_status() === FALSE)
-	    {
-	        $this->db->trans_rollback();
-	        return array('code' => 0);
-	    }
-	    else
-	    {
-	        $this->db->trans_commit();
-	        $this->addLog("Update existing Account Ledger", "New Account Ledger Name is ".$accountLedger_name."");
-	        return array('code' => 1);
-	    }
-	}
-
 	
 	/*CUSTOMER DOCUMENT DATA ADD  -- Written by William */
-	function addCustomerDoc($customer_id, $customer_doc_type, $customer_doc_filetype,$file)
+	function addCustomerDoc($customer_id, $customer_doc_type,$file)
 	{
+	    $file_extension = explode(':', substr($file, 0, strpos($file, ';')))[1];
 	    $data = array(
 	        'Cus_id'	=>  $customer_id,
 	        'doc_type'	=>  $customer_doc_type,
-	        'file_type'	=>  $customer_doc_filetype ,
+	        'file_type'	=>  $file_extension,
 	        'files'=>  $file,
 	        'IsActive'=>  1
 	    );
@@ -692,76 +653,6 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	function addLog($logtitle,$logDescription){
-		$data = array(
-				'log_name'	=>  $logtitle ,
-				'log_detail'=>  $logDescription,
-				'ipaddress'=>   $this->get_client_ip(),
-				'user_id'=>     $this->session->userdata('userId') 
-		);	
-	 	$this->db->insert('log', $data);
-	    $lastID=$this->db->insert_id();
-	    
-		if($this->db->trans_status() === FALSE)
-		{
-		    $this->db->trans_rollback();
-			return array('code' => 0);
-			
-		}
-		else
-		{
-		    $this->db->trans_commit();
-			return array('code' => 1);
-		}
-	}
-	function get_client_ip()
-	{
-		$ipaddress = '';
-		if (getenv('HTTP_CLIENT_IP'))
-			$ipaddress = getenv('HTTP_CLIENT_IP');
-			else if(getenv('HTTP_X_FORWARDED_FOR'))
-				$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-				else if(getenv('HTTP_X_FORWARDED'))
-					$ipaddress = getenv('HTTP_X_FORWARDED');
-					else if(getenv('HTTP_FORWARDED_FOR'))
-						$ipaddress = getenv('HTTP_FORWARDED_FOR');
-						else if(getenv('HTTP_FORWARDED'))
-							$ipaddress = getenv('HTTP_FORWARDED');
-							else if(getenv('REMOTE_ADDR'))
-								$ipaddress = getenv('REMOTE_ADDR');
-								else
-									$ipaddress = 'UNKNOWN';
-	
-									return $ipaddress;
-	}
-
-	function get_member_registration($branch_id){
-		$sql="SELECT cus.ID,
-				cus.name,
-				cus.parmanent_address,
-				cus.contact_no,
-				cus.aadhaar_no,
-				gm.Name AS sex,
-				dst.Name AS district
-				FROM customer cus
-				LEFT JOIN gender_master gm on gm.ID=cus.sex
-				LEFT JOIN district dst on dst.ID=cus.district
-				
-				WHERE cus.IsActive=1
-				AND cus.Branch_id=$branch_id
-				";
-		$query=$this->db->query($sql);
-		return $query->result_array();
-	}
-
 
 
 }

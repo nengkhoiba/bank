@@ -76,7 +76,7 @@
 <script type="text/javascript">
 function loadAccountLedger()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountLedger'); ?>"; 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountLedger'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -123,7 +123,7 @@ function loadAccountLedger()
         }
     	else
     	{ 
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditAccountLedger';
+    	var url = '<?php echo base_url();?>index.php/account_controller/EditAccountLedger';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -180,7 +180,7 @@ function loadAccountLedger()
 
         var formData = $('form#MasAccountLedgerForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateAccountLedger';
+        var url = '<?php echo base_url();?>index.php/account_controller/updateAccountLedger';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -214,7 +214,7 @@ function loadAccountLedger()
 
     function loadAccountGrpUnder()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrpUnder'); ?>"; 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountGrpUnder'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",

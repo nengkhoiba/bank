@@ -79,7 +79,7 @@
    
     function loadAccountGrp()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrp'); ?>"; 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountGrp'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -126,7 +126,7 @@
         }
     	else
     	{
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditAccountGrp';
+    	var url = '<?php echo base_url();?>index.php/account_controller/EditAccountGrp';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -183,7 +183,7 @@
 
         var formData = $('form#MasAccountGrpForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateAccountGrp';
+        var url = '<?php echo base_url();?>index.php/account_controller/updateAccountGrp';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -217,7 +217,7 @@
 
     function loadAccountGrpUnder()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrpUnder'); ?>"; 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountGrpUnder'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -251,7 +251,7 @@
 
     function loadAccountGrpNature()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadAccountGrpNature'); ?>"; 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountGrpNature'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
