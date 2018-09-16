@@ -1514,12 +1514,15 @@ class Data_controller extends CI_Controller {
 						'msg'=> 'Resquest Error !!!',
 						'success' =>false
 				);
-				echo json_encode($output);
+				
 			}else{
 				$result=$this->database->Update_page_role($roles,$checkboxs);
 				if($result['code'] == 1)
 				{
-					$this->loadPageByRole($roles[0]);
+					$output = array(
+							'msg'=>'Updated successfully!',
+							'success' =>true
+					);
 				}
 				
 			}
@@ -1528,9 +1531,9 @@ class Data_controller extends CI_Controller {
 					'msg'=> $ex->getMessage(),
 					'success' => false
 			);
-			echo json_encode($output);
+			
 		}
-		
+		echo json_encode($output);
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
 }

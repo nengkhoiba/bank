@@ -168,9 +168,14 @@ function UpdatePage()
     success: function(response){ 
     try{  
       
-        $('#role_tree').html(response.html);
-
-        $('#role_tree').treed();
+    	if (response.success)
+        { 
+			   SetSucessMessageBox('Success', response.msg);
+			   
+        } else
+        { 
+            SetWarningMessageBox('warning', response.msg);
+        }
           
      StopInsideLoading();
      
