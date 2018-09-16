@@ -654,6 +654,70 @@ class Data_model extends CI_Model{
 	    }
 	}
 
+	
+	/*PAGE MANAGER--Nengkhoiba*/
+	function get_page_by_role($role){
+		$sql="SELECT pt.ID,pt.category AS PageCategory,pt.IsDropDown,pt.Page_title, $role AS Role,		 
+	    (SELECT count(ID) from site_manager sm where sm.page_id=pt.ID AND sm.role_id='$role' AND sm.isActive =1 ) AS pageEnable
+		FROM page_table pt
+		WHERE pt.isActive=1";
+		$query=$this->db->query($sql);
+		return $query->result_array();
+		
+	}
+	function Update_page_role($role,$checkboxs){
+		$this->db->trans_begin();
+		
+		$roleId=$role[0];
+		foreach ($checkboxs AS $page){
+			
+			
+			$data = array(
+					'isActive'=>  0,
+			);
+			$where = array(
+					'role_id'   => $roleId
+			);
+			$this->db->where($where);
+			$this->db->update('site_manager',$data);
+			$sqlCheck="SELECT ID FROM site_manager WHERE page_id='$page' AND role_id='$roleId'";
+			$queryCheck=$this->db->query($sqlCheck);
+			if($queryCheck->num_rows()>0){
+			$data = array(
+						'isActive'=>  1,
+				);
+			$where = array(
+					'page_id' => $page,
+					'role_id'   => $roleId
+			);
+				$this->db->where($where);
+				$this->db->update('site_manager',$data);
+			}else{
+				$data = array(
+						'page_id'	=>  $page ,
+						'role_id'	=>  $roleId ,
+						'isActive'=>  1,
+				);
+				$this->db->insert('site_manager', $data);
+				
+			}
+			
+		}
+		if($this->db->trans_status() === FALSE)
+		{
+			$this->db->trans_rollback();
+			return array('code' => 0);
+		}
+		else
+		{
+			$this->db->trans_commit();
+			$this->addLog("Site Map Change", "Site Map change");
+			return array('code' => 1);
+		}
+		
+		
+	}
+	/*PAGE MANAGER--Nengkhoiba*/
 
 }
     

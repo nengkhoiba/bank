@@ -58,7 +58,7 @@ function resetAllFormValue(id)
   		//type: "warning",
   		showCancelButton: true,
   		confirmButtonText: "Yes, clear it!",
-  		cancelButtonText: "No, cancel plx!",
+  		cancelButtonText: "No, cancel plz!",
   		closeOnConfirm: true,
   		closeOnCancel: true
   	}, function(isConfirm) {
@@ -101,7 +101,7 @@ function deleteItem(tableName,loadFunctionName){
    //type: "warning",
    showCancelButton: true,
    confirmButtonText: "Yes, Delete it!",
-   cancelButtonText: "No, cancel plx!",
+   cancelButtonText: "No, cancel plz!",
    closeOnConfirm: true,
    closeOnCancel: true
    }, function(isConfirm) {

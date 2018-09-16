@@ -1474,4 +1474,55 @@ class Data_controller extends CI_Controller {
 
 	
 	
+	
+	
+	/*PAGE MANAGER--Nengkhoiba*/
+	public function loadPageByRole()
+	{
+		$_POST = json_decode(trim(file_get_contents('php://input')), true);
+		try {
+			$Id =  $this->input->post('Role',true);
+			if($Id == ''){
+				$output = array(
+						'msg'=> 'Resquest Error !!!',
+						'success' =>false
+				);
+			}else{
+					$data['result']=$this->database->get_page_by_role($Id);
+			$output = array(
+					'html'=>$this->load->view('datafragment/dataTable/role_page_table',$data, true),
+					'success' =>true
+				);
+			}
+		} catch (Exception $ex) {
+			$output = array(
+					'msg'=> $ex->getMessage(),
+					'success' => false
+			);
+		}
+		echo json_encode($output);
+	}
+	public function UpdatePageSitemap()
+	{
+		$_POST = json_decode(trim(file_get_contents('php://input')), true);
+		try {
+			$checkboxs =  $this->input->post('pageCheckBox',true);
+			$roles =  $this->input->post('roleId',true);
+			
+				$result=$this->database->Update_page_role($roles,$checkboxs);
+				if($result['code'] == 1)
+				{
+					$this->loadPageByRole($roles[0]);
+				}
+				
+			
+		} catch (Exception $ex) {
+			$output = array(
+					'msg'=> $ex->getMessage(),
+					'success' => false
+			);
+		}
+		echo json_encode($output);
+	}
+	/*PAGE MANAGER--Nengkhoiba*/
 }
