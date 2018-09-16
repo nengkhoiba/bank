@@ -167,17 +167,11 @@ function UpdatePage()
     dataType: 'json', 
     success: function(response){ 
     try{  
-      if (response.success)
-         { 
+      
         $('#role_tree').html(response.html);
 
         $('#role_tree').treed();
           
-         } else
-         { 
-             SetWarningMessageBox('warning', response.msg);
-            
-         }
      StopInsideLoading();
      
      }catch(e) {  

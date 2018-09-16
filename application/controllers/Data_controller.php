@@ -1186,12 +1186,12 @@ class Data_controller extends CI_Controller {
 	//SHG GROUP MEMBER ADD START HERE
 
 				/*Self Helf Group SHG MEMBER ADD SECTION LOAD*/
-	public function loadShggrouplist()
+	public function loadManageshg()
 	{ 	
 		try {
 			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Shg_group_list_table',$data, true),
+	        'html'=>$this->load->view('datafragment/dataTable/Mem_shg_group_select_table',$data, true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -1202,35 +1202,12 @@ class Data_controller extends CI_Controller {
         }
     	 echo json_encode($output);
 	}
-	
-	
-	
-	
-	public function LoadSelected_memberlist()
-	{ 	
-		try {
-			$data['result']=$this->database->GetAllActiveRecord('customer');  
-			
-			
-			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
-	        'success' =>true
-	    	);
-		} catch (Exception $ex) {
-            $output = array(
-	        'msg'=> $ex->getMessage(),
-	        'success' => false
-	    	);
-        }
-    	 echo json_encode($output);
-	}
-	
-	public function loadMemberlist_for_shg_group()
+		public function loadMember_list_group()
 	{ 	
 		try {
 			$data['result']=$this->database->GetAllActiveRecord('customer');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Memberlist_for_shg_group_table.php',$data,true),
+	        'html'=>$this->load->view('datafragment/dataTable/Memlist_group_table',$data, true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -1496,49 +1473,6 @@ class Data_controller extends CI_Controller {
 	}
 
 	
-	/*CUSTOMER PROFILE TABLE LOAD -- Written by William*/
-	public function loadCustomerProfile()
-	{
-	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('customer');
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/dataTable/CustomerProfile_table',$data, true),
-	            'success' =>true
-	        );
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
-	
-	/*VIEW CUSTOMER PROFILE -- Written by William*/
-	public function ViewCustomerProfile()
-	{
-	    try {
-	        $Id =  $this->input->post('reqId',true);
-	        if($Id == ''){
-	            $output = array(
-	                'msg'=> 'Resquest Error !!!',
-	                'success' =>false
-	            );
-	        }else{
-	            $data = $this->database->GetRecordById($Id,'customer');
-	            $output = array(
-	                'json'=>$data,
-	                'success' =>true
-	            );
-	        }
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	
 	
@@ -1572,23 +1506,31 @@ class Data_controller extends CI_Controller {
 	{
 		$_POST = json_decode(trim(file_get_contents('php://input')), true);
 		try {
-			$checkboxs =  $this->input->post('pageCheckBox',true);
-			$roles =  $this->input->post('roleId',true);
+			$checkboxs =  $this->input->post('pageCheckBox[]',true);
+			$roles =  $this->input->post('roleId[]',true);
 			
+			if($roles[0] == ''){
+				$output = array(
+						'msg'=> 'Resquest Error !!!',
+						'success' =>false
+				);
+				echo json_encode($output);
+			}else{
 				$result=$this->database->Update_page_role($roles,$checkboxs);
 				if($result['code'] == 1)
 				{
 					$this->loadPageByRole($roles[0]);
 				}
 				
-			
+			}
 		} catch (Exception $ex) {
 			$output = array(
 					'msg'=> $ex->getMessage(),
 					'success' => false
 			);
+			echo json_encode($output);
 		}
-		echo json_encode($output);
+		
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
 }

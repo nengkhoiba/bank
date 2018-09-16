@@ -666,25 +666,24 @@ class Data_model extends CI_Model{
 		
 	}
 	function Update_page_role($role,$checkboxs){
+		
 		$this->db->trans_begin();
 		
 		$roleId=$role[0];
+		$data = array(
+				'isActive'=>  0
+		);
+		$where = array(
+				'role_id'   => $roleId
+		);
+		$this->db->where($where);
+		$this->db->update('site_manager',$data);
 		foreach ($checkboxs AS $page){
-			
-			
-			$data = array(
-					'isActive'=>  0,
-			);
-			$where = array(
-					'role_id'   => $roleId
-			);
-			$this->db->where($where);
-			$this->db->update('site_manager',$data);
 			$sqlCheck="SELECT ID FROM site_manager WHERE page_id='$page' AND role_id='$roleId'";
 			$queryCheck=$this->db->query($sqlCheck);
 			if($queryCheck->num_rows()>0){
 			$data = array(
-						'isActive'=>  1,
+						'isActive'=>  1
 				);
 			$where = array(
 					'page_id' => $page,
@@ -696,7 +695,7 @@ class Data_model extends CI_Model{
 				$data = array(
 						'page_id'	=>  $page ,
 						'role_id'	=>  $roleId ,
-						'isActive'=>  1,
+						'isActive'=>  1
 				);
 				$this->db->insert('site_manager', $data);
 				
