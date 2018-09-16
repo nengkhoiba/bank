@@ -136,7 +136,9 @@
 
 	
 	
-    function addShgmasterform($btn){  
+    function addShgmasterform($btn)
+	{ 
+		
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
