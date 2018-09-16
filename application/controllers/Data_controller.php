@@ -1496,5 +1496,48 @@ class Data_controller extends CI_Controller {
 	}
 
 	
+	/*CUSTOMER PROFILE TABLE LOAD -- Written by William*/
+	public function loadCustomerProfile()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerProfile_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*VIEW CUSTOMER PROFILE -- Written by William*/
+	public function ViewCustomerProfile()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'customer');
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
 }
