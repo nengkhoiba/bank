@@ -47,7 +47,6 @@ class Login extends CI_Controller {
                 $Branch_id = $authentication_data [0]->Branch_id;
                 $Financial_id = $authentication_data [0]->Financial_id;
                 $siteMap= $this->loginmodel->get_sitemap ($RoleID);
-                
                 $this->session->set_userdata ( 'loginStatus', TRUE );
                 $this->session->set_userdata ( 'userId', $EmpId );
                 $this->session->set_userdata ( 'username', $EmpName );

@@ -27,8 +27,9 @@ class Login_model extends CI_Model
 	}
 	public function get_sitemap($roleid){
 		$sql="SELECT  
+				page_table.ID AS ID,
 				page_table.category AS PageCategory,
-				page_table.sub_category AS PageSubCategory,
+				page_table.IsDropDown AS IsDropDown,
 				page_table.page_title AS PageTitle,
 				page_table.page_icon AS PageIcon,
 				page_table.page_slug AS PageSlug,
