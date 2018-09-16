@@ -10,7 +10,7 @@ class Login_model extends CI_Model
 	{
 		$check_user_exist = "SELECT 
 		emp.ID AS EmpID,
-		role.role AS Role,
+		role.Name AS Role,
 		role.ID AS RoleID,
 		empLogin.password AS Password,
 		emp.name AS EmpName,
