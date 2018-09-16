@@ -1,4 +1,4 @@
-<table id="member_list_group" class="table table-hover" style="font-size:13px">
+<table id="customer" class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
             	<th>Sl No</th>
@@ -8,9 +8,7 @@
                 <th>Sex</th>               
                 <th>Aadhaar No</th>
                 <th>District</th>
-                <th>
-					Action
-            	</th>
+                <th>View Profile</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +22,8 @@
                 <td><?php echo $mem_data['aadhaar_no']?></td>
                 <td><?php echo $mem_data['district']?></td>
                 <td>
-					 <a onclick="loadMember_list_group()"  style="color:#fff" class="btn btn-sm btn-success">View profile</a>
+            	<button onclick="viewCustomerProfile($(this))" value="<?php echo $mem_data['ID']?>" class="btn btn-sm btn-danger" style="" type="button">View profile</button>
+            	
 				</td>
 				</tr>
         <?php $count ++;  } ?>

@@ -1186,12 +1186,12 @@ class Data_controller extends CI_Controller {
 	//SHG GROUP MEMBER ADD START HERE
 
 				/*Self Helf Group SHG MEMBER ADD SECTION LOAD*/
-	public function loadManageshg()
+	public function loadShggrouplist()
 	{ 	
 		try {
 			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Mem_shg_group_select_table',$data, true),
+	        'html'=>$this->load->view('datafragment/dataTable/Shg_group_list_table',$data, true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -1202,12 +1202,35 @@ class Data_controller extends CI_Controller {
         }
     	 echo json_encode($output);
 	}
-		public function loadMember_list_group()
+	
+	
+	
+	
+	public function LoadSelected_memberlist()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			
+			
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	public function loadMemberlist_for_shg_group()
 	{ 	
 		try {
 			$data['result']=$this->database->GetAllActiveRecord('customer');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Memlist_group_table',$data, true),
+	        'html'=>$this->load->view('datafragment/dataTable/Memberlist_for_shg_group_table.php',$data,true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -1473,6 +1496,49 @@ class Data_controller extends CI_Controller {
 	}
 
 	
+	/*CUSTOMER PROFILE TABLE LOAD -- Written by William*/
+	public function loadCustomerProfile()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerProfile_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*VIEW CUSTOMER PROFILE -- Written by William*/
+	public function ViewCustomerProfile()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'customer');
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
 	
 	

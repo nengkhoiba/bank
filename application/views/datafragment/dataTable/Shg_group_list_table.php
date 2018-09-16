@@ -1,4 +1,4 @@
-<table id="manageshg" class="table table-hover" style="font-size:13px">
+<table id="shg_group_table" class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
                 <th>Sl. No.</th>
@@ -22,7 +22,7 @@
 				<td><?php echo $shgmaster_data['Member_count'];?></td>
 				<td><?php echo $shgmaster_data['Branch_id'];?></td>
 				<td> 
-					<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" type="button" oMnclick="showGroupModel(<?php echo $shgmaster_data['ID'];?>)">View member</button>
+				  <a onclick="LoadSelected_memberlist()"  style="color:#fff" class="btn btn-sm btn-danger">View member</a>
 				</td>
 				</tr>
         <?php $count ++; } ?>

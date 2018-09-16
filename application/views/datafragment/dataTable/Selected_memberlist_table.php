@@ -1,4 +1,4 @@
-<table id="member_list_group" class="table table-hover" style="font-size:13px">
+<table id="selected_member_data_table" class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
             	<th>Sl No</th>
@@ -8,8 +8,13 @@
                 <th>Sex</th>               
                 <th>Aadhaar No</th>
                 <th>District</th>
+				<th>Action</th>
                 <th>
-					Action
+				<div class="animated-checkbox">
+              	<label>
+                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Select All</span>
+              	</label>
+            	</div>
             	</th>
             </tr>
         </thead>
@@ -23,8 +28,16 @@
                 <td><?php echo $mem_data['sex']?></td>
                 <td><?php echo $mem_data['aadhaar_no']?></td>
                 <td><?php echo $mem_data['district']?></td>
+				<td> 
+					<a onclick="loadMember_list_group()"  style="color:#fff" class="btn btn-sm btn-success">View profile</a>
+				</td>
                 <td>
-					 <a onclick="loadMember_list_group()"  style="color:#fff" class="btn btn-sm btn-success">View profile</a>
+				<div  class="animated-checkbox" style="display: inline-block;">
+					<label>
+						<input class="checkbox" type="checkbox" value="<?php echo $mem_data['ID']?>"/><span class="label-text"></span>
+					</label>
+            	</div>
+            		 
 				</td>
 				</tr>
         <?php $count ++;  } ?>
