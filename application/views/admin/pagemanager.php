@@ -126,7 +126,7 @@ function loadRole()
     			   if (response.success)
     	           { 	
     				$('#postType').val(response.json[0].ID);
-				    $('#role_title').val(response.json[0].role);
+				    $('#role_title').val(response.json[0].Name);
    				    $('#formContainer').show();
                      $(window).scrollTop(0);
     	           } else

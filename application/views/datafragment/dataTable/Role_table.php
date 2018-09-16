@@ -16,7 +16,7 @@
         <?php $count = 1;  foreach ( $result as $role_data) { ?>
             <tr>
                 <td><?php echo $count?></td>
-                <td><?php echo $role_data['role']?></td>
+                <td><?php echo $role_data['Name']?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>

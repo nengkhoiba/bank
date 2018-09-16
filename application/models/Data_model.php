@@ -184,7 +184,7 @@ class Data_model extends CI_Model{
 	function addRoleModel( $role_title )
 	{
          $data = array(
-             'role'	=>  $role_title,
+             'Name'	=>  $role_title,
              'isActive'=>  1,
          );
 	         
@@ -212,7 +212,7 @@ class Data_model extends CI_Model{
             'role'	=>  $role_title 
         );
 	    $this->db->where('ID',$role_id);
-	    $this->db->update('role',$data);
+	    $this->db->update('Name',$data);
 	    
 	    if($this->db->trans_status() === FALSE)
 	    {
