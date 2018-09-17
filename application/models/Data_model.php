@@ -26,6 +26,11 @@ class Data_model extends CI_Model{
          $query = $this->db->get_where($tabName, array('ID' => $id,'IsActive' => 1)); 
          return $query->result_array();  
     }
+    function GetRecordByForiegnKey($id,$fieldName,$tabName)
+    {
+        $query = $this->db->get_where($tabName, array($fieldName => $id,'IsActive' => 1));
+        return $query->result_array();
+    }    
     function RemoveRecordById($ArrIds,$tblName)
 	{ 
 		foreach ($ArrIds as $id)

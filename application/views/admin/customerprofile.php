@@ -29,8 +29,8 @@
                     <b>Aadhaar No. : </b><span id="customer_aadhaar"></span><br>
                     <b>Husband/Father Name : </b><span id="customer_husband"></span><br>
                     <b> Permanent Address : </b><span id="customer_address"></span><br>
-                    <b>Rural : </b><input id="customer_rural" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>Urban : </b><input id="customer_urban" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Rural : </b><input id="customer_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Urban : </b><input id="customer_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <b>District :</b><span id="customer_district"></span><br>
                    <b> Contact No. : </b><span id="customer_contact"></span><br>
                    <b> Work/Business/Profession : </b><span id="customer_work"></span></address>
@@ -45,8 +45,8 @@
                   <b>Name : </b><span id="customer_nominee_name"></span><br>
                   <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"></span><br>
                   <b> Permanent Address : </b><span id="customer_nominee_address"></span><br>
-                  <b>Rural : </b><input id="customer_nominee_rural" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <b>Urban : </b><input id="customer_nominee_urban" type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
                   <b> Contact No. : </b><span id="customer_nominee_contact"></span> 
                 </div>
@@ -64,39 +64,10 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td><?php echo '1';?></td>
-                        <td>Photo</td>
-                        <td><?php echo 'application/pdf';?></td>
-                        <td><?php echo 'Admin';?></td>
-                        <td><?php echo '12/08/2018';?></td>
-                        <td><button onclick="updateOrders(2)" class="btn btn-sm btn-danger" type="button">View</button></td>
-                      </tr>
-                      <tr>
-                        <td><?php echo '2';?></td>
-                        <td>PAN</td>
-                        <td><?php echo 'application/jpg';?></td>
-                        <td><?php echo 'Admin';?></td>
-                        <td><?php echo '12/08/2018';?></td>
-                        <td><button onclick="updateOrders(2)" class="btn btn-sm btn-danger" type="button">View</button></td>
-                      </tr>
-                      <tr>
-                        <td><?php echo '2';?></td>
-                        <td>Aadhaar</td>
-                        <td><?php echo 'application/jpg';?></td>
-                        <td><?php echo 'Admin';?></td>
-                        <td><?php echo '12/08/2018';?></td>
-                        <td><button onclick="updateOrders(2)" class="btn btn-sm btn-danger" type="button">View</button></td>
-                      </tr>
-                      <tr>
-                        <td><?php echo '2';?></td>
-                        <td>Voter</td>
-                        <td><?php echo 'application/jpg';?></td>
-                        <td><?php echo 'Admin';?></td>
-                        <td><?php echo '12/08/2018';?></td>
-                        <td><button onclick="updateOrders(2)" class="btn btn-sm btn-danger" type="button">View</button></td>
-                      </tr>
+                    <tbody id="cusDocument">
+                    
+                      
+                      
                     </tbody>
                   </table>
                 </div>
@@ -222,9 +193,9 @@
     				 $('#customer_nominee_district').html(response.json[0].nominee_district);
     				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
 
-    		
+    				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {
-    				        console.log(response.json1);
+    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><button onclick="viewCustomerProfile($(this))" value="'+value.ID+'" class="btn btn-sm btn-danger" type="button">View</button></td></tr>');
     				    });
     				 
                      $(window).scrollTop(0);

@@ -1502,7 +1502,7 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data = $this->database->GetRecordById($Id,'customer');
-	            $data1 = $this->database->GetRecordById($Id,'customer_document');
+	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
 	            $output = array(
 	                'json'=>$data,
 	                'json1'=>$data1,
