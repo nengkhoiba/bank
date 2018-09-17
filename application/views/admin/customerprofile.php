@@ -195,7 +195,7 @@
 
     				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {
-    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><button onclick="viewCustomerProfile($(this))" value="'+value.ID+'" class="btn btn-sm btn-danger" type="button">View</button></td></tr>');
+    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><button onclick="viewCustomerProfile($(this))" value="'+value.ID+'" class="btn btn-sm btn-danger" type="button">View Document</button></td></tr>');
     				    });
     				 
                      $(window).scrollTop(0);
