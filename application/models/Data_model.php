@@ -40,6 +40,26 @@ class Data_model extends CI_Model{
 			$this->db->update($tblName); //Set your table name
 		}
 	}
+	function UpdateRecordById($Id,$Val,$tblName)
+	{
+	    $data = array(
+	        'status'=>  $Val
+	    );
+	    $this->db->where('ID',$Id);
+	    $this->db->update('customer',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing account status", "New Account Status is ".$Val."");
+	        return array('code' => 1);
+	    }
+	}
 	function CheckAadhaarNo($aadhaar_no)
 	{
 	    $query = $this->db->get_where('customer', array('aadhaar_no' => $aadhaar_no));

@@ -1517,6 +1517,26 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	// 	UPDATE ACCOUNT STATUS-- Written by William
+	public function updateStatus()
+	{
+	    
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $Val = $this->input->post('statusVal',true);
+	        $this->database->UpdateRecordById($Id,$Val,'customer');
+	        $data = $this->database->GetRecordById($Id,'customer');
+	        $output = array('json'=>$data,'success' =>true, 'msg'=> "Update sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
 	
 	
