@@ -1186,6 +1186,63 @@ class Data_controller extends CI_Controller {
 	//SHG GROUP MEMBER ADD START HERE
 
 				/*Self Helf Group SHG MEMBER ADD SECTION LOAD*/
+	public function loadShggrouplist()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Shg_group_list_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+		public function LoadSelected_memberlist()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			
+			
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+		public function loadMemberlist_for_shg_group()
+	{ 	
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Memberlist_for_shg_group_table.php',$data,true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	
+	
+	//SHG GROUP MEMBER ADD START HERE
+
+				/*Self Helf Group SHG MEMBER ADD SECTION LOAD*/
 	public function loadManageshg()
 	{ 	
 		try {
