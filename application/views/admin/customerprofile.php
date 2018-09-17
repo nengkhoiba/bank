@@ -75,9 +75,9 @@
 		<hr> 
     <form class="row" id="OrdersFormsUpdate">
                     <div class="form-group col-md-8 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
-                      <button onclick="updateOrders(2)" class="btn btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Verified</button>
+                      <button onclick="updateOrders(2)" class="btn btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Verify</button>
                       &nbsp;&nbsp;&nbsp;
-                      <button onclick="updateOrders(6)" class="btn btn-danger" type="button"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reject Order</button>
+                      <button onclick="updateOrders(6)" class="btn btn-danger" type="button"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reject</button>
                     </div>
                     <div class="col-4 text-right">
                       <button class="btn btn-primary" onclick="printDiv('printarea')"><i class="fa fa-print"></i> Print</button>
