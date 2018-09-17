@@ -8,7 +8,7 @@
                 <th>Sex</th>               
                 <th>Aadhaar No</th>
                 <th>District</th>
-                <th>Upload Document</th>
+                <th>Upload</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <td><?php echo $mem_data['district']?></td>
                 <td>
             	<button onclick="addDocForm($(this))" value="<?php echo $mem_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-upload"></i></button>
-            	<button onclick="" value="<?php echo $mem_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
+            	
 				</td>
 				</tr>
         <?php $count ++;  } ?>

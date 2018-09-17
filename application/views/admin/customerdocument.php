@@ -171,6 +171,8 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
+				   $('#customer_doc_type').val('');
+				   $('#file').val('');
 				   $('#formContainer').hide(); 
 				   loadCustomer();
 	           } else
