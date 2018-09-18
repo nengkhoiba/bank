@@ -20,6 +20,38 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
+            <div class="row invoice-info" style="border: 1px solid #ced4da; margin: 0px; padding-top: 10px;">
+                <div class="col-4">
+                <b>Customer ID : <span id="customer_ID"></span><br><br></b>
+                    <b><address>Name : </b><span id="customer_name"></span><br>
+                    <b>Date of Birth : </b><span id="customer_dob"></span><br>
+                    <b>Gender : </b><span id="customer_gender"></span><br>
+                    <b>Aadhaar No. : </b><span id="customer_aadhaar"></span><br>
+                    <b>Husband/Father Name : </b><span id="customer_husband"></span><br>
+                    <b> Permanent Address : </b><span id="customer_address"></span><br>
+                    <b>Rural : </b><input id="customer_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Urban : </b><input id="customer_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>District :</b><span id="customer_district"></span><br>
+                   <b> Contact No. : </b><span id="customer_contact"></span><br>
+                   <b> Work/Business/Profession : </b><span id="customer_work"></span></address>
+                </div>
+                <div class="col-4">
+                <b>Bank Information </b><br><br>
+                  <b>Account No. : </b><span id="customer_bank_ac_no"></span><br>
+                  <b>Branch : </b><span id="customer_bank_branch"></span>
+                </div>
+                <div class="col-4">
+                <b>Nominee Information </b><br><br>
+                  <b>Name : </b><span id="customer_nominee_name"></span><br>
+                  <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"></span><br>
+                  <b> Permanent Address : </b><span id="customer_nominee_address"></span><br>
+                  <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>District :</b><span id="customer_nominee_district"></span><br>
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br><br>
+                  <b> Account Status : </b><span id="customer_account_status"></span> 
+                </div>
+              </div>
             <?php echo form_open_multipart('',array('id'=>'CustomerDocUploadForm','class'=>'row'))?>
               <input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
@@ -148,6 +180,40 @@
     			   if (response.success)
     	           { 	
     				 $('#postType').val(response.json[0].ID);
+    				 $('#customer_ID').html(response.json[0].ID);
+    				 $('#customer_account_status').html(response.json[0].accStatus);
+    				 $('#customer_name').html(response.json[0].name);
+    				 $('#customer_dob').html(response.json[0].dob);
+    				 $('#customer_gender').html(response.json[0].sex);
+    				 $('#customer_aadhaar').html(response.json[0].aadhaar_no);
+    				 $('#customer_husband').html(response.json[0].husband_name);
+    				 $('#customer_address').html(response.json[0].parmanent_address);
+
+    				 $('#customer_rural').attr('checked', false);
+    				 $('#customer_urban').attr('checked', false);
+    				 if(response.json[0].rural == 1)
+        			 {$('#customer_rural').attr('checked', true);}
+    				 if(response.json[0].urban == 1)
+        			 {$('#customer_urban').attr('checked', true);}
+        			 
+    				 $('#customer_district').html(response.json[0].district);
+    				 $('#customer_contact').html(response.json[0].contact_no);
+    				 $('#customer_work').html(response.json[0].work);
+    				 $('#customer_bank_ac_no').html(response.json[0].bank_ac_no);
+    				 $('#customer_bank_branch').html(response.json[0].bank_branch);
+
+    				 $('#customer_nominee_name').html(response.json[0].nominee_name);
+    				 $('#customer_nominee_aadhaar_no').html(response.json[0].nominee_aadhaar_no);
+    				 $('#customer_nominee_address').html(response.json[0].nominee_permanent_address);
+
+    				 $('#customer_nominee_rural').attr('checked', false);
+    				 $('#customer_nominee_urban').attr('checked', false);
+    				 if(response.json[0].nominee_rural == 1)
+        			 {$('#customer_nominee_rural').attr('checked', true);}
+    				 if(response.json[0].nominee_urban == 1)
+        			 {$('#customer_nominee_urban').attr('checked', true);}
+    				 $('#customer_nominee_district').html(response.json[0].nominee_district);
+    				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
     				 loadDropDown('','document_type','#customer_doc_type');
     				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {

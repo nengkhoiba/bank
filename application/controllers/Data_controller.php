@@ -1475,7 +1475,7 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data = $this->database->GetRecordById($Id,'customer');
+	            $data = $this->database->GetCustomerRecordById($Id,'customer');
 	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
 	            $output = array(
 	                'json'=>$data,
