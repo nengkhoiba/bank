@@ -20,7 +20,7 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-              <div class="row invoice-info">
+              <div class="row invoice-info" style="border: 1px solid #ced4da; margin: 0px; padding-top: 10px;">
                 <div class="col-4">
                 <b>Customer ID : <span id="customer_ID"></span><br><br></b>
                     <b><address>Name : </b><span id="customer_name"></span><br>
@@ -52,6 +52,7 @@
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
+              <br>
               <div class="row">
                 <div class="col-12 table-responsive">
                   <table class="table table-striped">
