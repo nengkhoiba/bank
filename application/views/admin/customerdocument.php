@@ -49,7 +49,7 @@
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
                   <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
-                  <b> Account Number : </b><span id="customer_account_no">N/A</span><br>
+                  <b> Account Number : </b><span id="customer_account_no"></span><br>
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
