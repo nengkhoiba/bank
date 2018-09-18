@@ -49,7 +49,7 @@
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
                   <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
-                  <b> Account Number : </b><span id="customer_account_no">N/A</span><br>                  
+                  <b> Account Number : </b><span id="customer_account_no"></span><br>                  
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
@@ -166,6 +166,7 @@
     	           {
     				 $('#customer_ID').html(response.json[0].ID);
     				 $('#customer_account_status').html(response.json[0].accStatus);
+    				 $('#customer_account_no').html(response.json[0].accNo);
     				 $('#customer_name').html(response.json[0].name);
     				 $('#customer_dob').html(response.json[0].dob);
     				 $('#customer_gender').html(response.json[0].sex);
@@ -212,7 +213,10 @@
         			 }
     				 else if(response.json[0].status == 2)
     				 {
-    					$('#generateAcc').show();
+    					 if(response.json[0].accNo==null)
+        				 {
+    					 $('#generateAcc').show();
+        				 }
     					$('#generateAcc').attr('onclick','generateAccNo('+response.json[0].ID+')');
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Activate');
@@ -284,7 +288,11 @@
         			 }
     				 else if(response.json[0].status == 2)
     				 {
-    					$('#generateAcc').show();
+        				 if(response.json[0].accNo==null)
+            				 {
+        					 $('#generateAcc').show();
+            				 }
+    					
     					$('#generateAcc').attr('onclick','generateAccNo('+response.json[0].ID+')');
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
@@ -316,6 +324,7 @@
     				 
                      $(window).scrollTop(0);
                      $('#formContainer').show();
+                     SetSucessMessageBox('Success', response.msg)
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -347,11 +356,19 @@
     			   if (response.success)
     	           {
     				 $('#customer_account_no').html(response.json[0].accNo);
-    				 $('#generateAcc').hide();
+    				 if(response.json[0].accNo==null)
+    				 {
+					 $('#generateAcc').show();
+    				 }
+    				 else
+        				 {
+        				 $('#generateAcc').hide();
+        				 }
     				 
     				    				 
                      $(window).scrollTop(0);
                      $('#formContainer').show();
+                     SetSucessMessageBox('Success', response.msg)
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
