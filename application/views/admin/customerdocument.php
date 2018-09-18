@@ -53,6 +53,7 @@
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
+              <br>
             <?php echo form_open_multipart('',array('id'=>'CustomerDocUploadForm','class'=>'row'))?>
               <input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
