@@ -1596,6 +1596,36 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	// 	GENERATE ACCOUNT NUMBER-- Written by William
+	public function generateAccNo()
+	{
+	    
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $accStatus = $this->database->GetAccountStatusById($Id,'customer_account');
+	        if(sizeof ( $accStatus ) == 1)
+	        {
+	            $output = array(
+	                'msg'=> 'Account already generated !!',
+	                'success' =>false
+	            );
+	        }
+	        else
+	        {
+    	        $this->database->GenerateAccountById($Id,'customer_account');
+    	        $data = $this->database->GetCustomerRecordById($Id,'customer');
+    	        $output = array('json'=>$data,'success' =>true, 'msg'=> "Generate sucessfull");
+	        }
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
 	
 	

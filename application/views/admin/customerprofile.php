@@ -48,7 +48,8 @@
                   <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
-                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br><br>
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
+                  <b> Account Number : </b><span id="customer_account_no">N/A</span><br>                  
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
@@ -77,6 +78,8 @@
 		<hr> 
     <form class="row" id="OrdersFormsUpdate">
                     <div class="form-group col-md-8 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
+                      <button id="generateAcc" style="display: none" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate Account No</button>
+                      &nbsp;&nbsp;&nbsp;
                       <button id="btn1" class="btn btn-sm btn-success" type="button"></button>
                       &nbsp;&nbsp;&nbsp;
                       <button id="btn2" class="btn btn-sm btn-success" type="button"></button>
@@ -203,32 +206,39 @@
 
     				 if(response.json[0].status == 1)
         			 {
+    					$('#generateAcc').hide();
             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',2)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Verify');
         			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
         			 }
     				 else if(response.json[0].status == 2)
     				 {
+    					$('#generateAcc').show();
+    					$('#generateAcc').attr('onclick','generateAccNo('+response.json[0].ID+')');
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
-         			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
+         			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Activate');
          			 }
     				 else if(response.json[0].status == 3)
     				 {
-             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
+    					$('#generateAcc').hide();
+             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Activate');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 }
     				 else if(response.json[0].status == 4)
     				 {
+    					$('#generateAcc').hide();
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',6)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Close');
          			 }
     				 else if(response.json[0].status == 5)
     				 {
-             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
+    					$('#generateAcc').hide();
+             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Activate');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',6)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Close');
          			 }
     				 else if(response.json[0].status == 6)
     				 {
-    					 $('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
+    					 $('#generateAcc').hide();
+    					 $('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Activate');
           			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 }
     				 
@@ -268,35 +278,78 @@
     				 
     				 if(response.json[0].status == 1)
         			 {
+    					$('#generateAcc').hide();
             			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',2)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Verify');
         			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
         			 }
     				 else if(response.json[0].status == 2)
     				 {
+    					$('#generateAcc').show();
+    					$('#generateAcc').attr('onclick','generateAccNo('+response.json[0].ID+')');
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',3)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Reject');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
          			 }
     				 else if(response.json[0].status == 3)
     				 {
+        				$('#generateAcc').hide();
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 }
     				 else if(response.json[0].status == 4)
     				 {
+    					$('#generateAcc').hide();
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',6)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Close');
          			 }
     				 else if(response.json[0].status == 5)
     				 {
+    					$('#generateAcc').hide();
              			$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
          			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',6)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Close');
          			 }
     				 else if(response.json[0].status == 6)
     				 {
-    					 $('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
+    					$('#generateAcc').hide();
+    					$('#btn1').attr('onclick','updateStatus('+response.json[0].ID+',4)'); $('#btn1').html('<i class="fa fa-fw fa-lg fa-check-circle"></i>Active');
           			 	$('#btn2').attr('onclick','updateStatus('+response.json[0].ID+',5)'); $('#btn2').html('<i class="fa fa-fw fa-lg fa-times-circle"></i>Block');
          			 }
     				 
+                     $(window).scrollTop(0);
+                     $('#formContainer').show();
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
+
+    function generateAccNo($reqestId){ 
+    	var url = '<?php echo base_url();?>index.php/data_controller/generateAccNo';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           {
+    				 $('#customer_account_no').html(response.json[0].accNo);
+    				 $('#generateAcc').hide();
+    				 
+    				    				 
                      $(window).scrollTop(0);
                      $('#formContainer').show();
     	           } else

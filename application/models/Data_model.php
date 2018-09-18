@@ -1,6 +1,21 @@
 <?php
 class Data_model extends CI_Model{
 	
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->helper('date');
+        if($this->session->userdata('loginStatus')){
+            $GLOBALS['branch_id']=$this->session->userdata('Branch_id');
+            $GLOBALS['financial_id']=$this->session->userdata('Financial_id');
+            $GLOBALS['Added_by']=$this->session->userdata('userId');
+        }else{
+            $output = array('success' =>false, 'msg'=> "EXP");
+            echo json_encode($output);
+            return;
+        }
+    }
+    
     // COMMON CODE START HERE  -- Written by William
 
     function GetAllRecord($tabName)
@@ -64,6 +79,66 @@ class Data_model extends CI_Model{
 	{
 	    $query = $this->db->get_where('customer', array('aadhaar_no' => $aadhaar_no));
 	    return $query->result ();
+	}
+	
+	function GetAccountStatusById($Id,$tabName)
+	{
+	    //data is retrive from this query
+	    $query = $this->db->get_where($tabName, array('Cus_id' => $Id));
+	    return $query->result_array();
+	} 
+	
+	/*GENERATE CUSTOMER ACCOUNT NUMBER */
+	function GenerateAccountById( $Id,$tabName )
+	{	
+	    $date = new \Datetime('now');
+	    $accountNo = $this->generateGetAccountNo($GLOBALS['financial_id'], $GLOBALS['branch_id']);
+	    
+	    $data = array(
+	        'Cus_id'	=>  $Id,
+	        'Acc_no'	=>  $accountNo,
+	        'Branch_id'	=>  $GLOBALS['branch_id'],
+	        'Added_by'	=>  $GLOBALS['Added_by'],
+	        'Added_on'	=>   date('Y-m-d H:i:s',now()),
+	        'isActive'=>  1,
+	    );
+	    
+	    $this->db->insert($tabName, $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Generate new customer account number", "A/c No ".$accountNo." is generated.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	private function generateGetAccountNo($financialYearId,$branchId){
+	    $accountNo="";
+	    $sql="SELECT YEAR(NOW()) AS FinancialYear";
+	    $yearQuery=$this->db->query($sql);
+	    $yearResult=$yearQuery->result_array();
+	    $year=$yearResult[0]['FinancialYear'];
+	    
+	    $Branchquery = $this->db->select('Branch_code')
+	    ->get_where('branch', array('ID' => $GLOBALS['branch_id']));
+	    $BranchResult=$Branchquery->result_array();
+	    $BranchCode = $BranchResult[0]['Branch_code'];
+	    $this->db->select('COUNT(ID) AS AccountCount')
+	    ->from('customer_account')
+	    ->where(array('Branch_id' => $branchId));
+	    $query = $this->db->get();
+	    $Result=$query->result_array();
+	    $Count=$Result[0]['AccountCount'];
+	    
+	    $accountNo=$BranchCode.$year.($Count+1);
+	    return $accountNo;
 	}
 	
 	function addLog($logtitle,$logDescription){
@@ -681,10 +756,12 @@ class Data_model extends CI_Model{
 	/*GET CUSTOMER DATA  -- Written by William */
 	function GetCustomerRecordById($id,$tabName)
 	{
-	    $sql = "SELECT account_status.Name as accStatus, customer.*
+	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, customer.*
 	    FROM customer
 	    LEFT JOIN account_status
 	    ON customer.status=account_status.ID
+        LEFT JOIN customer_account
+        ON customer_account.Cus_id=customer.ID
 	    WHERE customer.isActive = 1 AND customer.ID = $id";
 	    $query=$this->db->query($sql);
 	      
