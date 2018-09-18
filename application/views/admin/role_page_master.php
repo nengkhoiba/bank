@@ -51,6 +51,7 @@
                 
             		</ul>
             		<?php echo form_close() ?>
+					<br>
             		<button onclick="UpdatePage()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
                 </div>
             </div>
