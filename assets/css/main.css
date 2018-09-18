@@ -1698,7 +1698,8 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.45rem;
+  /*padding: 0.45rem;*/
+  padding:5px;
   border-top: 1px solid #dee2e6;
 }
 
