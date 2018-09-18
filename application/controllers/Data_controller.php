@@ -51,7 +51,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $tblName =  $this->input->post('tblName',true);
 	        $selectedVal =  $this->input->post('selectedVal',true);
-	        $data['result']=$this->database->GetAllRecord($tblName);
+	        $data['result']=$this->database->GetAllActiveRecord($tblName);
 	        $data['selectedVal']=$selectedVal;
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dropDown/Select_optionList',$data, true),
@@ -449,9 +449,9 @@ class Data_controller extends CI_Controller {
 	public function loadRole()
 	{ 	
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('role');  
+		//	$data['result']=$this->database->GetAllActiveRecord('role');  
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Role_table',$data, true),
+	        'html'=>$this->load->view('datafragment/dataTable/Role_table','', true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -1476,8 +1476,10 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data = $this->database->GetRecordById($Id,'customer');
+	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
 	            $output = array(
 	                'json'=>$data,
+	                'json1'=>$data1,
 	                'success' =>true
 	            );
 	        }
@@ -1558,7 +1560,7 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data = $this->database->GetRecordById($Id,'customer');
+	            $data = $this->database->GetCustomerRecordById($Id,'customer');
 	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
 	            $output = array(
 	                'json'=>$data,
@@ -1583,7 +1585,7 @@ class Data_controller extends CI_Controller {
 	        $Id = $this->input->post('reqId',true);
 	        $Val = $this->input->post('statusVal',true);
 	        $this->database->UpdateRecordById($Id,$Val,'customer');
-	        $data = $this->database->GetRecordById($Id,'customer');
+	        $data = $this->database->GetCustomerRecordById($Id,'customer');
 	        $output = array('json'=>$data,'success' =>true, 'msg'=> "Update sucessfull");
 	        
 	    } catch (Exception $ex) {

@@ -1,4 +1,4 @@
-<table id="role" class="table table-hover" style="font-size:13px">
+<table id="role" class="table table-hover" style="font-size:13px; width:100%">
         <thead style="background: #009688; color: #ffffff">
             <tr>
                 <th>Sl. No.</th>
@@ -12,21 +12,6 @@
             	</th>
             </tr>
         </thead>
-        <tbody>
-        <?php $count = 1;  foreach ( $result as $role_data) { ?>
-            <tr>
-                <td><?php echo $count?></td>
-                <td><?php echo $role_data['Name']?></td>
-                <td>
-				<div  class="animated-checkbox" style="display: inline-block;">
-              	<label>
-                <input class="checkbox" type="checkbox" value="<?php echo $role_data['ID']?>"><span class="label-text"></span>
-              	</label>
-            	</div>
-            	<button onclick="addRoleform($(this))" value="<?php echo $role_data['ID']?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button>
-				</td>
-				</tr>
-        <?php $count ++;} ?>
-        </tbody>
+    
        
     </table>

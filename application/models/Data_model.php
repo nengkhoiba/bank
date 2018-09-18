@@ -678,6 +678,24 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+	/*GET CUSTOMER DATA  -- Written by William */
+	function GetCustomerRecordById($id,$tabName)
+	{
+	    $sql = "SELECT account_status.Name as accStatus, customer.*
+	    FROM customer
+	    LEFT JOIN account_status
+	    ON customer.status=account_status.ID
+	    WHERE customer.isActive = 1 AND customer.ID = $id";
+	    $query=$this->db->query($sql);
+	      
+// 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
+// 	      ->from('customer')
+// 	      ->join('account_status', 'customer.status = account_status.ID', 'left')
+// 	      ->where_in('customer.isActive', 1)
+// 	      ->where_in('customer.ID', $id);
+	      
+	    return $query->result_array();
+	}
 
 	
 	/*PAGE MANAGER--Nengkhoiba*/

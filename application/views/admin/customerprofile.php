@@ -22,7 +22,7 @@
             <div class="tile-body">
               <div class="row invoice-info">
                 <div class="col-4">
-                <b>Customer ID : <span id="customer_ID"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Status : <span id="customer_account_status"></span><br><br></b>
+                <b>Customer ID : <span id="customer_ID"></span><br><br></b>
                     <b><address>Name : </b><span id="customer_name"></span><br>
                     <b>Date of Birth : </b><span id="customer_dob"></span><br>
                     <b>Gender : </b><span id="customer_gender"></span><br>
@@ -48,7 +48,8 @@
                   <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
-                  <b> Contact No. : </b><span id="customer_nominee_contact"></span> 
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br><br>
+                  <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
               <div class="row">
@@ -160,7 +161,7 @@
     			   if (response.success)
     	           {
     				 $('#customer_ID').html(response.json[0].ID);
-    				 $('#customer_account_status').html(response.json[0].status);
+    				 $('#customer_account_status').html(response.json[0].accStatus);
     				 $('#customer_name').html(response.json[0].name);
     				 $('#customer_dob').html(response.json[0].dob);
     				 $('#customer_gender').html(response.json[0].sex);
@@ -196,7 +197,7 @@
 
     				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {
-    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><button onclick="viewCustomerProfile($(this))" value="'+value.ID+'" class="btn btn-sm btn-danger" type="button">View Document</button></td></tr>');
+    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
     				    });
 
     				 if(response.json[0].status == 1)
@@ -262,7 +263,7 @@
     		  try{  	 
     			   if (response.success)
     	           {
-    				 $('#customer_account_status').html(response.json[0].status);
+    				 $('#customer_account_status').html(response.json[0].accStatus);
     				 
     				 if(response.json[0].status == 1)
         			 {

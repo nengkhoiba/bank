@@ -48,9 +48,34 @@
 		                </div>            
 		              <?php echo form_close() ?>
 		           </div>
+		           
+		           <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Sl No.</th>
+                        <th>Document Type</th>
+                        <th>File Type</th>
+                        <th>Uploaded By</th>
+                        <th>Uploaded On</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="cusDocument">
+                    
+                      
+                      
+                    </tbody>
+                  </table>
+                </div>
+		           
           </div>
-        </div> 
+        </div>
+        
+        
+         
       </div>
+   
      
       
       <div class="row">
@@ -124,6 +149,10 @@
     	           { 	
     				 $('#postType').val(response.json[0].ID);
     				 loadDropDown('','document_type','#customer_doc_type');
+    				 $('#cusDocument').empty();
+    				 $.each(response.json1, function (index, value) {
+    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
+    				    });
                      $(window).scrollTop(0);
                      $('#formContainer').show();
     	           } else

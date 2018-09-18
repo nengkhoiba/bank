@@ -77,7 +77,22 @@ function loadRole()
           if (response.success)
              { 
             $('#role_table').html(response.html);
-              $('#role').DataTable();
+            //  $('#role').DataTable();
+            var dataTable = $('#role').DataTable({  
+                "processing":true,  
+                "serverSide":true,  
+                "order":[],  
+                "ajax":{  
+                     url:"<?php echo site_url() . 'Table_server/fetch_item'; ?>",  
+                     type:"POST"  
+                },  
+                "columnDefs":[  
+                     {  
+                          "targets":[2],  
+                          "orderable":false,  
+                     },  
+                ],  
+           });
               
              } else
              { 
