@@ -83,7 +83,7 @@
 		              <?php echo form_close() ?>
 		           </div>
 		           
-		           <div class="col-12 table-responsive">
+		           <div class="table-responsive">
                   <table class="table table-striped">
                     <thead>
                       <tr>
