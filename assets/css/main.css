@@ -2015,28 +2015,28 @@ pre code {
 }
 
 .form-control:focus {
-  border-color: #3c8dbc !important;
+  border-color: #26a69a !important;
   box-shadow: none;
 }
 .form-group.has-success label {
   color: #00a65a;
 }
 .form-group.has-success .form-control {
-  border-color: #00a65a !important;
+  border-color: #26a69a !important;
   box-shadow: none;
 }
 .form-group.has-warning label {
   color: #f39c12;
 }
 .form-group.has-warning .form-control {
-  border-color: #f39c12 !important;
+  border-color: #26a69a !important;
   box-shadow: none;
 }
 .form-group.has-error label {
   color: #f56954;
 }
 .form-group.has-error .form-control {
-  border-color: #f56954 !important;
+  border-color: #26a69a !important;
   box-shadow: none;
 }
 
@@ -13741,8 +13741,8 @@ be a descendant of the grid when it is being dragged.
 .app-notification__title {
   padding: 8px 20px;
   text-align: center;
-  background-color: rgba(0, 150, 136, 0.4);
-  color: #333;
+  background-color: #26a69a;
+  color: #ffffff;
 }
 
 .app-notification__footer {
@@ -13800,7 +13800,7 @@ be a descendant of the grid when it is being dragged.
   top: 0;
   bottom: 0;
   left: 0;
-  padding-top: 70px;
+  padding-top: 60px;
   width: 230px;
   overflow: auto;
   z-index: 10;
@@ -13952,14 +13952,21 @@ be a descendant of the grid when it is being dragged.
       -ms-flex-align: center;
           align-items: center;
   padding: 5px 5px 5px 30px;
+  margin-top: 2px;
   font-size: 1em;
   color:#8a8989;
 }
 
 .treeview-item.active, .treeview-item:hover, .treeview-item:focus {
-  background: #009688;
+  background: #26a69a;
   text-decoration: none;
   color: #fff;
+  -webkit-transition: border-left-color 0.3s ease,
+ background-color 0.3s ease;
+  -o-transition: border-left-color 0.3s ease,
+ background-color 0.3s ease;
+  transition: border-left-color 0.3s ease,
+ background-color 0.3s ease;
 }
 
 .treeview-item .icon {
@@ -14233,6 +14240,7 @@ be a descendant of the grid when it is being dragged.
   margin-top: 0;
   margin-bottom: 20px;
   font-size: 1.5rem;
+  font-weight: light;
 }
 
 .tile .tile-title-w-btn {
@@ -14246,6 +14254,10 @@ be a descendant of the grid when it is being dragged.
       -ms-flex-align: center;
           align-items: center;
   margin-bottom: 20px;
+  color: #b7b7b7;
+      padding: 5px;
+    background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
 }
 
 .tile .tile-title-w-btn p {
@@ -14254,7 +14266,7 @@ be a descendant of the grid when it is being dragged.
 
 .tile .tile-title-w-btn .title {
   margin: 0;
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 .tile .tile-title-w-btn .side {
