@@ -9,12 +9,11 @@
              
            $this->load->model("Table_model");  
            $fetch_data = $this->Table_model->make_datatables_item();  
-           $data = array();  
-           $count = 0;
+           $data = array();
            foreach($fetch_data as $row)  
            {  
                $sub_array = array(); 
-               $sub_array[] = ++$count;
+               $sub_array[] = '';
                $sub_array[] = $row->Name;
                 $sub_array[] = '<div  class="animated-checkbox" style="display: inline-block;">
                 <label><input class="checkbox" type="checkbox" value="'.$row->ID.'"><span class="label-text"></span></label>

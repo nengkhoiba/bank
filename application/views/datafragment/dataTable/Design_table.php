@@ -1,5 +1,5 @@
-<table id="design" class="table table-hover" style="font-size:13px">
-        <thead style="background: #009688; color: #ffffff">
+<table id="design" class="table table-hover">
+        <thead>
             <tr>
                 <th>Sl. No.</th>
                 <th>Name</th>

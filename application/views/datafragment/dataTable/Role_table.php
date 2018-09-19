@@ -1,5 +1,5 @@
-<table id="role" class="table table-hover" style="font-size:13px; width:100%">
-        <thead style="background: #009688; color: #ffffff">
+<table id="role" class="table table-hover" style="width:100%">
+        <thead>
             <tr>
                 <th>Sl. No.</th>
                 <th>Name</th>

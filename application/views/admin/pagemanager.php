@@ -88,10 +88,14 @@ function loadRole()
                 },  
                 "columnDefs":[  
                      {  
-                          "targets":[2],  
+                          "targets":[0,2],  
                           "orderable":false,  
                      },  
-                ],  
+                ], 
+                "createdRow": function (row, data, index) {
+                    var info = dataTable.page.info(); 
+                    $('td', row).eq(0).html(index + 1 + info.page * info.length);
+                },
            });
               
              } else
