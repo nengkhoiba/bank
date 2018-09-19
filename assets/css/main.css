@@ -13953,13 +13953,13 @@ be a descendant of the grid when it is being dragged.
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 5px 5px 5px 20px;
+  padding: 5px 5px 5px 30px;
   font-size: 1em;
   color:#8a8989;
 }
 
 .treeview-item.active, .treeview-item:hover, .treeview-item:focus {
-  background: #26a69a;
+  background: #009688;
   text-decoration: none;
   color: #fff;
 }
@@ -14050,6 +14050,7 @@ be a descendant of the grid when it is being dragged.
     left: 50px;
     min-width: 180px;
     padding: 12px 0;
+    background: #f8f9fa;
     opacity: 0;
     border-bottom-right-radius: 4px;
     z-index: 9;
