@@ -271,6 +271,7 @@
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#customer_doc_type').val('');
 				   $('#file').val('');
+				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
 				   $('#formContainer').hide(); 
 				   loadCustomer();
 	           } else
