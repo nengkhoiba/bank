@@ -1626,6 +1626,24 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	/*CUSTOMER ADD DEPOSITE TABLE LOAD -- Written by William*/
+	public function loadCustomerAddDeposite()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerAddDeposite_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
 	
 	

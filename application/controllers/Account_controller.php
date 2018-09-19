@@ -56,6 +56,24 @@ class Account_controller extends CI_Controller {
         
     }
     
+    public function loadAccountLedgerDropDown()
+    {
+        try {
+            $data['result']=$this->account->GetAllActiveRecord('account_ledger');
+            $output = array(
+                'html'=>$this->load->view('datafragment/account/dropDown/Select_LedgerHead',$data, true),
+                'success' =>true
+            );
+        } catch (Exception $ex) {
+            $output = array(
+                'msg'=> $ex->getMessage(),
+                'success' => false
+            );
+        }
+        echo json_encode($output);
+        
+    }
+    
     /*ACCOUNT GROUP LOAD -- Written by William*/
     public function loadAccountGrp()
     {
