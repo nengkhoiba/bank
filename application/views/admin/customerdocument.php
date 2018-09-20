@@ -221,7 +221,7 @@
     				 $('#customer_doc_type').attr('onchange','checkDocumentType($(this),'+response.json[0].ID+')');
     				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {
-    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
+    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a><button onclick="updateDocument($(this))" value="'+value.ID+'"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-pencil"></i></button></td></tr>');
     				    });
                      $(window).scrollTop(0);
                      $('#formContainer').show();
