@@ -14267,6 +14267,7 @@ be a descendant of the grid when it is being dragged.
 .tile .tile-title-w-btn .title {
   margin: 0;
   font-size: 1em;
+  color: #666666;
 }
 
 .tile .tile-title-w-btn .side {
