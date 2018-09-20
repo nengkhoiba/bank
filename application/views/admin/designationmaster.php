@@ -85,7 +85,7 @@
              { 
             $('#design_table').html(response.html);
 //               $('#design').DataTable();
-$('#design').DataTable({dom: 'lBfrtip', buttons: ['copy', 'csv', 'excel', 'pdf', 'print']});
+$('#design').DataTable({dom: 'lBfrtip', buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']});
               
              } else
              { 
