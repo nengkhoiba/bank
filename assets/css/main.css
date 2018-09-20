@@ -15403,3 +15403,10 @@ be a descendant of the grid when it is being dragged.
     padding:0px 0px 0px 0px;
     outline: 0;
 }
+.dataTables_length{
+	float: left;
+}
+.dt-buttons{
+	float: left;
+	margin-left: 1rem;
+}
