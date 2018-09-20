@@ -271,6 +271,51 @@ class Data_controller extends CI_Controller {
                 $errorMSG = " Aadhaar No. is already used";
             }
 	}
+	
+	/* Check customer document type already exists or not */
+	public function checkDocumentType()
+	{
+	    
+	    
+	    try {
+	        $docVal =  $this->input->post('reqId',true);
+	        $cusId =  $this->input->post('cusId',true);
+	        if($docVal == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' => false
+	            );
+	        }else{
+	            $check = $this->database->CheckDocument($docVal,$cusId);
+	            if (sizeof ( $check ) == 1) {
+	                $output = array(
+	                    'msg'=> ' Document type is already uploaded !',
+	                    'success' => true
+	                );
+	            }
+	            else
+	            {
+	                $output = array(
+	                    'msg'=> 'Document type has been accepted',
+	                    'success' => false
+	                );
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	    
+	    $Id =  $this->input->post('reqId',true);
+	    $check = $this->database->CheckAadhaarNo($Id);
+	    if (sizeof ( $check ) == 1) {
+	        $errorMSG = " Aadhaar No. is already used";
+	    }
+	}
 
 	
 	public function loadEmp()
