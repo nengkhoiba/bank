@@ -80,9 +80,9 @@ class Data_model extends CI_Model{
 	    $query = $this->db->get_where('customer', array('aadhaar_no' => $aadhaar_no));
 	    return $query->result ();
 	}
-	function CheckDocument($docVal,$cusId)
+	function CheckDocument($docTypeVal,$cusId)
 	{
-	    $query = $this->db->get_where('customer_document', array('Cus_id' => $cusId,'doc_type' => $docVal));
+	    $query = $this->db->get_where('customer_document', array('Cus_id' => $cusId,'doc_type' => $docTypeVal));
 	    return $query->result ();
 	}
 	

@@ -278,25 +278,25 @@ class Data_controller extends CI_Controller {
 	    
 	    
 	    try {
-	        $docVal =  $this->input->post('reqId',true);
+	        $docTypeVal =  $this->input->post('reqId',true);
 	        $cusId =  $this->input->post('cusId',true);
-	        if($docVal == ''){
+	        if($docTypeVal == ''){
 	            $output = array(
 	                'msg'=> 'Resquest Error !!!',
 	                'success' => false
 	            );
 	        }else{
-	            $check = $this->database->CheckDocument($docVal,$cusId);
+	            $check = $this->database->CheckDocument($docTypeVal,$cusId);
 	            if (sizeof ( $check ) == 1) {
 	                $output = array(
-	                    'msg'=> ' Document type is already uploaded !',
+	                    'msg'=> ' Document is already uploaded !',
 	                    'success' => true
 	                );
 	            }
 	            else
 	            {
 	                $output = array(
-	                    'msg'=> 'Document type has been accepted',
+	                    'msg'=> 'Document has been accepted',
 	                    'success' => false
 	                );
 	            }

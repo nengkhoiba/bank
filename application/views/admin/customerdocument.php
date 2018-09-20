@@ -218,7 +218,7 @@
     				 $('#customer_nominee_district').html(response.json[0].nominee_district);
     				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
     				 loadDropDown('','document_type','#customer_doc_type');
-    				 $('#customer_doc_type').attr('onchange','checkDocumentType($(this)),'+response.json[0].ID+'');
+    				 $('#customer_doc_type').attr('onchange','checkDocumentType($(this),'+response.json[0].ID+')');
     				 $('#cusDocument').empty();
     				 $.each(response.json1, function (index, value) {
     					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
@@ -292,7 +292,8 @@
 		 });
 	}
 
-    function checkDocumentType($btn,$CustomerId){  
+    function checkDocumentType($btn,$CustomerId){ 
+
     	$reqestId =  $btn.val(); 
     	var url = '<?php echo base_url();?>index.php/data_controller/checkDocumentType';
     	StartInsideLoading();
@@ -307,8 +308,8 @@
     			   if (response.success)
     	           {
     			   SetWarningMessageBox('warning', response.msg);
-//     	           $('#member_aadhaar').val('');
-//     	           $('#member_aadhaar').focus();		           
+    			   $('#customer_doc_type').children('option[value = '+$reqestId+']').attr('disabled',true);
+    			   $('#customer_doc_type').val('');	           
     	           } else
     	           { 
     	               SetSucessMessageBox('success', response.msg);
