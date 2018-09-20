@@ -314,10 +314,11 @@ class Data_model extends CI_Model{
 	{ 
 	  
         $data = array(
-            'role'	=>  $role_title 
+            'Name'	=>  $role_title 
         );
+        
 	    $this->db->where('ID',$role_id);
-	    $this->db->update('Name',$data);
+	    $this->db->update('role',$data);
 	    
 	    if($this->db->trans_status() === FALSE)
 	    {
