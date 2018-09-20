@@ -11,7 +11,8 @@
       </div>
 	  
 	  <!-- Button trigger modal -->
-
+	
+	
 
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -21,8 +22,62 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			  </div>
 			  <div class="modal-body">
-			   
+			  
+			   <?php echo form_open_multipart('',array('id'=>'MasDesignForms','class'=>'row'))?>
+				
+					<div class="col-md-12">
+						<div class="app-search" align="right">
+							<input class="app-search__input search_input" type="search" placeholder="Search" >
+							<button class="app-search__button search_input_btn"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+					
+              <?php echo form_close() ?>
+			  
+					 <div class="row invoice-info" style="border: 2px solid #ced4da; margin: 0px; padding-top: 10px;">
+                <div class="col-4">
+                <b>Customer ID : <span id="customer_ID"></span><br><br></b>
+                    <b><address>Name : </b><span id="customer_name"></span><br>
+                    <b>Date of Birth : </b><span id="customer_dob"></span><br>
+                    <b>Gender : </b><span id="customer_gender"></span><br>
+                    <b>Aadhaar No. : </b><span id="customer_aadhaar"></span><br>
+                    <b>Husband/Father Name : </b><span id="customer_husband"></span><br>
+                    <b> Permanent Address : </b><span id="customer_address"></span><br>
+                    <b>Rural : </b><input id="customer_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>Urban : </b><input id="customer_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>District :</b><span id="customer_district"></span><br>
+                   <b> Contact No. : </b><span id="customer_contact"></span><br>
+                   <b> Work/Business/Profession : </b><span id="customer_work"></span></address>
+                </div>
+                <div class="col-4">
+                <b>Bank Information </b><br><br>
+                  <b>Account No. : </b><span id="customer_bank_ac_no"></span><br>
+                  <b>Branch : </b><span id="customer_bank_branch"></span>
+                </div>
+                <div class="col-4">
+                <b>Nominee Information </b><br><br>
+                  <b>Name : </b><span id="customer_nominee_name"></span><br>
+                  <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"></span><br>
+                  <b> Permanent Address : </b><span id="customer_nominee_address"></span><br>
+                  <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>District :</b><span id="customer_nominee_district"></span><br>
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
+                  <b> Account Number : </b><span id="customer_account_no"></span><br>
+                  <b> Account Status : </b><span id="customer_account_status"></span> 
+                </div>
+				
+					<div class="form-group col-md-4 align-self-end">
+					<br>
+		                  <button onclick="updateCustomerDoc()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
+		                   &nbsp;&nbsp;&nbsp;
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                	&nbsp;&nbsp;&nbsp;
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                </div>
+              </div>
 					<div id="memberlist_shg_group"></div>
+					
 				
 			  </div>
 			  <div class="modal-footer">
@@ -42,9 +97,12 @@
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
+			
+				
+			
 				<div align="right">
 					<p class="bs-component" >	
-						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" onclick="loadMemberlist_for_shg_group()">Add member</button>					
+						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" onclick="looadMemberlist_for_shg_group()">Add member</button>					
 						<button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('branch','loadBranch()')">Delete</button>
 					</p>
 				</div>

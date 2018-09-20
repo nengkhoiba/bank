@@ -15409,4 +15409,119 @@ be a descendant of the grid when it is being dragged.
 .dt-buttons{
 	float: left;
 	margin-left: 1rem;
+	
+	
+	
+}
+
+	.buttons-html5
+	{
+		color: #fff !important;
+		background-color: #26a69a  !important;
+		border-color: #26a69a  !important;
+		ont-weight: 400 !important;
+		font-family: 'open sans', sans-serif !important;
+		font-size: 12px !important;
+		font-style: normal !important;
+		border-radius: 0px !important;
+		cursor: pointer;
+		
+		padding: 0.25rem 0.5rem;
+		font-size: 0.765625rem;
+		line-height: 1.5;
+		border-radius: 3px;
+			border: 2px solid transparent;
+				-webkit-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+		transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+		-o-transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+
+		
+	}
+
+	.buttons-html5:hover
+	{
+		text-decoration: none;
+		-webkit-transform: translate3d(0, -1px, 0);
+		transform: translate3d(0, -1px, 0);
+		-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+	}
+
+	.buttons-print
+	{
+		color: #fff !important;
+		background-color: #26a69a  !important;
+		border-color: #26a69a  !important;
+		ont-weight: 400 !important;
+		font-family: 'open sans', sans-serif !important;
+		font-size: 12px !important;
+		font-style: normal !important;
+		border-radius: 0px !important;
+		cursor: pointer;
+		
+		padding: 0.25rem 0.5rem;
+		font-size: 0.765625rem;
+		line-height: 1.5;
+		border-radius: 3px;
+			border: 2px solid transparent;
+				-webkit-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+		transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+		-o-transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+		transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+
+	}
+	
+	.buttons-print:hover
+	{
+		text-decoration: none;
+		-webkit-transform: translate3d(0, -1px, 0);
+		transform: translate3d(0, -1px, 0);
+		-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+	}
+	
+.search_input
+{
+    width: 250px;
+	border: 0;
+    padding: 5px 10px;
+    padding-right: 35px;
+    border-radius: 0px;
+    background-color: #f8f9fa;
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+	
+	
+  -webkit-transition: width .35s ease-in-out;
+  transition: width .35s ease-in-out;
+	
+}
+
+.search_input_btn
+{
+    position: relative;
+    right: 33px;
+    top: 0px;
+    bottom: 10px;
+    padding: 0 10px;
+    border: 0;
+    color: rgba(0, 0, 0, 0.8);
+    background: none;
+    cursor: pointer;
+}
+
+
+.search_input:focus + .search_input_btn   {
+  background-color:#26a69a ;
+  color:#fff;
+  
+}
+
+.search_input:focus
+{
+width:300px;
 }

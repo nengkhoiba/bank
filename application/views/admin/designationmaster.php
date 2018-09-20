@@ -84,9 +84,8 @@
           if (response.success)
              { 
             $('#design_table').html(response.html);
-//               $('#design').DataTable();
-$('#design').DataTable({dom: 'lBfrtip', buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']});
-              
+		//	$('#design').DataTable({dom: 'lBfrtip', buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']});
+			$('#design').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});              
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
