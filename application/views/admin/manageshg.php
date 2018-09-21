@@ -189,7 +189,7 @@
           if (response.success)
              { 
             $('#shg_group_list').html(response.html);
-              $('#shg_group_table').DataTable();
+              $('#shg_group_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

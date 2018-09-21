@@ -93,7 +93,7 @@
           if (response.success)
              { 
             $('#financial_table').html(response.html);
-              $('#financial').DataTable();
+              $('#financial').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 
