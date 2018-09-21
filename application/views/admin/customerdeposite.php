@@ -6,8 +6,13 @@
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Customer Deposite</li>
+          
         </ul>
 		</div>
+		<p class="bs-component">	
+          <input class="app-search__input" type="search" placeholder="Search">
+          <button class="app-search__button"><i class="fa fa-search"></i></button>
+        </p>
       </div>
       
        <div class="row">
