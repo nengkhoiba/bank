@@ -1250,8 +1250,10 @@ class Data_controller extends CI_Controller {
 	
 		public function LoadSelected_memberlist()
 	{ 	
+		$group_id= $this->input->post('group_id',true);
+
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$data['result']=$this->database->GetAllActiveRecord('customer',);  
 			
 			
 			$output = array(
@@ -1792,4 +1794,6 @@ class Data_controller extends CI_Controller {
 		echo json_encode($output);
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
+
+
 }

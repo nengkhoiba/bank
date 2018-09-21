@@ -26,7 +26,6 @@
 			  <div class="modal-body">
 					
 							
-			<?php echo form_open_multipart('',array('id'=>'MasDesignForms','class'=>'row'))?>
 
 			<div class="col-md-12">
 				<div class="app-search" align="right">
@@ -35,10 +34,11 @@
 				</div>
 			</div>
 
-			<?php echo form_close() ?>
 			<h4>Search "234342324"</h4>
 			
-			<div class="row invoice-info" style="margin:15px;padding: 15px;">
+			<div class="alert alert-info" align="center">No data found</div>
+			
+			<div class="row invoice-info" style="margin:15px;padding: 15px; display:none;">
 				<table class="table table-hover">
 					<tbody>
 						<tr>
@@ -125,7 +125,7 @@
 			  </div>
 			  <div class="modal-footer">
 				<div class=" col-md-12 align-self-end" align="right">
-					<button onclick="updateCustomerDoc()" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
+					<button onclick="updateCustomerDoc()" style="display:none;" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
 					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			  </div>
@@ -173,7 +173,6 @@
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
    
-    	
    
     function loadShggrouplist()
     { 
@@ -249,14 +248,16 @@
     }
 	
 	
-	function LoadSelected_memberlist()
+	function LoadSelected_memberlist($data)
     { 
+
       var url = "<?php echo site_url('index.php/data_controller/LoadSelected_memberlist'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
         url: url,
         cache: false,   
+        data:{group_id:$data},
         dataType: 'json', 
         success: function(response){ 
         try{  

@@ -22,7 +22,7 @@
 				<td><?php echo $shgmaster_data['Member_count'];?></td>
 				<td><?php echo $shgmaster_data['Branch_id'];?></td>
 				<td> 
-				  <a onclick="LoadSelected_memberlist()"  style="color:#fff" class="btn btn-sm btn-danger">View member</a>
+				  <a onclick="LoadSelected_memberlist(<?php echo $shgmaster_data['ID'];?>)"  style="color:#fff" class="btn btn-sm btn-info">Add / View member</a>
 				</td>
 				</tr>
         <?php $count ++; } ?>
