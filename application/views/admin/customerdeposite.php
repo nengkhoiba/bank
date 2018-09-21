@@ -10,8 +10,9 @@
           </ul>
         </div>
 		<div class="app-search" style="padding: 0px; margin-right: -30px">
-		<input class="app-search__input search_input" type="search" placeholder="Search" >
+		<input onkeyup="runAutoComplete(this.value)" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Account Name/Account Number" >
 		<button class="app-search__button search_input_btn"><i class="fa fa-search"></i></button>
+
 		</div>
       
       </div>
@@ -299,7 +300,27 @@
        });
     } 
 
-	
+    function runAutoComplete(query){
+    	 $('#searchfield').typeahead({
+    		 items: 10,
+    		    source: function(request, response) {
+    		        $.ajax({
+    		            url: "<?php echo site_url('index.php/data_controller/searchByKeyword?q='); ?>"+query,
+    		            method:"GET",
+    		            dataType: "json",
+    		            success: function (data) {
+    		                response(data);
+    		            }
+    		        });
+    		    },
+    		    afterSelect:function(item){ loadData(item.id)},
+    		  displayText: function(item){ return item.value+"<"+item.id+">";}
+    	 });
+    	 
+        }
+ function loadData(accNo){
+		alert(accNo);
+	 }
     
 </script>
     

@@ -24,6 +24,34 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
+	
+	/*DESIGNATION EDIT SECTION*/
+	public function searchByKeyword()
+	{
+	    try {
+	        $q =  $this->input->post('q',true);
+	           
+	        $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
+                    LEFT JOIN customer on customer.ID=customer_account.Cus_id
+                    WHERE customer.name like '%$q%'
+                    OR customer_account.Acc_no like '%$q%'
+                    AND customer.IsActive=1
+                    AND customer.status=2
+                    AND customer_account.Acc_no !=''
+                    LIMIT 10
+                    ";
+	        $query=$this->db->query($sql);
+	        $output=$query->result_array();
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    };
+	    
+	    
+	    echo json_encode($output);
+	}
 
 // 	COMMON REMOVE ITEM START HERE -- Written by William
 	public function Remove()
