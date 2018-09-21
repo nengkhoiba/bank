@@ -117,17 +117,17 @@
 
 				
 			</div>
-			<div class="form-group col-md-12 align-self-end" align="right">
-				<button onclick="updateCustomerDoc()" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
-				<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
-			</div>
+			
 
 					<div id="memberlist_shg_group"></div>
 					
 				
 			  </div>
 			  <div class="modal-footer">
-				
+				<div class=" col-md-12 align-self-end" align="right">
+					<button onclick="updateCustomerDoc()" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
+					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+				</div>
 			  </div>
 			</div>
 		  </div>
