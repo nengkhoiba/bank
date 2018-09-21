@@ -16,7 +16,7 @@
     <!-- Font-icon css-->
 	  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/font-awesome.min.css">
 
-    <script src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js"></script>   
     <!-- date picker css -->
     <link type="text/css" media="all" rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" />
     <script src='<?php echo base_url();?>assets/js/bootstrap-datepicker.js'></script>
