@@ -204,7 +204,7 @@
           if (response.success)
              { 
             $('#member_table').html(response.html);
-            $('#Mem').DataTable();
+            $('#Mem').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

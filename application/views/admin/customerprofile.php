@@ -127,7 +127,7 @@
           if (response.success)
              { 
             $('#customer_table').html(response.html);
-              $('#customer').DataTable();
+              $('#customer').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

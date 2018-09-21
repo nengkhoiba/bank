@@ -111,7 +111,7 @@
           if (response.success)
              { 
             $('#shgmaster_table').html(response.html);
-              $('#shgmaster').DataTable();
+              $('#shgmaster').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

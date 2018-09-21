@@ -93,7 +93,7 @@
           if (response.success)
              { 
             $('#branch_table').html(response.html);
-              $('#branch').DataTable();
+              $('#branch').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

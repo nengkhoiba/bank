@@ -158,7 +158,7 @@
           if (response.success)
              { 
             $('#employee_table').html(response.html);
-              $('#emp').DataTable();
+              $('#emp').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

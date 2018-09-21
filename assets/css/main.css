@@ -15490,14 +15490,14 @@ be a descendant of the grid when it is being dragged.
     padding: 5px 10px;
     padding-right: 35px;
     border-radius: 0px;
-    background-color: #f8f9fa;
     -webkit-transition: background-color 0.3s ease;
     -o-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
-	
-	
-  -webkit-transition: width .35s ease-in-out;
-  transition: width .35s ease-in-out;
+	background-color: #FFF;
+	  border: 2px solid #ced4da;
+	  -webkit-transition: width .35s ease-in-out;
+	  transition: width .35s ease-in-out;
+	  
 	
 }
 

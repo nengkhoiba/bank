@@ -141,7 +141,7 @@
           if (response.success)
              { 
             $('#loanmaster_table').html(response.html);
-              $('#loanmaster').DataTable();
+              $('#loanmaster').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

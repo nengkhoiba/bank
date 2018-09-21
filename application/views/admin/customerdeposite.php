@@ -6,47 +6,22 @@
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Customer Deposite</li>
-          
-        </ul>
+          <li class="breadcrumb-item"></li>
+          </ul>
+        </div>
+		<div class="app-search" style="padding: 0px; margin-right: -30px">
+		<input class="app-search__input search_input" type="search" placeholder="Search" >
+		<button class="app-search__button search_input_btn"><i class="fa fa-search"></i></button>
 		</div>
-		<p class="bs-component">	
-          <input class="app-search__input" type="search" placeholder="Search">
-          <button class="app-search__button"><i class="fa fa-search"></i></button>
-        </p>
+      
       </div>
       
-       <div class="row">
+       <div class="row" id="formContainer">
       <div class="clearix"></div>
         <div class="col-md-12">
           <div class="tile">
           <div class="tile-title-w-btn">
-              <h3 class="title">Search Customer</h3>
-            </div>
-            <div class="tile-body">
-            <?php echo form_open_multipart('',array('id'=>'CustomerSearchByInputText','class'=>'row'))?>
-              <input id="postType" name="postType" type="hidden">
-                <div class="form-group col-md-12 align-self-end">
-                  	<input name="customer_deposite_amount" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_deposite_amount"
-    				placeholder="Customer Name/Account Number/Aadhaar Number/Group Name"></input>
-                </div>
-                <div class="form-group col-md-12 align-self-end">
-		                  <button onclick="loadCustomerAddDeposite()" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
-		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-success" href="#" onclick="resetAllFormValue('#CustomerSearchByInputText')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-		                </div>            
-		              <?php echo form_close() ?>
-		           </div>  
-          </div>
-        </div>
-         </div>
-      
-      <div class="row" id="formContainer" style="display: none">
-      <div class="clearix"></div>
-        <div class="col-md-12">
-          <div class="tile">
-            <div class="tile-title-w-btn">
-              <h3 class="title">Add Deposite</h3>
+              <h3 class="title">Customer Profile</h3>
              <button class="close"  href="" onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
@@ -84,60 +59,58 @@
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
-              <br>
-            <?php echo form_open_multipart('',array('id'=>'CustomerDocUploadForm','class'=>'row'))?>
-              <input id="postType" name="postType" type="hidden">
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Deposite Amount</label>
-                  	<input name="customer_deposite_amount" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_deposite_amount"
-    				placeholder="Deposite Amount"></input>
+            </div> 
+            <br>
+            <div class="row"> 
+              	<div class="col-md-4">
+                	<div id="" class="tile-body">
+                	<div class="row" style="margin-bottom: 12px">
+                    	<div class="col-md-6">
+                    	<button id="DepositeBtn" onclick="addCustomerDepositeForm($(this))" value="40" style="width: 100%" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-arrow-circle-down"></i>Deposite</button>
+                    	</div>                    	 
+                    	<div class="col-md-6">
+                    	<button id="WithdrawalsBtn" onclick="addCustomerWithdrawalsForm($(this))" value="40" style="width: 100%" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-arrow-circle-up"></i>Withdrawals</button>
+                    	</div> 
+                	</div>
+                	<div class="row" style="margin-bottom: 12px">
+                    	<div class="col-md-6">
+                    	<button onclick="" style="width: 100%" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-address-card"></i>Passbook</button>
+                    	</div> 
+                    	<div class="col-md-6">
+                    	<button onclick="" style="width: 100%" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-bars"></i>Balance</button>
+                    	</div>
+                	</div>
+                	</div>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Narration</label>
-                  	<input name="customer_deposite_narration" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="customer_deposite_narration"
-    				placeholder="Narration"></input>
-                </div>
-                <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Ledger Head</label>
-                  <select id="customer_deposite_ledger_head" name="customer_deposite_ledger_head" style="margin-top:10px;" class="form-control" >
-                        <!-- List of ledger -->
-                  	</select>
-                </div>
-                	
-                	<div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateCustomerDoc()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
-		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
-		                </div>            
-		              <?php echo form_close() ?>
-		           </div>
-		           
-          </div>
-        </div>
-        
-        
-         
-      </div>
-     
-     <div class="row">
-        <div class="col-md-12">
-        	<div class="tile">
-        	<div class="row"> 
-              	<div class="col-md-12">
-                	<div id="customer_table" class="tile-body">
-                	<div class="alert alert-info" align="center">
-  					<strong></strong> No record(s) found.
+                <div class="col-md-8">
+                	<div  class="tile-body">
+                	<div id="customer_form" class="alert alert-info" style="border-radius: 0px" align="left">
+  					 No preview found !!
 					</div>
 					</div>
                 </div>
             </div>
-          	</div>
+             
+          </div>
         </div>
-      </div>
+         </div>
+  
+     
+<!--      <div class="row"> -->
+<!--         <div class="col-md-12"> -->
+<!--         	<div class="tile"> -->
+<!--         	<div class="row">  -->
+<!--               	<div class="col-md-12"> -->
+<!--                 	<div id="customer_table" class="tile-body"> -->
+<!--                 	<div class="alert alert-info" align="center"> -->
+<!--   					<strong></strong> No record(s) found. -->
+<!-- 					</div> -->
+<!-- 					</div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--           	</div> -->
+<!--         </div> -->
+<!--       </div> -->
     </main>
 	  <?php $this->load->view('global/footer');?>
 
@@ -157,7 +130,7 @@
           if (response.success)
              { 
             $('#customer_table').html(response.html);
-              $('#customer').DataTable();
+              $('#customer').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 
@@ -179,9 +152,9 @@
     } 
     
       
-    function addDepositeForm($btn){   
+    function addCustomerDepositeForm($btn){   
     	$reqestId =  $btn.val();  
-    	var url = '<?php echo base_url();?>index.php/data_controller/AddCustomerDocUploadForm';
+    	var url = '<?php echo base_url();?>index.php/data_controller/addCustomerDepositeForm';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -193,47 +166,39 @@
     		  try{  	 
     			   if (response.success)
     	           { 	
-    				 $('#postType').val(response.json[0].ID);
-    				 $('#customer_ID').html(response.json[0].ID);
-    				 $('#customer_account_status').html(response.json[0].accStatus);
-    				 $('#customer_account_no').html(response.json[0].accNo);
-    				 $('#customer_name').html(response.json[0].name);
-    				 $('#customer_dob').html(response.json[0].dob);
-    				 $('#customer_gender').html(response.json[0].sex);
-    				 $('#customer_aadhaar').html(response.json[0].aadhaar_no);
-    				 $('#customer_husband').html(response.json[0].husband_name);
-    				 $('#customer_address').html(response.json[0].parmanent_address);
+    				   $('#customer_form').html(response.html);
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
 
-    				 $('#customer_rural').attr('checked', false);
-    				 $('#customer_urban').attr('checked', false);
-    				 if(response.json[0].rural == 1)
-        			 {$('#customer_rural').attr('checked', true);}
-    				 if(response.json[0].urban == 1)
-        			 {$('#customer_urban').attr('checked', true);}
-        			 
-    				 $('#customer_district').html(response.json[0].district);
-    				 $('#customer_contact').html(response.json[0].contact_no);
-    				 $('#customer_work').html(response.json[0].work);
-    				 $('#customer_bank_ac_no').html(response.json[0].bank_ac_no);
-    				 $('#customer_bank_branch').html(response.json[0].bank_branch);
-
-    				 $('#customer_nominee_name').html(response.json[0].nominee_name);
-    				 $('#customer_nominee_aadhaar_no').html(response.json[0].nominee_aadhaar_no);
-    				 $('#customer_nominee_address').html(response.json[0].nominee_permanent_address);
-
-    				 $('#customer_nominee_rural').attr('checked', false);
-    				 $('#customer_nominee_urban').attr('checked', false);
-    				 if(response.json[0].nominee_rural == 1)
-        			 {$('#customer_nominee_rural').attr('checked', true);}
-    				 if(response.json[0].nominee_urban == 1)
-        			 {$('#customer_nominee_urban').attr('checked', true);}
-    				 $('#customer_nominee_district').html(response.json[0].nominee_district);
-    				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
-
-    				 loadAccountLedger();
-    				 
-                     $(window).scrollTop(0);
-                     $('#formContainer').show();
+    function addCustomerWithdrawalsForm($btn){   
+    	$reqestId =  $btn.val();  
+    	var url = '<?php echo base_url();?>index.php/data_controller/addCustomerWithdrawalsForm';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				   $('#customer_form').html(response.html);
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);

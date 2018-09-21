@@ -1689,6 +1689,44 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	/*CUSTOMER ADD DEPOSITE FORM -- Written by William*/
+	public function addCustomerDepositeForm()
+	{
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/addForm/AddCustomerDepositeForm',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*CUSTOMER ADD WITHDRAWALS FORM -- Written by William*/
+	public function addCustomerWithdrawalsForm()
+	{
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/addForm/AddCustomerWithdrawalsForm',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
 	
 	
