@@ -15525,3 +15525,7 @@ be a descendant of the grid when it is being dragged.
 {
 width:300px;
 }
+
+th.table_head {
+    text-align: right !important;
+}
