@@ -16,6 +16,23 @@ class Data_model extends CI_Model{
         }
     }
     
+//Live Search from this query
+    function loadDataBySearchKeyword($q)
+    {
+        $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
+                    LEFT JOIN customer on customer.ID=customer_account.Cus_id
+                    WHERE customer.name like '%$q%'
+                    OR customer_account.Acc_no like '%$q%'
+                    AND customer.IsActive=1
+                    AND customer.status=2
+                    AND customer_account.Acc_no !=''
+                    LIMIT 10
+                    ";
+        $query=$this->db->query($sql);
+        
+        return $query->result_array();
+    }
+    
     // COMMON CODE START HERE  -- Written by William
 
     function GetAllRecord($tabName)
@@ -762,12 +779,14 @@ class Data_model extends CI_Model{
 	/*GET CUSTOMER DATA  -- Written by William */
 	function GetCustomerRecordById($id,$tabName)
 	{
-	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, customer.*
+	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, br.Name as branchName, br.Branch_code as Branch_code, br.Branch_address as Branch_address, dis.Name as District_name,  customer.*
 	    FROM customer
 	    LEFT JOIN account_status
 	    ON customer.status=account_status.ID
         LEFT JOIN customer_account
         ON customer_account.Cus_id=customer.ID
+        LEFT JOIN branch br on br.ID=customer.Branch_id
+        LEFT JOIN district dis on dis.ID=customer.district
 	    WHERE customer.isActive = 1 AND customer.ID = $id";
 	    $query=$this->db->query($sql);
 	      
@@ -777,6 +796,15 @@ class Data_model extends CI_Model{
 // 	      ->where_in('customer.isActive', 1)
 // 	      ->where_in('customer.ID', $id);
 	      
+	    return $query->result_array();
+	}
+	
+	/*GET CUSTOMER DATA BY SEARCH KEYWORD -- Written by William */
+	function GetRecordBySearchKeyWord($q)
+	{
+	    $sql = "SELECT *, $q as accNo, br.Name as branchName, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID LEFT JOIN branch br on br.ID=cus.Branch_id WHERE acc.IsActive=1 AND acc.Acc_no=$q ";
+	    $query=$this->db->query($sql);
+	    
 	    return $query->result_array();
 	}
 
