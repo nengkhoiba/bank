@@ -26,6 +26,7 @@
             </div>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			  </div>
+<<<<<<< HEAD
 			  <div class="modal-body" style="min-height:430px;">
 				<div class="row">
 					<div class="col-md-3">
@@ -48,6 +49,25 @@
 			<input id="groupId" type="text" value="">
 					
 				<table class="table custome_table table-hover">
+=======
+			  <div class="modal-body">
+					
+							
+
+			<div class="col-md-12">
+				<div class="app-search" align="right">
+					<input class="app-search__input search_input" type="search" placeholder="Search" >
+					<button class="app-search__button search_input_btn"><i class="fa fa-search"></i></button>
+				</div>
+			</div>
+
+			<h4>Search "234342324"</h4>
+			
+			<div class="alert alert-info" align="center">No data found</div>
+			
+			<div class="row invoice-info" style="margin:15px;padding: 15px; display:none;">
+				<table class="table table-hover">
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 					<tbody>
 						<tr>
 							<th class="table_head">Customer ID : </th>
@@ -132,7 +152,11 @@
 			  </div>
 			  <div class="modal-footer">
 				<div class=" col-md-12 align-self-end" align="right">
+<<<<<<< HEAD
 					<button onclick="addCustomer_to_group()" id="" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
+=======
+					<button onclick="updateCustomerDoc()" style="display:none;" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			  </div>
@@ -180,7 +204,6 @@
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
    
-    	
    
     function loadShggrouplist()
     { 
@@ -260,6 +283,7 @@
     }
    // loadMember_list_group();
 	
+<<<<<<< HEAD
 	function addCustomer_to_group()
     { 
 	
@@ -267,12 +291,24 @@
 	var gr_id=$('#branch_code').val();	
 		
       var url = "<?php echo site_url('index.php/data_controller/addCustomer_to_group'); ?>;
+=======
+	
+	function LoadSelected_memberlist($data)
+    { 
+
+      var url = "<?php echo site_url('index.php/data_controller/LoadSelected_memberlist'); ?>"; 
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
       StartInsideLoading();
       $.ajax({
         type: "post",
         url: url,
+<<<<<<< HEAD
         cache: false, 
 		data:{ac_id:ac_id,gr_id:gr_id},		
+=======
+        cache: false,   
+        data:{group_id:$data},
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
         dataType: 'json', 
         success: function(response){ 
         try{  

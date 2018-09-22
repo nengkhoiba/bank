@@ -8,9 +8,12 @@ width: 36px;"><span aria-hidden="true">×</span></button>
 <div class="col-6">
   <b> Transaction ID : </b><span id="customer_account_no">RD87191212</span> 
 </div>
+<<<<<<< HEAD
 <div class="col-6">
   <b> Transaction Type : </b><span id="customer_account_no">R</span>
 </div>
+=======
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 </div>
 <br>
 <?php echo form_open_multipart('',array('id'=>'CustomerWithdrawlsForm','class'=>'row'))?>

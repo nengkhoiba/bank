@@ -9,7 +9,11 @@
           </ul>
         </div>
 		<div class="app-search" style="padding: 0px; margin-right: 0px">
+<<<<<<< HEAD
 		<input onkeyup="runAutoComplete(this.value)" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
+=======
+		<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 		</div>
      </div>
       
@@ -82,8 +86,13 @@
                 </div>
                 <div class="col-md-9">
                 	<div  class="tile-body">
+<<<<<<< HEAD
                 	<div id="customer_form" class="alert alert-success" style="border-radius: 0px">
   					 No record found! Please type account name or number first.
+=======
+                	<div id="customer_form" class="alert alert-success" style="border-radius: 0px; display: none">
+  					 
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 					</div>
 					</div>
                 </div>
@@ -148,7 +157,91 @@
     			   if (response.success)
     	           { 	
     				   $('#customer_form').show();
+<<<<<<< HEAD
+=======
     				   $('#customer_form').html(response.html);
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
+
+    function addPassbookPreview($btn){   
+    	$reqestId =  $btn.val();  
+    	var url = '<?php echo base_url();?>index.php/data_controller/addPassbookPreview';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				   $('#customer_form').show();
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+    				   $('#customer_form').html(response.html);
+//     				   $('#passbook_customer_account_no').val(response.json[0].accNo);
+//     				   $('#passbook_customer_name').val(response.json[0].name);
+//     				   $('#passbook_customer_husband').val(response.json[0].husband_name);
+//     				   $('#passbook_customer_address').val(response.json[0].parmanent_address);
+//     				   $('#passbook_customer_district').val(response.json[0].district);
+//     				   $('#passbook_customer_contact').val(response.json[0].contact_no);
+//    				   $('#passbook_branch_name').val('Head Office');
+//     				   $('#passbook_branch_code').val('01');
+//     				   $('#passbook_customer_date_of_reg').val('12/09/2018');
+//     				   $('#passbook_date_of_issue').val('22/10/2018');
+//     				   $('#passbook_office_email').val('affordinservices@gmail.com');
+//     				   $('#passbook_sposored_by').val('PUNSHIUKAL CONSULTANCY PRIVATE LIMITED');
+//     				   $('#passbook_office_cin_no').val('U74999MN2018PTC13662');
+//     				   $('#passbook_office_address').val('Uripok Kangchup Road, Near Over Bridge, Imphal - 795001');
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
+
+    function addBalanceSheet($btn){   
+    	$reqestId =  $btn.val();  
+    	var url = '<?php echo base_url();?>index.php/data_controller/addBalanceSheet';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				   $('#customer_form').show();
+    				   $('#customer_form').html(response.html);
+    				   $('#customerBalanceSheet').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -293,7 +386,7 @@
     		            method:"GET",
     		            dataType: "json",
     		            success: function (data) {
-    		                response(data);
+    		            response(data);
     		            }
     		        });
      		    },
@@ -318,8 +411,14 @@
  		  try{  	 
  			   if (response.success)
  	           { 
+<<<<<<< HEAD
  				 $('#photo').attr('src',response.json[0].photo);
  				 $('#customer_ID').html(response.json[0].ID);
+=======
+ 				 $('#searchfield').val('');  
+ 				 $('#photo').attr('src',response.json[0].photo);
+ 				 $('#customer_ID').html(response.json[0].Cus_id);
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
  				 $('#customer_account_status').html(response.json[0].accStatus);
  				 $('#customer_account_no').html(response.json[0].accNo);
  				 $('#customer_name').html(response.json[0].name);
@@ -355,10 +454,17 @@
  				 $('#customer_nominee_district').html(response.json[0].nominee_district);
  				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
 
+<<<<<<< HEAD
  				 $('#DepositeBtn').val(response.json[0].ID).attr('disabled',false);
  				 $('#WithdrawalsBtn').val(response.json[0].ID).attr('disabled',false);
  				 $('#PassbookBtn').val(response.json[0].ID).attr('disabled',false);
 				 $('#BalanceBtn').val(response.json[0].ID).attr('disabled',false);
+=======
+ 				 $('#DepositeBtn').val(response.json[0].Cus_id).attr('disabled',false);
+ 				 $('#WithdrawalsBtn').val(response.json[0].Cus_id).attr('disabled',false);
+ 				 $('#PassbookBtn').val(response.json[0].Cus_id).attr('disabled',false);
+				 $('#BalanceBtn').val(response.json[0].Cus_id).attr('disabled',false);
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
  				 
  				$(window).scrollTop(0);
                 $('#formContainer').show();
@@ -378,8 +484,52 @@
  		  }
  		 });
  }
+<<<<<<< HEAD
 	 
     
+=======
+
+ function resetValue ()
+ 	{
+	 $('#searchfield').val('');
+
+	 	 $('#photo').attr('src',base_url+"assets/img/profile.png");
+		 $('#customer_ID').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_account_status').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_account_no').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_name').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_dob').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_gender').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_aadhaar').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_husband').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_address').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+
+		 $('#customer_rural').attr('checked', false);
+		 $('#customer_urban').attr('checked', false);
+		 
+		 $('#customer_district').html(' _ _ _ _ _ _ ');
+		 $('#customer_contact').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_work').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_bank_ac_no').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_bank_branch').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+
+		 $('#customer_nominee_name').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_nominee_aadhaar_no').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_nominee_address').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+
+		 $('#customer_nominee_rural').attr('checked', false);
+		 $('#customer_nominee_urban').attr('checked', false);
+		 
+		 $('#customer_nominee_district').html(' _ _ _ _ _ _ ');
+		 $('#customer_nominee_contact').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+	 
+    	 $('#DepositeBtn').val('').attr('disabled',true);
+    	 $('#WithdrawalsBtn').val('').attr('disabled',true);
+    	 $('#PassbookBtn').val('').attr('disabled',true);
+    	 $('#BalanceBtn').val('').attr('disabled',true);
+    	 $('#customer_form').hide();
+	 }   
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 </script>
     
        </body>

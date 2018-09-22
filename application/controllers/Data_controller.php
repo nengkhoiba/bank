@@ -1273,10 +1273,17 @@ class Data_controller extends CI_Controller {
 	
 		public function LoadSelected_memberlist()
 	{ 	
+<<<<<<< HEAD
 
 		$id =  $this->input->get('id',true);
 		try {
 			$data['result']=$this->database->GetAllSelectedMember($id);  
+=======
+		$group_id= $this->input->post('group_id',true);
+
+		try {
+			$data['result']=$this->database->GetAllActiveRecord('customer',);  
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 			
 			
 			$output = array(
@@ -1758,7 +1765,11 @@ class Data_controller extends CI_Controller {
 	{
 	    try {
 	        $Id = $this->input->post('reqId',true);
+<<<<<<< HEAD
 	        $data['result']=$this->database->GetRecordById($Id,'customer');
+=======
+	        $data['result']=$this->database->GetCustomerRecordById($Id,'customer');
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/addForm/AddCustomerPassbookPreview',$data, true),
 	            'success' =>true
@@ -1880,6 +1891,7 @@ class Data_controller extends CI_Controller {
 		echo json_encode($output);
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
+<<<<<<< HEAD
 	
 		/*Add member to group*/
 	public function addCustomer_to_group()
@@ -1901,4 +1913,8 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+=======
+
+
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 }

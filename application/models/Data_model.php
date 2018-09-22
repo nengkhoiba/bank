@@ -779,12 +779,14 @@ class Data_model extends CI_Model{
 	/*GET CUSTOMER DATA  -- Written by William */
 	function GetCustomerRecordById($id,$tabName)
 	{
-	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, customer.*
+	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, br.Name as branchName, br.Branch_code as Branch_code, br.Branch_address as Branch_address, dis.Name as District_name,  customer.*
 	    FROM customer
 	    LEFT JOIN account_status
 	    ON customer.status=account_status.ID
         LEFT JOIN customer_account
         ON customer_account.Cus_id=customer.ID
+        LEFT JOIN branch br on br.ID=customer.Branch_id
+        LEFT JOIN district dis on dis.ID=customer.district
 	    WHERE customer.isActive = 1 AND customer.ID = $id";
 	    $query=$this->db->query($sql);
 	      
@@ -798,9 +800,15 @@ class Data_model extends CI_Model{
 	}
 	
 	/*GET CUSTOMER DATA BY SEARCH KEYWORD -- Written by William */
+<<<<<<< HEAD
 	function GetRecordBySearchKeyWord($id)
 	{
 	    $sql = "SELECT *, $id as accNo, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID WHERE acc.IsActive=1 AND acc.Acc_no=$id ";
+=======
+	function GetRecordBySearchKeyWord($q)
+	{
+	    $sql = "SELECT *, $q as accNo, br.Name as branchName, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID LEFT JOIN branch br on br.ID=cus.Branch_id WHERE acc.IsActive=1 AND acc.Acc_no=$q ";
+>>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 	    $query=$this->db->query($sql);
 	    
 	    return $query->result_array();
