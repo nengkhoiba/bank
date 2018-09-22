@@ -15296,7 +15296,7 @@ be a descendant of the grid when it is being dragged.
     top:0;
     left:0;
     opacity: .7;
-    z-index: 100;
+    z-index: 19999999999999999999;
 }
 .loading-loadergif{
     position: fixed;
@@ -15308,7 +15308,7 @@ be a descendant of the grid when it is being dragged.
     top:50%;
     left:50%;
     margin: -20px 0 0 -20px;
-    z-index: 1000;
+    z-index: 99999999999999999999999;
 }
 
 .btn-success
@@ -15485,10 +15485,9 @@ be a descendant of the grid when it is being dragged.
 	
 .search_input
 {
-    width: 250px;
+    width: 285px;
 	border: 0;
-    padding: 5px 10px;
-    padding-right: 35px;
+    padding: 5px 5px;
     border-radius: 0px;
     -webkit-transition: background-color 0.3s ease;
     -o-transition: background-color 0.3s ease;
@@ -15523,9 +15522,15 @@ be a descendant of the grid when it is being dragged.
 
 .search_input:focus
 {
-width:300px;
+width:100%;
 }
 
 th.table_head {
     text-align: right !important;
+}
+
+.custome_table th, .custome_table td {
+    /* padding: 0.45rem; */
+    padding: 5px;
+    border-top: 1px solid #fbfbfb;
 }

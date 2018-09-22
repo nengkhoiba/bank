@@ -25,24 +25,19 @@ class Data_controller extends CI_Controller {
 		$this->load->view('login');
 	}
 	
-	/*DESIGNATION EDIT SECTION*/
+	/*LIVE SEARCH -- Written by William*/
 	public function searchByKeyword()
 	{
 	    try {
-	        $q =  $this->input->post('q',true);
-	           
-	        $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
-                    LEFT JOIN customer on customer.ID=customer_account.Cus_id
-                    WHERE customer.name like '%$q%'
-                    OR customer_account.Acc_no like '%$q%'
-                    AND customer.IsActive=1
-                    AND customer.status=2
-                    AND customer_account.Acc_no !=''
-                    LIMIT 10
-                    ";
-	        $query=$this->db->query($sql);
-	        $output=$query->result_array();
-	    } catch (Exception $ex) {
+	        $q =  $this->input->get('q',true);
+	        $output = $this->database->loadDataBySearchKeyword($q);
+	        if ($output == null)
+	        {
+	            //$output = array('id' => 'No Account Number','value' => 'No record found');
+	            $output[0]['id'] = 'No Account Number';
+	            $output[0]['value'] = 'No record found';
+	        }
+	       } catch (Exception $ex) {
 	        $output = array(
 	            'msg'=> $ex->getMessage(),
 	            'success' => false
@@ -1278,8 +1273,10 @@ class Data_controller extends CI_Controller {
 	
 		public function LoadSelected_memberlist()
 	{ 	
+
+		$id =  $this->input->get('id',true);
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('customer');  
+			$data['result']=$this->database->GetAllSelectedMember($id);  
 			
 			
 			$output = array(
@@ -1755,7 +1752,70 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	/*CUSTOMER PASSBOOK PREVIEW -- Written by William*/
+	public function addPassbookPreview()
+	{
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/addForm/AddCustomerPassbookPreview',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*CUSTOMER BALANCE SHEET -- Written by William*/
+	public function addBalanceSheet()
+	{
+	    try {
+	        $Id = $this->input->post('reqId',true);
+	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerBalanceSheet_table.php',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 
+	/*VIEW CUSTOMER PROFILE BY SEARCH KEYWORD -- Written by William*/
+	public function loadSearchData()
+	{
+	    try {
+	        $q =  $this->input->post('reqId',true);
+	        if($q == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordBySearchKeyWord($q);
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
 	
 	
@@ -1820,4 +1880,25 @@ class Data_controller extends CI_Controller {
 		echo json_encode($output);
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
+	
+		/*Add member to group*/
+	public function addCustomer_to_group()
+	{
+	    try {
+	        $ac_id = $this->input->post('ac_id',true);
+			$gr_id = $this->input->post('gr_id',true);
+	        $data['result']=$this->database->AddCustomerToGroup($ac_id,$gr_id);
+	        $output = array(
+				'msg'=>$ac_id .' is added successfully!',
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 }

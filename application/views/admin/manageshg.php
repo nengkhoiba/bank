@@ -21,63 +21,73 @@
 		  <div class="modal-dialog">
 			<div class="modal-content">
 			  <div class="modal-header">
+			  <div class="tile-title-w-btn">
+              <h3 class="title">Customer Information</h3>
+            </div>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			  </div>
-			  <div class="modal-body">
-					
-							
-			<?php echo form_open_multipart('',array('id'=>'MasDesignForms','class'=>'row'))?>
-
-			<div class="col-md-12">
-				<div class="app-search" align="right">
-					<input class="app-search__input search_input" type="search" placeholder="Search" >
-					<button class="app-search__button search_input_btn"><i class="fa fa-search"></i></button>
+			  <div class="modal-body" style="min-height:430px;">
+				<div class="row">
+					<div class="col-md-3">
+						<div class="app-search" style="padding: 0px; margin-right: 0px">
+							<input onkeyup="runAutoComplete(this.value)" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
+						</div>
+					</div>
+					<div class="col-md-1" style="padding-left:0px;">
+						<button onclick="inputReset()" class="btn btn-sm btn-info" type="button" style="padding: 6px; ">Reset</button>
+						
+					</div>
+					<div class="col-md-4">
+						<h4 style="color:#9e9e9e;">Search " <span id="data_show" style="color:#607d8b;"></span> "</h4>
+					</div>
 				</div>
-			</div>
-
-			<?php echo form_close() ?>
-			<h4>Search "234342324"</h4>
+		
 			
-			<div class="row invoice-info" style="margin:15px;padding: 15px;">
-				<table class="table table-hover">
+			<div class="row invoice-info" id="formContainer" style="margin:15px;padding: 15px; display:none;">
+			<input id="hd_cs_id" type="text" value="">
+			<input id="groupId" type="text" value="">
+					
+				<table class="table custome_table table-hover">
 					<tbody>
 						<tr>
 							<th class="table_head">Customer ID : </th>
-							<td><span id="customer_ID">1234567789</span></td>
+							<td><span id="customer_ID"></span></td>
 							<th class="table_head">Permanent Address :</th>
-							<td><span id="customer_address">Nongpok Sekmai Shikhong bazar</span></td>
+							<td><span id="customer_address"></span></td>
 							<th class="table_head">Account No.</th>
-							<td><span id="customer_bank_ac_no">0123456789</span></td>
+							<td><span id="customer_bank_ac_no"></span></td>
 							<th style="text-align:center;">Profile photo</th>
 						</tr>
 						<tr>
 							<th class="table_head">Name : </th>
-							<td><span id="customer_name">Thangjam niranjit singh</span></td>
+							<td><span id="customer_name"></span></td>
 							<th class="table_head">District :</th>
-							<td><span id="customer_district">Thoubal</span></td>
+							<td><span id="customer_district"></span></td>
 							<th class="table_head">Branch : </th>
-							<td><span id="customer_bank_branch">Imphal</span></td>
-							<td rowspan="7"><img src="<?php echo base_url()?>assets/img/NoImage.png" style="width:160px; height:auto;"/></td>
+							<td><span id="customer_bank_branch"></span></td>
+							<td rowspan="7">
+								<img id="photo" src="<?php echo base_url();?>assets/img/profile.png" style="width:160px; height:auto;"/>
+							</td>
 						</tr>
 						<tr>
 							<th class="table_head">Date of Birth : </th>
-							<td><span id="customer_dob">12/12/2018</span></td>
+							<td><span id="customer_dob"></span></td>
 							<th class="table_head">State :</th>
-							<td><span id="customer_state">Manipur</span></td>
+							<td><span id="customer_state"></span></td>
 							<th class="table_head">A/C opening date :</th>
-							<td><span id="customer_bank_open_date">12/12/1898</span></td>
+							<td><span id="customer_account_open_date"></span></td>
 						</tr>
 						<tr>
 							<th class="table_head">Gender : </th>
-							<td><span id="customer_gender">Male</span></td>
+							<td><span id="customer_gender"></span></td>
 							<th class="table_head">Contact No. :</th>
-							<td><span id="customer_contact">9876543210</span></td>
+							<td><span id="customer_contact"></span></td>
 							<th class="table_head">A/C status :</th>
-							<td><span id="customer_bank_open_date">Active</span></td>
+							<td><span id="customer_account_status"></span></td>
 						</tr>
 						<tr>
 							<th class="table_head">Aadhaar No. :</th>
-							<td><span id="customer_aadhaar">1234-1234-1234</span></td>
+							<td><span id="customer_aadhaar"></span></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -85,7 +95,7 @@
 						</tr>
 						<tr>
 							<th class="table_head">Husband/Father Name :</th>
-							<td><span id="customer_husband">Thangjam Jiten singh</span></td>
+							<td><span id="customer_husband"></span></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -93,7 +103,7 @@
 						</tr>
 						<tr>
 							<th class="table_head">Work/Business/Profession :</th>
-							<td><span id="customer_work">Self Employed</span></td>
+							<td><span id="customer_work"></span></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -113,19 +123,16 @@
 					</tbody>
 				</table>
 
-
+			
 
 				
 			</div>
-			
-
-					<div id="memberlist_shg_group"></div>
 					
 				
 			  </div>
 			  <div class="modal-footer">
 				<div class=" col-md-12 align-self-end" align="right">
-					<button onclick="updateCustomerDoc()" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
+					<button onclick="addCustomer_to_group()" id="" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
 					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			  </div>
@@ -148,7 +155,7 @@
 			
 				<div align="right">
 					<p class="bs-component" >	
-						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" onclick="looadMemberlist_for_shg_group()">Add member</button>					
+						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" >Add member</button>					
 						<button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('branch','loadBranch()')">Delete</button>
 					</p>
 				</div>
@@ -212,49 +219,12 @@
     loadShggrouplist();
 	
 	
-	function loadMemberlist_for_shg_group()
-	 { 
-      var url = "<?php echo site_url('index.php/data_controller/loadMemberlist_for_shg_group'); ?>"; 
-      StartInsideLoading();
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false,   
-        dataType: 'json', 
-        success: function(response){ 
-        try{  
-          if (response.success)
-             { 
-            $('#memberlist_shg_group').html(response.html);
-              $('#memberlist_for_shg_group').DataTable();
-			  
-              
-             } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);
-                
-             }
-         StopInsideLoading();
-         
-         }catch(e) {  
-            SetWarningMessageBox('warning', e);
-            StopInsideLoading();
-          } 
-        },
-        error: function(){      
-          SetWarningMessageBox('warning', 'Error while request..');
-          StopInsideLoading();
-        }
-       });
-    }
-	
-	
-	function LoadSelected_memberlist()
+	function LoadSelected_memberlist(id)
     { 
-      var url = "<?php echo site_url('index.php/data_controller/LoadSelected_memberlist'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/LoadSelected_memberlist?id='); ?>"+id;
       StartInsideLoading();
       $.ajax({
-        type: "post",
+        type: "get",
         url: url,
         cache: false,   
         dataType: 'json', 
@@ -265,7 +235,9 @@
 			
             $('#selected_member_data').html(response.html);
             $('#selected_member_data_table').DataTable();
-			$('#showSelectedmember').show();  
+			$('#showSelectedmember').show(); 
+			$('#groupId').val(id); 
+			
 			  	
               
              } else
@@ -288,62 +260,134 @@
     }
    // loadMember_list_group();
 	
+	function addCustomer_to_group()
+    { 
 	
-	
-	
-   /*
-
-    function UpdateShgmaster(){ 
-    	if ($('#shg_code').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'SHG Code is mandatory !');
-            $('#shg_code').focus();
-            return;
-        }
-		if ($('#shg_name').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'SHG Name is mandatory !');
-            $('#shg_name').focus();
-            return;
-        }
-		if ($('#shg_address').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Address is mandatory !');
-            $('#shg_address').focus();
-            return;
-        }
-		if ($('#shg_area').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Area is mandatory !');
-            $('#shg_area').focus();
-            return;
-        }
-		if ($('#shg_member_count').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Max Member is mandatory !');
-            $('#shg_member_count').focus();
-            return;
-        }
+	var ac_id=$('#branch_code').val();
+	var gr_id=$('#branch_code').val();	
 		
+      var url = "<?php echo site_url('index.php/data_controller/addCustomer_to_group'); ?>;
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false, 
+		data:{ac_id:ac_id,gr_id:gr_id},		
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+				SetSucessMessageBox('Success', response.msg);
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+	
+	
+    function runAutoComplete(query){
+	$query=query;
+	$('#data_show').html($query);
+       $('#searchfield').typeahead({
+         items: 10,
+            source: function(request, response) {
+                $.ajax({
+                    url: "<?php echo site_url('index.php/data_controller/searchByKeyword?q='); ?>"+query,
+                    method:"GET",
+                    dataType: "json",
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+//           autoselect:true,
+          afterSelect:function(item){ loadSearchData(item.id)},
+          displayText: function(item){ return item.value+ "<"+item.id+">";}
+       });
        
-        var formData = $('form#MasShgmasterForms').serializeObject();
-        var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/UpdateShgmaster';
-        
-     StartInsideLoading();
-     $.ajax({
+        }
+
+        function loadSearchData(accNo){
+  $reqestId =  accNo;  
+	$('#data_show').html($reqestId);
+  var url = '<?php echo base_url();?>index.php/data_controller/loadSearchData';
+  StartInsideLoading();
+  $.ajax({
       type: "post",
       url: url,
       cache: false,    
-      data: dataString,
+      data: {reqId:$reqestId},
       dataType: 'json',
       success: function(response){   
-      try{ 
+      try{     
          if (response.success)
              { 
-           SetSucessMessageBox('Success', response.msg);
-           $('#formContainer').hide();
-           loadShgmaster();
+         $('#photo').attr('src',response.json[0].photo);
+         $('#customer_ID').html(response.json[0].Cus_id);
+         $('#customer_account_status').html(response.json[0].accStatus);
+         $('#customer_account_no').html(response.json[0].accNo);
+         $('#hd_cs_id').val(response.json[0].accNo);
+        // $('#customer_name').html(response.json[0].name);		 
+         $('#customer_name').html(response.json[0].name);
+         $('#customer_dob').html(response.json[0].dob);
+         $('#customer_gender').html(response.json[0].sex);
+         $('#customer_aadhaar').html(response.json[0].aadhaar_no);
+         $('#customer_husband').html(response.json[0].husband_name);
+         $('#customer_address').html(response.json[0].parmanent_address);
+
+         $('#customer_rural').attr('checked', false);
+         $('#customer_urban').attr('checked', false);
+         if(response.json[0].rural == 1)
+           {$('#customer_rural').attr('checked', true);}
+         if(response.json[0].urban == 1)
+           {$('#customer_urban').attr('checked', true);}
+           
+         $('#customer_district').html(response.json[0].district);
+         $('#customer_contact').html(response.json[0].contact_no);
+         $('#customer_work').html(response.json[0].work);
+         $('#customer_bank_ac_no').html(response.json[0].bank_ac_no);
+         $('#customer_bank_branch').html(response.json[0].bank_branch);
+		 $('#customer_account_open_date').html(response.json[0].Added_on);
+
+         $('#customer_nominee_name').html(response.json[0].nominee_name);
+         $('#customer_nominee_aadhaar_no').html(response.json[0].nominee_aadhaar_no);
+         $('#customer_nominee_address').html(response.json[0].nominee_permanent_address);
+
+         $('#customer_nominee_rural').attr('checked', false);
+         $('#customer_nominee_urban').attr('checked', false);
+         if(response.json[0].nominee_rural == 1)
+           {$('#customer_nominee_rural').attr('checked', true);}
+         if(response.json[0].nominee_urban == 1)
+           {$('#customer_nominee_urban').attr('checked', true);}
+         $('#customer_nominee_district').html(response.json[0].nominee_district);
+         $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
+
+         $('#DepositeBtn').val(response.json[0].ID).attr('disabled',false);
+         $('#WithdrawalsBtn').val(response.json[0].ID).attr('disabled',false);
+         $('#PassbookBtn').val(response.json[0].ID).attr('disabled',false);
+         $('#BalanceBtn').val(response.json[0].ID).attr('disabled',false);
+         
+        $(window).scrollTop(0);
+                $('#formContainer').show();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
              }
-      StopInsideLoading();
+     StopInsideLoading();
       }catch(e) {  
         SetWarningMessageBox('warning', e);
         StopInsideLoading();
@@ -354,11 +398,16 @@
         StopInsideLoading();
       }
      });
-    }
-	
-	*/
-      
+ }
     
+	
+	function inputReset()
+	{
+	$('#data_show').html('');
+	$('#searchfield').val('');
+	$('#formContainer').hide();
+	
+	}
    
   
 </script>

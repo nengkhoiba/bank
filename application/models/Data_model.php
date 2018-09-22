@@ -16,6 +16,23 @@ class Data_model extends CI_Model{
         }
     }
     
+//Live Search from this query
+    function loadDataBySearchKeyword($q)
+    {
+        $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
+                    LEFT JOIN customer on customer.ID=customer_account.Cus_id
+                    WHERE customer.name like '%$q%'
+                    OR customer_account.Acc_no like '%$q%'
+                    AND customer.IsActive=1
+                    AND customer.status=2
+                    AND customer_account.Acc_no !=''
+                    LIMIT 10
+                    ";
+        $query=$this->db->query($sql);
+        
+        return $query->result_array();
+    }
+    
     // COMMON CODE START HERE  -- Written by William
 
     function GetAllRecord($tabName)
@@ -779,6 +796,15 @@ class Data_model extends CI_Model{
 	      
 	    return $query->result_array();
 	}
+	
+	/*GET CUSTOMER DATA BY SEARCH KEYWORD -- Written by William */
+	function GetRecordBySearchKeyWord($id)
+	{
+	    $sql = "SELECT *, $id as accNo, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID WHERE acc.IsActive=1 AND acc.Acc_no=$id ";
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
 
 	
 	/*PAGE MANAGER--Nengkhoiba*/
@@ -843,6 +869,55 @@ class Data_model extends CI_Model{
 		
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
+
+	function GetAllSelectedMember($id)  
+	{  
+	   //data is retrive from this query 
+	   $sql="SELECT customer.ID,
+	   				customer.name,
+	   				customer.aadhaar_no,
+	   				customer.parmanent_address,
+	   				customer.contact_no,
+	   				customer_account.Acc_no,
+	   				district.name AS district
+	        FROM customer 
+	   		
+	   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
+	   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
+	   		LEFT JOIN district ON district.ID =customer.district
+
+	   		WHERE group_customer_member.Group_id='$id'
+	   		
+	   		"; 
+	    $query = $this->db->query($sql); 
+	    return $query->result_array();  
+	}
+	
+
+	/*Add member to shg group*/ */
+	function AddCustomerToGroup($ac_id,$gr_id)
+	{
+         $data = array(
+             'Group_Id'	=>  $gr_id,
+			 'Acc_no'	=>  $ac_id,
+         );
+	         
+	    $this->db->insert('group_customer_member', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Customer to group", "Customer A/C no. ".$ac_id." is added to group ID ".$gr_id.");
+	        return array('code' => 1);
+	    }
+	}
+
 
 }
     
