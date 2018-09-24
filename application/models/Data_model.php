@@ -808,9 +808,10 @@ class Data_model extends CI_Model{
 	/*GET CUSTOMER DATA  -- Written by William */
 	function GetCustomerRecordById($id,$tabName)
 	{
-	    $sql = "SELECT cus.ID as ID,cus.name as name,dob,aadhaar_no,husband_name,parmanent_address,rural,
+	    $sql = "SELECT cus.ID as ID,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
         urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
-        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo, br.Name as branchName,
+        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo,
+        br.Name as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
         accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
         nomiDis.Name as nominee_district FROM $tabName cus
         LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
@@ -837,9 +838,10 @@ class Data_model extends CI_Model{
 
 	function GetRecordBySearchKeyWord($q)
 	{
-	    $sql =  "SELECT cus.ID as Cus_id,cus.name as name,dob,aadhaar_no,husband_name,parmanent_address,rural,urban,
+	    $sql =  "SELECT cus.ID as Cus_id,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,urban,
                 contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,nominee_rural,
-                nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo, br.Name as branchName, accSt.Name as accStatus,
+                nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo, br.Name as branchName,
+                br.Branch_address as Branch_address, br.Branch_code as Branch_code,accSt.ID as status, accSt.Name as accStatus,
                 cusDoc.files as photo, genMas.Name as sex, dis.Name as district, nomiDis.Name as nominee_district FROM customer cus
                 LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
                 LEFT JOIN branch br on br.ID=cus.Branch_id

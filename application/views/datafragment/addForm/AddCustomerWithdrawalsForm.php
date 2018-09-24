@@ -29,6 +29,7 @@ class="form-control address" id="customer_withdrawals_narration"
 <?php echo form_close() ?>
 </div>
 <div class="col-6">
+<b> Account Number : </b><span id="customer_acc_no"><?php echo $result[0]['accNo'];?></span><br><br>
 <b> Transaction ID : </b><span id="customer_withdrawals_tranId"></span><br>
   <b> Voucher Number : </b><span id="customer_voucher_no">N/A</span><br>
     <b> Balance : </b><span id="customer_balance">N/A</span> 

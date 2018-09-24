@@ -11,7 +11,7 @@ width: 36px;"><span aria-hidden="true">×</span></button>
                     <b>Member : </b><span id="passbook_customer_name" style="text-transform: uppercase"><?php echo $result[0]['name'];?></span><br>
                     <b>Husband/Father : </b><span id="passbook_customer_husband" style="text-transform: uppercase"><?php echo $result[0]['husband_name'];?></span><br>
                     <b>Address : </b><span id="passbook_customer_address" style="text-transform: uppercase"><?php echo $result[0]['parmanent_address'];?></span><br>
-                    <b>District : </b><span id="passbook_customer_district" style="text-transform: uppercase"><?php echo $result[0]['District_name'];?></span><br>
+                    <b>District : </b><span id="passbook_customer_district" style="text-transform: uppercase"><?php echo $result[0]['district'];?></span><br>
                    <b> Contact No. : </b><span id="passbook_customer_contact"><?php echo $result[0]['contact_no'];?></span>
                    </address>
                 </div>

@@ -1,5 +1,5 @@
 <div class="tile-title-w-btn">
-<h3 class="title">Balance Sheet</h3>
+<h3 class="title">Balance</h3>
 <button class="close"  href="" onclick="removeMasterform('#customer_form')" type="button" aria-label="Close" style="height: 28px;
 width: 36px;"><span aria-hidden="true">×</span></button>
 </div>
