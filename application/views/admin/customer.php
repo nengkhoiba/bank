@@ -18,7 +18,7 @@
         <div class="col-md-12">
           <div class="tile">
           <div class="tile-title-w-btn">
-              <h3 class="title">Customer Information</h3>
+              <h3 class="title">Information</h3>
              <button class="close"  href="" onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>

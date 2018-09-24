@@ -41,6 +41,7 @@
                   <b>Branch : </b><span id="customer_bank_branch"></span>
                 </div>
                 <div class="col-4">
+                <img id="photo" width="90" class="img-responsive pull-right" style="padding: 5px" src="<?php echo base_url();?>assets/img/profile.png">
                 <b>Nominee Information </b><br><br>
                   <b>Name : </b><span id="customer_nominee_name"></span><br>
                   <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"></span><br>
@@ -180,7 +181,8 @@
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
-    	           { 	
+    	           {
+    				 $('#photo').attr('src',response.json[0].photo); 	
     				 $('#postType').val(response.json[0].ID);
     				 $('#customer_ID').html(response.json[0].ID);
     				 $('#customer_account_status').html(response.json[0].accStatus);

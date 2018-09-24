@@ -16,6 +16,25 @@ class Data_model extends CI_Model{
         }
     }
     
+/*GET ALL CUSTOMER DATA BY BRANCH ID -- Written by William */
+    
+    
+    function GetCustomerDataByBranchId($id)
+    {
+        $sql =  "SELECT cus.ID as ID,cus.name as name,dob,aadhaar_no,parmanent_address,contact_no, accSt.Name as status, genMas.Name as sex, dis.Name as district FROM customer cus 
+                LEFT JOIN branch br on br.ID=cus.Branch_id
+                LEFT JOIN account_status accSt on accSt.ID=cus.status
+                LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+                LEFT JOIN district dis on dis.ID=cus.district
+                WHERE cus.IsActive=1 AND br.ID=$id ";
+        
+        $query=$this->db->query($sql);
+        
+        return $query->result_array();
+    }
+    
+ 
+    
 //Live Search from this query
     function loadDataBySearchKeyword($q)
     {
@@ -58,9 +77,15 @@ class Data_model extends CI_Model{
          $query = $this->db->get_where($tabName, array('ID' => $id,'IsActive' => 1)); 
          return $query->result_array();  
     }
-    function GetRecordByForiegnKey($id,$fieldName,$tabName)
+    function GetRecordByForiegnKey($id)
     {
-        $query = $this->db->get_where($tabName, array($fieldName => $id,'IsActive' => 1));
+        $sql =  "SELECT cusDoc.Cus_id as ID, docType.name as doc_type, cusDoc.file_type as file_type, cusDoc.Added_by as Added_by, cusDoc.Added_on as Added_on, cusDoc.files as files
+                FROM customer_document cusDoc
+                LEFT JOIN customer cus on cus.ID=cusDoc.Cus_id
+                LEFT JOIN document_type docType on docType.ID=cusDoc.doc_type
+                WHERE cus.IsActive=1 AND cusDoc.Cus_id = $id ";
+        $query=$this->db->query($sql);
+        
         return $query->result_array();
     }    
     function RemoveRecordById($ArrIds,$tblName)
@@ -378,6 +403,10 @@ class Data_model extends CI_Model{
 	        'nominee_urban'=>  $member_nomineeurban,
 	        'nominee_district'	=>  $member_nomineedistrict ,
 	        'nominee_contact_no'=>  $member_nomineecontact,
+	        'status'=>  1,
+	        'Branch_id'=>  $GLOBALS['branch_id'],
+	        'Added_by'=>  $GLOBALS['Added_by'],
+	        'Added_on'=>  date('Y-m-d H:i:s',now()),
 	        'IsActive'=>  1
 	    );
 	    
@@ -779,15 +808,19 @@ class Data_model extends CI_Model{
 	/*GET CUSTOMER DATA  -- Written by William */
 	function GetCustomerRecordById($id,$tabName)
 	{
-	    $sql = "SELECT account_status.Name as accStatus, customer_account.Acc_no as accNo, br.Name as branchName, br.Branch_code as Branch_code, br.Branch_address as Branch_address, dis.Name as District_name,  customer.*
-	    FROM customer
-	    LEFT JOIN account_status
-	    ON customer.status=account_status.ID
-        LEFT JOIN customer_account
-        ON customer_account.Cus_id=customer.ID
-        LEFT JOIN branch br on br.ID=customer.Branch_id
-        LEFT JOIN district dis on dis.ID=customer.district
-	    WHERE customer.isActive = 1 AND customer.ID = $id";
+	    $sql = "SELECT cus.ID as ID,cus.name as name,dob,aadhaar_no,husband_name,parmanent_address,rural,
+        urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
+        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo, br.Name as branchName,
+        accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
+        nomiDis.Name as nominee_district FROM $tabName cus
+        LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+        LEFT JOIN branch br on br.ID=cus.Branch_id
+        LEFT JOIN account_status accSt on accSt.ID=cus.status
+        LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+        LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+        LEFT JOIN district dis on dis.ID=cus.district
+        LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID WHERE cus.IsActive=1 AND cus.ID=$id ";
 	    $query=$this->db->query($sql);
 	      
 // 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
@@ -804,7 +837,18 @@ class Data_model extends CI_Model{
 
 	function GetRecordBySearchKeyWord($q)
 	{
-	    $sql = "SELECT *, $q as accNo, br.Name as branchName, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID LEFT JOIN branch br on br.ID=cus.Branch_id WHERE acc.IsActive=1 AND acc.Acc_no=$q ";
+	    $sql =  "SELECT cus.ID as Cus_id,cus.name as name,dob,aadhaar_no,husband_name,parmanent_address,rural,urban,
+                contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,nominee_rural,
+                nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo, br.Name as branchName, accSt.Name as accStatus,
+                cusDoc.files as photo, genMas.Name as sex, dis.Name as district, nomiDis.Name as nominee_district FROM customer cus
+                LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+                LEFT JOIN branch br on br.ID=cus.Branch_id
+                LEFT JOIN account_status accSt on accSt.ID=cus.status
+                LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+                LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+                LEFT JOIN district dis on dis.ID=cus.district
+                LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+                LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID WHERE acc.IsActive=1 AND acc.Acc_no=$q ";
 
 	    $query=$this->db->query($sql);
 	    

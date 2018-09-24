@@ -1503,7 +1503,7 @@ class Data_controller extends CI_Controller {
 	public function loadCustomerDocUpload()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $data['result']=$this->database->GetCustomerDataByBranchId($GLOBALS['branch_id']);
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/CustomerDocUpload_table',$data, true),
 	            'success' =>true
@@ -1529,7 +1529,7 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data = $this->database->GetCustomerRecordById($Id,'customer');
-	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
+	            $data1 = $this->database->GetRecordByForiegnKey($Id);
 	            $output = array(
 	                'json'=>$data,
 	                'json1'=>$data1,
@@ -1588,7 +1588,7 @@ class Data_controller extends CI_Controller {
 	public function loadCustomerProfile()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('customer');
+	        $data['result']=$this->database->GetCustomerDataByBranchId($GLOBALS['branch_id']);
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/CustomerProfile_table',$data, true),
 	            'success' =>true
