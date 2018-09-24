@@ -21,12 +21,10 @@
 				<td><?php echo $shgmaster_data['Area'];?></td>
 				<td><?php echo $shgmaster_data['Member_count'];?></td>
 				<td><?php echo $shgmaster_data['Branch_id'];?></td>
-				<td> 
-<<<<<<< HEAD
-				  <a onclick="LoadSelected_memberlist(<?php echo $shgmaster_data['ID'];?>)"  style="color:#fff" class="btn btn-sm btn-danger">View member</a>
-=======
+				<td>
+
 				  <a onclick="LoadSelected_memberlist(<?php echo $shgmaster_data['ID'];?>)"  style="color:#fff" class="btn btn-sm btn-info">Add / View member</a>
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+
 				</td>
 				</tr>
         <?php $count ++; } ?>

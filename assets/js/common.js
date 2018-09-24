@@ -278,3 +278,22 @@ function loadDropDown(selectedValue,tableName,appendID)
    });
 } 
 
+
+function customeconfirmationbox(functionName, alertMsg, confirmBtnTxt, ignoreBtnTxt)
+{
+	var callFunc=new Function(functionName);
+	
+ swal({
+   title: alertMsg,
+   showCancelButton: true,
+   confirmButtonText: confirmBtnTxt,
+   cancelButtonText: ignoreBtnTxt,
+   closeOnConfirm: true,
+   closeOnCancel: true
+   }, function(isConfirm) {
+   if (isConfirm) {
+	   callFunc();
+   }
+   }); 
+ }
+

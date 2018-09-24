@@ -15430,8 +15430,8 @@ be a descendant of the grid when it is being dragged.
 		font-size: 0.765625rem;
 		line-height: 1.5;
 		border-radius: 3px;
-			border: 2px solid transparent;
-				-webkit-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
+		border: 2px solid transparent;
+		-webkit-transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
 		transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, -webkit-box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), -webkit-transform 0.2s cubic-bezier(0.35, 0, 0.25, 1);
 		-o-transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 		transition: box-shadow 0.3s cubic-bezier(0.35, 0, 0.25, 1), transform 0.2s cubic-bezier(0.35, 0, 0.25, 1), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
@@ -15485,7 +15485,7 @@ be a descendant of the grid when it is being dragged.
 	
 .search_input
 {
-    width: 285px;
+    width: 205px;
 	border: 0;
     padding: 5px 5px;
     border-radius: 0px;
@@ -15493,9 +15493,9 @@ be a descendant of the grid when it is being dragged.
     -o-transition: background-color 0.3s ease;
     transition: background-color 0.3s ease;
 	background-color: #FFF;
-	  border: 2px solid #ced4da;
-	  -webkit-transition: width .35s ease-in-out;
-	  transition: width .35s ease-in-out;
+	border: 2px solid #ced4da;
+	-webkit-transition: width .35s ease-in-out;
+	transition: width .35s ease-in-out;
 	  
 	
 }
@@ -15522,7 +15522,7 @@ be a descendant of the grid when it is being dragged.
 
 .search_input:focus
 {
-width:100%;
+width:285px;
 }
 
 th.table_head {

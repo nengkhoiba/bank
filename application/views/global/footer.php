@@ -24,7 +24,7 @@
   <!-- Page specific javascripts--> 
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/main.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/common.js"></script>
-    
+    <script type="text/javascript" src="<?php echo base_url();?>assets/js/jQuery.print.js"></script>    
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/validation.js"></script>
     <!-- for date picker -->
     

@@ -7,6 +7,7 @@ class Data_controller extends CI_Controller {
     {
     	parent::__construct();
     	$this->load->model('Data_model', 'database');
+    	$this->load->model('Account_model', 'db_model');
     	$this->load->library ( 'form_validation' );
     	$this->load->helper ( 'security' );
     	if($this->session->userdata('loginStatus')){
@@ -358,23 +359,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	public function AddEmpform()
-	{
-	    try {
-	        $data['result'] = '';
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/addForm/Emp_addForm',$data, true),
-	            'success' =>true
-	        );
-	        
-	    } catch (Exception $ex) {
-	        $output = array(
-	            'msg'=> $ex->getMessage(),
-	            'success' => false
-	        );
-	    }
-	    echo json_encode($output);
-	}
 	
 	public function EditEmp()
 	{
@@ -1273,19 +1257,11 @@ class Data_controller extends CI_Controller {
 	
 		public function LoadSelected_memberlist()
 	{ 	
-<<<<<<< HEAD
+
 
 		$id =  $this->input->get('id',true);
 		try {
-			$data['result']=$this->database->GetAllSelectedMember($id);  
-=======
-		$group_id= $this->input->post('group_id',true);
-
-		try {
-			$data['result']=$this->database->GetAllActiveRecord('customer',);  
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
-			
-			
+			$data['result']=$this->database->GetAllSelectedMember($id);  	
 			$output = array(
 	        'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
 	        'success' =>true
@@ -1727,7 +1703,7 @@ class Data_controller extends CI_Controller {
 	{
 	    try {
 	        $Id = $this->input->post('reqId',true);
-	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $data['result']=$this->database->GetCustomerRecordById($Id,'customer');
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/addForm/AddCustomerDepositeForm',$data, true),
 	            'success' =>true
@@ -1746,7 +1722,7 @@ class Data_controller extends CI_Controller {
 	{
 	    try {
 	        $Id = $this->input->post('reqId',true);
-	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $data['result']=$this->database->GetCustomerRecordById($Id,'customer');
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/addForm/AddCustomerWithdrawalsForm',$data, true),
 	            'success' =>true
@@ -1765,11 +1741,8 @@ class Data_controller extends CI_Controller {
 	{
 	    try {
 	        $Id = $this->input->post('reqId',true);
-<<<<<<< HEAD
-	        $data['result']=$this->database->GetRecordById($Id,'customer');
-=======
 	        $data['result']=$this->database->GetCustomerRecordById($Id,'customer');
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+	        
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/addForm/AddCustomerPassbookPreview',$data, true),
 	            'success' =>true
@@ -1784,13 +1757,13 @@ class Data_controller extends CI_Controller {
 	}
 	
 	/*CUSTOMER BALANCE SHEET -- Written by William*/
-	public function addBalanceSheet()
+	public function addBalanceForm()
 	{
 	    try {
-	        $Id = $this->input->post('reqId',true);
-	        $data['result']=$this->database->GetRecordById($Id,'customer');
+	        $AccNo = $this->input->post('reqId',true);
+	        $data['result']=$this->database->GetCustomerBalanceById($AccNo,'transaction_footer');
 	        $output = array(
-	            'html'=>$this->load->view('datafragment/dataTable/CustomerBalanceSheet_table.php',$data, true),
+	            'html'=>$this->load->view('datafragment/dataTable/CustomerBalance_table.php',$data, true),
 	            'success' =>true
 	        );
 	    } catch (Exception $ex) {
@@ -1826,6 +1799,132 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+	
+	/*ADD CUSTOMER DEPOSITE -- Written by William*/
+	public function addCustomerDeposite()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* deposite amount validation */
+	        if (empty($this->input->post('customer_deposite_amount',true))) {
+	            $errorMSG = " Deposite Amount is required";
+	        }
+	        /* deposite narration*/
+	        if (empty($this->input->post('customer_deposite_narration',true))) {
+	            $errorMSG = " Narration is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $customer_account_no = $this->db->escape_str ( trim ( $this->input->post('customer_account_no',true) ) );
+	            $customer_deposit_tranId = $this->db->escape_str ( trim ( $this->input->post('customer_deposit_tranId_hidden',true) ) );
+	            $customer_deposite_amount = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_amount',true) ) );
+	            $customer_deposite_narration = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_narration',true) ) );
+	          
+	            $jsonData=array("header"=>array(
+	                "Acc_no"=>$customer_account_no,
+	                "Amount"=>$customer_deposite_amount,
+	                "TransactionID"=>$customer_deposit_tranId,
+	                "Naration"=>$customer_deposite_narration,
+	                "TransactionType"=>"R",
+	                "IsManual"=>"0"),
+	                "footer"=>array(
+	                    array(
+	                        "Ledger_type"=>"CR",
+	                        "Ledger_id"=>"1",
+	                        "Ledger_name"=>"CASH",
+	                        "Amount"=>$customer_deposite_amount,
+	                        "IsInward"=>"1"),
+	                    array(
+	                        "Ledger_type"=>"DR",
+	                        "Ledger_id"=>"2",
+	                        "Ledger_name"=>"Diposit",
+	                        "Amount"=>$customer_deposite_amount,
+	                        "IsInward"=>"1")));
+	                    
+	                    $result=$this->db_model->updateTransaction($jsonData, $GLOBALS['financial_id'],$GLOBALS['branch_id'],$GLOBALS['Added_by']);	
+	                    
+	                if($result != '')
+	                {
+	                    $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for diposite (Amount '.$customer_deposite_amount.')',"voucherNo" => $result);
+	                }
+	                else
+	                {
+	                    $status = array("success" => false,"msg" => "Fail to generate voucher no !!!");
+	                }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*ADD CUSTOMER WITHDRAWALS -- Written by William*/
+	public function addCustomerWithdrawals()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* withdrawals amount validation */
+	        if (empty($this->input->post('customer_withdrawals_amount',true))) {
+	            $errorMSG = " Deposite Amount is required";
+	        }
+	        /* withdrawals narration */
+	        if (empty($this->input->post('customer_withdrawals_narration',true))) {
+	            $errorMSG = " Narration is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $customer_account_no = $this->db->escape_str ( trim ( $this->input->post('customer_account_no',true) ) );
+	            $customer_withdrawals_tranId = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_tranId_hidden',true) ) );
+	            $customer_withdrawals_amount = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_amount',true) ) );
+	            $customer_withdrawals_narration = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_narration',true) ) );
+	            
+	            $jsonData=array("header"=>array(
+	                "Acc_no"=>$customer_account_no,
+	                "Amount"=>$customer_withdrawals_amount,
+	                "TransactionID"=>$customer_withdrawals_tranId,
+	                "Naration"=>$customer_withdrawals_narration,
+	                "TransactionType"=>"P",
+	                "IsManual"=>"0"),
+	                "footer"=>array(
+	                    array(
+	                        "Ledger_type"=>"CR",
+	                        "Ledger_id"=>"1",
+	                        "Ledger_name"=>"CASH",
+	                        "Amount"=>$customer_withdrawals_amount,
+	                        "IsInward"=>"0"),
+	                    array(
+	                        "Ledger_type"=>"DR",
+	                        "Ledger_id"=>"3",
+	                        "Ledger_name"=>"Withdrawals",
+	                        "Amount"=>$customer_withdrawals_amount,
+	                        "IsInward"=>"0")));
+	                    
+	                    $result=$this->db_model->updateTransaction($jsonData, $GLOBALS['financial_id'],$GLOBALS['branch_id'],$GLOBALS['Added_by']);
+	                    
+	                    if($result != '')
+	                    {
+	                        $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for withdrawals (Amount '.$customer_withdrawals_amount.')',"voucherNo" => $result);
+	                    }
+	                    else
+	                    {
+	                        $status = array("success" => false,"msg" => "Fail to generate voucher no !!!");
+	                    }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
 	}
 	
 	
@@ -1891,7 +1990,7 @@ class Data_controller extends CI_Controller {
 		echo json_encode($output);
 	}
 	/*PAGE MANAGER--Nengkhoiba*/
-<<<<<<< HEAD
+	
 	
 		/*Add member to group*/
 	public function addCustomer_to_group()
@@ -1899,11 +1998,29 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $ac_id = $this->input->post('ac_id',true);
 			$gr_id = $this->input->post('gr_id',true);
-	        $data['result']=$this->database->AddCustomerToGroup($ac_id,$gr_id);
-	        $output = array(
+	        $result=$this->database->AddCustomerToGroup($ac_id,$gr_id);
+			
+			if($result['code']==1){
+				$data['result']=$this->database->GetAllSelectedMember($gr_id );  	
+			
+				 $output = array(
 				'msg'=>$ac_id .' is added successfully!',
+				'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
 	            'success' =>true
 	        );
+				}else if($result['code']==2){
+					 $output = array(
+					'msg'=>$ac_id .' is already added!',
+	            	'success' =>false
+	           		 );
+				}else{
+					$output = array(
+					'msg'=>'Request error.',
+	            	'success' =>false
+	           		 );
+				}
+
+	       
 	    } catch (Exception $ex) {
 	        $output = array(
 	            'msg'=> $ex->getMessage(),
@@ -1913,8 +2030,4 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-=======
-
-
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 }

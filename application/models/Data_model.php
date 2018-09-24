@@ -800,15 +800,12 @@ class Data_model extends CI_Model{
 	}
 	
 	/*GET CUSTOMER DATA BY SEARCH KEYWORD -- Written by William */
-<<<<<<< HEAD
-	function GetRecordBySearchKeyWord($id)
-	{
-	    $sql = "SELECT *, $id as accNo, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID WHERE acc.IsActive=1 AND acc.Acc_no=$id ";
-=======
+
+
 	function GetRecordBySearchKeyWord($q)
 	{
 	    $sql = "SELECT *, $q as accNo, br.Name as branchName, (SELECT Name FROM account_status  WHERE ID=cus.status AND isActive =1 ) as accStatus, (SELECT files FROM customer_document  WHERE Cus_id=cus.ID AND doc_type = 1 AND isActive =1 ) as photo FROM customer cus LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID LEFT JOIN branch br on br.ID=cus.Branch_id WHERE acc.IsActive=1 AND acc.Acc_no=$q ";
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+
 	    $query=$this->db->query($sql);
 	    
 	    return $query->result_array();
@@ -902,9 +899,16 @@ class Data_model extends CI_Model{
 	}
 	
 
-	/*Add member to shg group*/ */
+	/*Add member to shg group*/ 
 	function AddCustomerToGroup($ac_id,$gr_id)
 	{
+
+		$sql="SELECT ID FROM group_customer_member WHERE Group_id='$gr_id' AND Acc_no='$ac_id'";
+		$query=$this->db->query($sql);
+		if($query->num_rows()>0){
+			return array('code' => 2);
+		}else{
+
          $data = array(
              'Group_Id'	=>  $gr_id,
 			 'Acc_no'	=>  $ac_id,
@@ -921,11 +925,40 @@ class Data_model extends CI_Model{
 	    else
 	    {
 	        $this->db->trans_commit();
-	        $this->addLog("Add new Customer to group", "Customer A/C no. ".$ac_id." is added to group ID ".$gr_id.");
+	        $this->addLog("Add new Customer to group", "Customer A/C no. ".$ac_id." is added to group ID ".$gr_id);
 	        return array('code' => 1);
 	    }
-	}
+		}
 
+	}
+	
+
+	/*GET CUSTOMER BALANCE BY ID --Nengkhoiba*/
+	
+	function GetCustomerBalanceById($AccNo,$tableName)
+	{
+	    //data is retrive from this query
+	    $sql="SELECT 
+DATE_FORMAT(transaction_footer.Added_on, '%d/%m/%Y') AS TransactionDate,
+transaction_header.Naration AS Particular,
+transaction_header.Tranction_id AS RefNo,
+transaction_header.Amount AS Amount,
+(10000) AS balance,
+CASE WHEN transaction_header.Transaction_type='R' THEN transaction_footer.Amount ELSE '' END AS Diposit,
+CASE WHEN transaction_header.Transaction_type='P' THEN transaction_footer.Amount ELSE '' END AS Withdraw
+
+FROM transaction_footer 
+LEFT JOIN transaction_header ON transaction_footer.Voucher_no=transaction_header.Voucher_no
+WHERE 
+
+transaction_header.IsActive=1
+AND transaction_footer.IsActive=1
+AND transaction_footer.Ledger_type='CR'
+AND transaction_footer.Acc_no='$AccNo'
+ORDER BY transaction_footer.ID asc ";
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 
 }
     

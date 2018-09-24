@@ -6,34 +6,35 @@ width: 36px;"><span aria-hidden="true">×</span></button>
 <div class="invoice-info" style="background: #fff; margin: 0px; padding: 10px; color: #000">
 <div class="row">
 <div class="col-6">
-  <b> Transaction ID : </b><span id="customer_account_no">RD87191212</span> 
-</div>
-<<<<<<< HEAD
-<div class="col-6">
-  <b> Transaction Type : </b><span id="customer_account_no">R</span>
-</div>
-=======
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
-</div>
-<br>
 <?php echo form_open_multipart('',array('id'=>'CustomerDepositeForm','class'=>'row'))?>
-<input id="postType" value="<?php echo $result[0]['ID'];?>" name="postType" type="hidden">
-<div class="form-group col-md-6 align-self-end">
+<input id="customer_account_no" value="<?php echo $result[0]['accNo'];?>" name="customer_account_no" type="hidden">
+<input id="customer_deposit_tranId_hidden" name="customer_deposit_tranId_hidden" type="hidden">
+<div class="form-group col-md-12 align-self-end">
   <label class="control-label">Deposite Amount</label>
   	<input name="customer_deposite_amount" style="margin-top: 10px;"
 class="form-control number" type="text" id="customer_deposite_amount"
 	placeholder="Deposite Amount"></input>
 </div>
-<div class="form-group col-md-6 align-self-end">
+<div class="form-group col-md-12 align-self-end">
   <label class="control-label">Narration</label>
-  	<input name="customer_deposite_narration" style="margin-top: 10px;"
-class="form-control name" type="text" id="customer_deposite_narration"
-	placeholder="Narration"></input>
+  	<textarea name="customer_deposite_narration" style="margin-top: 10px;"
+class="form-control address" id="customer_deposite_narration"
+	placeholder="Narration"></textarea>
 </div>
-	<div class="form-group col-md-4 align-self-end">
-          <button onclick="addCustomerDeposite()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
+	<div class="form-group col-md-12 align-self-end">
+          <button id="submitBtn" onclick="customeconfirmationbox('addCustomerDeposite()','Are you sure?','Yes, Deposite it!', 'No, cancel plz!')" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
 &nbsp;&nbsp;&nbsp;
-<a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDepositeForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+<button id="resetBtn" class="btn btn-sm btn-secondary" onclick="resetAllFormValue('#CustomerDepositeForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</button>
 </div>            
-<?php echo form_close() ?>
+<?php echo form_close() ?> 
 </div>
+<div class="col-6">
+ <b> Transaction ID : </b><span id="customer_deposit_tranId"></span><br>
+  <b> Voucher Number : </b><span id="customer_voucher_no">N/A</span><br>
+    <b> Balance : </b><span id="customer_balance">N/A</span>
+</div>
+</div>
+<br>
+
+</div>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/validation.js"></script>

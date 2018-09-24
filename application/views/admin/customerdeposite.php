@@ -9,11 +9,7 @@
           </ul>
         </div>
 		<div class="app-search" style="padding: 0px; margin-right: 0px">
-<<<<<<< HEAD
-		<input onkeyup="runAutoComplete(this.value)" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
-=======
-		<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" class="app-search__input search_input input-lg" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+		<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" class="search_input" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
 		</div>
      </div>
       
@@ -52,7 +48,7 @@
                 <b>Nominee Information </b><br><br>
                   <b>Name : </b><span id="customer_nominee_name"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
                   <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
-                  <b> Permanent Address : </b><span id="customer_nominee_address"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
+                  <b> Permanent Address : </b><span id="customer_nominee_address"> _ _ _ _ _ _ _ _ _ _ </span><br>
                   <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"> _ _ _ _ _  </span><br>
@@ -79,20 +75,15 @@
                     	<button id="PassbookBtn" disabled onclick="addPassbookPreview($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-address-card"></i>Passbook</button>
                     	</div> 
                     	<div class="col-md-6">
-                    	<button id="BalanceBtn" disabled onclick="addBalanceSheet($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-bars"></i>Balance</button>
+                    	<button id="BalanceBtn" disabled onclick="addBalanceForm($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-bars"></i>Balance</button>
                     	</div>
                 	</div>
                 	</div>
                 </div>
                 <div class="col-md-9">
                 	<div  class="tile-body">
-<<<<<<< HEAD
-                	<div id="customer_form" class="alert alert-success" style="border-radius: 0px">
-  					 No record found! Please type account name or number first.
-=======
                 	<div id="customer_form" class="alert alert-success" style="border-radius: 0px; display: none">
   					 
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
 					</div>
 					</div>
                 </div>
@@ -121,9 +112,21 @@
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
-    	           { 	
+    	           {
+        	            	
     				   $('#customer_form').show();
     				   $('#customer_form').html(response.html);
+    				   var currentdate = new Date(); 
+    				   var datetime = "TRN<?php echo $this->session->userdata('userId');?>" + currentdate.getDate() + ""
+    				                + (currentdate.getMonth()+1)  + "" 
+    				                + currentdate.getFullYear() + ""  
+    				                + currentdate.getHours() + ""  
+    				                + currentdate.getMinutes() + "" 
+    				                + currentdate.getSeconds() + ""
+    				                + currentdate.getMilliseconds();
+    				   $('#customer_deposit_tranId').html(datetime);
+    				   $('#customer_deposit_tranId_hidden').val(datetime);
+    				   
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -157,9 +160,17 @@
     			   if (response.success)
     	           { 	
     				   $('#customer_form').show();
-<<<<<<< HEAD
-=======
     				   $('#customer_form').html(response.html);
+    				   var currentdate = new Date(); 
+    				   var datetime = "TRN<?php echo $this->session->userdata('userId');?>" + currentdate.getDate() + ""
+    				                + (currentdate.getMonth()+1)  + "" 
+    				                + currentdate.getFullYear() + ""  
+    				                + currentdate.getHours() + ""  
+    				                + currentdate.getMinutes() + "" 
+    				                + currentdate.getSeconds() + ""
+    				                + currentdate.getMilliseconds();
+    				   $('#customer_withdrawals_tranId').html(datetime);
+    				   $('#customer_withdrawals_tranId_hidden').val(datetime);
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -192,7 +203,6 @@
     			   if (response.success)
     	           { 	
     				   $('#customer_form').show();
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
     				   $('#customer_form').html(response.html);
 //     				   $('#passbook_customer_account_no').val(response.json[0].accNo);
 //     				   $('#passbook_customer_name').val(response.json[0].name);
@@ -225,76 +235,9 @@
     		 });
     } 
 
-    function addBalanceSheet($btn){   
+    function addBalanceForm($btn){   
     	$reqestId =  $btn.val();  
-    	var url = '<?php echo base_url();?>index.php/data_controller/addBalanceSheet';
-    	StartInsideLoading();
-    	$.ajax({
-    		  type: "post",
-    		  url: url,
-    		  cache: false,    
-    		  data: {reqId:$reqestId},
-    		  dataType: 'json',
-    		  success: function(response){   
-    		  try{  	 
-    			   if (response.success)
-    	           { 	
-    				   $('#customer_form').show();
-    				   $('#customer_form').html(response.html);
-    				   $('#customerBalanceSheet').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
-    	           } else
-    	           { 
-    	               SetWarningMessageBox('warning', response.msg);
-    	           }
-    		 StopInsideLoading();
-    		  }catch(e) {  
-    			  SetWarningMessageBox('warning', e);
-    			  StopInsideLoading();
-    		  }  
-    		  },
-    		  error: function(){      
-    			  SetWarningMessageBox('warning', 'Error while request..');
-    			  StopInsideLoading();
-    		  }
-    		 });
-    } 
-
-    function addPassbookPreview($btn){   
-    	$reqestId =  $btn.val();  
-    	var url = '<?php echo base_url();?>index.php/data_controller/addPassbookPreview';
-    	StartInsideLoading();
-    	$.ajax({
-    		  type: "post",
-    		  url: url,
-    		  cache: false,    
-    		  data: {reqId:$reqestId},
-    		  dataType: 'json',
-    		  success: function(response){   
-    		  try{  	 
-    			   if (response.success)
-    	           { 	
-    				   $('#customer_form').show();
-    				   $('#customer_form').html(response.html);
-    	           } else
-    	           { 
-    	               SetWarningMessageBox('warning', response.msg);
-    	           }
-    		 StopInsideLoading();
-    		  }catch(e) {  
-    			  SetWarningMessageBox('warning', e);
-    			  StopInsideLoading();
-    		  }  
-    		  },
-    		  error: function(){      
-    			  SetWarningMessageBox('warning', 'Error while request..');
-    			  StopInsideLoading();
-    		  }
-    		 });
-    } 
-
-    function addBalanceSheet($btn){   
-    	$reqestId =  $btn.val();  
-    	var url = '<?php echo base_url();?>index.php/data_controller/addBalanceSheet';
+    	var url = '<?php echo base_url();?>index.php/data_controller/addBalanceForm';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -326,22 +269,22 @@
     		 });
     } 
     
-    function updateCustomerDoc(){  
-    	if ($('#customer_doc_type').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Document type is mandatory !');
-            $('#customer_doc_type').focus();
+    function addCustomerDeposite(){  
+    	if ($('#customer_deposite_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Deposite Amount is mandatory !');
+            $('#customer_deposite_amount').focus();
             return;
         }
-        if ($('#file').val().trim() == '') {
-            SetWarningMessageBox('warning', 'File is mandatory!');
-            $('#file').focus();
+        if ($('#customer_deposite_narration').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Narration is mandatory!');
+            $('#customer_deposite_narration').focus();
             return;
         }
                
 
-        var formData = $('form#CustomerDocUploadForm').serializeObject();
+        var formData = $('form#CustomerDepositeForm').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerDoc';
+        var url = '<?php echo base_url();?>index.php/data_controller/addCustomerDeposite';
         StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -354,11 +297,63 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#customer_doc_type').val('');
-				   $('#file').val('');
-				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
-				   $('#formContainer').hide(); 
-				   loadCustomer();
+				   $('#customer_voucher_no').html(response.voucherNo);
+				   $('#customer_deposite_amount').attr('disabled',true);
+				   $('#customer_deposite_narration').attr('disabled',true);
+				   $('#submitBtn').attr('disabled',true);
+				   $('#resetBtn').attr('disabled',true);
+				  
+	           } else
+	           { 
+	               SetWarningMessageBox('warning', response.msg);
+	           }
+		  StopInsideLoading();
+		  }catch(e) {  
+			  SetWarningMessageBox('warning', e);
+			  StopInsideLoading();
+		  }  
+		  },
+		  error: function(){      
+			  SetWarningMessageBox('warning', 'Error while request..');
+			  StopInsideLoading();
+		  }
+		 });
+	}
+
+    function addCustomerWithdrawals(){  
+    	if ($('#customer_withdrawals_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Withdrawals Amount is mandatory !');
+            $('#customer_withdrawals_amount').focus();
+            return;
+        }
+        if ($('#customer_withdrawals_narration').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Narration is mandatory!');
+            $('#customer_withdrawals_narration').focus();
+            return;
+        }
+               
+
+        var formData = $('form#CustomerWithdrawlsForm').serializeObject();
+        var dataString = JSON.stringify(formData);
+        var url = '<?php echo base_url();?>index.php/data_controller/addCustomerWithdrawals';
+        StartInsideLoading();
+		 $.ajax({
+		  type: "post",
+		  url: url,
+		  cache: false,    
+		  data: dataString,
+		  dataType: 'json',
+		  success: function(response){   
+		  try{  	
+			   if (response.success)
+	           { 
+				   SetSucessMessageBox('Success', response.msg);
+				   $('#customer_voucher_no').html(response.voucherNo);
+				   $('#customer_withdrawals_amount').attr('disabled',true);
+				   $('#customer_withdrawals_narration').attr('disabled',true);
+				   $('#submitBtn').attr('disabled',true);
+				   $('#resetBtn').attr('disabled',true);
+				  
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -411,14 +406,9 @@
  		  try{  	 
  			   if (response.success)
  	           { 
-<<<<<<< HEAD
- 				 $('#photo').attr('src',response.json[0].photo);
- 				 $('#customer_ID').html(response.json[0].ID);
-=======
  				 $('#searchfield').val('');  
  				 $('#photo').attr('src',response.json[0].photo);
  				 $('#customer_ID').html(response.json[0].Cus_id);
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
  				 $('#customer_account_status').html(response.json[0].accStatus);
  				 $('#customer_account_no').html(response.json[0].accNo);
  				 $('#customer_name').html(response.json[0].name);
@@ -454,17 +444,10 @@
  				 $('#customer_nominee_district').html(response.json[0].nominee_district);
  				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
 
-<<<<<<< HEAD
- 				 $('#DepositeBtn').val(response.json[0].ID).attr('disabled',false);
- 				 $('#WithdrawalsBtn').val(response.json[0].ID).attr('disabled',false);
- 				 $('#PassbookBtn').val(response.json[0].ID).attr('disabled',false);
-				 $('#BalanceBtn').val(response.json[0].ID).attr('disabled',false);
-=======
  				 $('#DepositeBtn').val(response.json[0].Cus_id).attr('disabled',false);
  				 $('#WithdrawalsBtn').val(response.json[0].Cus_id).attr('disabled',false);
  				 $('#PassbookBtn').val(response.json[0].Cus_id).attr('disabled',false);
-				 $('#BalanceBtn').val(response.json[0].Cus_id).attr('disabled',false);
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+				 $('#BalanceBtn').val(response.json[0].accNo).attr('disabled',false);
  				 
  				$(window).scrollTop(0);
                 $('#formContainer').show();
@@ -484,10 +467,6 @@
  		  }
  		 });
  }
-<<<<<<< HEAD
-	 
-    
-=======
 
  function resetValue ()
  	{
@@ -515,7 +494,7 @@
 
 		 $('#customer_nominee_name').html(' _ _ _ _ _ _ _ _ _ _ _ ');
 		 $('#customer_nominee_aadhaar_no').html(' _ _ _ _ _ _ _ _ _ _ _ ');
-		 $('#customer_nominee_address').html(' _ _ _ _ _ _ _ _ _ _ _ ');
+		 $('#customer_nominee_address').html(' _ _ _ _ _ _ _ _ _ _ ');
 
 		 $('#customer_nominee_rural').attr('checked', false);
 		 $('#customer_nominee_urban').attr('checked', false);
@@ -528,8 +507,21 @@
     	 $('#PassbookBtn').val('').attr('disabled',true);
     	 $('#BalanceBtn').val('').attr('disabled',true);
     	 $('#customer_form').hide();
-	 }   
->>>>>>> 3a10af897792b9d5a609ee3ca2e6f4140e7e6937
+	 }
+
+ function printDiv(divID) {
+	 $("#"+divID).print({
+			addGlobalStyles : true,
+			stylesheet : null,
+			rejectWindow : false,
+			noPrintSelector : ".no-print",
+			iframe : true,
+			append : null,
+			prepend : null
+
+
+			});
+	}    
 </script>
     
        </body>
