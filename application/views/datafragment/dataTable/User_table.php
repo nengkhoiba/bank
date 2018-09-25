@@ -2,6 +2,7 @@
         <thead>
             <tr>
                 <th>Sl. No.</th>
+                <th>Employee Name</th>
                 <th>Username</th>
 				 <th>Role</th>
                 <th>
@@ -17,6 +18,7 @@
         <?php $count = 1; foreach ( $result as $row) { ?>
             <tr>
                 <td><?php echo $count;?></td>
+                <td><?php echo $row['emp_id'];?></td>
                 <td><?php echo $row['username'];?></td>
 				<td><?php echo $row['role_id'];?></td>
                 <td>

@@ -1999,7 +1999,7 @@ class Data_controller extends CI_Controller {
 	public function loadUser()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('emp_login');
+	        $data['result']=$this->database->GetUserTable();
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/User_table',$data, true),
 	            'success' =>true

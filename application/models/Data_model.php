@@ -1059,21 +1059,18 @@ class Data_model extends CI_Model{
 	//DESIGNATION END HERE
 	
 	
-// 	function GetUserById($id)
-// 	{
+	function GetUserTable()
+	{
 	    
-// 	    $sql="SELECT emp.name as empName, emp_login.* FROM emp_login	        
-// 	   		LEFT JOIN emp ON emp.ID  = emp_login.emp_id	   		
-// 	   		WHERE emp_login.IsActive = 1 AND emp_login.emp_id = $id ";
-// 	    $query = $this->db->query($sql);
+	    $sql="SELECT emp.name as emp_id,role.Name as role_id, emp_login.username, emp_login.ID FROM emp_login	        
+	   		LEFT JOIN emp ON emp.ID  = emp_login.emp_id
+            LEFT JOIN role ON role.ID  = emp_login.role_id	   		
+	   		WHERE emp_login.IsActive = 1";
+	    $query = $this->db->query($sql);
 	    
-// 	    $query =   $this->db->select('*')
-// 	               ->from('emp_login')
-// 	               ->join('emp', 'emp.ID = emp_login.user_id', 'left')
-// 	               ->where_in(array('emp_login.user_id' => $id,'emp_login.IsActive' => 1));
 	    
-// 	    return $query->result_array();
-// 	}
+	    return $query->result_array();
+	}
 
 }
     
