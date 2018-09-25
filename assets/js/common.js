@@ -297,3 +297,69 @@ function customeconfirmationbox(functionName, alertMsg, confirmBtnTxt, ignoreBtn
    }); 
  }
 
+
+
+function deleteSelectedMember(group_id){
+
+
+    // Checking all category data are deleted
+  if (!$( ".checkbox" ).length) {
+    SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
+    return;
+  }
+  
+  var selected_value = []; // initialize empty array 
+  if ($('.checkbox:checked').length == 0 )
+     {
+    SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
+    return;
+      } else {
+        $(".checkbox:checked").each(function(){
+                selected_value.push($(this).val());
+            });
+      } 
+  var url = window.location.origin+'/bank/index.php/data_controller/RemoveSelectedMember';
+  var dataString = JSON.stringify(selected_value);
+ swal({
+   title: "Are you sure?",
+   //text: "You will not be able to recover this imaginary file!",
+   //type: "warning",
+   showCancelButton: true,
+   confirmButtonText: "Yes, Delete it!",
+   cancelButtonText: "No, cancel plz!",
+   closeOnConfirm: true,
+   closeOnCancel: true
+   }, function(isConfirm) {
+   if (isConfirm) {
+   StartInsideLoading();  
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,    
+        data: {dataArr:dataString},
+        dataType: 'json',
+        success: function(response){   
+        try{    
+           if (response.success)
+               { 
+             SetSucessMessageBox('Success', response.msg);
+            LoadSelected_memberlist(group_id);
+               } else
+               { 
+                   SetWarningMessageBox('warning', response.msg);
+                   //StopInsideLoading();
+               }
+        StopInsideLoading();
+        }catch(e) {  
+          SetWarningMessageBox('warning', e);
+          StopInsideLoading();
+        }  
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+   }
+   }); 
+ }

@@ -97,6 +97,7 @@ class Data_model extends CI_Model{
 			$this->db->update($tblName); //Set your table name
 		}
 	}
+
 	function UpdateRecordById($Id,$Val,$tblName)
 	{
 	    $data = array(
@@ -930,16 +931,19 @@ class Data_model extends CI_Model{
 	   				customer.parmanent_address,
 	   				customer.contact_no,
 	   				customer_account.Acc_no,
-	   				district.name AS district
-	        FROM customer 
-	   		
-	   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
-	   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
-	   		LEFT JOIN district ON district.ID =customer.district
+	   				district.name AS district,
+                    shg_master.Group_name,
+                    group_customer_member.ID AS group_id
+		        FROM customer 
+		   		
+		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
+		   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
+		   		LEFT JOIN district ON district.ID =customer.district
+		   		LEFT JOIN shg_master ON shg_master.ID  = group_customer_member.Group_id
 
-	   		WHERE group_customer_member.Group_id='$id'
-	   		
-	   		"; 
+		   		WHERE group_customer_member.Group_id='$id'
+		   		
+		   		"; 
 	    $query = $this->db->query($sql); 
 	    return $query->result_array();  
 	}
@@ -1004,6 +1008,19 @@ AND transaction_footer.Acc_no='$AccNo'
 ORDER BY transaction_footer.ID asc ";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
+	}
+
+
+	 function RemoveRecordByIdFromShgGroup($ArrIds)
+	{
+
+		foreach ($ArrIds as $id)
+		{ 	    
+
+			$this->db->where('ID', $id);
+			$this->db->delete('group_customer_member');
+
+		}
 	}
 
 }

@@ -45,16 +45,14 @@
 		
 			
 			<div class="row invoice-info" id="formContainer" style="margin:15px;padding: 15px; display:none;">
-			<input id="ac_id" type="text" value="">
+			<input id="ac_id" type="" value="">
 			<input id="gr_id" type="text" value="">
 					
 				<table class="table custome_table table-hover">
 
 			  <div class="modal-body">
 					
-							
-
-
+					
 			<div class="row invoice-info" style="margin:15px;padding: 15px; display:none;">
 				<table class="table table-hover">
 					<tbody>
@@ -158,18 +156,16 @@
         <div class="col-md-12">		
           <div class="tile">
             <div class="tile-title-w-btn">
-              <h3 class="title">Selected group member</h3>
+              <h3 class="title"><span id="group_title">Selected group member</span><span> member list.</span></h3>
              <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
 			
-				
-			
 				<div align="right">
 					<p class="bs-component" >	
 						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" >Add member</button>					
-						<button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('branch','loadBranch()')">Delete</button>
+						<button id="delete_onclick_set" class="btn btn-sm btn-danger" type="button" >Delete</button>
 					</p>
 				</div>
 				<div class="" id="selected_member_data"></div>
@@ -248,7 +244,9 @@
             $('#selected_member_data').html(response.html);
             $('#selected_member_data_table').DataTable();
       			$('#showSelectedmember').show(); 
-      			$('#gr_id').val(id); 
+            $('#group_title').html(response.group_title);
+      			$('#gr_id').val(id);
+            $('#delete_onclick_set').attr('onclick','deleteSelectedMember('+id+')'); 
       			
 			  	
               

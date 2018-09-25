@@ -1263,7 +1263,7 @@ class Data_controller extends CI_Controller {
 		try {
 			$data['result']=$this->database->GetAllSelectedMember($id);  	
 			$output = array(
-	        'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
+			'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
@@ -2029,5 +2029,25 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+
+	//REMOVED SELECTED MEMBER FROM SHG GROUP 
+	public function RemoveSelectedMember()
+	{
+	    
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        
+	        $this->database->RemoveRecordByIdFromShgGroup($IdsArray);
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	//
 	
 }

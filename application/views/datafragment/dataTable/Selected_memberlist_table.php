@@ -30,7 +30,7 @@
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
 					<label>
-						<input class="checkbox" type="checkbox" value="<?php echo $mem_data['ID']?>"/><span class="label-text"></span>
+					<input class="checkbox" type="checkbox" value="<?php echo $mem_data['group_id']?>"/><span class="label-text"></span>
 					</label>
             	</div>
             		 
