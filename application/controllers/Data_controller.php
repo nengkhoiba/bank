@@ -1331,7 +1331,7 @@ class Data_controller extends CI_Controller {
 	
 	//SHG GROUP MEMBER ADD END HERE
 	
-		/*DESIGNATION SECTION LOAD*/
+    /*DESIGNATION SECTION LOAD*/
 	public function loadDesign()
 	{ 	
 		try {
@@ -1426,42 +1426,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	/*DESIGNATION UPDATE*/
-	public function updateDesign()
-	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    $errorMSG ='';
-	    try {
-	        /* designation title validation */
-	        if (empty($this->input->post('design_title',true))) {
-	            $errorMSG = " Title is required";
-	        }
-	        
-	        
-	        $status = array("success"=>false,"msg"=>$errorMSG);
-	        if(empty($errorMSG)){
-	            
-	            $design_id = $this->db->escape_str ( trim ( $this->input->post('design_id',true) ) );
-	            $design_title = $this->db->escape_str ( trim ( $this->input->post('design_title',true) ) );
-	            
-	            
-	            
-	            $result = $this->database->updateDesignModel($design_title, $design_id);
-	            if($result['code'] == 1)
-	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
-	            }
-	            else
-	            {
-	                $status = array("success" => false,"msg" => "Fail to Update !!!");
-	            }
-	        }
-	    } catch (Exception $ex) {
-	        $status = array("success" => false,"msg" => $ex->getMessage());
-	    }
-	    
-	    echo json_encode($status) ;
-	}
+	
 	
 	
 	public function test(){
@@ -2029,5 +1994,128 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+	
+	/*USER TABLE LOAD*/
+	public function loadUser()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllActiveRecord('emp_login');
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/User_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*USER EDIT SECTION*/
+	public function EditUser()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'emp_login');
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*USER DATA ADD*/
+	public function UpdateUser()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* employee name validation */
+	        if (empty($this->input->post('user_list',true))) {
+	            $errorMSG = " Employee name is required";
+	        }
+	        /* user role validation */
+	        if (empty($this->input->post('role_list',true))) {
+	            $errorMSG = " User role is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $userId = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            $user_list = $this->db->escape_str ( trim ( $this->input->post('user_list',true) ) );
+	            $user_name = $this->db->escape_str ( trim ( $this->input->post('user_name',true) ) );
+	            $role_list = $this->db->escape_str ( trim ( $this->input->post('role_list',true) ) );
+	            
+	            if($userId==0){
+	                $result = $this->database->addUserModel( $user_list,$user_name,$role_list);
+	                if($result['code'] == 1){
+	                    $status = array("success" => true,"msg" => "Save sucessfull!");
+	                }else{
+	                    $status = array("success" => false,"msg" => "Fail to save !!!");
+	                }
+	            }else{
+	                $result = $this->database->updateUserModel($userId,$user_list,$user_name,$role_list);
+	                if($result['code'] == 1)
+	                {
+	                    $status = array("success" => true,"msg" => "Update sucessfull!");
+	                }
+	                else
+	                {
+	                    $status = array("success" => false,"msg" => "Fail to Update !!!");
+	                }
+	            }
+	            
+	            
+	            
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	public function createUserName()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'emp');
+	            $output = array(
+	                'userName'=>$data[0]['Name'],
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 	
 }

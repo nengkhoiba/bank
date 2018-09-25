@@ -22,7 +22,7 @@
         <?php $count = 1; foreach ( $result as $emp_data) { ?>
             <tr>
             	<td><?php echo $count?></td>
-                <td><?php echo $emp_data['name']?></td>
+                <td><?php echo $emp_data['Name']?></td>
                 <td><?php echo $emp_data['address']?></td>
                 <td><?php echo $emp_data['pincode']?></td>
                 <td><?php echo $emp_data['designation']?></td>

@@ -38,15 +38,15 @@ class Data_model extends CI_Model{
 //Live Search from this query
     function loadDataBySearchKeyword($q)
     {
-        $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
-                    LEFT JOIN customer on customer.ID=customer_account.Cus_id
-                    WHERE customer.name like '%$q%'
-                    OR customer_account.Acc_no like '%$q%'
-                    AND customer.IsActive=1
-                    AND customer.status=2
-                    AND customer_account.Acc_no !=''
-                    LIMIT 10
-                    ";
+       $sql="SELECT customer_account.Acc_no AS id,customer.name  AS value  FROM customer_account
+            LEFT JOIN customer on customer.ID=customer_account.Cus_id
+            WHERE customer.name like '%$q%'
+            OR customer_account.Acc_no like '%$q%'
+            AND customer.IsActive=1
+            AND customer.status=4
+            AND customer_account.Acc_no !=''
+            LIMIT 10
+            ";
         $query=$this->db->query($sql);
         
         return $query->result_array();
@@ -256,7 +256,7 @@ class Data_model extends CI_Model{
 	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{
 	         $data = array(
-	             'name'	=>  $employee_name ,
+	             'Name'	=>  $employee_name ,
 	             'address'=>  $employee_address,
 	             'country'=>  $employee_country,
 	             'state'=>  $employee_state,
@@ -295,7 +295,7 @@ class Data_model extends CI_Model{
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{ 
 	        $data = array(
-	            'name'	=>  $employee_name ,
+	            'Name'	=>  $employee_name ,
 	            'address'=>  $employee_address,
 	            'country'=>  $employee_country,
 	            'state'=>  $employee_state,
@@ -984,27 +984,96 @@ class Data_model extends CI_Model{
 	function GetCustomerBalanceById($AccNo,$tableName)
 	{
 	    //data is retrive from this query
-	    $sql="SELECT 
-DATE_FORMAT(transaction_footer.Added_on, '%d/%m/%Y') AS TransactionDate,
-transaction_header.Naration AS Particular,
-transaction_header.Tranction_id AS RefNo,
-transaction_header.Amount AS Amount,
-(10000) AS balance,
-CASE WHEN transaction_header.Transaction_type='R' THEN transaction_footer.Amount ELSE '' END AS Diposit,
-CASE WHEN transaction_header.Transaction_type='P' THEN transaction_footer.Amount ELSE '' END AS Withdraw
-
-FROM transaction_footer 
-LEFT JOIN transaction_header ON transaction_footer.Voucher_no=transaction_header.Voucher_no
-WHERE 
-
-transaction_header.IsActive=1
-AND transaction_footer.IsActive=1
-AND transaction_footer.Ledger_type='CR'
-AND transaction_footer.Acc_no='$AccNo'
-ORDER BY transaction_footer.ID asc ";
+	    $sql=   "SELECT 
+                DATE_FORMAT(transaction_footer.Added_on, '%d/%m/%Y') AS TransactionDate,
+                transaction_header.Naration AS Particular,
+                transaction_header.Tranction_id AS RefNo,
+                transaction_header.Amount AS Amount,
+                (10000) AS balance,
+                CASE WHEN transaction_header.Transaction_type='R' THEN transaction_footer.Amount ELSE '' END AS Diposit,
+                CASE WHEN transaction_header.Transaction_type='P' THEN transaction_footer.Amount ELSE '' END AS Withdraw
+                
+                FROM transaction_footer 
+                LEFT JOIN transaction_header ON transaction_footer.Voucher_no=transaction_header.Voucher_no
+                WHERE 
+                
+                transaction_header.IsActive=1
+                AND transaction_footer.IsActive=1
+                AND transaction_footer.Ledger_type='CR'
+                AND transaction_footer.Acc_no='$AccNo'
+                ORDER BY transaction_footer.ID asc ";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
 	}
+	
+	
+	/*USER MASTER DATA ADD */
+	function addUserModel(  $user_list,$user_name,$role_list)
+	{
+	    $data = array(
+	        'emp_id'	=>  $user_list,
+	        'username'	=>  $user_name,
+	        'role_id'	=>  $role_list,
+	        'IsActive'=>  1,
+	    );
+	    
+	    $this->db->insert('emp_login', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new user", "Employee ID ".$user_list." is added as Role ID ".$role_list.".");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*USER MASTER DATA UPDATE */
+	function updateUserModel($userId,$user_list,$user_name,$role_list)
+	{
+	    $data = array(
+	        'emp_id'	=>  $user_list,
+	        'username'	=>  $user_name,
+	        'role_id'	=>  $role_list
+	    );
+	    $this->db->where('ID',$userId);
+	    $this->db->update('emp_login',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing userID $userId", "New username ".$user_name.", New RoleID ".$role_list."");
+	        return array('code' => 1);
+	    }
+	}
+	//DESIGNATION END HERE
+	
+	
+// 	function GetUserById($id)
+// 	{
+	    
+// 	    $sql="SELECT emp.name as empName, emp_login.* FROM emp_login	        
+// 	   		LEFT JOIN emp ON emp.ID  = emp_login.emp_id	   		
+// 	   		WHERE emp_login.IsActive = 1 AND emp_login.emp_id = $id ";
+// 	    $query = $this->db->query($sql);
+	    
+// 	    $query =   $this->db->select('*')
+// 	               ->from('emp_login')
+// 	               ->join('emp', 'emp.ID = emp_login.user_id', 'left')
+// 	               ->where_in(array('emp_login.user_id' => $id,'emp_login.IsActive' => 1));
+	    
+// 	    return $query->result_array();
+// 	}
 
 }
     

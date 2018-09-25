@@ -9,7 +9,7 @@
         </ul>
 		</div>
 		<p class="bs-component">	
-            <a onclick="addDesignationform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
+            <a onclick="addUserform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
             <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesignnation()')">Delete</button>
         </p>
       </div>
@@ -19,31 +19,39 @@
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-title-w-btn">
-              <h3 class="title">Add/Update Designation</h3>
+              <h3 class="title">Add/Update User</h3>
              <button onclick="removeMasterform('#formContainer')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
-            <?php echo form_open_multipart('',array('id'=>'MasDesignForms','class'=>'row'))?>
+            <?php echo form_open_multipart('',array('id'=>'MasUserForms','class'=>'row'))?>
             	<input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Designation Title</label>
-                  <input name="design_title" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="design_title"
-    				placeholder="Designation Title"></input>
+                  <label class="control-label">Select Employee</label>
+                  <select onchange="createUserName($(this))" id="user_list" name="user_list" style="margin-top:10px;" class="form-control" >
+                        <!-- list of employee -->
+                  </select>
                 </div>
+                
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Username</label>
+                  <input name="user_name" style="margin-top: 10px;"
+    				class="form-control name" readonly type="text" id="user_name"
+    				placeholder=""></input>
+                </div>
+                
 				 <div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Designation Description</label>
-                  <textarea name="design_description" style="margin-top: 10px;"
-    				class="form-control name" rows="1" type="text" id="design_description"
-    				placeholder="Description"></textarea>
+                  <label class="control-label">Select Role</label>
+                  <select id="role_list" name="role_list" style="margin-top:10px;" class="form-control" >
+                        <!-- list of role -->
+                  </select>
                 </div>
                
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="UpdateDesignation()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="UpdateUser()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasDesignForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasUserForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
@@ -58,7 +66,7 @@
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-                	<div id="design_table" class="tile-body"></div>
+                	<div id="user_table" class="tile-body"></div>
                 </div>
             </div>
           </div>
@@ -70,9 +78,9 @@
    
     	
    
-    function loadDesignnation()
+    function loadUser()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadDesign'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadUser'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -83,9 +91,9 @@
         try{  
           if (response.success)
              { 
-            $('#design_table').html(response.html);
+            $('#user_table').html(response.html);
 		//	$('#design').DataTable({dom: 'lBfrtip', buttons: ['copy', 'csv', 'excel', 'pdf', 'print', 'colvis']});
-			$('#design').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});              
+			$('#user').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});              
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -104,22 +112,23 @@
         }
        });
     }
-    loadDesignnation();
+    loadUser();
 
 
-    function addDesignationform($btn){  
+    function addUserform($btn){  
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
     		$('#postType').val(0);
-    		$('#design_title').val('');
-    		$('#design_description').val('');
+    		loadDropDown('','emp','#user_list');
+    		loadDropDown('','role','#role_list');
+    		$('#user_name').val('');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
     	else
     	{
-    	var url = '<?php echo base_url();?>index.php/data_controller/EditDesignation';
+    	var url = '<?php echo base_url();?>index.php/data_controller/EditUser';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -132,8 +141,9 @@
     			   if (response.success)
     	           { 
 						$('#postType').val(response.json[0].ID);
-						$('#design_title').val(response.json[0].Name);
-						$('#design_description').val(response.json[0].description);
+						loadDropDown(response.json[0].emp_id,'emp','#user_list');
+			    		loadDropDown(response.json[0].role_id,'role','#role_list');
+			    		$('#user_name').val(response.json[0].username);
     				    $('#formContainer').show();
     				    $(window).scrollTop(0);
     	           } 
@@ -156,21 +166,21 @@
     } 
     
 
-    function UpdateDesignation(){ 
-    	if ($('#design_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Title is mandatory !');
-            $('#design_title').focus();
+    function UpdateUser(){ 
+    	if ($('#user_list').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Select Employee is mandatory !');
+            $('#user_list').focus();
             return;
         }
-		if ($('#design_title').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Description is mandatory !');
-            $('#design_title').focus();
+		if ($('#role_list').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Select Role is mandatory !');
+            $('#role_list').focus();
             return;
         }
        
-        var formData = $('form#MasDesignForms').serializeObject();
+        var formData = $('form#MasUserForms').serializeObject();
         var dataString = JSON.stringify(formData);
-        var url = '<?php echo base_url();?>index.php/data_controller/UpdateDesignation';
+        var url = '<?php echo base_url();?>index.php/data_controller/UpdateUser';
         
      StartInsideLoading();
      $.ajax({
@@ -185,7 +195,7 @@
              { 
            SetSucessMessageBox('Success', response.msg);
            $('#formContainer').hide();
-           loadDesignnation();
+           loadUser();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -204,7 +214,37 @@
     }
 
       
-    
+    function createUserName($select){  
+    	$reqestId =  $select.val(); 
+    	var url = '<?php echo base_url();?>index.php/data_controller/createUserName';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				 $('#user_name').val(response.userName);
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
    
   
 </script>
