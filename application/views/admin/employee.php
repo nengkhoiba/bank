@@ -214,7 +214,7 @@
     			   if (response.success)
     	           { 	
     				   $('#postType').val(response.json[0].ID);
-    				   	$('#employee_name').val(response.json[0].name);
+    				   	$('#employee_name').val(response.json[0].Name);
     		    		$('#employee_address').val(response.json[0].address);
     		    		loadDropDown(response.json[0].district,'district','#employee_district');
     					$('#employee_pincode').val(response.json[0].pincode);
