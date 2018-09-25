@@ -26,7 +26,7 @@
             <div class="tile-body">
             <?php echo form_open_multipart('',array('id'=>'MasUserForms','class'=>'row'))?>
             	<input id="postType" name="postType" type="hidden">
-                <div class="form-group col-md-4 align-self-end">
+                <div id="empDiv" class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select Employee</label>
                   <select onchange="createUserName($(this))" id="user_list" name="user_list" style="margin-top:10px;" class="form-control" >
                         <!-- list of employee -->
@@ -121,6 +121,7 @@
     	{
     		$('#postType').val(0);
     		loadDropDown('','emp','#user_list');
+    		$('#empDiv').attr('hidden',false);
     		loadDropDown('','role','#role_list');
     		$('#user_name').val('');
         	$('#formContainer').show();
@@ -142,6 +143,7 @@
     	           { 
 						$('#postType').val(response.json[0].ID);
 						loadDropDown(response.json[0].emp_id,'emp','#user_list');
+						$('#empDiv').attr('hidden',true);
 			    		loadDropDown(response.json[0].role_id,'role','#role_list');
 			    		$('#user_name').val(response.json[0].username);
     				    $('#formContainer').show();
