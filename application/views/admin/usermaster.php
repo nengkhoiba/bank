@@ -10,7 +10,7 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addUserform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('designation','loadDesignnation()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('emp_login','loadUser()')">Delete</button>
         </p>
       </div>
       
