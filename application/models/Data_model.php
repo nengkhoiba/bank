@@ -1107,5 +1107,28 @@ class Data_model extends CI_Model{
 	}
 	//USER ASSIGN CHECK END
 
+	function GetGroupDetails($id)  
+	{  
+	   //data is retrive from this query 
+		$sql="SELECT shg_master.Group_name,
+					shg_master.Group_code,
+					shg_master.Address,
+					shg_master.Area,
+					shg_master.Member_count as max_member_count,
+
+					count(group_customer_member.ID) as customer_count
+
+					from shg_master
+
+					LEFT JOIN group_customer_member ON group_customer_member.Group_id  = shg_master.ID
+
+					WHERE shg_master.ID='$id'
+
+		   		"; 
+	    $query = $this->db->query($sql); 
+	    return $query->result_array();  
+	}
+
+
 }
     

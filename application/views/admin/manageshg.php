@@ -161,12 +161,14 @@
             </div>
             <div class="tile-body">
 			
-				<div align="right">
-					<p class="bs-component" >	
-						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" >Add member</button>					
-						<button id="delete_onclick_set" class="btn btn-sm btn-danger" type="button" >Delete</button>
-					</p>
-				</div>
+            <div class="" id="group_details"></div>
+    				<div align="right">
+    					<p class="bs-component" >	
+    						<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal" type="button" >Add member</button>					
+    						<button id="delete_onclick_set" class="btn btn-sm btn-danger" type="button" >Delete</button>
+    					</p>
+    				</div>
+
 				<div class="" id="selected_member_data"></div>
             </div>
           </div>
@@ -243,8 +245,11 @@
             $('#selected_member_data').html(response.html);
             $('#selected_member_data_table').DataTable();
       			$('#showSelectedmember').show(); 
-            $('#group_title').html(response.group_title);
+            $('#group_details').html(response.Group_details);
+            console.log(response.Group_details);
+
       			$('#gr_id').val(id);
+
             $('#delete_onclick_set').attr('onclick','deleteSelectedMember('+id+')'); 
       			
 			  	

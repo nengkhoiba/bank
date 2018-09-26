@@ -1292,13 +1292,14 @@ class Data_controller extends CI_Controller {
 	
 		public function LoadSelected_memberlist()
 	{ 	
-
-
 		$id =  $this->input->get('id',true);
 		try {
-			$data['result']=$this->database->GetAllSelectedMember($id);  	
+			$data['result']=$this->database->GetAllSelectedMember($id);  
+			$data['group_details']=$this->database->GetGroupDetails($id);  
+
 			$output = array(
 			'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_table.php',$data,true),
+			'Group_details'=>$this->load->view('datafragment/dataTable/Group_details.php',$data,true),
 	        'success' =>true
 	    	);
 		} catch (Exception $ex) {
