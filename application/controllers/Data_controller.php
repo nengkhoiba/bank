@@ -49,7 +49,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 
-// 	COMMON REMOVE ITEM START HERE -- Written by William
+// 	COMMON REMOVE AND UNDOREMOVE ITEM START HERE -- Written by William
 	public function Remove()
 	{
 	    
@@ -58,6 +58,24 @@ class Data_controller extends CI_Controller {
 	        $tableName = $this->input->post('table',true);
 	        $this->database->RemoveRecordById($IdsArray,$tableName);
 	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	public function UndoRemove()
+	{
+	    
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        $tableName = $this->input->post('table',true);
+	        $this->database->UndoRemoveRecordById($IdsArray,$tableName);
+	        $output = array('success' =>true, 'msg'=> "Activated sucessfull");
 	        
 	    } catch (Exception $ex) {
 	        $output = array(

@@ -139,6 +139,134 @@ function deleteItem(tableName,loadFunctionName){
    }); 
  }
 
+function deactivateItem(tableName,loadFunctionName){
+	var callFunc=new Function(loadFunctionName)
+    // Checking all category data are deleted
+ 	if (!$( ".checkbox" ).length) {
+ 		SetWarningMessageBox('warning', 'No Item left  to Deactivate !!!'); 
+ 		return;
+ 	}
+ 	
+ 	var selected_value = []; // initialize empty array 
+ 	if ($('.checkbox:checked').length == 0 )
+     {
+ 		SetWarningMessageBox('warning', 'Please select Item to Deactivate !!!');
+ 		return;
+	    } else {
+	    	$(".checkbox:checked").each(function(){
+	              selected_value.push($(this).val());
+	          });
+	    }	
+ 	var url = window.location.origin+'/bank/index.php/data_controller/Remove';
+ 	var dataString = JSON.stringify(selected_value);
+ swal({
+   title: "Are you sure?",
+   //text: "You will not be able to recover this imaginary file!",
+   //type: "warning",
+   showCancelButton: true,
+   confirmButtonText: "Yes, Deactivate it!",
+   cancelButtonText: "No, cancel plz!",
+   closeOnConfirm: true,
+   closeOnCancel: true
+   }, function(isConfirm) {
+   if (isConfirm) {
+   StartInsideLoading();  
+     	$.ajax({
+   		  type: "post",
+   		  url: url,
+   		  cache: false,    
+   		  data: {dataArr:dataString,table:tableName},
+   		  dataType: 'json',
+   		  success: function(response){   
+   		  try{  	
+   			   if (response.success)
+   	           { 
+   				   SetSucessMessageBox('Success', response.msg);
+   				   callFunc();
+   	           } else
+   	           { 
+   	               SetWarningMessageBox('warning', response.msg);
+   	               //StopInsideLoading();
+   	           }
+   		  StopInsideLoading();
+   		  }catch(e) {  
+   			  SetWarningMessageBox('warning', e);
+   			  StopInsideLoading();
+   		  }  
+   		  },
+   		  error: function(){      
+   			  SetWarningMessageBox('warning', 'Error while request..');
+   			  StopInsideLoading();
+   		  }
+   		 });
+   }
+   }); 
+ }
+
+function activateItem(tableName,loadFunctionName){
+	var callFunc=new Function(loadFunctionName)
+    // Checking all category data are deleted
+ 	if (!$( ".checkbox" ).length) {
+ 		SetWarningMessageBox('warning', 'No Item left  to Activate !!!'); 
+ 		return;
+ 	}
+ 	
+ 	var selected_value = []; // initialize empty array 
+ 	if ($('.checkbox:checked').length == 0 )
+     {
+ 		SetWarningMessageBox('warning', 'Please select Item to Activate !!!');
+ 		return;
+	    } else {
+	    	$(".checkbox:checked").each(function(){
+	              selected_value.push($(this).val());
+	          });
+	    }	
+ 	var url = window.location.origin+'/bank/index.php/data_controller/UndoRemove';
+ 	var dataString = JSON.stringify(selected_value);
+ swal({
+   title: "Are you sure?",
+   //text: "You will not be able to recover this imaginary file!",
+   //type: "warning",
+   showCancelButton: true,
+   confirmButtonText: "Yes, Activate it!",
+   cancelButtonText: "No, cancel plz!",
+   closeOnConfirm: true,
+   closeOnCancel: true
+   }, function(isConfirm) {
+   if (isConfirm) {
+   StartInsideLoading();  
+     	$.ajax({
+   		  type: "post",
+   		  url: url,
+   		  cache: false,    
+   		  data: {dataArr:dataString,table:tableName},
+   		  dataType: 'json',
+   		  success: function(response){   
+   		  try{  	
+   			   if (response.success)
+   	           { 
+   				   SetSucessMessageBox('Success', response.msg);
+   				   callFunc();
+   	           } else
+   	           { 
+   	               SetWarningMessageBox('warning', response.msg);
+   	               //StopInsideLoading();
+   	           }
+   		  StopInsideLoading();
+   		  }catch(e) {  
+   			  SetWarningMessageBox('warning', e);
+   			  StopInsideLoading();
+   		  }  
+   		  },
+   		  error: function(){      
+   			  SetWarningMessageBox('warning', 'Error while request..');
+   			  StopInsideLoading();
+   		  }
+   		 });
+   }
+   }); 
+ }
+
 function SetWarningMessageBox(type,msg){
       	$.notify({
       		title: "<strong>"+type+"</strong> : ",

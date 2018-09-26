@@ -10,7 +10,8 @@
 		</div>
 		<p class="bs-component">	
             <a onclick="addUserform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('emp_login','loadUser()')">Delete</button>
+            <button class="btn btn-sm btn-info" type="button" onclick="activateItem('emp_login','loadUser()')">Activate</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deactivateItem('emp_login','loadUser()')">Deactivate</button>
         </p>
       </div>
       
@@ -229,8 +230,8 @@
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
-    	           { 	
-    				 $('#user_name').val(response.userName);
+    	           {	
+    				 $('#user_name').val(response.userName.replace(" ", "_").toLowerCase());
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);

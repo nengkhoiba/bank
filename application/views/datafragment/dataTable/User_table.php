@@ -5,6 +5,7 @@
                 <th>Employee Name</th>
                 <th>Username</th>
 				 <th>Role</th>
+				 <th>Status</th>
                 <th>
                 <div class="animated-checkbox">
               	<label>
@@ -21,6 +22,7 @@
                 <td><?php echo $row['emp_id'];?></td>
                 <td><?php echo $row['username'];?></td>
 				<td><?php echo $row['role_id'];?></td>
+				<td><?php if($row['isActive'] == 1){echo '<span style="">Active</span>';} else{echo '<span style="">Deactive</span>';};?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>

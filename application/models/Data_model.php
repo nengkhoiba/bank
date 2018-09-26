@@ -74,7 +74,7 @@ class Data_model extends CI_Model{
 	} 
 	function GetRecordById($id,$tabName)  
     { 
-         $query = $this->db->get_where($tabName, array('ID' => $id,'IsActive' => 1)); 
+         $query = $this->db->get_where($tabName, array('ID' => $id)); 
          return $query->result_array();  
     }
     function GetRecordByForiegnKey($id)
@@ -96,6 +96,15 @@ class Data_model extends CI_Model{
 			$this->db->where('ID', $id); //set column_name and value in which row need to update
 			$this->db->update($tblName); //Set your table name
 		}
+	}	
+	function UndoRemoveRecordById($ArrIds,$tblName)
+	{
+	    foreach ($ArrIds as $id)
+	    {
+	        $this->db->set('IsActive', 1);  //Set the column name and which value to set..
+	        $this->db->where('ID', $id); //set column_name and value in which row need to update
+	        $this->db->update($tblName); //Set your table name
+	    }
 	}
 
 	function UpdateRecordById($Id,$Val,$tblName)
@@ -1066,10 +1075,9 @@ class Data_model extends CI_Model{
 	function GetUserTable()
 	{
 	    
-	    $sql="SELECT emp.name as emp_id,role.Name as role_id, emp_login.username, emp_login.ID FROM emp_login	        
+	    $sql="SELECT emp.name as emp_id,role.Name as role_id, emp_login.username, emp_login.ID, emp_login.isActive as isActive FROM emp_login	        
 	   		LEFT JOIN emp ON emp.ID  = emp_login.emp_id
-            LEFT JOIN role ON role.ID  = emp_login.role_id	   		
-	   		WHERE emp_login.IsActive = 1";
+            LEFT JOIN role ON role.ID  = emp_login.role_id";
 	    $query = $this->db->query($sql);
 	    
 	    
