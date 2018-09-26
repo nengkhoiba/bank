@@ -2157,11 +2157,22 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data = $this->database->GetRecordById($Id,'emp');
-	            $output = array(
-	                'userName'=>$data[0]['Name'],
-	                'success' =>true
-	            );
+	            $check = $this->database->CheckUserAssign($Id);
+	            if (sizeof ( $check ) == 1)
+	            {
+	                $output = array(
+	                    'userName'=> '',
+	                    'success' => true
+	                );
+	            }
+	            else
+	            {
+    	            $data = $this->database->GetRecordById($Id,'emp');
+    	            $output = array(
+    	                'userName'=>$data[0]['Name'],
+    	                'success' =>true
+    	            );
+	            }
 	        }
 	    } catch (Exception $ex) {
 	        $output = array(

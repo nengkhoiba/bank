@@ -230,8 +230,16 @@
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
-    	           {	
-    				 $('#user_name').val(response.userName.replace(" ", "_").toLowerCase());
+    	           {
+    				 if(response.userName == '')
+    				 {
+        				SetWarningMessageBox('warning', 'User is already assigned !!');
+        				$('#user_list').children('option[value = '+$reqestId+']').attr('disabled',true);
+         			   	$('#user_list').val('');
+         			    $('#user_name').val('');
+         			    $('#role_list').val('');
+    				 }
+    				 else{ $('#user_name').val(response.userName.replace(" ", "_").toLowerCase()); }
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
