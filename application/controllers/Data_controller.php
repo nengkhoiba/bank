@@ -2169,7 +2169,7 @@ class Data_controller extends CI_Controller {
 	            {
     	            $data = $this->database->GetRecordById($Id,'emp');
     	            $output = array(
-    	                'userName'=>$data[0]['Name'],
+    	                'userName'=>$data[0]['Name'].$data[0]['ID'],
     	                'success' =>true
     	            );
 	            }
