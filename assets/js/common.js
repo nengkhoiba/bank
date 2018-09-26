@@ -157,7 +157,7 @@ function deactivateItem(tableName,loadFunctionName){
 	              selected_value.push($(this).val());
 	          });
 	    }	
- 	var url = window.location.origin+'/bank/index.php/data_controller/Remove';
+ 	var url = window.location.origin+'/bank/index.php/data_controller/deactivate';
  	var dataString = JSON.stringify(selected_value);
  swal({
    title: "Are you sure?",
@@ -221,7 +221,7 @@ function activateItem(tableName,loadFunctionName){
 	              selected_value.push($(this).val());
 	          });
 	    }	
- 	var url = window.location.origin+'/bank/index.php/data_controller/UndoRemove';
+ 	var url = window.location.origin+'/bank/index.php/data_controller/activate';
  	var dataString = JSON.stringify(selected_value);
  swal({
    title: "Are you sure?",
