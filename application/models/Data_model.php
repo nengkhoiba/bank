@@ -1098,6 +1098,14 @@ class Data_model extends CI_Model{
 
 		}
 	}
+	
+	//USER ASSIGN CHECK START
+	function CheckUserAssign($emp_id)
+	{
+	    $query = $this->db->get_where('emp_login', array('emp_id' => $emp_id));
+	    return $query->result ();
+	}
+	//USER ASSIGN CHECK END
 
 }
     
