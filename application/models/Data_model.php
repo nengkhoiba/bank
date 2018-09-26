@@ -1027,6 +1027,8 @@ class Data_model extends CI_Model{
 	        'emp_id'	=>  $user_list,
 	        'username'	=>  $user_name,
 	        'role_id'	=>  $role_list,
+	        'password'	=>  1,
+	        'keycode'	=>  'jldsajdli2jsladj',
 	        'IsActive'=>  1,
 	    );
 	    
