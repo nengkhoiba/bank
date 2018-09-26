@@ -88,3 +88,10 @@
         </li>
       </ul>
     </header>
+    
+    
+    
+<!-- for displaying loading image -->
+    <div id="loading-dimpage" class="loading-dimpage"></div>
+    <div class="loading-loadergif"></div>
+    <!-- displaying loader image ends here    -->

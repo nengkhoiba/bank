@@ -21,7 +21,7 @@
         <?php $count = 1; foreach ( $result as $mem_data) { ?>
             <tr>
             	<td><?php echo $count?></td>
-                <td><?php echo $mem_data['name']?></td>
+                <td><a href="<?php echo site_url('index.php/data_controller/customerInformation?cusId=');echo $mem_data['ID']; ?>" target="_blank"><?php echo $mem_data['name']?></a></td>
                 <td><?php echo $mem_data['parmanent_address']?></td>
                 <td><?php echo $mem_data['contact_no']?></td>
                 <td><?php echo $mem_data['sex']?></td>

@@ -3,7 +3,7 @@
 <button class="close"  href="" onclick="removeMasterform('#customer_form')" type="button" aria-label="Close" style="height: 28px;
 width: 36px;"><span aria-hidden="true">×</span></button>
 </div>
-<div class="row invoice-info" style="background: #fff; margin: 0px; color: #000">
+<div class="invoice-info" style="background: #fff; margin: 0px; color: #000">
 				<div class="row" id="passbook" style="padding : 10px" >
                 <div class="col-7">
                 	<address>
@@ -34,7 +34,7 @@ width: 36px;"><span aria-hidden="true">×</span></button>
                 </address>
                 </div>
                 </div>
-                <div class="form-group col-md-12 align-self-end" style="padding-top: 0px">
+                <div class="form-group col-md-12 align-self-end" style="padding: 10px">
                   <button onclick="printDiv('passbook')" class="btn btn-xm btn-danger" type="button"><i class="fa fa-fw fa-lg fa-print"></i>Print</button>
                   </div>
               </div>
