@@ -1,5 +1,46 @@
 // baseURL for all javascript 
 var base_url = window.location.origin + '/' + window.location.pathname.split ('/') [1] + '/';
+
+function StartInsideLoading(){ 
+    $('.loading-dimpage').show();
+    $('.loading-loadergif').show();
+}
+function StopInsideLoading(){
+    $('.loading-dimpage').hide();
+    $('.loading-loadergif').hide();
+}	
+function MainMenuNavigation(url,menuId){ 
+StartInsideLoading();	
+$.ajax({
+type: "post",
+url: url,
+cache: false,   
+dataType: 'json', 
+success: function(response){  
+try{  
+  if (response.success)
+     {   
+     	$('#body_container').empty().append(response.html);
+	$('.app-menu__item').removeClass('active');
+        $(menuId).addClass('active'); 
+        StopInsideLoading();
+     } else
+     { 
+         SetWarningMessageBox('warning', response.msg);
+         StopInsideLoading();
+     }
+  
+ }catch(e) {  
+    SetWarningMessageBox('warning', e);
+    StopInsideLoading();
+  } 
+},
+error: function(){      
+  SetWarningMessageBox('warning', 'Error while request..');
+  StopInsideLoading();
+}
+});
+}
 //   serializeObject
 (function($){
   $.fn.serializeObject = function () {

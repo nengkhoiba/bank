@@ -2184,4 +2184,20 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
+	/*CUSTOMER PASSBOOK PREVIEW -- Written by William*/
+	public function customerInformation()
+	{
+	    try 
+	    {
+	        $Id = $this->input->get('cusId',true);
+	        $data['result']=$this->database->GetCustomerRecordById($Id,'customer');
+	        $this->load->view('admin/independentpage',$data);
+	        //echo json_encode($data['result']);
+	    } 
+	    catch (Exception $ex)
+	    {
+	        
+	    }	    
+	}
+	
 }

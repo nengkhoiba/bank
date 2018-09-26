@@ -8,9 +8,6 @@
           <li class="breadcrumb-item">Customer</li>
           </ul>
         </div>
-		<div class="app-search" style="padding: 0px; margin-right: 0px">
-		<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" class="search_input" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
-		</div>
      </div>
       
        <div class="row" id="formContainer">
@@ -19,13 +16,14 @@
           <div class="tile">
           <div class="tile-title-w-btn">
               <h3 class="title">Information</h3>
-             <button class="close"  href="" onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
-              width: 36px;"><span aria-hidden="true">×</span></button>
+             <div class="app-search" style="padding: 0px; margin-right: 0px">
+		<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" class="search_input" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
+		</div>
             </div>
             <div class="tile-body">
             <div class="row invoice-info" style="border: 2px solid #ced4da; margin: 0px; padding-top: 10px;">
                 <div class="col-4">
-                <b>Customer ID : <span id="customer_ID"> _ _ _ _ _ _ _ _ _ _ _ </span><br><br></b>
+                	<b>Customer ID : <span id="customer_ID"> _ _ _ _ _ _ _ _ _ _ _ </span><br><br></b>
                     <b><address>Name : </b><span id="customer_name"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
                     <b>Date of Birth : </b><span id="customer_dob"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
                     <b>Gender : </b><span id="customer_gender"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
