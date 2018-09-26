@@ -142,7 +142,6 @@
 
 					<button onclick="addCustomer_to_group()" id="" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
 
-					<button onclick="updateCustomerDoc()" style="display:none;" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
 
 					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
 				</div>

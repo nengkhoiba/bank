@@ -962,7 +962,7 @@ class Data_model extends CI_Model{
 	function AddCustomerToGroup($ac_id,$gr_id)
 	{
 
-		$sql="SELECT ID FROM group_customer_member WHERE Group_id='$gr_id' AND Acc_no='$ac_id'";
+		$sql="SELECT ID FROM group_customer_member WHERE  Acc_no='$ac_id'";
 		$query=$this->db->query($sql);
 		if($query->num_rows()>0){
 			return array('code' => 2);
