@@ -18,7 +18,7 @@ class Login_model extends CI_Model
 		(select ID FROM financial_year WHERE YEAR(Start_date)-1 < YEAR(NOW()) AND YEAR(End_date)+1 > YEAR(NOW()) LIMIT 1) AS Financial_id
 		FROM emp_login empLogin
 		LEFT JOIN role role ON role.ID=empLogin.role_id
-		LEFT JOIN emp emp ON emp.ID=empLogin.ID
+		LEFT JOIN emp emp ON emp.ID=empLogin.emp_id
 		WHERE empLogin.username='$email' 
 		AND empLogin.password='$password'
 		AND empLogin.isActive=1;";

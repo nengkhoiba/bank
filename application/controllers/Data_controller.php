@@ -25,7 +25,9 @@ class Data_controller extends CI_Controller {
 	{  
 		$this->load->view('login');
 	}
-	
+	public function test2(){
+	    echo $GLOBALS['branch_id'];
+	}
 	/*LIVE SEARCH -- Written by William*/
 	public function searchByKeyword()
 	{
