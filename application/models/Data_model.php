@@ -1106,6 +1106,7 @@ class Data_model extends CI_Model{
 	    return $query->result ();
 	}
 	//USER ASSIGN CHECK END
-
+	
+	
 }
     
