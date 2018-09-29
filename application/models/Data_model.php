@@ -1106,7 +1106,6 @@ class Data_model extends CI_Model{
 	    return $query->result ();
 	}
 	//USER ASSIGN CHECK END
-<<<<<<< HEAD
 
 	function GetGroupDetails($id)  
 	{  
@@ -1130,10 +1129,5 @@ class Data_model extends CI_Model{
 	    return $query->result_array();  
 	}
 
-
-=======
-	
-	
->>>>>>> 2ac680c384d1593dbb1da42db204e749e8c4e9ff
 }
     

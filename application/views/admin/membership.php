@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Rural</label>
-    			  <input onclick="ruralurban($(this))" checked class="pull-right" type="radio" value="1" name="rural_urban">
+    			  <input onclick="ruralurban($(this))" checked class="pull-right animated-radio-button" type="radio" value="1" name="rural_urban">
     			  <input name="member_rural" value="1" style="margin-top: 10px;"
     				class="form-control" type="hidden" id="member_rural"
     				placeholder="Rural"></input>

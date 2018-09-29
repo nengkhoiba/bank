@@ -60,22 +60,23 @@
             <div class="row"> 
               	<div class="col-md-3">
                 	<div id="" class="tile-body">
-                	<div class="row" style="margin-bottom: 12px; font-size: .7rem">
+                	<div class="row btnDiv" style="">
                     	<div class="col-md-6">
                     	<button id="DepositeBtn" disabled onclick="addCustomerDepositeForm($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-arrow-circle-down"></i>Deposite</button>
                     	</div>                    	 
                     	<div class="col-md-6">
                     	<button id="WithdrawalsBtn" disabled onclick="addCustomerWithdrawalsForm($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-arrow-circle-up"></i>Withdrawals</button>
-                    	</div> 
-                	</div>
-                	<div class="row" style="margin-bottom: 12px">
-                    	<div class="col-md-6">
+                    	</div> <div class="col-md-6">
                     	<button id="PassbookBtn" disabled onclick="addPassbookPreview($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-address-card"></i>Passbook</button>
                     	</div> 
                     	<div class="col-md-6">
                     	<button id="BalanceBtn" disabled onclick="addBalanceForm($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-bars"></i>Balance</button>
                     	</div>
-                	</div>
+                    	<div class="col-md-6">
+                    	<button id="StatementBtn" disabled onclick="addStatementForm($(this))" style="width: 100%; font-size: .7rem !important" class="btn btn-xm btn-success" type="button"><i class="fa fa-fw fa-lg fa-bars"></i>Statement</button>
+                    	</div>
+                    	</div>
+                	
                 	</div>
                 </div>
                 <div class="col-md-9">

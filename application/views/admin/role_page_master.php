@@ -45,7 +45,10 @@
           <div class="tile">
           <div class="row"> 
               	<div class="col-md-12">
-              	<h3 class="title">Pages</h3>
+              	<div class="tile-title-w-btn">
+              <h3 class="title">Pages</h3>
+            
+            </div>
               		<?php echo form_open_multipart('',array('id'=>'PageUpdateForm','class'=>'row'))?>
                 	<ul id="role_tree">
                 
