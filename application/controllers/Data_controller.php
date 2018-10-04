@@ -380,7 +380,7 @@ class Data_controller extends CI_Controller {
 	public function loadEmp()
 	{
 	    try {
-	        $data['result']=$this->database->GetAllActiveRecord('emp');
+	        $data['result']=$this->database->GetEmpRecord();
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dataTable/Emp_table',$data, true),
 	            'success' =>true
@@ -734,7 +734,7 @@ class Data_controller extends CI_Controller {
 	public function loadLoanmaster()
 	{ 
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('loan_master');  
+			$data['result']=$this->database->GetLoanMasterRecord();  
 			$output = array(
 	        'html'=>$this->load->view('datafragment/dataTable/Loanmaster_table',$data, true),
 	        'success' =>true
@@ -1159,7 +1159,7 @@ class Data_controller extends CI_Controller {
 	public function loadShgmaster()
 	{ 	
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
+		    $data['result']=$this->database->GetShgRecord();  
 			$output = array(
 	        'html'=>$this->load->view('datafragment/dataTable/Shgmaster_table',$data, true),
 	        'success' =>true
@@ -1276,7 +1276,7 @@ class Data_controller extends CI_Controller {
 	public function loadShggrouplist()
 	{ 	
 		try {
-			$data['result']=$this->database->GetAllActiveRecord('shg_master');  
+		    $data['result']=$this->database->GetShgRecord();  
 			$output = array(
 	        'html'=>$this->load->view('datafragment/dataTable/Shg_group_list_table',$data, true),
 	        'success' =>true

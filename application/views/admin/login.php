@@ -11,6 +11,9 @@
     <title>Login</title>
   </head>
   <body>
+  <?php
+echo CI_VERSION;
+?>
     <section class="material-half-bg">
       <div class="cover"></div>
     </section>

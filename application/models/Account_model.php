@@ -113,7 +113,19 @@ class Account_model extends CI_Model
 	// COMMON CODE END HERE  -- Written by William
 	
 	
-	
+	/*LOAD ACCOUNT GROUP TABLE */
+	function GetAccountGrpRecord()
+	{
+	    //data is retrive from this query
+	    $sql=  "SELECT ag.Group_name,agu.Group_name as Group_under,anu.Name as Group_nature, ag.ID
+    			from account_group ag
+                LEFT JOIN account_group agu ON agu.ID  = ag.Group_under
+    			LEFT JOIN account_nature anu ON anu.ID  = ag.Group_nature
+                WHERE ag.isActive = 1";
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 	
 	/*ACCOUNT GROUP DATA ADD  -- Written by William */
 	function addAccountGrpModel( $accountGrp_name,$accountGrp_under,$accountGrp_nature )
@@ -164,6 +176,20 @@ class Account_model extends CI_Model
 	        $this->addLog("Update existing Account Group", "New Account Group Name is ".$accountGrp_name."");
 	        return array('code' => 1);
 	    }
+	}
+	
+	
+	/*LOAD ACCOUNT LEDGER TABLE */
+	function GetAccountLedgerRecord()
+	{
+	    //data is retrive from this query
+	    $sql=  "SELECT al.Ledger,al.Open_balance,agu.Group_name as Group_ID, al.ID
+    			from account_ledger al
+                LEFT JOIN account_group agu ON agu.ID  = al.Group_ID
+                WHERE al.isActive = 1";
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
 	}
 	
 	

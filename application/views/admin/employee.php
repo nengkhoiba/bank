@@ -181,7 +181,7 @@
     loadEmp();
     
    
-    function addEmpform($btn){  
+    function addEmpform($btn){
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
@@ -216,6 +216,14 @@
     				   $('#postType').val(response.json[0].ID);
     				   	$('#employee_name').val(response.json[0].Name);
     		    		$('#employee_address').val(response.json[0].address);
+    		    		$('#employee_country').val(response.json[0].country);
+
+    		    		loadStateUpdate(response.json[0].country);
+    		    		$('#employee_state').val(response.json[0].state);
+    		    		
+    		    		loadCityUpdate(response.json[0].state);
+    		    		$('#employee_city').val(response.json[0].city);
+    		    		
     		    		loadDropDown(response.json[0].district,'district','#employee_district');
     					$('#employee_pincode').val(response.json[0].pincode);
     					loadDropDown(response.json[0].designation,'designation','#employee_designation');
@@ -243,6 +251,70 @@
     		 });
     	}
     } 
+
+    function loadStateUpdate($select){  
+    	$reqestId =  $select; 
+    	var url = '<?php echo base_url();?>index.php/data_controller/loadState';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				 $('#employee_state').html(response.html);
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    } 
+
+    function loadCityUpdate($select){  
+    	$reqestId =  $select; 
+    	var url = '<?php echo base_url();?>index.php/data_controller/loadCity';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false,    
+    		  data: {reqId:$reqestId},
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           { 	
+    				 $('#employee_city').html(response.html);
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    }
     
     function updateEmp(){  
     	if ($('#employee_name').val().trim() == '') { 

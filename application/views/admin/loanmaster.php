@@ -83,16 +83,16 @@
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Income Ledger</label>
-                  <input name="loanmaster_income_ledger" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_income_ledger"
-					placeholder="Income Ledger"></input>
+                  <select id="loanmaster_income_ledger" name="loanmaster_income_ledger" style="margin-top:10px;" class="form-control" >
+                  	<!-- List of ledger -->
+                  </select>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Expense Ledger</label>
-                  <input name="loanmaster_expense_ledger" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_expense_ledger"
-					placeholder="Expense Ledger"></input>
+                  <select id="loanmaster_expense_ledger" name="loanmaster_expense_ledger" style="margin-top:10px;" class="form-control" >
+                  	<!-- List of ledger -->
+                  </select>
                 </div>
 				
                 
@@ -162,7 +162,43 @@
        });
     }
     
-      loadLoanmaster();
+    loadLoanmaster();
+
+      function loadLedger()
+      { 
+        var url = "<?php echo site_url('index.php/account_controller/loadAccountLedgerDropDown'); ?>"; 
+        StartInsideLoading();
+        $.ajax({
+          type: "post",
+          url: url,
+          cache: false,   
+          dataType: 'json', 
+          success: function(response){ 
+          try{  
+            if (response.success)
+               { 
+              $('#loanmaster_income_ledger').html(response.html);  
+              $('#loanmaster_expense_ledger').html(response.html);             
+               } else
+               { 
+                   SetWarningMessageBox('warning', response.msg);
+                  
+               }
+           StopInsideLoading();
+           
+           }catch(e) {  
+              SetWarningMessageBox('warning', e);
+              StopInsideLoading();
+            } 
+          },
+          error: function(){      
+            SetWarningMessageBox('warning', 'Error while request..');
+            StopInsideLoading();
+          }
+         });
+      }
+      loadLedger(); 
+      
     
       
     function addLoanmasterform($btn){  

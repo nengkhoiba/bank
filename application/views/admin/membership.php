@@ -205,6 +205,36 @@
              { 
             $('#member_table').html(response.html);
             $('#Mem').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+//              var printCounter = 0;
+//             $('#Mem').DataTable( {
+//                 dom: 'lBfrtip',
+//                 buttons: [
+//                     'copy',
+//                     {
+//                         extend: 'excel',
+//                         messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+//                     },
+//                     {
+//                         extend: 'pdf',
+//                         title: 'Data export',
+//                         messageBottom: null
+//                     },
+//                     {
+//                         extend: 'print',
+//                         messageTop: function () {
+//                             printCounter++;
+         
+//                             if ( printCounter === 1 ) {
+//                                 return 'This is the first time you have printed this document.';
+//                             }
+//                             else {
+//                                 return 'You have printed this document '+printCounter+' times';
+//                             }
+//                         },
+//                         messageBottom: null
+//                     }
+//                 ]
+//             } )
               
              } else
              { 

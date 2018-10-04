@@ -78,7 +78,7 @@ class Account_controller extends CI_Controller {
     public function loadAccountGrp()
     {
         try {
-            $data['result']=$this->account->GetAllActiveRecord('account_group');
+            $data['result']=$this->account->GetAccountGrpRecord();
             $output = array(
                 'html'=>$this->load->view('datafragment/account/dataTable/AccountGrp_table',$data, true),
                 'success' =>true
@@ -185,7 +185,7 @@ class Account_controller extends CI_Controller {
     public function loadAccountLedger()
     {
         try {
-            $data['result']=$this->account->GetAllActiveRecord('account_ledger');
+            $data['result']=$this->account->GetAccountLedgerRecord();
             $output = array(
                 'html'=>$this->load->view('datafragment/account/dataTable/AccountLedger_table',$data, true),
                 'success' =>true

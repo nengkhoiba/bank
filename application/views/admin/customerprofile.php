@@ -85,10 +85,10 @@
                       &nbsp;&nbsp;&nbsp;
                       <button id="btn2" class="btn btn-sm btn-success" type="button"></button>
                     </div>
-                    <div class="col-4 text-right">
-                      <button class="btn btn-primary" onclick="printDiv('printarea')"><i class="fa fa-print"></i> Print</button>
-                      <a class="btn btn-primary icon-btn" href="<?php echo site_url() . 'Data_controller/save_pdf_download?req=' .base64_encode('ID'); ?>" target="_blank"><i class="fa fa-file"></i>PDF</a>
-                  </div>        
+<!--                     <div class="col-4 text-right"> -->
+ <!--                      <button class="btn btn-primary" onclick="printDiv('printarea')"><i class="fa fa-print"></i> Print</button> -->
+  <!--                     <a class="btn btn-primary icon-btn" href="<?php echo site_url() . 'Data_controller/save_pdf_download?req=' .base64_encode('ID'); ?>" target="_blank"><i class="fa fa-file"></i>PDF</a> -->
+<!--                   </div>         -->
 		</form>
 		           </div>
           </div>

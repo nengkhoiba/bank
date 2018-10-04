@@ -262,6 +262,22 @@ class Data_model extends CI_Model{
 
 	// COMMON CODE END HERE  -- Written by William
 
+	
+	/*LOAD EMP TABLE */
+	function GetEmpRecord()
+	{
+	    //data is retrive from this query
+	    $sql=  "SELECT emp.Name,emp.address,emp.pincode,emp.dob,emp.qualification,emp.ID, des.Name as designation
+    			from emp
+    			LEFT JOIN designation des ON des.ID  = emp.designation
+                WHERE emp.isActive = 1";
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
+	
+	
+	
 	/* EMPLOYEE DATA ADD  -- Written by William */
 	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{
@@ -529,7 +545,18 @@ class Data_model extends CI_Model{
 	}
 	//DESIGNATION END HERE
 
-
+	/*LOAD SHG TABLE */
+	function GetShgRecord()
+	{
+	    //data is retrive from this query
+	    $sql=  "SELECT shg.Group_code,shg.Group_name,shg.Address,shg.Area,shg.Member_count,shg.Extra,shg.Added_on,shg.ID,brn.Name as Branch_id
+    			from shg_master shg
+    			LEFT JOIN branch brn ON brn.ID  = shg.Branch_id
+                WHERE shg.isActive = 1";
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 
 	//SHG START HERE
 	function addShgmasterModel(  $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra )
@@ -651,10 +678,25 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
+
+/*LOAN MASTER TABLE */
+	function GetLoanMasterRecord()
+	{
+	    //data is retrive from this query
+	    $sql=  "SELECT pc.Name as Loan_pc_type, ten.Name as Tenure_type, ledInc.Ledger as Income_ledger, ledExp.Ledger as Expense_ledger, lm.Loan_name, lm.Loan_pc, lm.Tenure_min, lm.Tenure_max, lm.Min_amount, lm.Max_amount, lm.Added_on, lm.ID				
+    			from loan_master lm					
+    			LEFT JOIN pc_type_master pc ON pc.ID  = lm.Loan_pc_type
+                LEFT JOIN tenure_type_master ten ON ten.ID  = lm.Tenure_type
+                LEFT JOIN account_ledger ledInc ON ledInc.ID  = lm.Income_ledger
+                LEFT JOIN account_ledger ledExp ON ledExp.ID  = lm.Expense_ledger
+                WHERE lm.isActive = 1";
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 	
 	
-	
-		/*FINANCIAL DATA ADD */
+/*LOAN MASTER DATA ADD */
 	function addLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
 	{	
 
@@ -667,7 +709,7 @@ class Data_model extends CI_Model{
 			'Tenure_min'	=>$loanmaster_tenure_min,
 			'Tenure_max'	=>$loanmaster_tenure_max,
 			'Min_amount'	=>$loanmaster_min_amount,
-			'Min_amount'	=>$loanmaster_max_amount,
+			'Max_amount'	=>$loanmaster_max_amount,
 			'Income_ledger'	=>$loanmaster_income_ledger,
 			'Expense_ledger'=>$loanmaster_expense_ledger,		  
 			 'Branch_id'=>  1,
@@ -706,7 +748,7 @@ class Data_model extends CI_Model{
 			'Tenure_min'	=>$loanmaster_tenure_min,
 			'Tenure_max'	=>$loanmaster_tenure_max,
 			'Min_amount'	=>$loanmaster_min_amount,
-			'Min_amount'	=>$loanmaster_max_amount,
+			'Max_amount'	=>$loanmaster_max_amount,
 			'Income_ledger'	=>$loanmaster_income_ledger,
 			'Expense_ledger'=>$loanmaster_expense_ledger,
 		  	 'Branch_id'=>  1,

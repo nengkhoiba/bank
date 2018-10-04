@@ -7,7 +7,7 @@
 				<th>Address</th>
 				<th>Area</th>	
 				<th>Max Member </th>				
-                <th>Branch ID</th>
+                <th>Branch</th>
                 <th>Remark</th>
 				<th>Created On</th>
 				<th>
