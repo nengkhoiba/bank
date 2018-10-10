@@ -155,7 +155,7 @@
         <div class="col-md-12">		
           <div class="tile">
             <div class="tile-title-w-btn">
-              <h3 class="title"><span id="group_title">Selected group member</span><span> member list.</span></h3>
+              <h3 class="title"><span id="group_title">Selected group member list.</span></h3>
              <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>

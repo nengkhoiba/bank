@@ -1,0 +1,48 @@
+.nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.nav>li {
+    position: relative;
+    display: block;
+}
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+   
+}
+.nav-tabs>li>a:hover {
+background-color:#17867b;
+color:white;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+.nav>li>a:hover {
+    text-decoration: none;
+}
+a.active.show {
+    background-color: #26a69a;
+	color:white;
+}
+
+.custome_label
+{
+color:#f44336;
+}
