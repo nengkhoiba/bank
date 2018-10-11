@@ -12,6 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/custome.css">
+
+	
 	
     <!-- Font-icon css-->
 	  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/font-awesome.min.css">
@@ -21,6 +24,7 @@
     <link type="text/css" media="all" rel="stylesheet" href="<?php echo base_url();?>assets/css/datepicker.css" />
     <script type="text/javascript" src='<?php echo base_url();?>assets/js/bootstrap-datepicker.js'></script>
     <script type="text/javascript" src='<?php echo base_url();?>assets/js/angular.min.js'></script>
+	
     
   </head>
   <body class="app sidebar-mini rtl">
