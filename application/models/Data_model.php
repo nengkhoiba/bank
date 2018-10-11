@@ -1170,6 +1170,117 @@ class Data_model extends CI_Model{
 	    $query = $this->db->query($sql); 
 	    return $query->result_array();  
 	}
+	
+	
+	//GET RO LIST
+	function GetAllROList()
+	{
+	    $sql =  "SELECT em.ID,em.Name
+                FROM emp_login user
+                LEFT JOIN emp em on em.ID=user.emp_id
+                WHERE user.IsActive=1 AND user.role_id = 2";
+	    
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
+	
+	
+	//GET SHG MEMBER LIST BY GROUP CODE
+	function GetAllSelectedMemberByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp)
+	{
+	    //data is retrive from this query
+	    if($GrpSearchType=='1')
+	    {
+	           $sql="SELECT customer.ID,
+	   				customer.name,
+	   				customer.aadhaar_no,
+	   				customer.parmanent_address,
+	   				customer.contact_no,
+	   				customer_account.Acc_no,
+	   				district.name AS district,
+                    shg_master.Group_name,
+                    loan_acc_relation.Loan_acc,
+                    group_customer_member.ID AS group_id
+		        FROM customer		        
+		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
+		   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
+		   		LEFT JOIN district ON district.ID =customer.district
+		   		LEFT JOIN shg_master ON shg_master.ID  = group_customer_member.Group_id
+		   		LEFT JOIN loan_acc_relation ON loan_acc_relation.Acc_no  = group_customer_member.Acc_no
+                LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = group_customer_member.Group_id
+		   		WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_code='$grp_code_Grp'	   		
+		   		";
+	    }
+	    elseif ($GrpSearchType=='2')
+	    {
+	           $sql="SELECT customer.ID,
+	   				customer.name,
+	   				customer.aadhaar_no,
+	   				customer.parmanent_address,
+	   				customer.contact_no,
+	   				customer_account.Acc_no,
+	   				district.name AS district,
+                    shg_master.Group_name,
+                    loan_acc_relation.Loan_acc,
+                    group_customer_member.ID AS group_id
+		        FROM customer
+		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
+		   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
+		   		LEFT JOIN district ON district.ID =customer.district
+		   		LEFT JOIN shg_master ON shg_master.ID  = group_customer_member.Group_id
+                LEFT JOIN loan_acc_relation ON loan_acc_relation.Acc_no  = group_customer_member.Acc_no
+		   		LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = group_customer_member.Group_id
+		   		WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_Loan_acc_no='$loan_acc_no_Grp'
+		   		";
+	    }
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
+	
+	
+	//GET SHG DETAILS BY GROUP CODE
+	function GetGroupDetailsByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp)
+	{
+	    //data is retrive from this query
+	    if($GrpSearchType=='1')
+	    {
+	              $sql="SELECT shg_master.Group_name,
+					shg_master.Group_code,
+					shg_master.Address,
+					shg_master.Area,
+					shg_master.Member_count as max_member_count,
+					
+					count(group_customer_member.ID) as customer_count
+					
+					from shg_master
+					
+					LEFT JOIN group_customer_member ON group_customer_member.Group_id  = shg_master.ID
+					LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = shg_master.ID
+					WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_code='$grp_code_Grp'					
+		   		";
+	    }
+	    if($GrpSearchType=='2')
+	    {
+	        $sql="SELECT shg_master.Group_name,
+					shg_master.Group_code,
+					shg_master.Address,
+					shg_master.Area,
+					shg_master.Member_count as max_member_count,
+					
+					count(group_customer_member.ID) as customer_count
+					
+					from shg_master
+					
+					LEFT JOIN group_customer_member ON group_customer_member.Group_id  = shg_master.ID
+					LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = shg_master.ID
+					WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_Loan_acc_no='$loan_acc_no_Grp'
+		   		";
+	    }
+	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 
 }
     

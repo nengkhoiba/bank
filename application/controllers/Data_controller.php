@@ -2201,4 +2201,50 @@ class Data_controller extends CI_Controller {
 	    }	    
 	}
 	
+	
+	/*LOAD RO LIST -- Written by William*/
+	public function loadROList()
+	{
+	    try {
+	        $data['result']=$this->database->GetAllROList();
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dropDown/Select_ROList',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
+	
+	/*SEARCH LOAD APPLICATION FORM -- Written by William*/
+	public function searchLoanApplication()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    try {
+	        $GrpSearchType =  $this->input->post('GrpSearchType',true);
+	        $grp_code_Grp =  $this->input->post('grp_code_Grp',true);
+	        $loan_acc_no_Grp =  $this->input->post('loan_acc_no_Grp',true);
+	        
+	        $data['result']=$this->database->GetAllSelectedMemberByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp);
+	        $data['group_details']=$this->database->GetGroupDetailsByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp);	        
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/Loan_application_memberlist_table.php',$data,true),
+	            'Group_details'=>$this->load->view('datafragment/dataTable/Group_details.php',$data,true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 }

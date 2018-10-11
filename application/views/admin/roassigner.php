@@ -32,9 +32,16 @@
 						 <br>
 							 <?php echo form_open_multipart('',array('id'=>'MasROAssignerGrpForms','class'=>'row'))?>
 								
+								<div class="form-group col-md-4 align-self-end" >
+								<label class="control-label">Select RO</label>
+									<select id="ro" name="ro" class="form-control" style="margin-top: 10px;">
+									  <!-- list of  gender -->
+									</select>
+								</div>
+								
 								<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Select Type</label>
-									<select onchange="GroupSearchType()" class="form-control" style="margin-top: 10px;" id="GrpSearchType">
+									<select onchange="GroupSearchType()" class="form-control" name="GrpSearchType" style="margin-top: 10px;" id="GrpSearchType">
 									  <option  value="">-  Select -</option>
 									  <option  value="1">SHG Group Code</option>
 									  <option  value="2">Loan Account Number</option>
@@ -42,117 +49,35 @@
 								</div>
 								<div class="form-group col-md-4 align-self-end" id="groupCode" style="display: none">
 									<label class="control-label">SHG Group Code</label>
-									<input id="shg_name" name="shg_name" style="margin-top: 10px;"
-									class="form-control text_number" rows="1" type="text" id="shg_name"
+									<input id="grp_code_Grp" name="grp_code_Grp" style="margin-top: 10px;"
+									class="form-control text_number" type="text"
 									placeholder="SHG Group Code"></input>
 								</div>
 								<div class="form-group col-md-4 align-self-end" id="groupLoanAccNo" style="display: none">
 									<label class="control-label">Loan Account Number</label>
-									<input id="shg_name" name="shg_name" style="margin-top: 10px;"
-									class="form-control text_number" rows="1" type="text" id="shg_name"
+									<input id="loan_acc_no_Grp" name="loan_acc_no_Grp" style="margin-top: 10px;"
+									class="form-control text_number" type="text"
 									placeholder="Loan Account Number"></input>
 								</div>
 								
 								<div class="form-group col-md-4 align-self-end">
-								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
+								  <button onclick="loadLoadApplication()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
 								  &nbsp;&nbsp;&nbsp;
 								 <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasROAssignerGrpForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
 								
 																
-								<div class="form-group col-md-12 align-self-end">
-								 <div class="row invoice-info" style="border: 2px solid #ced4da; margin: 0px; padding-top: 10px;">
-                                <div class="col-4">
-                                	<b>Group Code : <span id="customer_ID"> _ _ _ _ _ _ _ _ _ _ _ _ </span><br></b>
-                                    <b>Group Name : </b><span id="customer_name"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
-                                </div>
-                                <div class="col-4">
-                                 <b>Group Address : </b><span id="customer_dob"> _ _ _ _ _ _ _ _ _ _ _ _ </span><br>
-                                 <b>Group Area : </b><span id="customer_aadhaar"> _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </span><br>
-                                </div>
-                                <div class="col-4">
-                                <b>Max. Member Allow : </b><span id="customer_gender"> _ _ _ _ _ _ _ _ _ _ _ </span><br>
-                                <b>Total Added : </b><span id="customer_husband"> _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ </span><br>
+								<div class="form-group col-md-12 align-self-end" id="LoadApplicationForm" style="display: block">
+								 <div class="row" style="border: 2px solid #ced4da; margin: 0px; padding-top: 10px;">
+								 
+								 <div id="group_details">
+                                
                                 </div>
                                 
-                                <div class="col-12">
-                                <table class="table table-hover dataTable no-footer">
-										<thead>
-										<tr>
-											<th>Sl. No.</th>
-											<th>Member Name</th>
-											<th>Address</th>
-											<th>Gender</th>
-											<th>Contact No.</th>				
-											<th>Aadhaar No.</th>
-											<th>District</th>
-											<th>Loan Amount</th>
-										</tr>
-										</thead>
-										<tbody>
-											<tr>
-											  <td>1</td>
-											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>
-											  <td>Male</td>
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
-											  <td>200000</td>
-											</tr>
-											<tr>
-											  <td>2</td>
-											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>
-											  <td>Male</td>
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
-											  <td>200000</td>
-											</tr>
-											<tr>
-											  <td>3</td>
-											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>
-											  <td>Male</td>
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
-											  <td>200000</td>
-											</tr>
-											<tr>
-											  <td>4</td>
-											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>
-											  <td>Male</td>
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
-											  <td>200000</td>
-											</tr>
-											<tr>
-											  <td>5</td>
-											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>
-											  <td>Male</td>
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
-											  <td>200000</td>
-											</tr>
-										</tbody>
-									</table>
+                                <div class="col-12" id="memList">
+                                
                                 </div>
-                                <div class="form-group col-md-4 align-self-end" >
-									<select onchange="GroupSearchType()" class="form-control" style="margin-top: 10px;" id="GrpSearchType">
-									  <option  value="">-  Select RO -</option>
-									  <option  value="1">H. Ranjan Singh</option>
-									  <option  value="2">Th. Thomba Singh</option>
-									  <option  value="3">Kh. Gopendro Singh</option>
-									  <option  value="4">S. Johnson Singh</option>
-									  <option  value="5">L. Dineshwor Singh</option>
-									</select>
-								</div>
+                                
 								
 								<div class="form-group col-md-4 align-self-end">
 								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Assign</button>
@@ -300,6 +225,110 @@
     		$("#memberAccNo").hide();
     	    $("#memLoanAccNo").hide();
     	}
+    }
+
+    function loadROList()
+    { 
+      var url = "<?php echo site_url('index.php/data_controller/loadROList'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#ro').html(response.html);              
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    } 
+    loadROList();
+
+    function loadLoadApplication()
+    { 
+
+    	if ($('#ro').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'RO is mandatory !');
+            $('#ro').focus();
+            return;
+        }
+
+    	if ($('#GrpSearchType').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Search type is mandatory !');
+            $('#GrpSearchType').focus();
+            return;
+        }
+
+    	if ($('#GrpSearchType').val().trim() == '1')
+    	{
+        	if ($('#grp_code_Grp').val().trim() == '') { 
+                SetWarningMessageBox('warning', 'Group code is mandatory !');
+                $('#grp_code_Grp').focus();
+                return;
+            }
+    	}
+
+    	if ($('#GrpSearchType').val().trim() == '2')
+    	{
+        	if ($('#loan_acc_no_Grp').val().trim() == '') { 
+                SetWarningMessageBox('warning', 'Loan account no. is mandatory !');
+                $('#loan_acc_no_Grp').focus();
+                return;
+            }
+    	}
+
+    	var formData = $('form#MasROAssignerGrpForms').serializeObject();
+        var dataString = JSON.stringify(formData);
+        
+      var url = '<?php echo base_url();?>index.php/data_controller/searchLoanApplication';
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false, 
+        data: dataString,  
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+            {			
+            $('#memList').html(response.html);
+            $('#memTable').DataTable();
+      		$('#LoadApplicationForm').show(); 
+            $('#group_details').html(response.Group_details); 
+            } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
     }
     
 
