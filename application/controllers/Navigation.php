@@ -20,7 +20,7 @@ class Navigation extends CI_Controller {
 			if($page){
 				$this->load->view($view);
 			}else{
-				echo "404";
+			    $this->load->view('404');
 			}
 		}else{
 			redirect('login');
