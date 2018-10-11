@@ -21,6 +21,7 @@
 					<ul class="nav nav-tabs">
 						<li><a data-toggle="tab" href="#group" class="active show">Group</a></li>
 						<li><a data-toggle="tab" href="#individuals">Individuals</a></li>
+						<li><a data-toggle="tab" href="#reports">Reports</a></li>
 					</ul>
 					</div>
 					<div class="col-md-12">
@@ -246,6 +247,105 @@
 								<?php echo form_close() ?>
 						  
 						</div>
+						
+						<div id="reports" class="tab-pane fade">
+						 <br>
+						 <h5>Reports</h5>
+						 <br>
+							<?php echo form_open_multipart('',array('id'=>'MasROReportsForms','class'=>'row'))?>
+							<div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Start date</label>
+                  <input name="financial_start" style="margin-top: 10px;"
+					class="form-control" type="text" id="financial_start"
+					placeholder="Start date"></input>
+                </div>
+				
+				<div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">End date</label>
+                  <input name="financial_end" style="margin-top: 10px;"
+					class="form-control" type="text" id="financial_end"
+					placeholder="End date"></input>
+                </div>
+                
+                <div class="form-group col-md-4 align-self-end">
+    			  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
+    			  &nbsp;&nbsp;&nbsp;
+    			 <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasROReportsForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+    			</div>
+    			
+    			<div class="col-12">
+                                <table class="table table-hover dataTable no-footer" id="reportTable">
+										<thead>
+										<tr>
+											<th>Sl. No.</th>
+											<th>Date Time</th>
+											<th>Member Name</th>
+											<th>Address</th>
+											<th>Contact No.</th>				
+											<th>Aadhaar No.</th>
+											<th>District</th>
+											<th>Collected Amount</th>
+										</tr>
+										</thead>
+										<tbody>
+											<tr>
+											  <td>1</td>
+											  <td>01-01-2018 12:00:00 AM</td>
+											  <td>Nengkhoiba Chungkham</td>
+											  <td>Bamon Leikai</td>											  
+											  <td>987683123</td>
+											  <td>7849217423942</td>
+											  <td>Imphal East</td>
+											  <td>200000</td>
+											</tr>
+											<tr>
+											  <td>2</td>
+											  <td>01-01-2018 12:00:00 AM</td>
+											  <td>Nengkhoiba Chungkham</td>
+											  <td>Bamon Leikai</td>											  
+											  <td>987683123</td>
+											  <td>7849217423942</td>
+											  <td>Imphal East</td>
+											  <td>200000</td>
+											</tr>
+											<tr>
+											  <td>3</td>
+											  <td>01-01-2018 12:00:00 AM</td>
+											  <td>Nengkhoiba Chungkham</td>
+											  <td>Bamon Leikai</td>											  
+											  <td>987683123</td>
+											  <td>7849217423942</td>
+											  <td>Imphal East</td>
+											  <td>200000</td>
+											</tr>
+											<tr>
+											  <td>4</td>
+											  <td>01-01-2018 12:00:00 AM</td>
+											  <td>Nengkhoiba Chungkham</td>
+											  <td>Bamon Leikai</td>											  
+											  <td>987683123</td>
+											  <td>7849217423942</td>
+											  <td>Imphal East</td>
+											  <td>200000</td>
+											</tr>
+											<tr>
+											  <td>5</td>
+											  <td>01-01-2018 12:00:00 AM</td>
+											  <td>Nengkhoiba Chungkham</td>
+											  <td>Bamon Leikai</td>											  
+											  <td>987683123</td>
+											  <td>7849217423942</td>
+											  <td>Imphal East</td>
+											  <td>200000</td>
+											</tr>
+										</tbody>
+									</table>
+                                </div>
+							<?php echo form_close() ?>
+							
+							
+						  
+						</div>
 					</div>
 					</div>
 				
@@ -256,6 +356,10 @@
     </main>
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
+
+    $(document).ready( function () {
+        $('#reportTable').DataTable();
+    } );
 
     function GroupSearchType() {
     	var flag=document.getElementById("GrpSearchType").value;
@@ -294,6 +398,31 @@
     	    $("#memLoanAccNo").hide();
     	}
     }
+
+    $(document).ready(function (){
+    	var date = new Date();
+    	date.setDate(date.getDate()-1);            
+
+    	// allow to pick future date
+    	    // $('#employee_dob').datepicker({
+    	    // format: "dd/mm/yyyy"
+    	    // });
+    	// allow to pick future date
+
+    	var FromEndDate = new Date();
+    	$(function(){
+    	$('#financial_start').datepicker({
+    	format: 'dd-mm-yyyy',
+    	//endDate: FromEndDate, 
+    	autoclose: true
+    	});
+    	$('#financial_end').datepicker({
+    	format: 'dd-mm-yyyy',
+    	//endDate: FromEndDate, 
+    	autoclose: true
+    	});
+    	});
+    	});
     
 
 </script>
