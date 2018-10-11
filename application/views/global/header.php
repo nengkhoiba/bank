@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="zoom: 95%">
   <head>
     <meta name="description" content="W2W">
     <!-- Twitter meta-->
@@ -75,13 +75,12 @@
           </ul>
         </li>
          <!--Setting Menu-->
-        <li class="dropdown"><a class="app-nav__item" href="#"  aria-label="Setting"><i class="fa fa-cog fa-lg"></i></a>
-        </li>
-        
+        <li><a class="app-nav__item" href="#" ><i class="fa fa-cog fa-lg"></i></a></li>
+         <li><a class="app-nav__item" href="#" onclick="toggleFullScreen(document.body)"><i class="fa fa-arrows-alt fa-lg"></i></a></li>
 		<!-- User Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
           <ul class="dropdown-menu settings-menu dropdown-menu-right">
-            <!-- <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li> -->
+            <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
             <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
             <li><a class="dropdown-item" href="<?php echo base_url()?>login/logout"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
           </ul>
@@ -89,7 +88,7 @@
       </ul>
     </header>
     
-    
+   
     
 <!-- for displaying loading image -->
     <div id="loading-dimpage" class="loading-dimpage"></div>

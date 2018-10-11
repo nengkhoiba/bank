@@ -25,7 +25,7 @@ echo CI_VERSION;
 	<div class="alert alert-danger"><?php echo $msg;?></div>
 	<?php }?>
       <div class="login-box">
-        <form class="login-form" method="post" action="login">
+      <?php echo form_open_multipart('login',array('method'=>'post','class'=>'login-form'))?>
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label">USERNAME</label>
@@ -51,7 +51,7 @@ echo CI_VERSION;
             <button class="btn btn-primary btn-block">LOGIN</button>
           </div>
             
-        </form>
+        <?php echo form_close() ?>
         	
         
         <form class="forget-form" action="index.html">
