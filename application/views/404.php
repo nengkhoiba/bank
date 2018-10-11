@@ -93,7 +93,7 @@
         position: relative;
         top: 8%;
         color: white;
-        background: #07B3F9;
+        background: #009688;
         border-radius: 50%;
         display: inline-block;
         transform: skew(45deg);
