@@ -280,11 +280,11 @@
 											<th>Sl. No.</th>
 											<th>Date Time</th>
 											<th>Member Name</th>
-											<th>Address</th>
-											<th>Contact No.</th>				
-											<th>Aadhaar No.</th>
-											<th>District</th>
-											<th>Collected Amount</th>
+											<th>Group/Individuals</th>
+											<th>Group Name (if Grp.)</th>				
+											<th>Balance</th>
+											<th>Laon Account No.</th>
+											<th>Amount</th>
 										</tr>
 										</thead>
 										<tbody>
@@ -292,50 +292,50 @@
 											  <td>1</td>
 											  <td>01-01-2018 12:00:00 AM</td>
 											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>											  
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
+											  <td>Individuals</td>											  
+											  <td>N/A</td>
+											  <td>30000</td>
+											  <td>79272394723424234</td>
 											  <td>200000</td>
 											</tr>
 											<tr>
 											  <td>2</td>
 											  <td>01-01-2018 12:00:00 AM</td>
 											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>											  
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
+											  <td>Individuals</td>											  
+											  <td>N/A</td>
+											  <td>30000</td>
+											  <td>79272394723424234</td>
 											  <td>200000</td>
 											</tr>
 											<tr>
 											  <td>3</td>
 											  <td>01-01-2018 12:00:00 AM</td>
 											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>											  
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
+											  <td>Individuals</td>											  
+											  <td>N/A</td>
+											  <td>30000</td>
+											  <td>79272394723424234</td>
 											  <td>200000</td>
 											</tr>
 											<tr>
 											  <td>4</td>
 											  <td>01-01-2018 12:00:00 AM</td>
 											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>											  
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
+											  <td>Individuals</td>											  
+											  <td>N/A</td>
+											  <td>30000</td>
+											  <td>79272394723424234</td>
 											  <td>200000</td>
 											</tr>
 											<tr>
 											  <td>5</td>
 											  <td>01-01-2018 12:00:00 AM</td>
 											  <td>Nengkhoiba Chungkham</td>
-											  <td>Bamon Leikai</td>											  
-											  <td>987683123</td>
-											  <td>7849217423942</td>
-											  <td>Imphal East</td>
+											  <td>Individuals</td>											  
+											  <td>N/A</td>
+											  <td>30000</td>
+											  <td>79272394723424234</td>
 											  <td>200000</td>
 											</tr>
 										</tbody>
