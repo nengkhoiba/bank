@@ -358,7 +358,7 @@
     <script type="text/javascript">
 
     $(document).ready( function () {
-        $('#reportTable').DataTable();
+        $('#reportTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
     } );
 
     function GroupSearchType() {
