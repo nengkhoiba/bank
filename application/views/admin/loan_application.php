@@ -111,7 +111,7 @@
 							  <?php echo form_close() ?>
 						  
 						</div>
-						<div id="individuals" class="tab-pane fade active show">
+						<div id="individuals" class="tab-pane fade ">
 						 <br>
 						 <h5>Individual Loan Application</h5>
 						 <br>
