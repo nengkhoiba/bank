@@ -212,7 +212,41 @@
     </main>
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
-    
+
+    function checkedCheckbox(ele)
+    {
+    	if(ele.val() >= 1)
+        {
+    		$('#'+ele.attr('id').replace("ammount", "loan_acc_no")).attr('checked',true);
+    		
+    		$('#'+ele.attr('id').replace("ammount", "collected_amount")).attr('checked',true);
+    		$('#'+ele.attr('id').replace("ammount", "collected_amount")).val(ele.val());
+        }
+    	else
+    	{
+    		$('#'+ele.attr('id').replace("ammount", "loan_acc_no")).attr('checked',false);
+    		
+    		$('#'+ele.attr('id').replace("ammount", "collected_amount")).attr('checked',false);
+    		$('#'+ele.attr('id').replace("ammount", "collected_amount")).val('');
+    	}
+
+    	var selected_loan_acc_no = []; 
+        $(".loanAccNo:checked").each(function(){
+        	selected_loan_acc_no.push($(this).val());
+        });
+        var  dataString_loan_acc_no = JSON.stringify(selected_loan_acc_no);
+
+        var selected_collected_amount = []; 
+        $(".amount:checked").each(function(){
+        	selected_collected_amount.push($(this).val());
+        });
+        var  dataString_collected_amount = JSON.stringify(selected_collected_amount);
+
+        var dataArray = [];
+        dataArray = [{String_loan_acc_no:dataString_loan_acc_no, String_collected_amount:dataString_collected_amount}];
+        console.log(dataArray);
+    }
+      
     function loadROList()
     { 
       var url = "<?php echo site_url('index.php/data_controller/loadROList'); ?>"; 
@@ -266,7 +300,7 @@
     	var formData = $('form#MasROAssignerGrpForms').serializeObject();
         var dataString = JSON.stringify(formData);
         
-      var url = '<?php echo base_url();?>index.php/data_controller/searchLoanApplicationGrp';
+      var url = '<?php echo base_url();?>index.php/data_controller/searchLoanApplicationGrpRecovery';
       StartInsideLoading();
       $.ajax({
         type: "post",

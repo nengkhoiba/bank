@@ -9,13 +9,12 @@
                 <th>Aadhaar No</th>
 				<th>Account No</th>
 				<th>Loan Account No</th>
-				<th></th>
             </tr>
         </thead>
         <tbody>
         <?php $count = 1; foreach ( $result as $mem_data) { ?>
             <tr>
-            	<td><?php echo $count?></td>
+            	<td><input class="checkbox" hidden disabled checked type="checkbox" value="<?php echo $mem_data['Loan_acc'];?>"><?php echo $count?></td>
                 <td><?php echo $mem_data['name']?></td>
 				<td><?php echo $mem_data['parmanent_address']?></td>
                 <td><?php echo $mem_data['district']?></td>                               
@@ -23,7 +22,6 @@
 				<td><?php echo $mem_data['aadhaar_no']?></td>
 				<td><?php echo $mem_data['Acc_no']?></td>
                 <td><?php echo $mem_data['Loan_acc']?></td>
-                <td><input class="checkbox" disabled checked type="checkbox" value="<?php echo $mem_data['Loan_acc'];?>"></td>
 				</tr>
         <?php $count ++;  } ?>
         </tbody>
