@@ -207,6 +207,13 @@
 
     function assignROGrp()
     {
+
+    	if ($('#roGrp').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'RO is mandatory !');
+            $('#roGrp').focus();
+            return;
+        }
+        
    	var selected_value = []; 
     $(".checkbox:checked").each(function(){
         selected_value.push($(this).val());
@@ -307,6 +314,13 @@
 
     function assignROIndi()
     {
+
+    	if ($('#roIndi').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'RO is mandatory !');
+            $('#roIndi').focus();
+            return;
+        }
+        
     var  roIndi = $('#roIndi').val();
     var  customer_loan_acc_no = $('#customer_loan_acc_no').html();
 
