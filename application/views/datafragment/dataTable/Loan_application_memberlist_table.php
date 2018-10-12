@@ -1,4 +1,4 @@
-<table id="selected_member_data_table" class="table table-hover">
+<table id="memTable" class="table table-hover">
         <thead>
             <tr>
             	<th>Sl No</th>
@@ -9,6 +9,7 @@
                 <th>Aadhaar No</th>
 				<th>Account No</th>
 				<th>Loan Account No</th>
+				<th></th>
             </tr>
         </thead>
         <tbody>
@@ -22,9 +23,12 @@
 				<td><?php echo $mem_data['aadhaar_no']?></td>
 				<td><?php echo $mem_data['Acc_no']?></td>
                 <td><?php echo $mem_data['Loan_acc']?></td>
+                <td><input class="checkbox" disabled checked type="checkbox" value="<?php echo $mem_data['Loan_acc'];?>"></td>
 				</tr>
         <?php $count ++;  } ?>
         </tbody>
        
     </table>
+<button id="assignROBtn" style="margin-bottom: 20px" onclick="assignROGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Assign</button>
+
 	

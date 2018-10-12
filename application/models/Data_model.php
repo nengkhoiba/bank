@@ -1187,33 +1187,10 @@ class Data_model extends CI_Model{
 	
 	
 	//GET SHG MEMBER LIST BY GROUP CODE
-	function GetAllSelectedMemberByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp)
+	function GetAllSelectedMemberByGrpLoanAccNo($loan_acc_no_Grp)
 	{
 	    //data is retrive from this query
-	    if($GrpSearchType=='1')
-	    {
-	           $sql="SELECT customer.ID,
-	   				customer.name,
-	   				customer.aadhaar_no,
-	   				customer.parmanent_address,
-	   				customer.contact_no,
-	   				customer_account.Acc_no,
-	   				district.name AS district,
-                    shg_master.Group_name,
-                    loan_acc_relation.Loan_acc,
-                    group_customer_member.ID AS group_id
-		        FROM customer		        
-		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
-		   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
-		   		LEFT JOIN district ON district.ID =customer.district
-		   		LEFT JOIN shg_master ON shg_master.ID  = group_customer_member.Group_id
-		   		LEFT JOIN loan_acc_relation ON loan_acc_relation.Acc_no  = group_customer_member.Acc_no
-                LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = group_customer_member.Group_id
-		   		WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_code='$grp_code_Grp'	   		
-		   		";
-	    }
-	    elseif ($GrpSearchType=='2')
-	    {
+	    
 	           $sql="SELECT customer.ID,
 	   				customer.name,
 	   				customer.aadhaar_no,
@@ -1233,52 +1210,155 @@ class Data_model extends CI_Model{
 		   		LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = group_customer_member.Group_id
 		   		WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_Loan_acc_no='$loan_acc_no_Grp'
 		   		";
-	    }
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
 	}
 	
 	
 	//GET SHG DETAILS BY GROUP CODE
-	function GetGroupDetailsByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp)
+	function GetGroupDetailsByGrpLoanAccNo($loan_acc_no_Grp)
 	{
 	    //data is retrive from this query
-	    if($GrpSearchType=='1')
-	    {
-	              $sql="SELECT shg_master.Group_name,
+	    
+	        $sql="SELECT shg_master.ID,
+                    shg_master.Group_name,
 					shg_master.Group_code,
 					shg_master.Address,
 					shg_master.Area,
 					shg_master.Member_count as max_member_count,
-					
-					count(group_customer_member.ID) as customer_count
-					
-					from shg_master
-					
-					LEFT JOIN group_customer_member ON group_customer_member.Group_id  = shg_master.ID
-					LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = shg_master.ID
-					WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_code='$grp_code_Grp'					
-		   		";
-	    }
-	    if($GrpSearchType=='2')
-	    {
-	        $sql="SELECT shg_master.Group_name,
-					shg_master.Group_code,
-					shg_master.Address,
-					shg_master.Area,
 					shg_master.Member_count as max_member_count,
-					
-					count(group_customer_member.ID) as customer_count
-					
+					count(group_customer_member.ID) as customer_count,
+					loan_grp_relation.Group_Loan_acc_no
 					from shg_master
 					
 					LEFT JOIN group_customer_member ON group_customer_member.Group_id  = shg_master.ID
 					LEFT JOIN loan_grp_relation ON loan_grp_relation.Group_ID  = shg_master.ID
 					WHERE loan_grp_relation.isActive = 1 AND loan_grp_relation.Group_Loan_acc_no='$loan_acc_no_Grp'
 		   		";
-	    }
 	    
 	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
+	
+	/*GET MEMBER INFORMATION BY LOAN ACC NO  -- Written by William */
+	function GetMemInfoByIndiLoanAccNo($loan_acc_no_Indi)
+	{
+	    $sql = "SELECT cus.ID as ID,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
+        urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
+        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo,
+        br.Name as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
+        accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
+        nomiDis.Name as nominee_district,
+        loanAccRel.Loan_acc as Loan_acc
+        FROM customer cus
+        LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+        LEFT JOIN branch br on br.ID=cus.Branch_id
+        LEFT JOIN account_status accSt on accSt.ID=cus.status
+        LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+        LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+        LEFT JOIN district dis on dis.ID=cus.district
+        LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID
+        LEFT JOIN loan_acc_relation loanAccRel on loanAccRel.Acc_no=acc.Acc_no
+        WHERE loanAccRel.IsActive=1 AND loanAccRel.Loan_acc='$loan_acc_no_Indi' ";
+	    $query=$this->db->query($sql);
+	    
+	    // 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
+	    // 	      ->from('customer')
+	    // 	      ->join('account_status', 'customer.status = account_status.ID', 'left')
+	    // 	      ->where_in('customer.isActive', 1)
+	    // 	      ->where_in('customer.ID', $id);
+	    
+	    return $query->result_array();
+	}
+	
+	function AssignROGrpModel($loan_acc_no_Array,$ro_id,$grp_id,$grp_loan_acc_no)
+	{
+	    foreach ($loan_acc_no_Array as $loan_acc_no)
+	    {	        
+	        $data = array(
+	            'emp_id'	=>  $ro_id,
+	            'loan_acc_no'	=>  $loan_acc_no,
+	            'group_id' => $grp_id,
+	            'group_loan_acc_no'	=>  $grp_loan_acc_no,
+	            'IsActive'=>  1,
+	        );
+	        
+	        $this->db->insert('ro_assign', $data);
+	        $lastID=$this->db->insert_id();
+	        
+	        if($this->db->trans_status() === FALSE)
+	        {
+	            $this->db->trans_rollback();
+	            return array('code' => 0);
+	        }
+	        else
+	        {
+	            $this->db->trans_commit();
+	            $this->addLog("Assign new RO", "Emp ID ".$ro_id." is assign to Loan Acccount No ".$loan_acc_no.", Group ID ".$grp_id." and Group Loan Account No ".$grp_loan_acc_no." .");
+	            return array('code' => 1);
+	        }
+	    }
+	}	
+	
+	function GetAssignROByGrpLoanAccNo($loan_acc_no_Grp)
+	{
+	   $sql =  "SELECT emp.Name
+                FROM ro_assign
+                LEFT JOIN emp on emp.ID=ro_assign.emp_id
+                WHERE ro_assign.isActive=1 AND ro_assign.group_loan_acc_no = $loan_acc_no_Grp";	    
+	    $query=$this->db->query($sql);
+	    
+// 	    $query = $this->db->get_where('ro_assign', array('group_loan_acc_no' => $loan_acc_no_Grp));
+	    return $query->result_array();
+	}
+	
+	function CheckAssignROGrp($ro_id,$grp_loan_acc_no)
+	{
+	    $query = $this->db->get_where('ro_assign', array('emp_id' => $ro_id,'group_loan_acc_no' => $grp_loan_acc_no));
+	    return $query->result ();
+	}
+	
+	function AssignROIndiModel($ro_id,$loan_acc_no)
+	{
+	    
+	        $data = array(
+	            'emp_id'	=>  $ro_id,
+	            'loan_acc_no'	=>  $loan_acc_no,
+	            'IsActive'=>  1,
+	        );
+	        
+	        $this->db->insert('ro_assign', $data);
+	        $lastID=$this->db->insert_id();
+	        
+	        if($this->db->trans_status() === FALSE)
+	        {
+	            $this->db->trans_rollback();
+	            return array('code' => 0);
+	        }
+	        else
+	        {
+	            $this->db->trans_commit();
+	            $this->addLog("Assign new RO", "Emp ID ".$ro_id." is assign to Loan Acccount No ".$loan_acc_no.".");
+	            return array('code' => 1);
+	        }
+	}
+	
+	function CheckAssignROIndi($ro_id,$loan_acc_no)
+	{
+	    $query = $this->db->get_where('ro_assign', array('emp_id' => $ro_id,'loan_acc_no' => $loan_acc_no));
+	    return $query->result ();
+	}
+	
+	function GetAssignROByLoanAccNo($loan_acc_no_Indi)
+	{
+	    $sql =  "SELECT emp.Name
+                FROM ro_assign
+                LEFT JOIN emp on emp.ID=ro_assign.emp_id
+                WHERE ro_assign.isActive=1 AND ro_assign.loan_acc_no = '$loan_acc_no_Indi'";
+	    $query=$this->db->query($sql);
+	    
+	    // 	    $query = $this->db->get_where('ro_assign', array('group_loan_acc_no' => $loan_acc_no_Grp));
 	    return $query->result_array();
 	}
 

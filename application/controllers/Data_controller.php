@@ -2222,22 +2222,124 @@ class Data_controller extends CI_Controller {
 	}
 	
 	
-	/*SEARCH LOAD APPLICATION FORM -- Written by William*/
-	public function searchLoanApplication()
+	/*SEARCH LOAN APPLICATION FORM GROUP -- Written by William*/
+	public function searchLoanApplicationGrp()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
 	    try {
-	        $GrpSearchType =  $this->input->post('GrpSearchType',true);
-	        $grp_code_Grp =  $this->input->post('grp_code_Grp',true);
 	        $loan_acc_no_Grp =  $this->input->post('loan_acc_no_Grp',true);
-	        
-	        $data['result']=$this->database->GetAllSelectedMemberByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp);
-	        $data['group_details']=$this->database->GetGroupDetailsByGrpCode($GrpSearchType, $grp_code_Grp, $loan_acc_no_Grp);	        
-	        $output = array(
-	            'html'=>$this->load->view('datafragment/dataTable/Loan_application_memberlist_table.php',$data,true),
-	            'Group_details'=>$this->load->view('datafragment/dataTable/Group_details.php',$data,true),
+	        if($loan_acc_no_Grp == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            
+	            $data['result']=$this->database->GetAllSelectedMemberByGrpLoanAccNo($loan_acc_no_Grp);
+	            $data['group_details']=$this->database->GetGroupDetailsByGrpLoanAccNo($loan_acc_no_Grp);
+	            $data['assignRO']=$this->database->GetAssignROByGrpLoanAccNo($loan_acc_no_Grp);
+	            $output = array(
+	            'check' => $data['result'],
+	            'html'=>$this->load->view('datafragment/dataTable/Loan_application_memberlist_table',$data,true),
+	            'Group_details'=>$this->load->view('admin/LoanAccGrpInfo',$data,true),
 	            'success' =>true
 	        );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*SEARCH LOAN APPLICATION FORM INDIVIDUALS -- Written by William*/
+	public function searchLoanApplicationIndi()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    try {
+	        $loan_acc_no_Indi =  $this->input->post('loan_acc_no_Indi',true);
+	        if($loan_acc_no_Indi == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result']=$this->database->GetMemInfoByIndiLoanAccNo($loan_acc_no_Indi);
+  	            $data['assignRO']=$this->database->GetAssignROByLoanAccNo($loan_acc_no_Indi);
+	            $output = array(
+	                'html'=>$this->load->view('admin/MemberInformation',$data,true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	// 	ASSIGN RO FOR GROUP -- Written by William
+	public function assignROGrp()
+	{
+	    
+	    try {
+	        $loan_acc_no_Array = json_decode($this->input->post('dataArr',true), TRUE);
+	        $ro_id = $this->input->post('roID',true);
+	        $grp_id = $this->input->post('grpID',true);
+	        $grp_loan_acc_no = $this->input->post('grpLoanAcc',true);
+	        
+	        $check = $this->database->CheckAssignROGrp($ro_id,$grp_loan_acc_no);
+	        if (sizeof ( $check ) == 1) {
+	            $output = array(
+	                'msg'=> "EmpID ".$ro_id." is already assigned !",
+	                'success' => false
+	            );
+	        }
+	        else
+	        {	        
+	        $this->database->AssignROGrpModel($loan_acc_no_Array,$ro_id,$grp_id,$grp_loan_acc_no);
+	        $output = array('success' =>true, 'msg'=> "Successfully assign to EmpID ".$ro_id);
+	        }
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	// 	ASSIGN RO FOR INDIVIDUALS -- Written by William
+	public function assignROIndi()
+	{
+	    try {	        
+	        $ro_id = $this->input->post('roID',true);
+	        $loan_acc_no = $this->input->post('loan_acc_no',true);
+	        if($loan_acc_no == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{	        
+	        $check = $this->database->CheckAssignROIndi($ro_id,$loan_acc_no);
+	        if (sizeof ( $check ) == 1) {
+	            $output = array(
+	                'msg'=> "EmpID ".$ro_id." is already assigned !",
+	                'success' => false
+	            );
+	        }
+	        else
+	        {
+	            $this->database->AssignROIndiModel($ro_id,$loan_acc_no);
+	            $output = array('success' =>true, 'msg'=> "Successfully assign to EmpID ".$ro_id);
+	        }
+	        }
+	        
 	    } catch (Exception $ex) {
 	        $output = array(
 	            'msg'=> $ex->getMessage(),
