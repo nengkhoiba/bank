@@ -48,7 +48,7 @@
 								</div>
 								
 								<div class="form-group col-md-4 align-self-end">
-								  <button onclick="loadLoadApplicationGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
+								  <button onclick="searchLoanApplicationGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
 								  &nbsp;&nbsp;&nbsp;
 								 <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasROAssignerGrpForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
@@ -91,7 +91,7 @@
 								</div>
 								
 								<div class="form-group col-md-4 align-self-end">
-								  <button onclick="loadLoadApplicationIndi()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
+								  <button onclick="searchLoanApplicationIndi()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
 								  &nbsp;&nbsp;&nbsp;
 								 <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasROAssignerIndividualsForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
@@ -247,7 +247,7 @@
     } 
     loadROList();
 
-    function loadLoadApplicationGrp()
+    function searchLoanApplicationGrp()
     { 
 
     	if ($('#roGrp').val().trim() == '') { 
@@ -337,7 +337,7 @@
         if (response.success)
           {
             SetSucessMessageBox('Success', response.msg);
-            loadLoadApplicationGrp()            
+            searchLoanApplicationGrp()            
           } else
            { 
                SetWarningMessageBox('warning', response.msg);                
@@ -362,7 +362,7 @@
 
     
 
-    function loadLoadApplicationIndi()
+    function searchLoanApplicationIndi()
     { 
 
     	if ($('#roIndi').val().trim() == '') { 
@@ -438,7 +438,7 @@
         if (response.success)
           {
             SetSucessMessageBox('Success', response.msg);
-            loadLoadApplicationIndi()            
+            searchLoanApplicationIndi()            
           } else
            { 
                SetWarningMessageBox('warning', response.msg);                
