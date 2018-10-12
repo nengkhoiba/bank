@@ -1325,6 +1325,8 @@ class Data_model extends CI_Model{
 	        $data = array(
 	            'emp_id'	=>  $ro_id,
 	            'loan_acc_no'	=>  $loan_acc_no,
+	            'group_loan_acc_no'	=>  'N/A',
+	            'group_id'	=>  'N/A',
 	            'IsActive'=>  1,
 	        );
 	        
@@ -1346,7 +1348,7 @@ class Data_model extends CI_Model{
 	
 	function CheckAssignROIndi($ro_id,$loan_acc_no)
 	{
-	    $query = $this->db->get_where('ro_assign', array('emp_id' => $ro_id,'loan_acc_no' => $loan_acc_no));
+	    $query = $this->db->get_where('ro_assign', array('emp_id' => $ro_id,'loan_acc_no' => $loan_acc_no,'group_loan_acc_no' => 'N/A','group_id' => 'N/A'));
 	    return $query->result ();
 	}
 	
@@ -1355,7 +1357,7 @@ class Data_model extends CI_Model{
 	    $sql =  "SELECT emp.Name
                 FROM ro_assign
                 LEFT JOIN emp on emp.ID=ro_assign.emp_id
-                WHERE ro_assign.isActive=1 AND ro_assign.loan_acc_no = '$loan_acc_no_Indi'";
+                WHERE ro_assign.isActive=1 AND ro_assign.group_loan_acc_no = 'N/A' AND ro_assign.group_id = 'N/A' AND ro_assign.loan_acc_no = '$loan_acc_no_Indi'";
 	    $query=$this->db->query($sql);
 	    
 	    // 	    $query = $this->db->get_where('ro_assign', array('group_loan_acc_no' => $loan_acc_no_Grp));
