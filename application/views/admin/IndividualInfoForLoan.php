@@ -38,14 +38,19 @@
 			  
 					<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Select Loan type</label>
-									<select class="form-control" style="margin-top: 10px;" id="exampleSelect1">
-									  <option>1</option>
-									  <option>2</option>
-									  <option>3</option>
-									  <option>4</option>
-									  <option>5</option>
+									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type" name="LoanType">
+									 <!-- Loan Type will add here -->
 									</select>
 								</div>
+								<div class="col-md-4">
+								hello this is the thest sdjhdshfksjdfhkshdfkhsdkj hfsdjkh fkshkdhf hsdjfhksh dfkjhjksdhkjfh sdfjhdskjhf sdjkfhkjs dfjsdhfks
+								fsljdfklsd fjklsdj fklsdjflk jsdlkfjlks dfjkls jdfkljsdlkfjsldf jsldkjflksdjfl sdkljfj sdlkjfldsf
+								 jsdklfjlsdjkljf
+								 
+								 <div id="loan_details" class="">
+								 </div>
+								</div>
+								
 								
 								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Loan Amount</label>

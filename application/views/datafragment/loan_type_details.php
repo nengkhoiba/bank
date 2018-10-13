@@ -1,0 +1,10 @@
+<?php echo $result[0]['Loan_name'];?><br>
+<?php echo $result[0]['Loan_pc'];?><br>
+<?php echo $result[0]['pc_type_id'];?><br>
+<?php echo $result[0]['loan_tenure_type_id'];?><br>
+<?php echo $result[0]['Tenure_min'];?><br>
+<?php echo $result[0]['Tenure_max'];?><br>
+<?php echo $result[0]['Min_amount'];?><br>
+<?php echo $result[0]['Max_amount'];?><br>
+<?php echo $result[0]['pc_type_name'];?><br>
+<?php echo $result[0]['tenure_type_name'];?><br>

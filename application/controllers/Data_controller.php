@@ -2362,7 +2362,9 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data['result']=$this->database->GetIndividualAccountInfo($individual_account_no);
-  	            $output = array(
+	            $data['loantype']=$this->database->GetLoanTypeList();	
+	            $output = array(
+	            	'loantype_html'=>$this->load->view('datafragment/dropDown/LoanTypeList',$data, true),
 	                'html'=>$this->load->view('admin/IndividualInfoForLoan',$data,true),
 	                'success' =>true
 	            );
@@ -2408,5 +2410,35 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+
+
+	/*SEARCH LOAN TYPE DETAILS -- Written by Riyaj*/
+	public function searchLoanTypeDetails()
+	{
+	    try {
+	        $loan_type_id =  $this->input->post('loan_type_id',true);
+	        echo 
+	        if($loan_type_id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result']=$this->database->GetLoanTypeDetialList($loan_type_id);
+	            $output = array(
+	            	'html'=>$this->load->view('datafragment/loan_type_details',$data,true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
+	
 	
 }

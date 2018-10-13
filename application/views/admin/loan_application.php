@@ -129,6 +129,8 @@
 								</div>
 								<div class="form-group col-md-12 align-self-end" id="LoadIndividualApplicationForm">
 								</div>
+								
+								
 							  <?php echo form_close() ?>
 						  
 						</div>
@@ -145,18 +147,16 @@
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
    
-    
+
+	
     function LoanIndividualSearch()
     { 
-
-    
     	if ($('#individual_account_no').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Account No. is mandatory !');
             $('#individual_account_no').focus();
             return;
         }
     	
-
     	var formData = $('form#MasLoanApplicationIndividualForms').serializeObject();
         var dataString = JSON.stringify(formData);
         
@@ -173,6 +173,7 @@
           if (response.success)
             {
         	$('#LoadIndividualApplicationForm').html(response.html); 
+			$('#individual_Loan_Type').html(response.loantype_html); 
         	$('#LoadIndividualApplicationForm').show();             
             } else
              { 
@@ -192,6 +193,40 @@
        });
     }
 	
+	function searchLoanTypeDetails(value)
+    { 
+        var loan_type_id = value;
+        
+      var url = '<?php echo base_url();?>index.php/data_controller/searchLoanTypeDetails';
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false, 
+        data: loan_type_id,  
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+            {
+        	$('#loan_details').html(response.html);             
+            } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
 	
 	
    

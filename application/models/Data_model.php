@@ -1385,5 +1385,35 @@ class Data_model extends CI_Model{
 	    return $query->result_array();
 	}
 
+		//GET Loan Type LIST
+	function GetLoanTypeList()
+	{
+	    $sql =  "SELECT ID, Loan_name
+                FROM loan_master
+                WHERE IsActive=1";
+	    
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
+
+	function GetLoanTypeDetialList($loan_type_id)
+	{
+		 $sql =  "SELECT loan_master.Loan_name, loan_master.Loan_pc, loan_master.Loan_pc_type as pc_type_id,loan_master.Tenure_type as loan_tenure_type_id,loan_master.Tenure_min,loan_master.Tenure_max,loan_master.Min_amount,loan_master.Max_amount, pc_type_master.Name as pc_type_name, tenure_type_master.Name as tenure_type_name
+				FROM loan_master
+				LEFT JOIN pc_type_master
+				ON loan_master.Loan_pc_type = pc_type_master.ID
+				LEFT JOIN tenure_type_master
+				ON loan_master.Tenure_type= tenure_type_master.ID
+
+				WHERE loan_master.ID='$loan_type_id'";
+	    $query=$this->db->query($sql);
+	    
+	   return $query->result_array();
+
+
+
+	}
+
 }
     
