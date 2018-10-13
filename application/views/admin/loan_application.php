@@ -195,7 +195,7 @@
 	
 	function searchLoanTypeDetails(value)
     { 
-        var loan_type_id = value;
+      var loan_type_id = value;
         
       var url = '<?php echo base_url();?>index.php/data_controller/searchLoanTypeDetails';
       StartInsideLoading();
@@ -203,7 +203,7 @@
         type: "post",
         url: url,
         cache: false, 
-        data: loan_type_id,  
+        data: {loan_type_id:loan_type_id},  
         dataType: 'json', 
         success: function(response){ 
         try{  

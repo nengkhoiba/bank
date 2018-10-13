@@ -2417,7 +2417,6 @@ class Data_controller extends CI_Controller {
 	{
 	    try {
 	        $loan_type_id =  $this->input->post('loan_type_id',true);
-	        echo 
 	        if($loan_type_id == ''){
 	            $output = array(
 	                'msg'=> 'Resquest Error !!!',
