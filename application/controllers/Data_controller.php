@@ -2348,5 +2348,32 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+
+	/*SEARCH INDIVIDUAL ACCOUNT FOR LOAN APPLY -- Written by Riyaj*/
+	public function searchIndividualAccountForLoan()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    try {
+	        $individual_account_no =  $this->input->post('individual_account_no',true);
+	        if($individual_account_no == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result']=$this->database->GetIndividualAccountInfo($individual_account_no);
+  	            $output = array(
+	                'html'=>$this->load->view('admin/IndividualInfoForLoan',$data,true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
 }
