@@ -2441,4 +2441,109 @@ class Data_controller extends CI_Controller {
 
 	
 	
+	/*Loan calculator--Nengkhoiba */
+	public function calculateLoan(){
+		//$data['loan']=$this->getFlatEmi(100000, 36, 12, "01-09-2018");  // use this for flat calculation 
+		$data['loan']=$this->getReducingEmi(100000, 36, 12, "01-09-2018"); // use this for reducing
+		$this->load->view('datafragment/interest_calculation_table',$data);
+	}
+ 
+	private function getNextMonth($date){
+		$date = new DateTime($date);
+		$interval = new DateInterval('P1M');
+		$date->add($interval);
+		$nextMonth= $date->format('d-m-Y');
+		return $nextMonth;
+	}
+	
+	private function getReducingEmi($principalAmount,$rate,$time,$date){
+		$rate = $rate/100/12;
+		$x= pow(1+$rate,$time);
+		$monthly = ($principalAmount*$x*$rate)/($x-1);
+		$monthly = round($monthly);
+		$mEmi=$monthly;
+		$k= $time;
+		$t=$principalAmount;
+		$tl;
+		$totalint=0;
+		$tp=0;
+		$sl=1;
+		$emi= array();
+		for($time;$time>0;$time--){
+			$arr= array();
+			$r = $t*$rate;
+			$p = round($monthly-$r);
+			$e= round($t-$p);
+			if($time==2){
+				$tl= $e;
+			}
+			if($time==1){
+				$p= $tl;
+				$e= round($t-$p);
+				$monthly= round($p+$r);
+			}
+			$totalint = $totalint + $r;
+			$tp = $tp+$monthly;
+			$arr['sl']=$sl;
+			$arr['date']=$date;
+			$arr['interest']=number_format(round($r));
+			$arr['opening']=number_format($t);
+			$arr['principal']=number_format($p);
+			$arr['emi']=number_format($monthly);
+			$arr['closing']=number_format(round($e));
+			$emi[]=$arr;
+			$date=$this->getNextMonth($date);
+			$t=$e;
+			$sl++;
+		}
+		$output['principle']=number_format(round($principalAmount));
+		$output['int']=number_format(round($rate));
+		$output['totalInterest']=number_format(round($totalint));
+		$output['totalWithprincipal']=number_format(round($tp));
+		$output['emi']=number_format(round($mEmi));
+		$output['details']=$emi;
+		return $output;
+	}
+	
+	private function getFlatEmi($principalAmount,$rate,$time,$date){
+		$rate = $rate/100/12;
+		
+		$interest=$principalAmount*$rate;
+		$principalPaid=$principalAmount/$time;
+		
+		$monthly=$interest+$principalPaid;
+		
+		$mEmi=$monthly;
+		$k= $time;
+		$t=$principalAmount;
+		$tl;
+		$totalint=0;
+		$tp=0;
+		$sl=1;
+		$emi= array();
+		for($time;$time>0;$time--){
+			$arr= array();
+			$e=$t-$principalPaid;
+			$totalint = $totalint + $interest;
+			$tp = $tp+$monthly;
+			$arr['sl']=$sl;
+			$arr['date']=$date;
+			$arr['interest']=number_format(round($interest));
+			$arr['opening']=number_format($t);
+			$arr['principal']=number_format($principalPaid);
+			$arr['emi']=number_format($monthly);
+			$arr['closing']=number_format(round($e));
+			$emi[]=$arr;
+			$date=$this->getNextMonth($date);
+			$t=$e;
+			$sl++;
+		}
+		$output['principle']=number_format(round($principalAmount));
+		$output['int']=number_format(round($rate));
+		$output['totalInterest']=number_format(round($totalint));
+		$output['totalWithprincipal']=number_format(round($tp));
+		$output['emi']=number_format(round($mEmi));
+		$output['details']=$emi;
+		return $output;
+	}
 }
