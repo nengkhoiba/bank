@@ -33,12 +33,6 @@
 						 <br>
 							 <?php echo form_open_multipart('',array('id'=>'MasROAssignerGrpForms','class'=>'row'))?>
 								
-								<div class="form-group col-md-4 align-self-end" >
-								<label class="control-label">Select RO</label>
-									<select id="roGrp" name="ro" class="form-control" style="margin-top: 10px;">
-									  <!-- list of  RO -->
-									</select>
-								</div>
 								
 								<div class="form-group col-md-4 align-self-end" id="groupLoanAccNo">
 									<label class="control-label">Group Loan Account Number</label>
@@ -75,14 +69,7 @@
 						 <h5>Search Individuals</h5>
 						 <br>
 							 <?php echo form_open_multipart('',array('id'=>'MasROAssignerIndividualsForms','class'=>'row'))?>
-								
-								<div class="form-group col-md-4 align-self-end" >
-								<label class="control-label">Select RO</label>
-									<select id="roIndi" name="ro" class="form-control" style="margin-top: 10px;">
-									  <!-- list of  RO -->
-									</select>
-								</div>
-								
+							
 								<div class="form-group col-md-4 align-self-end" id="memLoanAccNo">
 									<label class="control-label">Loan Account Number</label>
 									<input id="loan_acc_no_Indi" name="loan_acc_no_Indi" style="margin-top: 10px;"
@@ -221,6 +208,10 @@
     		
     		$('#'+ele.attr('id').replace("ammount", "collected_amount")).attr('checked',true);
     		$('#'+ele.attr('id').replace("ammount", "collected_amount")).val(ele.val());
+
+    		$('#'+ele.attr('id').replace("ammount", "collected_date_checkbox")).attr('checked',true);
+    		$('#'+ele.attr('id').replace("ammount", "collected_date_checkbox")).val(new Date());
+    		$('#'+ele.attr('id').replace("ammount", "collected_date")).val(new Date());
         }
     	else
     	{
@@ -228,6 +219,10 @@
     		
     		$('#'+ele.attr('id').replace("ammount", "collected_amount")).attr('checked',false);
     		$('#'+ele.attr('id').replace("ammount", "collected_amount")).val('');
+
+    		$('#'+ele.attr('id').replace("ammount", "collected_date_checkbox")).attr('checked',false);
+    		$('#'+ele.attr('id').replace("ammount", "collected_date_checkbox")).val('');
+    		$('#'+ele.attr('id').replace("ammount", "collected_date")).val('');
     	}
 
     	var selected_loan_acc_no = []; 
@@ -242,53 +237,20 @@
         });
         var  dataString_collected_amount = JSON.stringify(selected_collected_amount);
 
+        var selected_collected_date_checkbox = []; 
+        $(".date:checked").each(function(){
+        	selected_collected_date_checkbox.push($(this).val());
+        });
+        var  dataString_collected_date = JSON.stringify(selected_collected_date_checkbox);
+
         var dataArray = [];
-        dataArray = [{String_loan_acc_no:dataString_loan_acc_no, String_collected_amount:dataString_collected_amount}];
+        dataArray = [{String_loan_acc_no:dataString_loan_acc_no, String_collected_amount:dataString_collected_amount, String_collected_date:dataString_collected_date}];
         console.log(dataArray);
     }
       
-    function loadROList()
-    { 
-      var url = "<?php echo site_url('index.php/data_controller/loadROList'); ?>"; 
-      StartInsideLoading();
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false,   
-        dataType: 'json', 
-        success: function(response){ 
-        try{  
-          if (response.success)
-             { 
-            $('#roGrp').html(response.html); 
-            $('#roIndi').html(response.html);             
-             } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);                
-             }
-         StopInsideLoading();
-         
-         }catch(e) {  
-            SetWarningMessageBox('warning', e);
-            StopInsideLoading();
-          } 
-        },
-        error: function(){      
-          SetWarningMessageBox('warning', 'Error while request..');
-          StopInsideLoading();
-        }
-       });
-    } 
-    loadROList();
-
+    
     function searchLoanApplicationGrp()
     { 
-
-    	if ($('#roGrp').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'RO is mandatory !');
-            $('#roGrp').focus();
-            return;
-        }
 
     	if ($('#loan_acc_no_Grp').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan account no. is mandatory !');
@@ -343,12 +305,6 @@
     function assignROGrp()
     {
 
-    	if ($('#roGrp').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'RO is mandatory !');
-            $('#roGrp').focus();
-            return;
-        }
-        
    	var selected_value = []; 
     $(".checkbox:checked").each(function(){
         selected_value.push($(this).val());
@@ -399,12 +355,6 @@
     function searchLoanApplicationIndi()
     { 
 
-    	if ($('#roIndi').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'RO is mandatory !');
-            $('#roIndi').focus();
-            return;
-        }
-
     	if ($('#loan_acc_no_Indi').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan account no. is mandatory !');
             $('#loan_acc_no_Indi').focus();
@@ -449,12 +399,6 @@
 
     function assignROIndi()
     {
-
-    	if ($('#roIndi').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'RO is mandatory !');
-            $('#roIndi').focus();
-            return;
-        }
         
     var  roIndi = $('#roIndi').val();
     var  customer_loan_acc_no = $('#customer_loan_acc_no').html();
