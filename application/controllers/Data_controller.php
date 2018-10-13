@@ -2376,4 +2376,37 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	
+	/*SEARCH LOAN APPLICATION FORM GROUP -- Written by William*/
+	public function searchLoanApplicationGrpRecovery()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    try {
+	        $loan_acc_no_Grp =  $this->input->post('loan_acc_no_Grp',true);
+	        if($loan_acc_no_Grp == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            
+	            $data['result']=$this->database->GetAllSelectedMemberByGrpLoanAccNo($loan_acc_no_Grp);
+	            $data['group_details']=$this->database->GetGroupDetailsByGrpLoanAccNo($loan_acc_no_Grp);
+	            $data['assignRO']=$this->database->GetAssignROByGrpLoanAccNo($loan_acc_no_Grp);
+	            $output = array(
+	                'check' => $data['result'],
+	                'html'=>$this->load->view('datafragment/dataTable/Loan_application_memberlist_recovery_table',$data,true),
+	                'Group_details'=>$this->load->view('admin/LoanAccGrpInfo',$data,true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 }
