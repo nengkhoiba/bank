@@ -302,54 +302,7 @@
     }
 
 
-    function assignROGrp()
-    {
-
-   	var selected_value = []; 
-    $(".checkbox:checked").each(function(){
-        selected_value.push($(this).val());
-    });
-    var  roGrp = $('#roGrp').val();
-    var  grp_id = $('#grp_id').html();
-    var  grp_loan_acc_no = $('#grp_loan_acc_no').html();
-    var  dataString_loan_acc_no = JSON.stringify(selected_value);
-
-    var url = '<?php echo base_url();?>index.php/data_controller/assignROGrp';
-    StartInsideLoading();
-    $.ajax({
-      type: "post",
-      url: url,
-      cache: false, 
-      data: {dataArr:dataString_loan_acc_no,roID:roGrp,grpID:grp_id,grpLoanAcc:grp_loan_acc_no}, 
-      dataType: 'json', 
-      success: function(response){ 
-      try{  
-        if (response.success)
-          {
-            SetSucessMessageBox('Success', response.msg);
-            searchLoanApplicationGrp()            
-          } else
-           { 
-               SetWarningMessageBox('warning', response.msg);                
-           }
-       StopInsideLoading();
-       
-       }catch(e) {  
-          SetWarningMessageBox('warning', e);
-          StopInsideLoading();
-        } 
-      },
-      error: function(){      
-        SetWarningMessageBox('warning', 'Error while request..');
-        StopInsideLoading();
-      }
-     });
     
-    }
-
-
-
-
     
 
     function searchLoanApplicationIndi()
@@ -397,44 +350,7 @@
        });
     }
 
-    function assignROIndi()
-    {
-        
-    var  roIndi = $('#roIndi').val();
-    var  customer_loan_acc_no = $('#customer_loan_acc_no').html();
-
-    var url = '<?php echo base_url();?>index.php/data_controller/assignROIndi';
-    StartInsideLoading();
-    $.ajax({
-      type: "post",
-      url: url,
-      cache: false, 
-      data: {roID:roIndi,loan_acc_no:customer_loan_acc_no}, 
-      dataType: 'json', 
-      success: function(response){ 
-      try{  
-        if (response.success)
-          {
-            SetSucessMessageBox('Success', response.msg);
-            searchLoanApplicationIndi()            
-          } else
-           { 
-               SetWarningMessageBox('warning', response.msg);                
-           }
-       StopInsideLoading();
-       
-       }catch(e) {  
-          SetWarningMessageBox('warning', e);
-          StopInsideLoading();
-        } 
-      },
-      error: function(){      
-        SetWarningMessageBox('warning', 'Error while request..');
-        StopInsideLoading();
-      }
-     });
     
-    }
 
     $(document).ready(function (){
     	var date = new Date();
