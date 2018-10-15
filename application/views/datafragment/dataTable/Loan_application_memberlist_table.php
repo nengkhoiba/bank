@@ -31,6 +31,5 @@
         </tbody>
        
     </table>
-<button id="assignROBtn" style="margin-bottom: 20px" onclick="assignROGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Assign</button>
 </div>
 	
