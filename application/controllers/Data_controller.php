@@ -2458,8 +2458,7 @@ class Data_controller extends CI_Controller {
 	
 	/*Loan calculator--Nengkhoiba */
 	public function calculateLoan(){
-		//$data['loan']=$this->getFlatEmi(100000, 36, 12, "01-09-2018");  // use this for flat calculation 
-		$data['loan']=$this->getReducingEmi(100000, 36, 12, "01-09-2018"); // use this for reducing
+		$data['loan']=$this->database->GenerateLoan_statement("GRP123","LAN123",25000,36,1,"01-09-2018",5,2,0.5,1,1,4,1,3); 
 		$this->load->view('datafragment/interest_calculation_table',$data);
 	}
  
