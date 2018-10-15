@@ -1548,8 +1548,6 @@ class Data_model extends CI_Model{
 		}
 		
 		return $result;
-		
-		
 	}
 	public function getNextInterval($date,$intValue){
 		$date = new DateTime($date);
