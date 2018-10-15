@@ -75,14 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '103.83.12.10',
 	'username' => 'root',
-	'password' => 'mysql',
+	'password' => 'imphal795001',
 
-	
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
 	'database' => 'bank_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -96,8 +92,26 @@ $db['default'] = array(
 	'encrypt' => FALSE,
 	'compress' => FALSE,
 	'stricton' => FALSE,
-	'failover' => array('hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'mysql',),
 	'save_queries' => TRUE
+);
+
+$db['default']['failover'] = array(
+		array(
+				'hostname' => 'localhost',
+				'username' => 'root',
+				'password' => 'mysql',
+				'database' => 'bank_db',
+				'dbdriver' => 'mysqli',
+				'dbprefix' => '',
+				'pconnect' => TRUE,
+				'db_debug' => TRUE,
+				'cache_on' => FALSE,
+				'cachedir' => '',
+				'char_set' => 'utf8',
+				'dbcollat' => 'utf8_general_ci',
+				'swap_pre' => '',
+				'encrypt' => FALSE,
+				'compress' => FALSE,
+				'stricton' => FALSE
+		)
 );
