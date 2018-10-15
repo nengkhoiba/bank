@@ -1,8 +1,12 @@
+<div class="" style="border-radius: 0px;">
+<div class="tile-title-w-btn">
+<h3 class="title">List of members</h3>
+</div>
 <table id="memTable" class="table table-hover">
         <thead>
             <tr>
             	<th>Sl No</th>
-                <th>Name</th>
+                <th>Member Name</th>
 				<th>Address</th>
 				<th>District</th>
 				<th>Contact No</th>              
@@ -28,5 +32,5 @@
        
     </table>
 <button id="assignROBtn" style="margin-bottom: 20px" onclick="assignROGrp()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Assign</button>
-
+</div>
 	

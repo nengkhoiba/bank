@@ -179,6 +179,7 @@
             {
           	  $('#group_details').html(response.Group_details); 			
               $('#memList').html(response.html);
+              $('#roTableGrp').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               $('#memTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               if(response.check == '')
               {
@@ -292,7 +293,8 @@
         try{  
           if (response.success)
             {
-        	$('#LoadApplicationFormIndi').html(response.html); 
+        	$('#LoadApplicationFormIndi').html(response.html);
+        	$('#roTableIndi').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']}); 
         	$('#LoadApplicationFormIndi').show();             
             } else
              { 

@@ -1281,6 +1281,9 @@ class Data_model extends CI_Model{
 	            'loan_acc_no'	=>  $loan_acc_no,
 	            'group_id' => $grp_id,
 	            'group_loan_acc_no'	=>  $grp_loan_acc_no,
+	            'Added_on' => date('Y-m-d H:i:s',now()),
+	            'Added_by' => $GLOBALS['Added_by'],
+	            'branch_id' => $GLOBALS['branch_id'],
 	            'IsActive'=>  1,
 	        );
 	        
@@ -1303,9 +1306,10 @@ class Data_model extends CI_Model{
 	
 	function GetAssignROByGrpLoanAccNo($loan_acc_no_Grp)
 	{
-	   $sql =  "SELECT emp.Name
+	   $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by
                 FROM ro_assign
                 LEFT JOIN emp on emp.ID=ro_assign.emp_id
+                LEFT JOIN emp added on added.ID=ro_assign.Added_by
                 WHERE ro_assign.isActive=1 AND ro_assign.group_loan_acc_no = $loan_acc_no_Grp";	    
 	    $query=$this->db->query($sql);
 	    
@@ -1327,6 +1331,9 @@ class Data_model extends CI_Model{
 	            'loan_acc_no'	=>  $loan_acc_no,
 	            'group_loan_acc_no'	=>  'N/A',
 	            'group_id'	=>  'N/A',
+	            'Added_on' => date('Y-m-d H:i:s',now()),
+	            'Added_by' => $GLOBALS['Added_by'],
+	            'branch_id' => $GLOBALS['branch_id'],
 	            'IsActive'=>  1,
 	        );
 	        
@@ -1353,10 +1360,11 @@ class Data_model extends CI_Model{
 	}
 	
 	function GetAssignROByLoanAccNo($loan_acc_no_Indi)
-	{
-	    $sql =  "SELECT emp.Name
+	{	    
+	    $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by
                 FROM ro_assign
                 LEFT JOIN emp on emp.ID=ro_assign.emp_id
+                LEFT JOIN emp added on added.ID=ro_assign.Added_by
                 WHERE ro_assign.isActive=1 AND ro_assign.group_loan_acc_no = 'N/A' AND ro_assign.group_id = 'N/A' AND ro_assign.loan_acc_no = '$loan_acc_no_Indi'";
 	    $query=$this->db->query($sql);
 	    
