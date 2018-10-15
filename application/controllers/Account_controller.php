@@ -283,6 +283,24 @@ class Account_controller extends CI_Controller {
         echo json_encode($status) ;
     }
     
+    /*LOAD TRANSACTION TABLE -- Written by William*/
+    public function loadAccTran()
+    {
+        try {
+            $data['result']=$this->account->LoadAccTransaction();
+            $output = array(
+                'html'=>$this->load->view('datafragment/dataTable/Acc_tran_table.php',$data, true),
+                'success' =>true
+            );
+        } catch (Exception $ex) {
+            $output = array(
+                'msg'=> $ex->getMessage(),
+                'success' => false
+            );
+        }
+        echo json_encode($output);
+    }
+    
 
 	
 	

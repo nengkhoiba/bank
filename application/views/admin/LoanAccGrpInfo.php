@@ -20,7 +20,7 @@
 <div class="tile-title-w-btn">
 <h3 class="title">List of assigned RO</h3>
 <p class="bs-component">	
-  <a onclick="assignROGrp()" style="color:#fff" class="btn btn-sm btn-success">Assign New RO</a>
+  <a onclick="assignROGrp()" style="color:#fff" class="btn btn-sm btn-success">Assign New</a>
   <button class="btn btn-sm btn-danger" type="button" onclick="hardDeleteRO_Grp('ro_assign','searchLoanApplicationGrp()')">Delete</button>
         </p>
 </div>
@@ -36,7 +36,7 @@
 				<th>
                 <div class="animated-checkbox">
               	<label>
-                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Select All</span>
+                
               	</label>
             	</div>
             	</th>
