@@ -691,12 +691,20 @@ class Data_model extends CI_Model{
 	function GetLoanMasterRecord()
 	{
 	    //data is retrive from this query
-	    $sql=  "SELECT pc.Name as Loan_pc_type, ten.Name as Tenure_type, ledInc.Ledger as Income_ledger, ledExp.Ledger as Expense_ledger, lm.Loan_name, lm.Loan_pc, lm.Tenure_min, lm.Tenure_max, lm.Min_amount, lm.Max_amount, lm.Added_on, lm.ID				
+	    $sql=  "SELECT pc.Name as Loan_pc_type, 
+	    		ten.Name as Tenure_type, 
+	    		lm.Loan_name, lm.Loan_pc, 
+	    		lm.Tenure_min, lm.Tenure_max, 
+	    		lm.Min_amount, lm.Max_amount, 
+	    		lm.Added_on, lm.ID,
+	    		lm.Fine_type,
+	    		lm.Fine_value,
+	    		lm.Buffer_days,
+	    		lm.Loan_calculation_type
+	    		
     			from loan_master lm					
     			LEFT JOIN pc_type_master pc ON pc.ID  = lm.Loan_pc_type
                 LEFT JOIN tenure_type_master ten ON ten.ID  = lm.Tenure_type
-                LEFT JOIN account_ledger ledInc ON ledInc.ID  = lm.Income_ledger
-                LEFT JOIN account_ledger ledExp ON ledExp.ID  = lm.Expense_ledger
                 WHERE lm.isActive = 1";
 	    
 	    $query = $this->db->query($sql);
@@ -705,7 +713,7 @@ class Data_model extends CI_Model{
 	
 	
 /*LOAN MASTER DATA ADD */
-	function addLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
+	function addLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type)
 	{	
 
 		
@@ -718,8 +726,10 @@ class Data_model extends CI_Model{
 			'Tenure_max'	=>$loanmaster_tenure_max,
 			'Min_amount'	=>$loanmaster_min_amount,
 			'Max_amount'	=>$loanmaster_max_amount,
-			'Income_ledger'	=>$loanmaster_income_ledger,
-			'Expense_ledger'=>$loanmaster_expense_ledger,		  
+         	'Fine_type'	=>$Fine_type,
+			'Fine_value'=>$Fine_value,
+        	'Buffer_days'=>$buffer_day,
+        	'Loan_calculation_type'=>$Loan_type,	  
 			 'Branch_id'=>  1,
 			  'Added_by'=>  1,
 			  'Added_on'=>  1,
@@ -744,7 +754,7 @@ class Data_model extends CI_Model{
 	}
 	
 	/*LOANMASTER DATA UPDATE */
-	function updateLoanmasterModel($loanmaster_id, $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger)
+	function updateLoanmasterModel($loanmaster_id, $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type)
 	{ 
 	
 	
@@ -757,8 +767,10 @@ class Data_model extends CI_Model{
 			'Tenure_max'	=>$loanmaster_tenure_max,
 			'Min_amount'	=>$loanmaster_min_amount,
 			'Max_amount'	=>$loanmaster_max_amount,
-			'Income_ledger'	=>$loanmaster_income_ledger,
-			'Expense_ledger'=>$loanmaster_expense_ledger,
+			'Fine_type'	=>$Fine_type,
+			'Fine_value'=>$Fine_value,
+        	'Buffer_days'=>$buffer_day,
+        	'Loan_calculation_type'=>$Loan_type,
 		  	 'Branch_id'=>  1,
 			  'Modified_by'=>  1,
 			 'IsActive'=>  1,

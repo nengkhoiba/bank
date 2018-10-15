@@ -825,15 +825,11 @@ class Data_controller extends CI_Controller {
 			 if (empty($this->input->post('loanmaster_max_amount',true))) {
 	            $errorMSG = " Loan max amount is required";
 	        }
-			 if (empty($this->input->post('loanmaster_income_ledger',true))) {
-	            $errorMSG = " Income ledger is required";
+			 if (empty($this->input->post('buffer_day',true))) {
+	            $errorMSG = " Buffer days is required";
 	        }
 			
-			 if (empty($this->input->post('loanmaster_expense_ledger',true))) {
-	            $errorMSG = " Expense ledger is required";
-	        }
-						
-			        
+			     
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
@@ -846,12 +842,14 @@ class Data_controller extends CI_Controller {
 				$loanmaster_tenure_max = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_max',true) ) );
 				$loanmaster_min_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_min_amount',true) ) );
 				$loanmaster_max_amount = $this->db->escape_str ( trim ( $this->input->post('loanmaster_max_amount',true) ) );
-				$loanmaster_income_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_income_ledger',true) ) );
-				$loanmaster_expense_ledger = $this->db->escape_str ( trim ( $this->input->post('loanmaster_expense_ledger',true) ) );
+				$Fine_type = $this->db->escape_str ( trim ( $this->input->post('Fine_type',true) ) );
+				$Fine_value = $this->db->escape_str ( trim ( $this->input->post('Fine_value',true) ) );
+				$buffer_day = $this->db->escape_str ( trim ( $this->input->post('buffer_day',true) ) );
+				$Loan_type = $this->db->escape_str ( trim ( $this->input->post('Loan_type',true) ) );
 	            
 				if($postType ==0)
 				{
-    				$result = $this->database->addLoanmasterModel( $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+    				$result = $this->database->addLoanmasterModel( $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type);
     				if($result['code'] == 1){
     				    $status = array("success" => true,"msg" => "Save sucessfull!");
     				}else{
@@ -860,7 +858,7 @@ class Data_controller extends CI_Controller {
 				}
 				else 
 				{
-				    $result = $this->database->updateLoanmasterModel($postType,$loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$loanmaster_income_ledger,$loanmaster_expense_ledger);
+				    $result = $this->database->updateLoanmasterModel($postType,$loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type);
     	            if($result['code'] == 1)
     	            {
     	                $status = array("success" => true,"msg" => "Update sucessfull!");
