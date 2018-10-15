@@ -20,8 +20,8 @@
 <div class="tile-title-w-btn">
 <h3 class="title">List of assigned RO</h3>
 <p class="bs-component">	
-  <a onclick="addnewRO_Grp()" style="color:#fff" class="btn btn-sm btn-success">New</a>
-  <button class="btn btn-sm btn-danger" type="button" onclick="hardDeleteItem('ro_assign','searchLoanApplicationGrp()')">Delete</button>
+  <a onclick="assignROGrp()" style="color:#fff" class="btn btn-sm btn-success">Assign New RO</a>
+  <button class="btn btn-sm btn-danger" type="button" onclick="hardDeleteRO_Grp('ro_assign','searchLoanApplicationGrp()')">Delete</button>
         </p>
 </div>
 
@@ -53,7 +53,7 @@
 				<td>
 				<div  class="animated-checkbox" style="display: inline-block;">
               	<label>
-                <input class="checkboxRO" type="checkbox" value="<?php echo $row['ID'];?>"><span class="label-text"></span>
+                <input class="checkboxRO_Grp" type="checkbox" value="<?php echo $row['ID'];?>"><span class="label-text"></span>
               	</label>
             	</div>
             	</td>

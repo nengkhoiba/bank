@@ -308,21 +308,85 @@ function activateItem(tableName,loadFunctionName){
    }); 
  }
 
-function hardDeleteItem(tableName,loadFunctionName){
+function hardDeleteRO_Grp(tableName,loadFunctionName){
 	var callFunc=new Function(loadFunctionName)
     // Checking all category data are deleted
- 	if (!$( ".checkboxRO" ).length) {
+ 	if (!$( ".checkboxRO_Grp" ).length) {
  		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
  		return;
  	}
  	
  	var selected_value = []; // initialize empty array 
- 	if ($('.checkboxRO:checked').length == 0 )
+ 	if ($('.checkboxRO_Grp:checked').length == 0 )
      {
  		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
  		return;
 	    } else {
-	    	$(".checkboxRO:checked").each(function(){
+	    	$(".checkboxRO_Grp:checked").each(function(){
+	              selected_value.push($(this).val());
+	          });
+	    }	
+ 	var url = window.location.origin+'/bank/index.php/data_controller/HardRemove';
+ 	var dataString = JSON.stringify(selected_value);
+ swal({
+   title: "Are you sure?",
+   //text: "You will not be able to recover this imaginary file!",
+   //type: "warning",
+   showCancelButton: true,
+   confirmButtonText: "Yes, Delete it!",
+   cancelButtonText: "No, cancel plz!",
+   closeOnConfirm: true,
+   closeOnCancel: true
+   }, function(isConfirm) {
+   if (isConfirm) {
+   StartInsideLoading();  
+     	$.ajax({
+   		  type: "post",
+   		  url: url,
+   		  cache: false,    
+   		  data: {dataArr:dataString,table:tableName},
+   		  dataType: 'json',
+   		  success: function(response){   
+   		  try{  	
+   			   if (response.success)
+   	           { 
+   				   SetSucessMessageBox('Success', response.msg);
+   				   callFunc();
+   	           } else
+   	           { 
+   	               SetWarningMessageBox('warning', response.msg);
+   	               //StopInsideLoading();
+   	           }
+   		  StopInsideLoading();
+   		  }catch(e) {  
+   			  SetWarningMessageBox('warning', e);
+   			  StopInsideLoading();
+   		  }  
+   		  },
+   		  error: function(){      
+   			  SetWarningMessageBox('warning', 'Error while request..');
+   			  StopInsideLoading();
+   		  }
+   		 });
+   }
+   }); 
+ }
+
+function hardDeleteRO_Indi(tableName,loadFunctionName){
+	var callFunc=new Function(loadFunctionName)
+    // Checking all category data are deleted
+ 	if (!$( ".checkboxRO_Indi" ).length) {
+ 		SetWarningMessageBox('warning', 'No Item left  to Delete !!!'); 
+ 		return;
+ 	}
+ 	
+ 	var selected_value = []; // initialize empty array 
+ 	if ($('.checkboxRO_Indi:checked').length == 0 )
+     {
+ 		SetWarningMessageBox('warning', 'Please select Item to Delete !!!');
+ 		return;
+	    } else {
+	    	$(".checkboxRO_Indi:checked").each(function(){
 	              selected_value.push($(this).val());
 	          });
 	    }	
