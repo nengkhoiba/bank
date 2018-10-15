@@ -13,7 +13,7 @@
                     <b>District :</b><span id="customer_district"> <?php echo $result[0]['district'];?>  </span><br>
                    <b> Contact No. : </b><span id="customer_contact"><?php echo $result[0]['contact_no'];?> </span><br>
                    <b> Work/Business/Profession : </b><span id="customer_work"> <?php echo $result[0]['work'];?> </span><br><br>
-                   <b> Assigned RO : </b><span id="assign_ro"><?php foreach ($assignRO as $row){echo $row['Name'].", ";}?></span></address>
+                   </address>
                 </div>
                 <div class="col-4">
                 <b>Bank Information </b><br><br>
@@ -34,6 +34,38 @@
                   <b> Account Status : </b><span id="customer_account_status"> <?php echo $result[0]['accStatus'];?> </span><br>
                   <b> Loan Account Number : </b><span id="customer_loan_acc_no"><?php echo $result[0]['Loan_acc'];?></span> 
                 </div>
+                <br>
+                <div class="col-12">
+                  <br>
+<div class="tile-title-w-btn">
+<h3 class="title">List of assigned RO</h3>
+</div>
+<table id="roTableIndi" class="table table-hover dataTable no-footer">
+        <thead>
+            <tr>
+                <th>Sl. No.</th>
+                <th>RO Name</th>
+				<th>Address</th>
+				<th>Assigned on</th>
+				<th>Assigned by</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $count = 1; foreach ($assignRO as $row) { ?>
+            <tr>
+                <td><?php echo $count;?></td>
+                <td><?php echo $row['Name'];?></td>
+				<td><?php echo $row['address'];?></td>
+				<td><?php echo $row['Added_on'];?></td>
+				<td><?php echo $row['Added_by'];?></td>
+			</tr>
+        <?php $count ++; } ?>
+        </tbody>
+       
+    </table>
+</div>
+<br>
+                
                 </div>
                 <div class="form-group col-md-12 align-self-end" style="padding-top: 0px">
                   <button onclick="assignROIndi()" class="btn btn-xm btn-danger" type="button"><i class="fa fa-fw fa-lg fa-print"></i>Assign</button>

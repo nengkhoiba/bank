@@ -78,6 +78,10 @@ $db['default'] = array(
 	// 'hostname' => '103.83.12.10',
 	// 'username' => 'root',
 	// 'password' => 'imphal795001',
+
+// 	'hostname' => '103.83.12.10',
+// 	'username' => 'root',
+// 	'password' => 'imphal795001',
 	
 	'hostname' => 'localhost',
 	'username' => 'root',
