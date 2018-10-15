@@ -358,6 +358,11 @@
      });
     
     }
+
+    function addnewRO_Grp()
+    {
+            $('#roGrp').focus();
+    }
     
 
 </script>
