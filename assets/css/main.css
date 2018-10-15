@@ -15539,3 +15539,33 @@ th.table_head {
 {
 	margin-bottom: 12px; font-size: .7rem
 }
+
+
+/*----- Componant: Footer Bar ----- */
+.app-footer {
+  position: fixed;
+  left: 0;
+  height: 35px;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 3px solid #009688;
+  z-index: 1030;
+  padding-right: 15px;
+}
+
+@media (min-width: 768px) {
+  .app-footer {
+    padding-right: 30px;
+  }
+}
+
+@media print {
+  .app-footer {
+    display: none;
+  }
+}

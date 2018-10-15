@@ -1,3 +1,10 @@
+<footer class="app-footer">
+<ul class="app-nav">
+        <li class="app-search">
+          <span style="color: #8a8989; font-size: 12px"><strong style="color: #26a69a">Developed by</strong> Test IT Solution Private Limited</span>
+        </li>
+</ul>
+</footer>
   <!-- Essential javascripts for application to work-->
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/popper.min.js"></script>
     <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>

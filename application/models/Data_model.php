@@ -1472,6 +1472,8 @@ class Data_model extends CI_Model{
 		    $this->addLog("Add new Loan application", "Loan Acount number ".$loan_account_no." is added.");
 			return array('code' => 1);
 		}
+		
+	}
 
 	
 	//loan recovery statement
