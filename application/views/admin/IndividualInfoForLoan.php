@@ -35,12 +35,11 @@
                 </div>
                 </div>
 							
-							
-							
+							<input type="text" name="account_number" value="<?php echo $result[0]['accNo'];?>"/>
 							<div class="row" style="padding:15px;">
 								<div class="col-md-4">
 									<label class="control-label">Select Loan type</label>
-									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type" name="LoanType">
+									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type_Id" name="LoanTypeId">
 									 <!-- Loan Type will add here -->
 									</select>
 								</div>
@@ -52,7 +51,6 @@
 								</div>
 							</div>
 							
-			  
 			  
 			  </div>
 			  

@@ -127,11 +127,13 @@
 									&nbsp;&nbsp;&nbsp;
 									<a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasLoanApplicationIndividualForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
+								<?php echo form_close() ?>
+								
+								 <?php echo form_open_multipart('',array('id'=>'Loan_Details_uploadForm','class'=>'row'))?>
 								<div class="form-group col-md-12 align-self-end" id="LoadIndividualApplicationForm">
 								</div>
-								
-								
-							  <?php echo form_close() ?>
+								<?php echo form_close() ?>
+							  
 						  
 						</div>
 					</div>
@@ -173,7 +175,7 @@
           if (response.success)
             {
         	$('#LoadIndividualApplicationForm').html(response.html); 
-			$('#individual_Loan_Type').html(response.loantype_html); 
+			$('#individual_Loan_Type_Id').html(response.loantype_html); 
         	$('#LoadIndividualApplicationForm').show();             
             } else
              { 

@@ -79,6 +79,9 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => 'imphal795001',
 
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
 	'database' => 'bank_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

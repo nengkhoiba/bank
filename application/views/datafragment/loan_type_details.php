@@ -28,18 +28,36 @@
         </tbody>
        
     </table>
+	<div class="">
+	
+	</div>
 	
 	<div class="row" style="padding:15px;">
-								<div class="form-group col-md-4 align-self-end">
+								<div class="form-group col-md-3 align-self-end">
 									<label class="control-label">Loan Amount</label>
 								  	<div class="input-group" style="margin-top:10px;">
-										<div class="input-group-prepend"><span class="input-group-text">$</span></div>
+										<div class="input-group-prepend"><span class="input-group-text fa fa-inr"></span></div>
 										<input class="form-control number" id="exampleInputAmount" type="text" placeholder="Loan Amount">
 										<div class="input-group-append"><span class="input-group-text">.00</span></div>
 									</div>
 									<label class="control-label custome_label"><?php echo "( Rs.".$result[0]['Min_amount']." to ".$result[0]['Max_amount']." ) ";?> </label>
 								</div>
-								<div class="form-group col-md-4 align-self-end">
+								
+							<div class="col-md-3">
+									<label class="control-label">Select Loan type</label>
+									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type_Id" name="LoanTypeId">	<option class="form-control" value="">- Select -</option>
+  	<option class="form-control" value="1">first</option>
+  	<option class="form-control" value="2">sadsad</option>
+  	<option class="form-control" value="3">sadsad</option>
+  	<option class="form-control" value="4">Personal loan</option>
+  	<option class="form-control" value="5">dasdsad</option>
+  	<option class="form-control" value="6">Car Loan</option>
+ 
+  
+</select>
+								</div>
+								
+								<div class="form-group col-md-2 align-self-end">
 								  <label class="control-label">Tenure length</label>
 								  <input  name="shg_member_count" style="margin-top: 10px;"
 									class="form-control number"  type="text" id="shg_member_count"
@@ -68,15 +86,13 @@
 						<div class="form-inline">
 							<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Asset Name</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
-										placeholder="Asset Name"></input>
+									  <input  name="asset_name[]" style="margin-top: 10px;"
+										class="form-control name"  type="text" placeholder="Asset Name"></input>
 									</div>
 									<div class="form-group col-md-6 align-self-end">
 									  <label class="control-label">Particulars of the properties</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
-										placeholder="Particular of the properties"></input>
+									  <input  name="particular_properties[]" style="margin-top: 10px;"
+										class="form-control text_number"  type="text" placeholder="Particular of the properties"></input>
 									</div>
 									<div class="form-group col-md-2 align-self-end">
 									  <label class="control-label">Approx. values (in Rs.)</label>
@@ -110,12 +126,18 @@
 										placeholder="Guranter Name"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">Guranter Aadhaar No.</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Aadhaar No."></input>
+									</div>
+									<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Guranter Photo</label>
 									  <input  name="shg_member_count" style="margin-top: 10px;"
 										class="form-control number"  type="file" id="shg_member_count"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">ID Proff</label>
+									  <label class="control-label">Guranter ID Proff</label>
 									  <input  name="shg_member_count" style="margin-top: 10px;"
 										class="form-control number"  type="file" id="shg_member_count"></input>
 									</div>
