@@ -1443,6 +1443,7 @@ class Data_model extends CI_Model{
 
 	}
 
+
 	
 	/* EMPLOYEE DATA ADD  -- Written by William */
 	function addLoanAppDetails($loan_account_no,$account_number,$loan_amount,$loanmaster_tenure_type,$interval_value,$tenure_length,$loan_purpose)
@@ -1471,6 +1472,208 @@ class Data_model extends CI_Model{
 		    $this->addLog("Add new Loan application", "Loan Acount number ".$loan_account_no." is added.");
 			return array('code' => 1);
 		}
+
+	
+	//loan recovery statement
+	function GenerateLoan_statement($groupACC,$LAN,$principleAmount,$LoanPc,$loanPcType,$loanPayMentDate,$bufferDate,$FineType,$FineValue,$loanCalculationType,$loanTenure,$loanTenureType,$loanInterval,$loanIntervalType){
+		$yearpc=0;
+		switch ($loanPcType){
+			case 1://PA
+				$yearpc = $LoanPc/100;
+				break;
+			case 2://PM
+				$yearpc = ($LoanPc/100)*12;
+				break;
+		}
+		
+		switch($loanIntervalType){
+			case 1://days
+				$interval="P".$loanInterval."D";
+				$ratepc=($yearpc/365)*$loanInterval;
+				switch($loanTenureType){
+					case 1://days
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 2: //week
+						$loanTenure=$loanTenure*7;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 3: //month
+						$loanTenure=$loanTenure*30;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 4: //year
+						$loanTenure=$loanTenure*365;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+				}
+				break;
+				
+			case 2: //week
+				$interval="P".$loanInterval."W";
+				$ratepc=($yearpc/52.1429)*$loanInterval;
+				switch($loanTenureType){
+					case 1://days
+						$time=ceil($loanTenure*7/$loanInterval);
+						break;
+					case 2: //week
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 3: //month
+						$loanTenure=$loanTenure*4.345;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 4: //year
+						$loanTenure=$loanTenure*52.1429;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+				}
+				break;
+			case 3: //month
+				$interval="P".$loanInterval."M";
+				$ratepc=($yearpc/12)*$loanInterval;
+				switch($loanTenureType){
+					case 1://days
+						$time=ceil($loanTenure*30/$loanInterval);
+						break;
+					case 2: //week
+						$loanTenure=$loanTenure*4.345;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 3: //month
+						
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 4: //year
+						$loanTenure=$loanTenure*12;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+				}
+				break;
+			case 4: //year
+				$interval="P".$loanInterval."Y";
+				$ratepc=($yearpc)*$loanInterval;
+				switch($loanTenureType){
+					case 1://days
+						$time=ceil($loanTenure*365/$loanInterval);
+						break;
+					case 2: //week
+						$loanTenure=$loanTenure*52.1429;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 3: //month
+						$loanTenure=$loanTenure*12;
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+					case 4: //year
+						$time=ceil($loanTenure/$loanInterval);
+						break;
+				}
+				break;
+		}
+		
+		if($loanCalculationType==1){
+			$result=$this->getFlatEmi($principleAmount, $ratepc, $time, $loanPayMentDate, $interval);
+		}else{
+			$result=$this->getReducingEmi($principleAmount, $ratepc, $time, $loanPayMentDate, $interval);
+		}
+		
+		return $result;
+	}
+	public function getNextInterval($date,$intValue){
+		$date = new DateTime($date);
+		$interval = new DateInterval($intValue);
+		$date->add($interval);
+		$nextInterval= $date->format('d-m-Y');
+		return $nextInterval;
+	}
+	
+	public function getReducingEmi($principalAmount,$rate,$time,$date,$intValue){
+		$x= pow(1+$rate,$time);
+		$monthly = ($principalAmount*$x*$rate)/($x-1);
+		$monthly = round($monthly);
+		$mEmi=$monthly;
+		$k= $time;
+		$t=$principalAmount;
+		$tl;
+		$totalint=0;
+		$tp=0;
+		$sl=1;
+		$emi= array();
+		for($time;$time>0;$time--){
+			$arr= array();
+			$r = $t*$rate;
+			$p = round($monthly-$r);
+			$e= round($t-$p);
+			if($time==2){
+				$tl= $e;
+			}
+			if($time==1){
+				$p= $tl;
+				$e= round($t-$p);
+				$monthly= round($p+$r);
+			}
+			$totalint = $totalint + $r;
+			$tp = $tp+$monthly;
+			$arr['sl']=$sl;
+			$arr['date']=$date;
+			$arr['interest']=number_format(round($r));
+			$arr['opening']=number_format($t);
+			$arr['principal']=number_format($p);
+			$arr['emi']=number_format($monthly);
+			$arr['closing']=number_format(round($e));
+			$emi[]=$arr;
+			$date=$this->getNextInterval($date,$intValue);
+			$t=$e;
+			$sl++;
+		}
+		$output['principle']=number_format(round($principalAmount));
+		$output['int']=number_format(round($rate));
+		$output['totalInterest']=number_format(round($totalint));
+		$output['totalWithprincipal']=number_format(round($tp));
+		$output['emi']=number_format(round($mEmi));
+		$output['details']=$emi;
+		return $output;
+	}
+	
+	public function getFlatEmi($principalAmount,$rate,$time,$date,$intValue){
+		$interest=$principalAmount*$rate;
+		$principalPaid=$principalAmount/$time;
+	
+		$monthly=$interest+$principalPaid;
+	
+		$mEmi=$monthly;
+		$k= $time;
+		$t=$principalAmount;
+		$tl;
+		$totalint=0;
+		$tp=0;
+		$sl=1;
+		$emi= array();
+		for($time;$time>0;$time--){
+			$arr= array();
+			$e=$t-$principalPaid;
+			$totalint = $totalint + $interest;
+			$tp = $tp+$monthly;
+			$arr['sl']=$sl;
+			$arr['date']=$date;
+			$arr['interest']=number_format(round($interest));
+			$arr['opening']=number_format($t);
+			$arr['principal']=number_format($principalPaid);
+			$arr['emi']=number_format($monthly);
+			$arr['closing']=number_format(round($e));
+			$emi[]=$arr;
+			$date=$this->getNextInterval($date,$intValue);
+			$t=$e;
+			$sl++;
+		}
+		$output['principle']=number_format(round($principalAmount));
+		$output['int']=number_format(round($rate));
+		$output['totalInterest']=number_format(round($totalint));
+		$output['totalWithprincipal']=number_format(round($tp));
+		$output['emi']=number_format(round($mEmi));
+		$output['details']=$emi;
+		return $output;
 	}
 }
     
