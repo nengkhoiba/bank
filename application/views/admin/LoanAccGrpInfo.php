@@ -19,7 +19,12 @@
 <br>
 <div class="tile-title-w-btn">
 <h3 class="title">List of assigned RO</h3>
+<p class="bs-component">	
+  <a onclick="assignROGrp()" style="color:#fff" class="btn btn-sm btn-success">Assign New RO</a>
+  <button class="btn btn-sm btn-danger" type="button" onclick="hardDeleteRO_Grp('ro_assign','searchLoanApplicationGrp()')">Delete</button>
+        </p>
 </div>
+
 <table id="roTableGrp" class="table table-hover dataTable no-footer">
         <thead>
             <tr>
@@ -28,6 +33,13 @@
 				<th>Address</th>
 				<th>Assigned on</th>
 				<th>Assigned by</th>
+				<th>
+                <div class="animated-checkbox">
+              	<label>
+                <input onclick="checkAllCheckbox($(this));" type="checkbox" ><span class="label-text">Select All</span>
+              	</label>
+            	</div>
+            	</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +50,13 @@
 				<td><?php echo $row['address'];?></td>
 				<td><?php echo $row['Added_on'];?></td>
 				<td><?php echo $row['Added_by'];?></td>
+				<td>
+				<div  class="animated-checkbox" style="display: inline-block;">
+              	<label>
+                <input class="checkboxRO_Grp" type="checkbox" value="<?php echo $row['ID'];?>"><span class="label-text"></span>
+              	</label>
+            	</div>
+            	</td>
 			</tr>
         <?php $count ++; } ?>
         </tbody>

@@ -67,6 +67,24 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	public function HardRemove()
+	{
+	    
+	    try {
+	        $IdsArray = json_decode($this->input->post('dataArr',true), TRUE);
+	        $tableName = $this->input->post('table',true);
+	        $this->database->HardRemoveRecordById($IdsArray,$tableName);
+	        $output = array('success' =>true, 'msg'=> "Deleted sucessfull");
+	        
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 	public function deactivate()
 	{
 	    

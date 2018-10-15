@@ -96,7 +96,15 @@ class Data_model extends CI_Model{
 			$this->db->where('ID', $id); //set column_name and value in which row need to update
 			$this->db->update($tblName); //Set your table name
 		}
-	}	
+	}
+	function HardRemoveRecordById($ArrIds,$tblName)
+	{
+	    foreach ($ArrIds as $id)
+	    {
+	        $this->db->where('ID', $id); //set column_name and value in which row need to update
+	        $this->db->delete($tblName); //Set your table name
+	    }
+	}
 	function UndoRemoveRecordById($ArrIds,$tblName)
 	{
 	    foreach ($ArrIds as $id)
@@ -1306,7 +1314,7 @@ class Data_model extends CI_Model{
 	
 	function GetAssignROByGrpLoanAccNo($loan_acc_no_Grp)
 	{
-	   $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by
+	   $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by, ro_assign.ID as ID
                 FROM ro_assign
                 LEFT JOIN emp on emp.ID=ro_assign.emp_id
                 LEFT JOIN emp added on added.ID=ro_assign.Added_by
@@ -1361,7 +1369,7 @@ class Data_model extends CI_Model{
 	
 	function GetAssignROByLoanAccNo($loan_acc_no_Indi)
 	{	    
-	    $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by
+	    $sql =  "SELECT emp.Name, emp.address, ro_assign.Added_on, ro_assign.Added_by, added.Name as Added_by, ro_assign.ID as ID
                 FROM ro_assign
                 LEFT JOIN emp on emp.ID=ro_assign.emp_id
                 LEFT JOIN emp added on added.ID=ro_assign.Added_by
