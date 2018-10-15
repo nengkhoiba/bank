@@ -2561,4 +2561,65 @@ class Data_controller extends CI_Controller {
 		$output['details']=$emi;
 		return $output;
 	}
+
+
+	
+	/*UPDATE CUSTOMER DOCUMENT -- Written by Riyaj*/
+	public function Loan_Details_upload()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	         
+	         if (empty($this->input->post('account_number',true))) {
+	            $errorMSG = " Account no. is mandatory";
+	        }
+			if (empty($this->input->post('loan_amount',true))) {
+	            $errorMSG = " Loan amount is mandatory";
+	        }
+	          if (empty($this->input->post('loanmaster_tenure_type',true))) {
+	            $errorMSG = " Please select Loan Tenure interval type ";
+	        }
+	          if (empty($this->input->post('interval_value',true))) {
+	            $errorMSG = " Loan Tenure Interval value is mendatory ";
+	        }
+	          if (empty($this->input->post('tenure_length',true))) {
+	            $errorMSG = " Loan Tenure length is mandatory";
+	        }
+	          if (empty($this->input->post('loan_purpose',true))) {
+	            $errorMSG = " Loan purpose is mandatory";
+	        }
+
+
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+				
+				$loan_account_no = $this->db->escape_str ( trim ( $this->input->post('loan_account_no',true) ) );
+	            $account_number = $this->db->escape_str ( trim ( $this->input->post('account_number',true) ) );
+	            $loan_amount = $this->db->escape_str ( trim ( $this->input->post('loan_amount',true) ) );
+	            $loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+	            $interval_value = $this->db->escape_str ( trim ( $this->input->post('interval_value',true) ) );
+	            $tenure_length = $this->db->escape_str ( trim ( $this->input->post('tenure_length',true) ) );
+	            $loan_purpose = $this->db->escape_str ( trim ( $this->input->post('loan_purpose',true) ) );
+
+	            //$file = $this->db->escape_str ( trim ( $_POST ['fileUpload'] ) );
+	            $result = $this->database->addLoanAppDetails($loan_account_no, $account_number,$loan_amount,$loanmaster_tenure_type,$interval_value,$tenure_length,$loan_purpose);
+
+
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Add sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Add !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
 }

@@ -211,7 +211,8 @@
         try{  
           if (response.success)
             {
-        	$('#loan_details').html(response.html);             
+        	$('#loan_details').html(response.html); 
+			loadDropDown('','tenure_type_master','#loanmaster_tenure_type');            
             } else
              { 
                  SetWarningMessageBox('warning', response.msg);                
@@ -231,7 +232,72 @@
     }
 	
 	
-   
+
+   function Save_Loan_Application()
+    { 
+    	if ($('#loan_amount').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan amount is mandatory !');
+            $('#loan_amount').focus();
+            return;
+        }
+		if ($('#loanmaster_tenure_type').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Please select Loan Interval type !');
+            $('#loanmaster_tenure_type').focus();
+            return;
+        }
+		if ($('#interval_value').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan Interval value is mendatory !');
+            $('#interval_value').focus();
+            return;
+        }
+		if ($('#tenure_length').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Select Tenure length!');
+            $('#tenure_length').focus();
+            return;
+        }
+		if ($('#loan_purpose').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan purpose is mandatory !');
+            $('#loan_purpose').focus();
+            return;
+        }
+
+		
+    	
+    	var formData = $('form#Loan_Details_uploadForm').serializeObject();
+        var dataString = JSON.stringify(formData);
+        
+      var url = '<?php echo base_url();?>index.php/data_controller/Loan_Details_upload';
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false, 
+        data: dataString,  
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+            {
+        	// $('#LoadIndividualApplicationForm').html(response.html); 
+			// $('#individual_Loan_Type_Id').html(response.loantype_html); 
+        	// $('#LoadIndividualApplicationForm').show();             
+            } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
     
    
   

@@ -1443,5 +1443,34 @@ class Data_model extends CI_Model{
 
 	}
 
+	
+	/* EMPLOYEE DATA ADD  -- Written by William */
+	function addLoanAppDetails($loan_account_no,$account_number,$loan_amount,$loanmaster_tenure_type,$interval_value,$tenure_length,$loan_purpose)
+	{
+	         $data = array(
+	             'loan_acc_no'	=>  $loan_account_no ,
+	             'group_id'=>  $account_number,
+	             'Loan_amount'=>  $loan_amount,
+	             'Fine_type'=>  $loanmaster_tenure_type,
+	             'Fine_value'=>  $interval_value,
+	             'loan_tenure_length'=>  $tenure_length,
+	             'Loan_purpose'=>  $loan_purpose,
+	         );
+	         
+	    $this->db->insert('loan_app_details_relation', $data);
+	    $lastID=$this->db->insert_id();	    
+	   	
+		if($this->db->trans_status() === FALSE)
+		{
+		    $this->db->trans_rollback();
+			return array('code' => 0);			
+		}
+		else
+		{
+		    $this->db->trans_commit();
+		    $this->addLog("Add new Loan application", "Loan Acount number ".$loan_account_no." is added.");
+			return array('code' => 1);
+		}
+	}
 }
     

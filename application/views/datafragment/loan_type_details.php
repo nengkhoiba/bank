@@ -33,34 +33,32 @@
 	</div>
 	
 	<div class="row" style="padding:15px;">
-								<div class="form-group col-md-3 align-self-end">
+	<input type="text" name="loan_account_no" id="loan_account_no" value="123456789">
+								<div class="form-group col-md-2 align-self-end">
 									<label class="control-label">Loan Amount</label>
 								  	<div class="input-group" style="margin-top:10px;">
-										<div class="input-group-prepend"><span class="input-group-text fa fa-inr"></span></div>
-										<input class="form-control number" id="exampleInputAmount" type="text" placeholder="Loan Amount">
-										<div class="input-group-append"><span class="input-group-text">.00</span></div>
+										<input class="form-control number" id="loan_amount" name="loan_amount" type="text" placeholder="Loan Amount">
 									</div>
 									<label class="control-label custome_label"><?php echo "( Rs.".$result[0]['Min_amount']." to ".$result[0]['Max_amount']." ) ";?> </label>
 								</div>
 								
-							<div class="col-md-3">
-									<label class="control-label">Select Loan type</label>
-									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type_Id" name="LoanTypeId">	<option class="form-control" value="">- Select -</option>
-  	<option class="form-control" value="1">first</option>
-  	<option class="form-control" value="2">sadsad</option>
-  	<option class="form-control" value="3">sadsad</option>
-  	<option class="form-control" value="4">Personal loan</option>
-  	<option class="form-control" value="5">dasdsad</option>
-  	<option class="form-control" value="6">Car Loan</option>
- 
-  
-</select>
+							<div class="form-group col-md-2 align-self-end">
+									<label class="control-label">Tenure Interval</label>
+									 <select id="loanmaster_tenure_type" name="loanmaster_tenure_type" style="margin-top:10px;" class="form-control" >
+										<!-- List of loan tenure type -->
+									  </select>
+								</div>
+								<div class="form-group col-md-2 align-self-end">
+									<label class="control-label">Interval value</label>
+								  	<div class="input-group" style="margin-top:10px;">
+										<input class="form-control number" id="interval_value" name="interval_value" type="text" placeholder="Interval value">
+									</div>
 								</div>
 								
 								<div class="form-group col-md-2 align-self-end">
 								  <label class="control-label">Tenure length</label>
-								  <input  name="shg_member_count" style="margin-top: 10px;"
-									class="form-control number"  type="text" id="shg_member_count"
+								  <input  name="tenure_length" style="margin-top: 10px;"
+									class="form-control number"  type="text" id="tenure_length"
 									placeholder="Tenure length"></input>
 									<label class="control-label custome_label"><?php echo " ( ".$result[0]['Tenure_min']." to ".$result[0]['Tenure_max']." ) ".$result[0]['tenure_type_name'];?> </label>
 								</div>
@@ -68,8 +66,8 @@
 								
 								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Loan Purpose</label>
-									<textarea  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
+									<textarea  name="loan_purpose" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="loan_purpose"
 										placeholder="Loan Purpose"/>
 									</input>
 								</div>
@@ -86,18 +84,18 @@
 						<div class="form-inline">
 							<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Asset Name</label>
-									  <input  name="asset_name[]" style="margin-top: 10px;"
+									  <input  name="asset_name[]" id="asset_name" style="margin-top: 10px;"
 										class="form-control name"  type="text" placeholder="Asset Name"></input>
 									</div>
 									<div class="form-group col-md-6 align-self-end">
 									  <label class="control-label">Particulars of the properties</label>
-									  <input  name="particular_properties[]" style="margin-top: 10px;"
+									  <input  name="particular_properties[]" id="particular_properties" style="margin-top: 10px;"
 										class="form-control text_number"  type="text" placeholder="Particular of the properties"></input>
 									</div>
 									<div class="form-group col-md-2 align-self-end">
 									  <label class="control-label">Approx. values (in Rs.)</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
+									  <input  name="approx_value[]" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="approx_value"
 										placeholder="Tenure length"></input>
 									</div>
 									
@@ -116,30 +114,30 @@
 																	
 									<div class="col-md-12">
 									<br><br>
-										<h5>Guranter</h5>
+										<h5>Guarantor</h5>
 										<hr>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guranter Name</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
+									  <label class="control-label">Guarantor Name</label>
+									  <input  name="guarantor_name" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="guarantor_name"
 										placeholder="Guranter Name"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Guranter Aadhaar No.</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
+									  <input  name="guarantor_aadhaar" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="guarantor_aadhaar"
 										placeholder="Aadhaar No."></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Guranter Photo</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="file" id="shg_member_count"></input>
+									  <input  name="guarantor_photo" style="margin-top: 10px;"
+										class="form-control number"  type="file" id="guarantor_photo"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guranter ID Proff</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="file" id="shg_member_count"></input>
+									  <label class="control-label">Guranter ID Proof</label>
+									  <input  name="guarantor_id_proof" style="margin-top: 10px;"
+										class="form-control number"  type="file" id="guarantor_id_proof"></input>
 									</div>
 							</div>
 						
@@ -148,7 +146,7 @@
 								<div class="form-group col-md-12 align-self-end">
 								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
 								  &nbsp;&nbsp;&nbsp;
-								   <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+								   <button onclick="Save_Loan_Application()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
 								  &nbsp;&nbsp;&nbsp;
 										  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
