@@ -78,10 +78,11 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => 'mysql',
+
 	
-// 	'hostname' => 'localhost',
-// 	'username' => 'root',
-// 	'password' => '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'bank_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
