@@ -75,13 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => '103.83.12.10',
-	// 'username' => 'root',
-	// 'password' => 'imphal795001',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'mysql',
 
-// 	'hostname' => '103.83.12.10',
-// 	'username' => 'root',
-// 	'password' => 'imphal795001',
 	
 	'hostname' => 'localhost',
 	'username' => 'root',
@@ -99,6 +96,8 @@ $db['default'] = array(
 	'encrypt' => FALSE,
 	'compress' => FALSE,
 	'stricton' => FALSE,
-	'failover' => array(),
+	'failover' => array('hostname' => 'localhost',
+	'username' => 'root',
+	'password' => 'mysql',),
 	'save_queries' => TRUE
 );
