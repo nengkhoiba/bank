@@ -68,15 +68,13 @@
 						<div class="form-inline">
 							<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Asset Name</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
-										placeholder="Asset Name"></input>
+									  <input  name="asset_name[]" style="margin-top: 10px;"
+										class="form-control name"  type="text" placeholder="Asset Name"></input>
 									</div>
 									<div class="form-group col-md-6 align-self-end">
 									  <label class="control-label">Particulars of the properties</label>
-									  <input  name="shg_member_count" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="shg_member_count"
-										placeholder="Particular of the properties"></input>
+									  <input  name="particular_properties[]" style="margin-top: 10px;"
+										class="form-control text_number"  type="text" placeholder="Particular of the properties"></input>
 									</div>
 									<div class="form-group col-md-2 align-self-end">
 									  <label class="control-label">Approx. values (in Rs.)</label>
@@ -110,12 +108,18 @@
 										placeholder="Guranter Name"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">Guranter Aadhaar No.</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Aadhaar No."></input>
+									</div>
+									<div class="form-group col-md-3 align-self-end">
 									  <label class="control-label">Guranter Photo</label>
 									  <input  name="shg_member_count" style="margin-top: 10px;"
 										class="form-control number"  type="file" id="shg_member_count"></input>
 									</div>
 									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">ID Proff</label>
+									  <label class="control-label">Guranter ID Proff</label>
 									  <input  name="shg_member_count" style="margin-top: 10px;"
 										class="form-control number"  type="file" id="shg_member_count"></input>
 									</div>
