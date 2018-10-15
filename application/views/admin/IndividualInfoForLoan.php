@@ -34,48 +34,57 @@
                   <b> Account Status : </b><span id="customer_account_status"> <?php echo $result[0]['accStatus'];?> </span><br>
                 </div>
                 </div>
-              
-							<div class="row">
+							
+							
+							
+							<div class="row" style="padding:15px;">
 								<div class="col-md-4">
 									<label class="control-label">Select Loan type</label>
 									<select class="form-control" onchange="searchLoanTypeDetails(this.value);" style="margin-top: 10px;" id="individual_Loan_Type" name="LoanType">
 									 <!-- Loan Type will add here -->
 									</select>
 								</div>
-								<div class="col-md-8">
-								<div id="loan_details" class="">
-								 
-								</div>
-								</div>
 							</div>	
-								
-								<div class="form-group col-md-4 align-self-end">
-								  <label class="control-label">Loan Amount</label>
-								  	<div class="input-group" style="margin-top:10px;">
-										<div class="input-group-prepend"><span class="input-group-text">$</span></div>
-										<input class="form-control number" id="exampleInputAmount" type="text" placeholder="Loan Amount">
-										<div class="input-group-append"><span class="input-group-text">.00</span></div>
-									</div>
-									<label class="control-label custome_label">(Rs.100000 to Rs.200000)</label>
+							
+							<div class="col-md-12">
+								<br>
+								<div id="loan_details" class="">								 
 								</div>
-								<div class="form-group col-md-4 align-self-end">
-								  <label class="control-label">Tenure length</label>
-								  <input  name="shg_member_count" style="margin-top: 10px;"
-									class="form-control number"  type="text" id="shg_member_count"
-									placeholder="Tenure length"></input>
-									<label class="control-label custome_label">(30 to 60)</label>
-								</div>
-								<div class="form-group align-self-center">
-								 <label class="control-label custome_label">( Days )</label>
-								</div>
-								
-								<div class="form-group col-md-12 align-self-end">
-								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
-								  &nbsp;&nbsp;&nbsp;
-								   <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
-								  &nbsp;&nbsp;&nbsp;
-										  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-								</div>
+							</div>
+							
 			  
 			  
 			  </div>
+			  
+			  	<script >
+		
+		$( document ).ready(function() {
+		
+		$(function() {
+    // Remove button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+        function(e) {
+            e.preventDefault();
+            $(this).closest('.form-inline').remove();
+        }
+    );
+    // Add button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+        function(e) {
+            e.preventDefault();
+            var container = $(this).closest('[data-role="dynamic-fields"]');
+            new_field_group = container.children().filter('.form-inline:first-child').clone();
+            new_field_group.find('input').each(function(){
+                $(this).val('');
+            });
+            container.append(new_field_group);
+        }
+    );
+});
+		});
+
+		</script>

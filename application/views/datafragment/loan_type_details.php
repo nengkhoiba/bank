@@ -1,5 +1,6 @@
 <?php //echo $result[0]['Loan_name']; echo $result[0]['Loan_pc']; echo $result[0]['pc_type_id']; echo $result[0]['loan_tenure_type_id']; echo $result[0]['Tenure_min']; echo $result[0]['Tenure_max']; echo $result[0]['Min_amount']; echo $result[0]['Max_amount']; echo $result[0]['pc_type_name']; echo $result[0]['tenure_type_name'];
 ?>
+
 <table  class="table table-hover" style="font-size:13px">
         <thead style="background: #009688; color: #ffffff">
             <tr>
@@ -27,3 +28,108 @@
         </tbody>
        
     </table>
+	
+	<div class="row" style="padding:15px;">
+								<div class="form-group col-md-4 align-self-end">
+									<label class="control-label">Loan Amount</label>
+								  	<div class="input-group" style="margin-top:10px;">
+										<div class="input-group-prepend"><span class="input-group-text">$</span></div>
+										<input class="form-control number" id="exampleInputAmount" type="text" placeholder="Loan Amount">
+										<div class="input-group-append"><span class="input-group-text">.00</span></div>
+									</div>
+									<label class="control-label custome_label"><?php echo "( Rs.".$result[0]['Min_amount']." to ".$result[0]['Max_amount']." ) ";?> </label>
+								</div>
+								<div class="form-group col-md-4 align-self-end">
+								  <label class="control-label">Tenure length</label>
+								  <input  name="shg_member_count" style="margin-top: 10px;"
+									class="form-control number"  type="text" id="shg_member_count"
+									placeholder="Tenure length"></input>
+									<label class="control-label custome_label"><?php echo " ( ".$result[0]['Tenure_min']." to ".$result[0]['Tenure_max']." ) ".$result[0]['tenure_type_name'];?> </label>
+								</div>
+								
+								
+								<div class="form-group col-md-4 align-self-end">
+								  <label class="control-label">Loan Purpose</label>
+									<textarea  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Loan Purpose"/>
+									</input>
+								</div>
+								
+								<div class="col-md-12">
+								<br><br>
+									<h5>Assets</h5>
+									<hr>
+								</div>
+									
+									
+									  <div class="">
+					<div data-role="dynamic-fields">
+						<div class="form-inline">
+							<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">Asset Name</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Asset Name"></input>
+									</div>
+									<div class="form-group col-md-6 align-self-end">
+									  <label class="control-label">Particulars of the properties</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Particular of the properties"></input>
+									</div>
+									<div class="form-group col-md-2 align-self-end">
+									  <label class="control-label">Approx. values (in Rs.)</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Tenure length"></input>
+									</div>
+									
+								<div class="form-group col-md-1" style="padding-top: 25px;">
+									<button class="btn btn-danger" data-role="remove">
+										<span class="fa fa-close"></span>
+									</button>
+									<button class="btn btn-primary" data-role="add">
+										<span class="fa fa-plus"></span>
+									</button>
+								</div>
+						</div>  <!-- /div.form-inline -->
+					</div>  <!-- /div[data-role="dynamic-fields"] -->
+				</div>  <!-- /div.col-md-12 -->
+																	
+																	
+									<div class="col-md-12">
+									<br><br>
+										<h5>Guranter</h5>
+										<hr>
+									</div>
+									<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">Guranter Name</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="text" id="shg_member_count"
+										placeholder="Guranter Name"></input>
+									</div>
+									<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">Guranter Photo</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="file" id="shg_member_count"></input>
+									</div>
+									<div class="form-group col-md-3 align-self-end">
+									  <label class="control-label">ID Proff</label>
+									  <input  name="shg_member_count" style="margin-top: 10px;"
+										class="form-control number"  type="file" id="shg_member_count"></input>
+									</div>
+							</div>
+						
+						
+								
+								<div class="form-group col-md-12 align-self-end">
+								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
+								  &nbsp;&nbsp;&nbsp;
+								   <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+								  &nbsp;&nbsp;&nbsp;
+										  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+								</div>
+								
+								
+							
