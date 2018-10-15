@@ -36,7 +36,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan PC</label>
                   <input name="loanmaster_loan_pc" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_loan_pc"
+					class="form-control percentage" type="text" id="loanmaster_loan_pc"
 					placeholder="Loan PC"></input>
                 </div>
 				
@@ -57,41 +57,55 @@
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan Tenure Min</label>
                   <input name="loanmaster_tenure_min" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_tenure_min"
+					class="form-control percentage" type="text" id="loanmaster_tenure_min"
 					placeholder="Loan Tunure Min"></input>
                 </div>
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan Tenure Max</label>
                   <input name="loanmaster_tenure_max" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_tenure_max"
+					class="form-control percentage" type="text" id="loanmaster_tenure_max"
 					placeholder="Loan Tunure Max"></input>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Min Amount</label>
                   <input name="loanmaster_min_amount" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_min_amount"
+					class="form-control percentage" type="text" id="loanmaster_min_amount"
 					placeholder="Loan Min Amount"></input>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Max Amount</label>
                   <input name="loanmaster_max_amount" style="margin-top: 10px;"
-					class="form-control" type="text" id="loanmaster_max_amount"
+					class="form-control percentage" type="text" id="loanmaster_max_amount"
 					placeholder="Loan Max Amount"></input>
                 </div>
 				
 				<div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Income Ledger</label>
-                  <select id="loanmaster_income_ledger" name="loanmaster_income_ledger" style="margin-top:10px;" class="form-control" >
-                  	<!-- List of ledger -->
+                  <label class="control-label">Fine Type</label>
+                  <select id="Fine_type" name="Fine_type" style="margin-top:10px;" class="form-control" >
+                  		<option value="1">Fixed</option>
+                  		<option value="2">PC</option>
+                  		<option value="3">Compound</option>
                   </select>
                 </div>
-				
 				<div class="form-group col-md-4 align-self-end">
-                  <label class="control-label">Expense Ledger</label>
-                  <select id="loanmaster_expense_ledger" name="loanmaster_expense_ledger" style="margin-top:10px;" class="form-control" >
-                  	<!-- List of ledger -->
+                  <label class="control-label">Fine Value</label>
+                  <input name="Fine_value" style="margin-top: 10px;"
+					class="form-control percentage" type="text" id="Fine_value"
+					placeholder="Fine Value"></input>
+                </div>
+                <div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Buffer days</label>
+                  <input name="buffer_day" style="margin-top: 10px;"
+					class="form-control number" type="text" id="buffer_day"
+					placeholder="Loan collection buffer days"></input>
+                </div>
+				<div class="form-group col-md-4 align-self-end">
+                  <label class="control-label">Loan calculation type</label>
+                  <select id="Loan_type" name="Loan_type" style="margin-top:10px;" class="form-control" >
+                  	<option value="1">Flat</option>
+                  	<option value="2">Reducing</option>
                   </select>
                 </div>
 				
@@ -164,40 +178,7 @@
     
     loadLoanmaster();
 
-      function loadLedger()
-      { 
-        var url = "<?php echo site_url('index.php/account_controller/loadAccountLedgerDropDown'); ?>"; 
-        StartInsideLoading();
-        $.ajax({
-          type: "post",
-          url: url,
-          cache: false,   
-          dataType: 'json', 
-          success: function(response){ 
-          try{  
-            if (response.success)
-               { 
-              $('#loanmaster_income_ledger').html(response.html);  
-              $('#loanmaster_expense_ledger').html(response.html);             
-               } else
-               { 
-                   SetWarningMessageBox('warning', response.msg);
-                  
-               }
-           StopInsideLoading();
-           
-           }catch(e) {  
-              SetWarningMessageBox('warning', e);
-              StopInsideLoading();
-            } 
-          },
-          error: function(){      
-            SetWarningMessageBox('warning', 'Error while request..');
-            StopInsideLoading();
-          }
-         });
-      }
-      loadLedger(); 
+      
       
     
       
@@ -206,16 +187,20 @@
     	if($reqestId == 0)
     	{
     		$('#postType').val(0);
-    		$('#loanmaster_loan_name').val('');
-    		$('#loanmaster_loan_pc').val('');
+
     		loadDropDown('','pc_type_master','#loanmaster_loan_pc_type');
 			loadDropDown('','tenure_type_master','#loanmaster_tenure_type');
+    		$('#loanmaster_loan_name').val('');
+    		$('#loanmaster_loan_pc').val('');
+    		
 			$('#loanmaster_tenure_min').val('');
 			$('#loanmaster_tenure_max').val('');
 			$('#loanmaster_min_amount').val('');
 			$('#loanmaster_max_amount').val('');
-			$('#loanmaster_income_ledger').val('');
-			$('#loanmaster_expense_ledger').val('');
+			$('#Fine_type').val('');
+			$('#Fine_value').val('');
+			$('#buffer_day').val('');
+			$('#loan_type').val('');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
@@ -242,8 +227,10 @@
     				$('#loanmaster_tenure_max').val(response.json[0].Tenure_max);
     				$('#loanmaster_min_amount').val(response.json[0].Min_amount);
     				$('#loanmaster_max_amount').val(response.json[0].Max_amount);
-    				$('#loanmaster_income_ledger').val(response.json[0].Income_ledger);
-    				$('#loanmaster_expense_ledger').val(response.json[0].Expense_ledger);
+    				$('#Fine_type').val(response.json[0].Fine_type);
+    				$('#Fine_value').val(response.json[0].Fine_value);
+    				$('#buffer_day').val(response.json[0].Buffer_days);
+    				$('#loan_type').val(response.json[0].Loan_calculation_type);
    				    $('#formContainer').show();
    				    $(window).scrollTop(0);
                      
@@ -309,14 +296,17 @@
             $('#loanmaster_max_amount').focus();
             return;
         }
-			if ($('#loanmaster_income_ledger').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Income ledger is mandatory !');
-            $('#loanmaster_income_ledger').focus();
-            return;
-        }
-			if ($('#loanmaster_expense_ledger').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Expences ledger is mandatory !');
-            $('#loanmaster_expense_ledger').focus();
+			if ($('#Fine_type').val().trim() != '3') { 
+				if ($('#Fine_value').val().trim() == '') { 
+		            SetWarningMessageBox('warning', 'Fine value is mandatory !');
+		            $('#Fine_value').focus();
+		            return;
+				}
+			}
+        
+			if ($('#buffer_day').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Buffer days is mandatory !');
+            $('#buffer_day').focus();
             return;
         }
 				
@@ -355,7 +345,6 @@
 		  }
 		 });
 	}
-   
 </script>
     
        </body>

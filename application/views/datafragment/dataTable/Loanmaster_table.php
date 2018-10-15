@@ -10,8 +10,10 @@
                 <th>Tenure Max.</th>
 				<th>Min. amount</th>
 				<th>Max. amount</th>
-				<th>Income ledger</th>
-				<th>Expense ledger</th>
+				<th>Fine Type</th>
+				<th>Fine</th>
+				<th>Buffer_days</th>
+				<th>Calcualtion</th>
 				<th>Created On</th>
 				<th>
 					<div class="animated-checkbox">
@@ -34,8 +36,10 @@
 				<td><?php echo $loanmaster_data['Tenure_max'];?></td>
 				<td><?php echo $loanmaster_data['Min_amount'];?></td>
 				<td><?php echo $loanmaster_data['Max_amount'];?></td>
-				<td><?php echo $loanmaster_data['Income_ledger'];?></td>
-				<td><?php echo $loanmaster_data['Expense_ledger'];?></td>
+				<td><?php echo $loanmaster_data['Fine_type'];?></td>
+				<td><?php echo $loanmaster_data['Fine_value'];?></td>
+				<td><?php echo $loanmaster_data['Buffer_days'];?></td>
+				<td><?php echo $loanmaster_data['Loan_calculation_type'];?></td>
 				<td><?php echo date("d-m-Y h:i:s A", strtotime($loanmaster_data['Added_on']));?></td>
                 <td>
 				<div  class="animated-checkbox" style="display: inline-block;">
