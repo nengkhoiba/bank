@@ -1598,6 +1598,7 @@ class Data_model extends CI_Model{
 		
 		return $result;
 	}
+	//calculate interval
 	public function getNextInterval($date,$intValue){
 		$date = new DateTime($date);
 		$interval = new DateInterval($intValue);
@@ -1605,7 +1606,7 @@ class Data_model extends CI_Model{
 		$nextInterval= $date->format('d-m-Y');
 		return $nextInterval;
 	}
-	
+	//calculate reducing emi
 	public function getReducingEmi($principalAmount,$rate,$time,$date,$intValue){
 		$x= pow(1+$rate,$time);
 		$monthly = ($principalAmount*$x*$rate)/($x-1);
@@ -1653,7 +1654,7 @@ class Data_model extends CI_Model{
 		$output['details']=$emi;
 		return $output;
 	}
-	
+	//calculate flat emi
 	public function getFlatEmi($principalAmount,$rate,$time,$date,$intValue){
 		$interest=$principalAmount*$rate;
 		$principalPaid=$principalAmount/$time;
@@ -1692,6 +1693,33 @@ class Data_model extends CI_Model{
 		$output['emi']=number_format(round($mEmi));
 		$output['details']=$emi;
 		return $output;
+	}
+	
+	public function getLAN($isGroup){
+		$LAN="";
+		$sql="SELECT YEAR(NOW()) AS FinancialYear,MONTH(NOW()) AS FinancialMonth,DAY(NOW()) AS FinancialDay";
+		$yearQuery=$this->db->query($sql);
+		$yearResult=$yearQuery->result_array();
+		$year=$yearResult[0]['FinancialYear'];
+		$month=$yearResult[0]['FinancialMonth'];
+		$day=$yearResult[0]['FinancialDay'];
+		
+		if($isGroup==0){
+			$this->db->select('COUNT(ID) AS LoneeCount')
+			->from('loan_app_details_relation')
+			->where(array('IsGroup' => 0));
+			$prefix="GLAN";
+		}else{
+			$this->db->select('COUNT(ID) AS LoneeCount')
+			->from('loan_app_details_relation')
+			->where(array('IsGroup' => 1));
+			$prefix="LAN";
+		}
+		$query = $this->db->get();
+		$Result=$query->result_array();
+		$Count=$Result[0]['LoneeCount'];
+		$LAN=$prefix.$year.$month.$day.($Count+1);
+		return $LAN;
 	}
 }
     
