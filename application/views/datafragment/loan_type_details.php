@@ -32,6 +32,27 @@
 	
 	</div>
 	
+	loan master id
+	<input type="text" name="loan_master_id" id="loan_master_id" value="<?php echo $result[0]['ID'];?>"/>
+	loan master  fine type
+	<input type="text" name="loan_fine_type" id="loan_fine_type" value="<?php echo $result[0]['Fine_type'];?>"/>
+	loan master fine value
+	<input type="text" name="loan_fine_value" id="loan_fine_value" value="<?php echo $result[0]['Fine_value'];?>"/>
+	loan master buffer day
+	<input type="text" name="loan_buffer_days" id="loan_buffer_days" value="<?php echo $result[0]['Buffer_days'];?>"/>
+	 pc type cal type
+	<input type="text" name="loan_calculation_type" id="loan_calculation_type" value="<?php echo $result[0]['loan_pc_type'];?>"/>
+	Loan_pc
+	<input type="text" name="loan_pc" id="loan_pc" value="<?php echo $result[0]['Loan_pc'];?>"/>
+
+	loan master loan name
+	<input type="text" name="loan_name" id="loan_name" value="<?php echo $result[0]['Loan_name'];?>"/>
+	 pc master id
+	<input type="text" name="loan_pc_master_id" id="loan_pc_master_id" value="<?php echo $result[0]['loan_pc_master_id'];?>"/>
+	tenure type master id
+	<input type="text" name="tenure_type_master_id" id="tenure_type_master_id" value="<?php echo $result[0]['tenure_type_master_id'];?>"/>
+	
+							
 	<div class="row" style="padding:15px;">
 	<input type="text" name="loan_account_no" id="loan_account_no" value="123456789">
 								<div class="form-group col-md-2 align-self-end">
@@ -51,7 +72,7 @@
 								<div class="form-group col-md-2 align-self-end">
 									<label class="control-label">Interval value</label>
 								  	<div class="input-group" style="margin-top:10px;">
-										<input class="form-control number" id="interval_value" name="interval_value" type="text" placeholder="Interval value">
+										<input class="form-control number" id="loan_tenure_interval_value" name="loan_tenure_interval_value" type="text" placeholder="Interval value">
 									</div>
 								</div>
 								
@@ -67,7 +88,7 @@
 								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Loan Purpose</label>
 									<textarea  name="loan_purpose" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="loan_purpose"
+										class="form-control "  type="text" id="loan_purpose"
 										placeholder="Loan Purpose"/>
 									</input>
 								</div>

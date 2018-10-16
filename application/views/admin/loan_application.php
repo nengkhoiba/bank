@@ -102,9 +102,9 @@
 								</div>
 								
 								<div class="form-group col-md-12 align-self-end">
-								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
+								  <button onclick="" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
 								  &nbsp;&nbsp;&nbsp;
-								   <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+								   <button onclick="" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
 								  &nbsp;&nbsp;&nbsp;
 										  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
@@ -245,9 +245,9 @@
             $('#loanmaster_tenure_type').focus();
             return;
         }
-		if ($('#interval_value').val().trim() == '') { 
+		if ($('#loan_tenure_interval_value').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Loan Interval value is mendatory !');
-            $('#interval_value').focus();
+            $('#loan_tenure_interval_value').focus();
             return;
         }
 		if ($('#tenure_length').val().trim() == '') { 
@@ -280,7 +280,8 @@
             {
         	// $('#LoadIndividualApplicationForm').html(response.html); 
 			// $('#individual_Loan_Type_Id').html(response.loantype_html); 
-        	// $('#LoadIndividualApplicationForm').show();             
+        	// $('#LoadIndividualApplicationForm').show();  
+          	alert("hello");           
             } else
              { 
                  SetWarningMessageBox('warning', response.msg);                

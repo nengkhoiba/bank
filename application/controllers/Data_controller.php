@@ -2579,7 +2579,7 @@ class Data_controller extends CI_Controller {
 	          if (empty($this->input->post('loanmaster_tenure_type',true))) {
 	            $errorMSG = " Please select Loan Tenure interval type ";
 	        }
-	          if (empty($this->input->post('interval_value',true))) {
+	          if (empty($this->input->post('loan_tenure_interval_value',true))) {
 	            $errorMSG = " Loan Tenure Interval value is mendatory ";
 	        }
 	          if (empty($this->input->post('tenure_length',true))) {
@@ -2594,16 +2594,29 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 				
-				$loan_account_no = $this->db->escape_str ( trim ( $this->input->post('loan_account_no',true) ) );
-	            $account_number = $this->db->escape_str ( trim ( $this->input->post('account_number',true) ) );
-	            $loan_amount = $this->db->escape_str ( trim ( $this->input->post('loan_amount',true) ) );
-	            $loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
-	            $interval_value = $this->db->escape_str ( trim ( $this->input->post('interval_value',true) ) );
-	            $tenure_length = $this->db->escape_str ( trim ( $this->input->post('tenure_length',true) ) );
-	            $loan_purpose = $this->db->escape_str ( trim ( $this->input->post('loan_purpose',true) ) );
-
+	     	echo	$account_number = $this->db->escape_str ( trim ( $this->input->post('$account_number',true) ) );
+	     	echo	$loan_account_no = $this->db->escape_str ( trim ( $this->input->post('$loan_account_no',true) ) );
+	     	echo	$loan_master_id = $this->db->escape_str ( trim ( $this->input->post('$loan_master_id',true) ) );
+	     	echo	$loan_fine_type = $this->db->escape_str ( trim ( $this->input->post('$loan_fine_type',true) ) );
+	     	echo	$loan_fine_value = $this->db->escape_str ( trim ( $this->input->post('$loan_fine_value',true) ) );
+	     	echo	$loan_buffer_days = $this->db->escape_str ( trim ( $this->input->post('$loan_buffer_days',true) ) );
+	     	echo	$loan_calculation_type = $this->db->escape_str ( trim ( $this->input->post('$loan_calculation_type',true) ) );
+	     	echo	$loan_name = $this->db->escape_str ( trim ( $this->input->post('$loan_name',true) ) );
+	     	echo	$loan_pc = $this->db->escape_str ( trim ( $this->input->post('$loan_pc',true) ) );
+	     	echo	$loan_pc_master_id = $this->db->escape_str ( trim ( $this->input->post('$loan_pc_master_id',true) ) );
+	     	echo	$tenure_type_master_id = $this->db->escape_str ( trim ( $this->input->post('$tenure_type_master_id',true) ) );
+	     	echo	$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('$loanmaster_tenure_type',true) ) );
+	     	echo	$tenure_length = $this->db->escape_str ( trim ( $this->input->post('$tenure_length',true) ) );
+	     	echo	$loan_purpose = $this->db->escape_str ( trim ( $this->input->post('$loan_purpose',true) ) );
+	     	echo	$loan_amount = $this->db->escape_str ( trim ( $this->input->post('$loan_amount',true) ) );
+	     	echo	$loan_tenure_interval_type = $this->db->escape_str ( trim ( $this->input->post('$loanmaster_tenure_type',true) ) );
+	     	echo	$loan_tenure_interval_value = $this->db->escape_str ( trim ( $this->input->post('$loan_tenure_interval_value',true) ) );
+	     		
+	            
+	     		exit();
+	     		
 	            //$file = $this->db->escape_str ( trim ( $_POST ['fileUpload'] ) );
-	            $result = $this->database->addLoanAppDetails($loan_account_no, $account_number,$loan_amount,$loanmaster_tenure_type,$interval_value,$tenure_length,$loan_purpose);
+	            $result = $this->database->addLoanAppDetails($account_number,$loan_account_no,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value);
 
 
 	            if($result['code'] == 1)

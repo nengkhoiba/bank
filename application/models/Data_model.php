@@ -1427,7 +1427,7 @@ class Data_model extends CI_Model{
 
 	function GetLoanTypeDetialList($loan_type_id)
 	{
-		 $sql =  "SELECT loan_master.Loan_name, loan_master.Loan_pc, loan_master.Loan_pc_type as pc_type_id,loan_master.Tenure_type as loan_tenure_type_id,loan_master.Tenure_min,loan_master.Tenure_max,loan_master.Min_amount,loan_master.Max_amount, pc_type_master.Name as pc_type_name, tenure_type_master.Name as tenure_type_name
+		 $sql =  "SELECT loan_master.ID,loan_master.Fine_type,loan_master.Fine_value,loan_master.Buffer_days,loan_master.Loan_name, loan_master.Loan_pc, loan_master.Loan_pc_type as loan_pc_type,loan_master.Tenure_type as loanmaster_tenure_type,loan_master.Tenure_min,loan_master.Tenure_max,loan_master.Min_amount,loan_master.Max_amount,pc_type_master.ID as loan_pc_master_id,pc_type_master.Name as pc_type_name, tenure_type_master.Name as tenure_type_name,tenure_type_master.ID as tenure_type_master_id
 				FROM loan_master
 				LEFT JOIN pc_type_master
 				ON loan_master.Loan_pc_type = pc_type_master.ID
@@ -1445,17 +1445,30 @@ class Data_model extends CI_Model{
 
 
 	
-	/* EMPLOYEE DATA ADD  -- Written by William */
-	function addLoanAppDetails($loan_account_no,$account_number,$loan_amount,$loanmaster_tenure_type,$interval_value,$tenure_length,$loan_purpose)
+	/* LOAN APPLICATION DATA ADD  -- Written by Riyaj */
+	function addLoanAppDetails($account_number,$loan_account_no,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value)
 	{
 	         $data = array(
-	             'loan_acc_no'	=>  $loan_account_no ,
-	             'group_id'=>  $account_number,
-	             'Loan_amount'=>  $loan_amount,
-	             'Fine_type'=>  $loanmaster_tenure_type,
-	             'Fine_value'=>  $interval_value,
-	             'loan_tenure_length'=>  $tenure_length,
-	             'Loan_purpose'=>  $loan_purpose,
+	         	
+	         	 'Acc_no'=>  $account_number,
+	         	 'Loan_acc_no'	=>  $loan_account_no ,
+	         	 'Loan_msater_id'=>  $loan_master_id,
+	         	 'Fine_type'=>  $loan_fine_type,
+	         	 'Fine_value'=>  $loan_fine_value,
+	         	 'Buffer_days'=>  $loan_buffer_days,
+	         	 'Loan_calculation_type'=>  $loan_calculation_type,
+	         	 'Loan_name'=>  $loan_name,
+	         	 'Loan_pc'=>  $loan_pc,
+	         	 'Loan_pc_master_id'=>  $loan_pc_master_id,
+	         	 'Loan_pc_master_id'=>  $loan_tenure_master_id,
+	         		
+	         	 'Tenure_type_master_id'=>  $tenure_type_master_id,
+	         	 'loan_tenure_length'=>  $tenure_length,
+	         	 'Loan_purpose'=>  $loan_purpose,
+	         	 'Loan_amount'=>  $loan_amount,
+	         	 'Loan_Tenure_interval_type'=>  $loan_tenure_interval_type,
+	         	 'Loan_tenure_interval_value'=>  $loan_tenure_interval_value,
+	         	 
 	         );
 	         
 	    $this->db->insert('loan_app_details_relation', $data);
