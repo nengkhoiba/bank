@@ -281,7 +281,8 @@
         	// $('#LoadIndividualApplicationForm').html(response.html); 
 			// $('#individual_Loan_Type_Id').html(response.loantype_html); 
         	// $('#LoadIndividualApplicationForm').show();  
-          	alert("hello");           
+          //	alert("hello"); 
+			SetSucessMessageBox('Success', response.msg);          
             } else
              { 
                  SetWarningMessageBox('warning', response.msg);                
