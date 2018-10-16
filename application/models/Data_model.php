@@ -1452,7 +1452,7 @@ class Data_model extends CI_Model{
 	         	
 	         	 'Acc_no'=>  $account_number,
 	         	 'Loan_acc_no'	=>  $loan_account_no ,
-	         	 'Loan_msater_id'=>  $loan_master_id,
+	         	 'Loan_master_id'=>  $loan_master_id,
 	         	 'Fine_type'=>  $loan_fine_type,
 	         	 'Fine_value'=>  $loan_fine_value,
 	         	 'Buffer_days'=>  $loan_buffer_days,
@@ -1460,7 +1460,6 @@ class Data_model extends CI_Model{
 	         	 'Loan_name'=>  $loan_name,
 	         	 'Loan_pc'=>  $loan_pc,
 	         	 'Loan_pc_master_id'=>  $loan_pc_master_id,
-	         	 'Loan_pc_master_id'=>  $loan_tenure_master_id,
 	         		
 	         	 'Tenure_type_master_id'=>  $tenure_type_master_id,
 	         	 'loan_tenure_length'=>  $tenure_length,
