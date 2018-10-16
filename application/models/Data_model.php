@@ -1448,8 +1448,9 @@ class Data_model extends CI_Model{
 	/* LOAN APPLICATION DATA ADD  -- Written by Riyaj */
 	function addLoanAppDetails($account_number,$loan_account_no,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value)
 	{
-
-
+		$this->db->trans_begin();
+		$loan_account_no=$this->getLAN(0);//1 for group and 0 for individual
+		
 	         $data = array(
 	         	
 	         	 'Acc_no'=>  $account_number,
@@ -1471,9 +1472,7 @@ class Data_model extends CI_Model{
 	         	 'Loan_tenure_interval_value'=>  $loan_tenure_interval_value,
 	         	 
 	         );
-	    
-
-
+	         
 	    $this->db->insert('loan_app_details_relation', $data);
 	    $lastID=$this->db->insert_id();	    
 	   	
