@@ -185,6 +185,70 @@
     			   if (response.success)
     	           { 	
     				$('#loan_sanction_form').html(response.html);
+					loadDropDown('','payment_type_master','#payment_mode'); 
+					
+   				    $(window).scrollTop(0);
+                     
+    	           } else
+    	           { 
+    	               SetWarningMessageBox('warning', response.msg);
+    	           }
+    		 StopInsideLoading();
+    		  }catch(e) {  
+    			  SetWarningMessageBox('warning', e);
+    			  StopInsideLoading();
+    		  }  
+    		  },
+    		  error: function(){      
+    			  SetWarningMessageBox('warning', 'Error while request..');
+    			  StopInsideLoading();
+    		  }
+    		 });
+    	
+    } 
+	
+	  function addSanctionDetails()
+	  {
+	  
+	  if ($('#payment_mode').val()== '') { 
+            SetWarningMessageBox('warning', 'Please select payment mode !');
+            $('#payment_mode').focus();
+            return;
+        }
+		else
+		{
+			if ($('#payment_mode').val()== '2') {
+				if ($('#cheque_no').val().trim() == '') { 
+				SetWarningMessageBox('warning', 'Cheque No. is mandatory !');
+				$('#cheque_no').focus();
+				return;
+			}
+        }
+		}
+		
+		if ($('#loan_app_id').val().trim() == '') { 
+            SetWarningMessageBox('warning', 'Loan purpose is mandatory !');
+            $('#loan_app_id').focus();
+            return;
+        }
+		
+		
+			var formData = $('form#MasIndiLoansanctionForms').serializeObject();
+        var dataString = JSON.stringify(formData);
+		
+    	var url = '<?php echo base_url();?>index.php/data_controller/addSanctionDetails';
+    	StartInsideLoading();
+    	$.ajax({
+    		  type: "post",
+    		  url: url,
+    		  cache: false, 
+				data:dataString,
+    		  dataType: 'json',
+    		  success: function(response){   
+    		  try{  	 
+    			   if (response.success)
+    	           {
+					SetSucessMessageBox('Success', response.msg);      
    				    $(window).scrollTop(0);
                      
     	           } else
@@ -205,74 +269,18 @@
     	
     } 
 
-   function Save_Loan_Application()
+	function check_value(value)
     { 
-    	if ($('#loan_amount').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Loan amount is mandatory !');
-            $('#loan_amount').focus();
-            return;
-        }
-		if ($('#loanmaster_tenure_type').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Please select Loan Interval type !');
-            $('#loanmaster_tenure_type').focus();
-            return;
-        }
-		if ($('#loan_tenure_interval_value').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Loan Interval value is mendatory !');
-            $('#loan_tenure_interval_value').focus();
-            return;
-        }
-		if ($('#tenure_length').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Select Tenure length!');
-            $('#tenure_length').focus();
-            return;
-        }
-		if ($('#loan_purpose').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Loan purpose is mandatory !');
-            $('#loan_purpose').focus();
-            return;
-        }
-
-		
-    	
-    	var formData = $('form#Loan_Details_uploadForm').serializeObject();
-        var dataString = JSON.stringify(formData);
-        
-      var url = '<?php echo base_url();?>index.php/data_controller/Loan_Details_upload';
-      StartInsideLoading();
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false, 
-        data: dataString,  
-        dataType: 'json', 
-        success: function(response){ 
-        try{  
-          if (response.success)
-            {
-        	// $('#LoadIndividualApplicationForm').html(response.html); 
-			// $('#individual_Loan_Type_Id').html(response.loantype_html); 
-        	// $('#LoadIndividualApplicationForm').show();  
-          //	alert("hello"); 
-			SetSucessMessageBox('Success', response.msg);          
-            } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);                
-             }
-         StopInsideLoading();
-         
-         }catch(e) {  
-            SetWarningMessageBox('warning', e);
-            StopInsideLoading();
-          } 
-        },
-        error: function(){      
-          SetWarningMessageBox('warning', 'Error while request..');
-          StopInsideLoading();
-        }
-       });
-    }
-    
+      var select_value = value;
+	if(value==1)
+		  {
+			document.getElementById("cheque_box").style.visibility=" hidden";
+		  }
+	  if(value==2)
+		{
+			document.getElementById("cheque_box").style.visibility="visible";
+		}
+	}
    
   
 </script>

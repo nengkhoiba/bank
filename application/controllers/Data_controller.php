@@ -2463,7 +2463,7 @@ class Data_controller extends CI_Controller {
 	}
  
 	
-	/*UPDATE CUSTOMER DOCUMENT -- Written by Riyaj*/
+	/*UPLOAD LOAN DETAILS -- Written by Riyaj*/
 	public function Loan_Details_upload()
 	{
 	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
@@ -2578,9 +2578,10 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
+
 	            $data['result']=$this->database->GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id);
   	            $output = array(
-	                'html'=>$this->load->view('datafragment/addForm/individual_loan_sanction_form',$data,true),
+  	            	'html'=>$this->load->view('datafragment/addForm/individual_loan_sanction_form',$data,true),
 	                'success' =>true
 	            );
 	        }
@@ -2647,4 +2648,62 @@ class Data_controller extends CI_Controller {
 		 
 		echo json_encode($status) ;
 	}
+
+	/*UPDATE LOAN SANCTION RECORD -- Written by Riyaj*/
+	public function addSanctionDetails()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	         
+	         if (empty($this->input->post('loan_app_id',true))) {
+	            $errorMSG = " Loan Account No. is mandator y";
+	        }
+	        
+	        else
+	        {
+	        	$payment_mode_value=$this->input->post('payment_mode',true);
+	        	if($payment_mode_value=='2')
+	        	{
+		        	  	if (empty($this->input->post('cheque_no',true))) {
+		            	$errorMSG = " Cheque No. is mendatory ";
+		        	}	        		
+	        	}
+
+	        }
+
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+				
+	     		$loan_app_id = $this->db->escape_str ( trim ( $this->input->post('loan_app_id',true) ) );
+	     		$payment_mode = $this->db->escape_str ( trim ( $this->input->post('payment_mode',true) ) );
+	     		
+	     		if($payment_mode=="2")
+	     		{
+	     			$cheque_no = $this->db->escape_str ( trim ( $this->input->post('cheque_no',true) ) );
+	     		}
+	     		else
+	     		{
+	     			$cheque_no="";
+	     		}
+
+	            $result = $this->database->updateLoanAppDetails($loan_app_id,$payment_mode,$cheque_no);
+
+
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+
 }
