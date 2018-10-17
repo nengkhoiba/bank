@@ -1,7 +1,11 @@
 <footer class="app-footer">
 <ul class="app-nav">
         <li class="app-search">
-          <span style="color: #8a8989; font-size: 12px"><strong style="color: #26a69a">Developed by</strong> Test IT Solution Private Limited</span>
+          <span style="color: #8a8989; font-size: 12px;"> Copyright 2018 &copy;  All Rights Reserved &nbsp;&nbsp;&nbsp;&nbsp; |</span>
+        </li>
+        
+        <li class="app-search">
+          <span style="color: #8a8989; font-size: 12px"><strong style="color: #26a69a">Developed by</strong> <a href="https://www.google.com/" class="" style="color: #8a8989;" target="_blank"> Test IT Solution Private Limited </a></span>
         </li>
 </ul>
 </footer>
