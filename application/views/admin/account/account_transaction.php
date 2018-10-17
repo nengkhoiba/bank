@@ -61,15 +61,15 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Amount</label>
                   <input name="acc_tran_amount" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="acc_tran_amount"
+    				class="form-control number" type="text" id="acc_tran_amount"
     				placeholder="Amount"></input>
                 </div>
 				
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="updateBranch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="updateAccTran()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasBranchForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasAccTranForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
@@ -240,7 +240,7 @@
         }
        
 
-        var formData = $('form#MasBranchForms').serializeObject();
+        var formData = $('form#MasAccTranForms').serializeObject();
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
         StartInsideLoading();
