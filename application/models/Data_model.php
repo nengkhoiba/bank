@@ -1852,16 +1852,26 @@ class Data_model extends CI_Model{
 
 	function updateLoanAppDetails($loan_app_id,$payment_mode,$cheque_no)
 	{
+			$this->db->trans_begin();
 
 			$data=array('Payment_type'=>$payment_mode,
 						'Cheque_no'=>$cheque_no
 						);
 
-			$this->db->where('ID',$loan_app_id);
+			$this->db->where('Loan_acc_no',$loan_app_id);
 			$this->db->update('loan_app_details_relation',$data);
-
-		
-
+			
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return array('code' => 0);
+			}
+			else
+			{
+				$this->db->trans_commit();
+				$this->addLog("Loan Sanction", "Loan Sanction for ".$loan_app_id."");
+				return array('code' => 1);
+			}
 	}
 
 

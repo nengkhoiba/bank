@@ -2658,7 +2658,6 @@ class Data_controller extends CI_Controller {
 		 
 		echo json_encode($status) ;
 	}
-<<<<<<< HEAD
 
 	/*UPDATE LOAN SANCTION RECORD -- Written by Riyaj*/
 	public function addSanctionDetails()
@@ -2717,8 +2716,6 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 
-=======
-	
 	
 	/* LOAD APPLIED LOAN TABLE */
 	public function loadAppliedLoan()
@@ -2768,5 +2765,4 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
->>>>>>> 5caa0c4f8da310a47b6dee3f19fc3eeab718c643
 }

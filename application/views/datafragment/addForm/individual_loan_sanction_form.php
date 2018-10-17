@@ -14,7 +14,7 @@
 		
             <div class="tile-body">
             <?php echo form_open_multipart('',array('id'=>'MasIndiLoansanctionForms','class'=>'row'))?>
-            <input id="loan_app_id" name="loan_app_id" type="hidden" value="<?php echo $result[0]['ID'];?>">
+            <input id="loan_app_id" name="loan_app_id" type="hidden" value="<?php echo $result[0]['Loan_acc_no'];?>">
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Customer Name</label>
                   <input name="loanmaster_loan_name" style="margin-top: 10px;"
