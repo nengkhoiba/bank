@@ -1068,7 +1068,7 @@ class Data_model extends CI_Model{
                 transaction_header.Naration AS Particular,
                 transaction_header.Tranction_id AS RefNo,
                 transaction_header.Amount AS Amount,
-                (10000) AS balance,
+                transaction_header.Closing AS balance,
                 CASE WHEN transaction_header.Transaction_type='R' THEN transaction_footer.Amount ELSE '' END AS Diposit,
                 CASE WHEN transaction_header.Transaction_type='P' THEN transaction_footer.Amount ELSE '' END AS Withdraw
                 
@@ -1080,7 +1080,7 @@ class Data_model extends CI_Model{
                 AND transaction_footer.IsActive=1
                 AND transaction_footer.Ledger_type='CR'
                 AND transaction_footer.Acc_no='$AccNo'
-                ORDER BY transaction_footer.ID asc ";
+                ORDER BY transaction_footer.Added_on asc ";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
 	}

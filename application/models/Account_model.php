@@ -9,6 +9,8 @@ class Account_model extends CI_Model
 			$GLOBALS['branch_id']=$this->session->userdata('Branch_id');
 			$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
 			$GLOBALS['Added_by']=$this->session->userdata('userId');
+			$date = new \Datetime('now');
+			$GLOBALS['NOW']=date('Y-m-d H:i:s',now());
 		}else{
 			$output = array('success' =>false, 'msg'=> "EXP");
 			echo json_encode($output);
@@ -272,12 +274,14 @@ class Account_model extends CI_Model
 		return $voucher;
 	}
 	
-	public function updateAccountHeader($accountNo,$amount,$transactionId,$naration,$tranType,$isManual,$financialYearId,$branchId,$added_by){
+	public function updateAccountHeader($accountNo,$opening,$closing,$amount,$transactionId,$naration,$tranType,$isManual,$financialYearId,$branchId,$added_by){
 		$voucherNo=$this->generateVoucher($tranType, $financialYearId, $branchId);
 		$date = new \Datetime('now');
 		$data = array(
 				'Voucher_no'=> $voucherNo ,
 				'Acc_no'=>  $accountNo,
+				'Opening'=>  $opening,
+				'Closing'=>  $closing,
 				'Amount'=>  $amount,
 				'Tranction_id'=>  $transactionId,
 				'Naration'=>  $naration,
@@ -338,7 +342,7 @@ class Account_model extends CI_Model
 		$header=$jsonData['header'];
 		$footer=$jsonData['footer'];
 		
-		$voucher=$this->updateAccountHeader($header['Acc_no'],$header['Amount'] , $header['TransactionID'], $header['Naration'], $header['TransactionType'], $header['IsManual'], $financialId, $branchId, $addedBy);
+		$voucher=$this->updateAccountHeader($header['Acc_no'],$header['opening'],$header['closing'],$header['Amount'] , $header['TransactionID'], $header['Naration'], $header['TransactionType'], $header['IsManual'], $financialId, $branchId, $addedBy);
 		
 		if($voucher!="0"){
 			foreach ($footer AS $row){
@@ -353,6 +357,12 @@ class Account_model extends CI_Model
 		}else{
 			$return="0";
 		}
+		if($return!="0" AND $header['Acc_no']!=""){
+			$return=$this->UpdateAccountBalanceForAccount($header['Acc_no'], $header['closing']);
+		}
+		
+		
+		
 		if($return!="0"){
 			$this->db->trans_commit();
 			$this->addLog("Account transaction", "Account transaction for Amount: ".$header['Amount']." Voucher No.:".$voucher.". By- ");
@@ -438,4 +448,44 @@ class Account_model extends CI_Model
 		
 		return $return;
 	}
+	// get current balance for account
+	function getCustomerBalance($accNo){
+		$return=0;
+		$sql="SELECT Balance FROM customer_account WHERE Acc_no='$accNo' AND IsActive=1";
+		$BalanceQuery=$this->db->query($sql);
+		$BalanceResult=$BalanceQuery->result_array();
+		$return=$BalanceResult[0]['Balance'];
+		return $return;
+	}
+	//get Ledger form Mapping
+	function getLedgerIdFromMapping($MappingCode){
+		$sql="SELECT Credit,Debit FROM account_mapping WHERE Code='$MappingCode' AND IsActive=1";
+		$BalanceQuery=$this->db->query($sql);
+		$BalanceResult=$BalanceQuery->result_array();
+		$cr=$BalanceResult[0]['Credit'];
+		$dr=$BalanceResult[0]['Debit'];
+		return array('CR' => $cr,'DR'=>$dr);
+	}
+	
+	function UpdateAccountBalanceForAccount($acc,$balance){
+		$data = array(
+				'Balance'	=>  $balance ,
+				'Modified_by'=>$GLOBALS['Added_by'],
+				'Modified_on'=>$GLOBALS['NOW']
+					
+		);
+		$this->db->where('Acc_no',$acc);
+		$this->db->update('customer_account',$data);
+		if($this->db->trans_status() === FALSE)
+		{
+			$this->db->trans_rollback();
+			$return="0";
+		}
+		else
+		{
+			$return="1";
+		}
+		return $return;
+	}
+	
 }
