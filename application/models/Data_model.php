@@ -1427,7 +1427,24 @@ class Data_model extends CI_Model{
 
 	function GetLoanTypeDetialList($loan_type_id)
 	{
-		 $sql =  "SELECT loan_master.ID,loan_master.Fine_type,loan_master.Fine_value,loan_master.Buffer_days,loan_master.Loan_name, loan_master.Loan_pc, loan_master.Loan_pc_type as loan_pc_type,loan_master.Tenure_type as loanmaster_tenure_type,loan_master.Tenure_min,loan_master.Tenure_max,loan_master.Min_amount,loan_master.Max_amount,pc_type_master.ID as loan_pc_master_id,pc_type_master.Name as pc_type_name, tenure_type_master.Name as tenure_type_name,tenure_type_master.ID as tenure_type_master_id
+		 $sql =  "SELECT 
+		 loan_master.ID,
+		 loan_master.Fine_type,
+		 loan_master.Fine_value,
+		 loan_master.Buffer_days,
+		 loan_master.Loan_name, 
+		 loan_master.Loan_pc, 
+		 loan_master.Loan_pc_type as loan_pc_type,
+		 loan_master.Tenure_type as loanmaster_tenure_type,
+		 loan_master.Tenure_min,
+		 loan_master.Tenure_max,
+		 loan_master.Min_amount,
+		 loan_master.Max_amount,
+		 loan_master.Loan_calculation_type,
+		 pc_type_master.ID as loan_pc_master_id,
+		 pc_type_master.Name as pc_type_name, 
+		 tenure_type_master.Name as tenure_type_name,
+		 tenure_type_master.ID as tenure_type_master_id
 				FROM loan_master
 				LEFT JOIN pc_type_master
 				ON loan_master.Loan_pc_type = pc_type_master.ID
@@ -1446,15 +1463,21 @@ class Data_model extends CI_Model{
 
 	
 	/* LOAN APPLICATION DATA ADD  -- Written by Riyaj */
-	function addLoanAppDetails($account_number,$loan_account_no,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value)
+	function addLoanAppDetails($account_number,$IsGroup,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value)
 	{
 		$this->db->trans_begin();
+		
+		$grpAcc="";
+		if($IsGroup=="1"){
+			$grpAcc=$this->getLAN(1);
+		}
 		$loan_account_no=$this->getLAN(0);//1 for group and 0 for individual
 		
 	         $data = array(
-	         	
+	         	 'IsGroup'=>$IsGroup,
 	         	 'Acc_no'=>  $account_number,
 	         	 'Loan_acc_no'	=>  $loan_account_no ,
+	         	 'Group_loan_acc_no'=>$grpAcc,
 	         	 'Loan_master_id'=>  $loan_master_id,
 	         	 'Fine_type'=>  $loan_fine_type,
 	         	 'Fine_value'=>  $loan_fine_value,
@@ -1463,19 +1486,24 @@ class Data_model extends CI_Model{
 	         	 'Loan_name'=>  $loan_name,
 	         	 'Loan_pc'=>  $loan_pc,
 	         	 'Loan_pc_master_id'=>  $loan_pc_master_id,
-	         		
 	         	 'Tenure_type_master_id'=>  $tenure_type_master_id,
 	         	 'loan_tenure_length'=>  $tenure_length,
 	         	 'Loan_purpose'=>  $loan_purpose,
 	         	 'Loan_amount'=>  $loan_amount,
 	         	 'Loan_Tenure_interval_type'=>  $loan_tenure_interval_type,
 	         	 'Loan_tenure_interval_value'=>  $loan_tenure_interval_value,
+	         	 'Branch_id'=>$GLOBALS['branch_id'],
+	         	 'Added_by'=>$GLOBALS['Added_by'],
+	         	 'IsActive'=>1
+	         	 	
 	         	 
 	         );
 	         
 	    $this->db->insert('loan_app_details_relation', $data);
 	    $lastID=$this->db->insert_id();	    
 	   	
+	    
+	    
 		if($this->db->trans_status() === FALSE)
 		{
 		    $this->db->trans_rollback();
@@ -1579,7 +1607,7 @@ class Data_model extends CI_Model{
 						$time=ceil($loanTenure/$loanInterval);
 						break;
 					case 3: //month
-						$loanTenure=$loanTenure*12;
+						$loanTenure=$loanTenure/12;
 						$time=ceil($loanTenure/$loanInterval);
 						break;
 					case 4: //year
@@ -1703,7 +1731,7 @@ class Data_model extends CI_Model{
 		$month=$yearResult[0]['FinancialMonth'];
 		$day=$yearResult[0]['FinancialDay'];
 		
-		if($isGroup==0){
+		if($isGroup==1){
 			$this->db->select('COUNT(ID) AS LoneeCount')
 			->from('loan_app_details_relation')
 			->where(array('IsGroup' => 0));

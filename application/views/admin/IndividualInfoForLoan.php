@@ -35,7 +35,7 @@
                 </div>
                 </div>
 							
-							<input type="text" name="account_number" id="account_number" value="<?php echo $result[0]['accNo'];?>"/>
+							<input type="hidden" name="account_number" id="account_number" value="<?php echo $result[0]['accNo'];?>"/>
 							
 							<div class="row" style="padding:15px;">
 								<div class="col-md-4">

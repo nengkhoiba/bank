@@ -31,31 +31,20 @@
 	<div class="">
 	
 	</div>
-	
-	loan master id
-	<input type="text" name="loan_master_id" id="loan_master_id" value="<?php echo $result[0]['ID'];?>"/>
-	loan master  fine type
-	<input type="text" name="loan_fine_type" id="loan_fine_type" value="<?php echo $result[0]['Fine_type'];?>"/>
-	loan master fine value
-	<input type="text" name="loan_fine_value" id="loan_fine_value" value="<?php echo $result[0]['Fine_value'];?>"/>
-	loan master buffer day
-	<input type="text" name="loan_buffer_days" id="loan_buffer_days" value="<?php echo $result[0]['Buffer_days'];?>"/>
-	 pc type cal type
-	<input type="text" name="loan_calculation_type" id="loan_calculation_type" value="<?php echo $result[0]['loan_pc_type'];?>"/>
-	Loan_pc
-	<input type="text" name="loan_pc" id="loan_pc" value="<?php echo $result[0]['Loan_pc'];?>"/>
-
-	loan master loan name
-	<input type="text" name="loan_name" id="loan_name" value="<?php echo $result[0]['Loan_name'];?>"/>
-	 pc master id
-	<input type="text" name="loan_pc_master_id" id="loan_pc_master_id" value="<?php echo $result[0]['loan_pc_master_id'];?>"/>
-	tenure type master id
-	<input type="text" name="tenure_type_master_id" id="tenure_type_master_id" value="<?php echo $result[0]['tenure_type_master_id'];?>"/>
+	<input type="hidden" name="loan_master_id" id="loan_master_id" value="<?php echo $result[0]['ID'];?>"/>
+	<input type="hidden" name="isGroup" id="isGroup" value="0"/>
+	<input type="hidden" name="loan_fine_type" id="loan_fine_type" value="<?php echo $result[0]['Fine_type'];?>"/>
+	<input type="hidden" name="loan_fine_value" id="loan_fine_value" value="<?php echo $result[0]['Fine_value'];?>"/>
+	<input type="hidden" name="loan_buffer_days" id="loan_buffer_days" value="<?php echo $result[0]['Buffer_days'];?>"/>
+	<input type="hidden" name="loan_calculation_type" id="loan_calculation_type" value="<?php echo $result[0]['Loan_calculation_type'];?>"/>
+	<input type="hidden" name="loan_pc" id="loan_pc" value="<?php echo $result[0]['Loan_pc'];?>"/>
+	<input type="hidden" name="loan_name" id="loan_name" value="<?php echo $result[0]['Loan_name'];?>"/>
+	<input type="hidden" name="loan_pc_master_id" id="loan_pc_master_id" value="<?php echo $result[0]['loan_pc_master_id'];?>"/>
+	<input type="hidden" name="tenure_type_master_id" id="tenure_type_master_id" value="<?php echo $result[0]['tenure_type_master_id'];?>"/>
 	
 							
 	<div class="row" style="padding:15px;">
-	<input type="text" name="loan_account_no" id="loan_account_no" value="123456789">
-								<div class="form-group col-md-2 align-self-end">
+								<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Loan Amount</label>
 								  	<div class="input-group" style="margin-top:10px;">
 										<input class="form-control number" id="loan_amount" name="loan_amount" type="text" placeholder="Loan Amount">
@@ -63,20 +52,20 @@
 									<label class="control-label custome_label"><?php echo "( Rs.".$result[0]['Min_amount']." to ".$result[0]['Max_amount']." ) ";?> </label>
 								</div>
 								
-							<div class="form-group col-md-2 align-self-end">
+							<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Tenure Interval</label>
 									 <select id="loanmaster_tenure_type" name="loanmaster_tenure_type" style="margin-top:10px;" class="form-control" >
 										<!-- List of loan tenure type -->
 									  </select>
 								</div>
-								<div class="form-group col-md-2 align-self-end">
+								<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Interval value</label>
 								  	<div class="input-group" style="margin-top:10px;">
 										<input class="form-control number" id="loan_tenure_interval_value" name="loan_tenure_interval_value" type="text" placeholder="Interval value">
 									</div>
 								</div>
 								
-								<div class="form-group col-md-2 align-self-end">
+								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Tenure length</label>
 								  <input  name="tenure_length" style="margin-top: 10px;"
 									class="form-control number"  type="text" id="tenure_length"
@@ -165,7 +154,7 @@
 						
 								
 								<div class="form-group col-md-12 align-self-end">
-								  <button onclick="UpdateShgmaster()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
+								  <button onclick="calculate_loan()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
 								  &nbsp;&nbsp;&nbsp;
 								   <button onclick="Save_Loan_Application()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
 								  &nbsp;&nbsp;&nbsp;
