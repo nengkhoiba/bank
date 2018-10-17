@@ -49,15 +49,18 @@
                   <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
-                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br>
                   <b> Account Number : </b><span id="customer_account_no"></span><br>                  
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
               <br>
               <div class="row">
-                <div class="col-12 table-responsive">
-                  <table class="table table-striped">
+                <div class="col-12">
+                <div class="tile-title-w-btn">
+				<h3 class="title">List of uploaded document</h3>
+				</div>
+                  <table id="docTable" class="table table-striped dataTable">
                     <thead>
                       <tr>
                         <th>Sl No.</th>
@@ -76,9 +79,10 @@
                   </table>
                 </div>
               </div>
-		<hr> 
-    <form class="row" id="OrdersFormsUpdate">
-                    <div class="form-group col-md-8 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
+              <br>
+              <div class="row">
+              <?php echo form_open_multipart('',array('id'=>'OrdersFormsUpdate','class'=>'row'))?>
+                    <div class="form-group col-md-12 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
                       <button id="generateAcc" style="display: none" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate Account No</button>
                       &nbsp;&nbsp;&nbsp;
                       <button id="btn1" class="btn btn-sm btn-success" type="button"></button>
@@ -89,7 +93,8 @@
  <!--                      <button class="btn btn-primary" onclick="printDiv('printarea')"><i class="fa fa-print"></i> Print</button> -->
   <!--                     <a class="btn btn-primary icon-btn" href="<?php echo site_url() . 'Data_controller/save_pdf_download?req=' .base64_encode('ID'); ?>" target="_blank"><i class="fa fa-file"></i>PDF</a> -->
 <!--                   </div>         -->
-		</form>
+		<?php echo form_close() ?>
+		</div>
 		           </div>
           </div>
         </div> 
@@ -206,6 +211,7 @@
     				 $.each(response.json1, function (index, value) {
     					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
     				    });
+//     				 $('#docTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
 
     				 if(response.json[0].status == 1)
         			 {

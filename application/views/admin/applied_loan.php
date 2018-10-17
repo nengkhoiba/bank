@@ -15,7 +15,7 @@
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-title-w-btn">
-              <h3 class="title">Loan Information</h3>
+              <h3 class="title">Loan Application Form</h3>
              <button class="close"  href="" onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
@@ -49,15 +49,18 @@
                   <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <b>District :</b><span id="customer_nominee_district"></span><br>
-                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br><br>
+                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br>
                   <b> Account Number : </b><span id="customer_account_no"></span><br>                  
                   <b> Account Status : </b><span id="customer_account_status"></span> 
                 </div>
               </div>
               <br>
               <div class="row">
-                <div class="col-12 table-responsive">
-                  <table class="table table-striped">
+                <div class="col-12">
+                  <div class="tile-title-w-btn">
+				<h3 class="title">Uploaded document</h3>
+				</div>
+                  <table id="docTable" class="table table-striped dataTable">
                     <thead>
                       <tr>
                         <th>Sl No.</th>
@@ -70,15 +73,27 @@
                     </thead>
                     <tbody id="cusDocument">
                     
-                      
-                      
                     </tbody>
                   </table>
                 </div>
               </div>
-		<hr> 
-    <form class="row" id="OrdersFormsUpdate">
-                    <div class="form-group col-md-8 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
+              
+              <br>
+              <div class="row">
+                <div class="col-12">
+                  <div class="tile-title-w-btn">
+				<h3 class="title">Loan history</h3>
+				</div>
+				<div id="loanHistory">
+                      
+                  </div>
+                </div>
+              </div>
+              
+              <br>
+              <div class="row">
+              <?php echo form_open_multipart('',array('id'=>'OrdersFormsUpdate','class'=>'row'))?>
+                    <div class="form-group col-md-12 align-self-end" id='Btn_area_verify' style="visibility: visible; display:block;">
                       <button id="generateAcc" style="display: none" class="btn btn-sm btn-success" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate Account No</button>
                       &nbsp;&nbsp;&nbsp;
                       <button id="btn1" class="btn btn-sm btn-success" type="button"></button>
@@ -89,7 +104,9 @@
  <!--                      <button class="btn btn-primary" onclick="printDiv('printarea')"><i class="fa fa-print"></i> Print</button> -->
   <!--                     <a class="btn btn-primary icon-btn" href="<?php echo site_url() . 'Data_controller/save_pdf_download?req=' .base64_encode('ID'); ?>" target="_blank"><i class="fa fa-file"></i>PDF</a> -->
 <!--                   </div>         -->
-		</form>
+		<?php echo form_close() ?>
+		</div>
+    
 		           </div>
           </div>
         </div> 
@@ -114,9 +131,9 @@
 
     <script type="text/javascript">
     
-    function loadCustomerProfile()
+    function loadAppliedLoan()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadCustomerProfile'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadAppliedLoan'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -128,7 +145,7 @@
           if (response.success)
              { 
             $('#customer_table').html(response.html);
-              $('#customer').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+            $('#applied_loan_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 
@@ -148,12 +165,12 @@
         }
        });
     }
-    loadCustomerProfile();  
+    loadAppliedLoan();  
     
       
-    function viewCustomerProfile($btn){   
+    function viewLoanApplicationForm($btn){   
     	$reqestId =  $btn.val();  
-    	var url = '<?php echo base_url();?>index.php/data_controller/ViewCustomerProfile';
+    	var url = '<?php echo base_url();?>index.php/data_controller/viewLoanApplicationForm';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
@@ -206,6 +223,10 @@
     				 $.each(response.json1, function (index, value) {
     					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-danger">View Document</a></td></tr>');
     				    });
+     				 $('#docTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+
+     				$('#loanHistory').html(response.loan_history_html);
+     				$('#loan_history_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
 
     				 if(response.json[0].status == 1)
         			 {

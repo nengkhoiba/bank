@@ -1782,6 +1782,57 @@ class Data_model extends CI_Model{
 	    return $query->result_array();
 
 	}
+	
+	/*GET CUSTOMER DATA  -- Written by William */
+	function GetCustomerRecordByAccNo($accNo,$tabName)
+	{
+	    $sql = "SELECT cus.ID as ID,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
+        urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
+        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo,
+        br.Name as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
+        accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
+        nomiDis.Name as nominee_district FROM $tabName cus
+        LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+        LEFT JOIN branch br on br.ID=cus.Branch_id
+        LEFT JOIN account_status accSt on accSt.ID=cus.status
+        LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+        LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+        LEFT JOIN district dis on dis.ID=cus.district
+        LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID WHERE acc.IsActive=1 AND acc.Acc_no=$accNo ";
+	    $query=$this->db->query($sql);
+	    
+	    // 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
+	    // 	      ->from('customer')
+	    // 	      ->join('account_status', 'customer.status = account_status.ID', 'left')
+	    // 	      ->where_in('customer.isActive', 1)
+	    // 	      ->where_in('customer.ID', $id);
+	    
+	    return $query->result_array();
+	}
+	
+	function GetCustomerDocByAccNo($accNo)
+	{
+	    $sql =  "SELECT cusDoc.Cus_id as ID, docType.name as doc_type, cusDoc.file_type as file_type, cusDoc.Added_by as Added_by, cusDoc.Added_on as Added_on, cusDoc.files as files
+                FROM customer_document cusDoc
+                LEFT JOIN customer cus on cus.ID=cusDoc.Cus_id
+                LEFT JOIN document_type docType on docType.ID=cusDoc.doc_type
+                LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cusDoc.Cus_id
+                WHERE cusAcc.IsActive=1 AND cusAcc.Acc_no = $accNo ";
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
+	
+	function GetLoanHistoryByAccNo($accNo)
+	{
+	    $sql =  "SELECT *
+                FROM loan_app_details_relation LoanApp
+                WHERE LoanApp.IsActive=1 AND LoanApp.Acc_no = $accNo ";
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
 
 }
     
