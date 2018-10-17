@@ -13,6 +13,8 @@ class Account_controller extends CI_Controller {
     		$GLOBALS['branch_id']=$this->session->userdata('Branch_id');
     		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
     		$GLOBALS['Added_by']=$this->session->userdata('userId');
+    		$date = new \Datetime('now');
+    		$GLOBALS['NOW']=date('Y-m-d H:i:s',now());
     	}else{
     		$output = array('success' =>false, 'msg'=> "EXP");
     		echo json_encode($output);
@@ -301,7 +303,103 @@ class Account_controller extends CI_Controller {
         echo json_encode($output);
     }
     
-
+//  Manual Account transaction
+    public function UpdateAccounttransaction()
+    {
+    	$_POST = json_decode(trim(file_get_contents('php://input')), true);
+    	$errorMSG ='';
+    	try {
+    		
+    		/* withdrawals amount validation */
+    		if (empty($this->input->post('acc_tran_type',true))) {
+    			$errorMSG = "Select Voucher Type !";
+    		}
+    		/* withdrawals narration */
+    		if (empty($this->input->post('acc_tran_by',true))) {
+    			$errorMSG = "Select By ledger !";
+    		}
+    		if (empty($this->input->post('acc_tran_to',true))) {
+    			$errorMSG = "Select To Ledger !";
+    		}
+    		/* withdrawals narration */
+    		if (empty($this->input->post('acc_tran_narration',true))) {
+    			$errorMSG = " Narration is mandatory";
+    		}
+    		if (empty($this->input->post('acc_tran_amount',true))) {
+    			$errorMSG = " Amount is required";
+    		}
+    		
+    		 
+    		 
+    		$status = array("success"=>false,"msg"=>$errorMSG);
+    		if(empty($errorMSG)){
+    			 
+    			$acc_tran_type = $this->db->escape_str ( trim ( $this->input->post('acc_tran_type',true) ) );
+    			$acc_tran_by = $this->db->escape_str ( trim ( $this->input->post('acc_tran_by',true) ) );
+    			$acc_tran_to = $this->db->escape_str ( trim ( $this->input->post('acc_tran_to',true) ) );
+    			$acc_tran_narration = $this->db->escape_str ( trim ( $this->input->post('acc_tran_narration',true) ) );
+    			$acc_tran_amount = $this->db->escape_str ( trim ( $this->input->post('acc_tran_amount',true) ) );
+    			
+    			$jsonData=array("header"=>array(
+    					"Acc_no"=>"",
+    					"opening"=>"0",
+    					"closing"=>"0",
+    					"Amount"=>$acc_tran_amount,
+    					"TransactionID"=>"",
+    					"Naration"=>$acc_tran_narration,
+    					"TransactionType"=>$acc_tran_type,
+    					"IsManual"=>"1"),
+    					"footer"=>array(
+    							array(
+    									"Ledger_type"=>"CR",
+    									"Ledger_id"=>$acc_tran_by,
+    									"Ledger_name"=>$this->account->GetLedgerName($acc_tran_by),
+    									"Amount"=>$acc_tran_amount,
+    									"IsInward"=>$acc_tran_type="R"?1:0),
+    							array(
+    									"Ledger_type"=>"DR",
+    									"Ledger_id"=>$acc_tran_to,
+    									"Ledger_name"=>$this->account->GetLedgerName($acc_tran_to),
+    									"Amount"=>$acc_tran_amount,
+    									"IsInward"=>$acc_tran_type="C"?1:0)));
+    							 
+    							$result=$this->account->updateTransaction($jsonData, $GLOBALS['financial_id'],$GLOBALS['branch_id'],$GLOBALS['Added_by']);
+    							 
+    							if($result != '')
+    							{
+    								$status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated.',"voucherNo" => $result);
+    							}
+    							else
+    							{
+    								$status = array("success" => false,"msg" => "Fail to generate voucher no !!!");
+    							}
+    		}
+    	} catch (Exception $ex) {
+    		$status = array("success" => false,"msg" => $ex->getMessage());
+    	}
+    	 
+    	echo json_encode($status) ;
+    }
+    
+    function deleteVoucher(){
+    	$errorMSG ='';
+    	try {
+	    	if (empty($this->input->get('q',true))) {
+	    		$errorMSG = "Select Voucher Type !";
+	    	}
+	    	$voucher=$this->db->escape_str ( trim ( $this->input->get('q',true) ) );
+	    	$result=$this->account->deleteVoucher($voucher);
+	    	if($result==1){
+	    		$status = array("success" => true,"msg" => "Successfully deleted!");
+	    	}else{
+	    		$status = array("success" => false,"msg" => "Cannot Delete ".$voucher." ,Account is closed!");
+	    	}
+    	
+    	} catch (Exception $ex) {
+    		$status = array("success" => false,"msg" => $ex->getMessage());
+    	}
+    	echo json_encode($status) ;
+    }
 	
 	
 }

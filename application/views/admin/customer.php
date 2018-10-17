@@ -301,6 +301,7 @@
 				   $('#customer_deposite_narration').attr('disabled',true);
 				   $('#submitBtn').attr('disabled',true);
 				   $('#resetBtn').attr('disabled',true);
+				   $('#customer_balance').html(response.Balance);
 				  
 	           } else
 	           { 
@@ -352,6 +353,7 @@
 				   $('#customer_withdrawals_narration').attr('disabled',true);
 				   $('#submitBtn').attr('disabled',true);
 				   $('#resetBtn').attr('disabled',true);
+				   $('#customer_balance').html(response.Balance);
 				  
 	           } else
 	           { 

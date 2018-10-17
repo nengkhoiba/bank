@@ -1631,7 +1631,7 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data = $this->database->GetCustomerRecordById($Id,'customer');
-	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
+	            $data1 = $this->database->GetRecordByForiegnKey($Id);
 	            $output = array(
 	                'json'=>$data,
 	                'json1'=>$data1,
@@ -1841,9 +1841,14 @@ class Data_controller extends CI_Controller {
 	            $customer_deposit_tranId = $this->db->escape_str ( trim ( $this->input->post('customer_deposit_tranId_hidden',true) ) );
 	            $customer_deposite_amount = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_amount',true) ) );
 	            $customer_deposite_narration = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_narration',true) ) );
-	          
+	            $LegerArray=$this->db_model->getLedgerIdFromMapping("DIPOSIT");
+	            $opening=$this->db_model->getCustomerBalance($customer_account_no);
+	            $closing=$this->db_model->getCustomerBalance($customer_account_no)+$customer_deposite_amount;
+	             
 	            $jsonData=array("header"=>array(
 	                "Acc_no"=>$customer_account_no,
+	            	"opening"=>$opening,
+	            	"closing"=>$closing,
 	                "Amount"=>$customer_deposite_amount,
 	                "TransactionID"=>$customer_deposit_tranId,
 	                "Naration"=>$customer_deposite_narration,
@@ -1852,14 +1857,14 @@ class Data_controller extends CI_Controller {
 	                "footer"=>array(
 	                    array(
 	                        "Ledger_type"=>"CR",
-	                        "Ledger_id"=>"1",
-	                        "Ledger_name"=>"CASH",
+	                        "Ledger_id"=>$LegerArray["CR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["CR"]),
 	                        "Amount"=>$customer_deposite_amount,
 	                        "IsInward"=>"1"),
 	                    array(
 	                        "Ledger_type"=>"DR",
-	                        "Ledger_id"=>"2",
-	                        "Ledger_name"=>"Diposit",
+	                        "Ledger_id"=>$LegerArray["DR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["DR"]),
 	                        "Amount"=>$customer_deposite_amount,
 	                        "IsInward"=>"1")));
 	                    
@@ -1867,7 +1872,7 @@ class Data_controller extends CI_Controller {
 	                    
 	                if($result != '')
 	                {
-	                    $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for diposite (Amount '.$customer_deposite_amount.')',"voucherNo" => $result);
+	                    $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for diposite (Amount '.$customer_deposite_amount.')',"voucherNo" => $result,"Balance"=>$closing);
 	                }
 	                else
 	                {
@@ -1905,8 +1910,13 @@ class Data_controller extends CI_Controller {
 	            $customer_withdrawals_amount = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_amount',true) ) );
 	            $customer_withdrawals_narration = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_narration',true) ) );
 	            
+	            $LegerArray=$this->db_model->getLedgerIdFromMapping("WITHDRAW");
+	            $opening=$this->db_model->getCustomerBalance($customer_account_no);
+	            $closing=$this->db_model->getCustomerBalance($customer_account_no)-$customer_withdrawals_amount;
 	            $jsonData=array("header"=>array(
 	                "Acc_no"=>$customer_account_no,
+	            	"opening"=>$opening,
+	            	"closing"=>$closing,
 	                "Amount"=>$customer_withdrawals_amount,
 	                "TransactionID"=>$customer_withdrawals_tranId,
 	                "Naration"=>$customer_withdrawals_narration,
@@ -1915,14 +1925,14 @@ class Data_controller extends CI_Controller {
 	                "footer"=>array(
 	                    array(
 	                        "Ledger_type"=>"CR",
-	                        "Ledger_id"=>"1",
-	                        "Ledger_name"=>"CASH",
+	                        "Ledger_id"=>$LegerArray["CR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["CR"]),
 	                        "Amount"=>$customer_withdrawals_amount,
 	                        "IsInward"=>"0"),
 	                    array(
 	                        "Ledger_type"=>"DR",
-	                        "Ledger_id"=>"3",
-	                        "Ledger_name"=>"Withdrawals",
+	                        "Ledger_id"=>$LegerArray["DR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["DR"]),
 	                        "Amount"=>$customer_withdrawals_amount,
 	                        "IsInward"=>"0")));
 	                    
@@ -1930,7 +1940,7 @@ class Data_controller extends CI_Controller {
 	                    
 	                    if($result != '')
 	                    {
-	                        $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for withdrawals (Amount '.$customer_withdrawals_amount.')',"voucherNo" => $result);
+	                        $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for withdrawals (Amount '.$customer_withdrawals_amount.')',"voucherNo" => $result,"Balance"=>$closing);
 	                    }
 	                    else
 	                    {
@@ -2648,6 +2658,7 @@ class Data_controller extends CI_Controller {
 		 
 		echo json_encode($status) ;
 	}
+<<<<<<< HEAD
 
 	/*UPDATE LOAN SANCTION RECORD -- Written by Riyaj*/
 	public function addSanctionDetails()
@@ -2706,4 +2717,56 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 
+=======
+	
+	
+	/* LOAD APPLIED LOAN TABLE */
+	public function loadAppliedLoan()
+	{
+	    try {
+	        $data['result']=$this->database->Get_individual_sanction_table_Record();
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/Applied_loan_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*VIEW CUSTOMER PROFILE -- Written by William*/
+	public function viewLoanApplicationForm()
+	{
+	    try {
+	        $accNo =  $this->input->post('reqId',true);
+	        if($accNo == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetCustomerRecordByAccNo($accNo,'customer');
+	            $data1 = $this->database->GetCustomerDocByAccNo($accNo);
+	            $loanHistory['result'] = $this->database->GetLoanHistoryByAccNo($accNo);
+	            $output = array(
+	                'json'=>$data,
+	                'json1'=>$data1,
+	                'loan_history_html'=>$this->load->view('datafragment/dataTable/Loan_history_table',$loanHistory, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+>>>>>>> 5caa0c4f8da310a47b6dee3f19fc3eeab718c643
 }
