@@ -133,6 +133,44 @@
     }
     
     loadAccTran();
+
+    function loadLedger()
+    { 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountLedgerDropDown'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#acc_tran_by').html(response.html);  
+            $('#acc_tran_to').html(response.html);             
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+    loadLedger(); 
+
+
+
     
 
     function addBranchform($btn){  
