@@ -1841,9 +1841,14 @@ class Data_controller extends CI_Controller {
 	            $customer_deposit_tranId = $this->db->escape_str ( trim ( $this->input->post('customer_deposit_tranId_hidden',true) ) );
 	            $customer_deposite_amount = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_amount',true) ) );
 	            $customer_deposite_narration = $this->db->escape_str ( trim ( $this->input->post('customer_deposite_narration',true) ) );
-	          
+	            $LegerArray=$this->db_model->getLedgerIdFromMapping("DIPOSIT");
+	            $opening=$this->db_model->getCustomerBalance($customer_account_no);
+	            $closing=$this->db_model->getCustomerBalance($customer_account_no)+$customer_deposite_amount;
+	             
 	            $jsonData=array("header"=>array(
 	                "Acc_no"=>$customer_account_no,
+	            	"opening"=>$opening,
+	            	"closing"=>$closing,
 	                "Amount"=>$customer_deposite_amount,
 	                "TransactionID"=>$customer_deposit_tranId,
 	                "Naration"=>$customer_deposite_narration,
@@ -1852,14 +1857,14 @@ class Data_controller extends CI_Controller {
 	                "footer"=>array(
 	                    array(
 	                        "Ledger_type"=>"CR",
-	                        "Ledger_id"=>"1",
-	                        "Ledger_name"=>"CASH",
+	                        "Ledger_id"=>$LegerArray["CR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["CR"]),
 	                        "Amount"=>$customer_deposite_amount,
 	                        "IsInward"=>"1"),
 	                    array(
 	                        "Ledger_type"=>"DR",
-	                        "Ledger_id"=>"2",
-	                        "Ledger_name"=>"Diposit",
+	                        "Ledger_id"=>$LegerArray["DR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["DR"]),
 	                        "Amount"=>$customer_deposite_amount,
 	                        "IsInward"=>"1")));
 	                    
@@ -1867,7 +1872,7 @@ class Data_controller extends CI_Controller {
 	                    
 	                if($result != '')
 	                {
-	                    $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for diposite (Amount '.$customer_deposite_amount.')',"voucherNo" => $result);
+	                    $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for diposite (Amount '.$customer_deposite_amount.')',"voucherNo" => $result,"Balance"=>$closing);
 	                }
 	                else
 	                {
@@ -1905,8 +1910,13 @@ class Data_controller extends CI_Controller {
 	            $customer_withdrawals_amount = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_amount',true) ) );
 	            $customer_withdrawals_narration = $this->db->escape_str ( trim ( $this->input->post('customer_withdrawals_narration',true) ) );
 	            
+	            $LegerArray=$this->db_model->getLedgerIdFromMapping("WITHDRAW");
+	            $opening=$this->db_model->getCustomerBalance($customer_account_no);
+	            $closing=$this->db_model->getCustomerBalance($customer_account_no)-$customer_withdrawals_amount;
 	            $jsonData=array("header"=>array(
 	                "Acc_no"=>$customer_account_no,
+	            	"opening"=>$opening,
+	            	"closing"=>$closing,
 	                "Amount"=>$customer_withdrawals_amount,
 	                "TransactionID"=>$customer_withdrawals_tranId,
 	                "Naration"=>$customer_withdrawals_narration,
@@ -1915,14 +1925,14 @@ class Data_controller extends CI_Controller {
 	                "footer"=>array(
 	                    array(
 	                        "Ledger_type"=>"CR",
-	                        "Ledger_id"=>"1",
-	                        "Ledger_name"=>"CASH",
+	                        "Ledger_id"=>$LegerArray["CR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["CR"]),
 	                        "Amount"=>$customer_withdrawals_amount,
 	                        "IsInward"=>"0"),
 	                    array(
 	                        "Ledger_type"=>"DR",
-	                        "Ledger_id"=>"3",
-	                        "Ledger_name"=>"Withdrawals",
+	                        "Ledger_id"=>$LegerArray["DR"],
+	                        "Ledger_name"=>$this->db_model->GetLedgerName($LegerArray["DR"]),
 	                        "Amount"=>$customer_withdrawals_amount,
 	                        "IsInward"=>"0")));
 	                    
@@ -1930,7 +1940,7 @@ class Data_controller extends CI_Controller {
 	                    
 	                    if($result != '')
 	                    {
-	                        $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for withdrawals (Amount '.$customer_withdrawals_amount.')',"voucherNo" => $result);
+	                        $status = array("success" => true,"msg" => 'Voucher no. '.$result.' is generated for withdrawals (Amount '.$customer_withdrawals_amount.')',"voucherNo" => $result,"Balance"=>$closing);
 	                    }
 	                    else
 	                    {

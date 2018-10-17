@@ -342,6 +342,8 @@ class Account_controller extends CI_Controller {
     			
     			$jsonData=array("header"=>array(
     					"Acc_no"=>"",
+    					"opening"=>"0",
+    					"closing"=>"0",
     					"Amount"=>$acc_tran_amount,
     					"TransactionID"=>"",
     					"Naration"=>$acc_tran_narration,
