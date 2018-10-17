@@ -14,7 +14,7 @@
         </p>
       </div>
       
-      <div class="row" id="formContainer" style="display: block">
+      <div class="row" id="formContainer" style="display: none">
       <div class="clearix"></div>
         <div class="col-md-12">
           <div class="tile">
@@ -173,7 +173,7 @@
 
     
 
-    function addBranchform($btn){  
+    function addAccTranform($btn){  
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
@@ -222,7 +222,7 @@
     	}
     } 
    
-    function updateBranch(){  
+    function updateAccTran(){  
     	if ($('#branch_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Branch name is mandatory !');
             $('#branch_name').focus();

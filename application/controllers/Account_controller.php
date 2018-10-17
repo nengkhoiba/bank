@@ -289,7 +289,7 @@ class Account_controller extends CI_Controller {
         try {
             $data['result']=$this->account->LoadAccTransaction();
             $output = array(
-                'html'=>$this->load->view('datafragment/dataTable/Acc_tran_table.php',$data, true),
+                'html'=>$this->load->view('datafragment/account/dataTable/Acc_tran_table.php',$data, true),
                 'success' =>true
             );
         } catch (Exception $ex) {
