@@ -6,9 +6,11 @@ class Data_model extends CI_Model{
         parent::__construct();
         $this->load->helper('date');
         if($this->session->userdata('loginStatus')){
-            $GLOBALS['branch_id']=$this->session->userdata('Branch_id');
-            $GLOBALS['financial_id']=$this->session->userdata('Financial_id');
-            $GLOBALS['Added_by']=$this->session->userdata('userId');
+           $GLOBALS['branch_id']=$this->session->userdata('Branch_id');
+    		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
+    		$GLOBALS['Added_by']=$this->session->userdata('userId');
+    		$date = new \Datetime('now');
+    		$GLOBALS['NOW']=date('Y-m-d H:i:s',now());
         }else{
             $output = array('success' =>false, 'msg'=> "EXP");
             echo json_encode($output);
