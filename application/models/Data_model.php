@@ -771,9 +771,9 @@ class Data_model extends CI_Model{
 			'Fine_value'=>$Fine_value,
         	'Buffer_days'=>$buffer_day,
         	'Loan_calculation_type'=>$Loan_type,
-		  	 'Branch_id'=>  1,
-			  'Modified_by'=>  1,
-			 'IsActive'=>  1,
+		  	'Branch_id'=>  1,
+			'Modified_by'=>  1,
+			'IsActive'=>  1,
         );
 	    $this->db->where('ID',$loanmaster_id);
 	    $this->db->update('loan_master',$data);
