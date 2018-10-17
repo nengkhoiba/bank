@@ -8,7 +8,7 @@
 			</div>
 			<div class="col-md-6">
 				Loan Amount: ₹ <?php echo $loan['principle'];?><br>
-			    Interest:<?php echo $loan['int'];?><br>
+			    Interest: ₹ <?php echo $loan['totalInterest'];?><br>
 				EMI: ₹ <?php echo $loan['emi'];?>
 				
 			</div>
