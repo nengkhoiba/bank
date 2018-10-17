@@ -1631,7 +1631,7 @@ class Data_controller extends CI_Controller {
 	            );
 	        }else{
 	            $data = $this->database->GetCustomerRecordById($Id,'customer');
-	            $data1 = $this->database->GetRecordByForiegnKey($Id,'Cus_id','customer_document');
+	            $data1 = $this->database->GetRecordByForiegnKey($Id);
 	            $output = array(
 	                'json'=>$data,
 	                'json1'=>$data1,
@@ -2657,4 +2657,54 @@ class Data_controller extends CI_Controller {
 		 
 		echo json_encode($status) ;
 	}
+	
+	
+	/* LOAD APPLIED LOAN TABLE */
+	public function loadAppliedLoan()
+	{
+	    try {
+	        $data['result']=$this->database->Get_individual_sanction_table_Record();
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/Applied_loan_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*VIEW CUSTOMER PROFILE -- Written by William*/
+	public function viewLoanApplicationForm()
+	{
+	    try {
+	        $accNo =  $this->input->post('reqId',true);
+	        if($accNo == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetCustomerRecordByAccNo($accNo,'customer');
+	            $data1 = $this->database->GetCustomerDocByAccNo($accNo);
+	            $loanHistory['result'] = $this->database->GetLoanHistoryByAccNo($accNo);
+	            $output = array(
+	                'json'=>$data,
+	                'json1'=>$data1,
+	                'loan_history_html'=>$this->load->view('datafragment/dataTable/Loan_history_table',$loanHistory, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 }
