@@ -12,6 +12,7 @@
                 <th>Tenure Max.</th>
                 <th>Min. Amount</th>
                 <th>Max. Amount</th>
+                <th>Calculation Type</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +24,8 @@
                 <td><?php echo $result[0]['Tenure_min'];?></td>
 				<td><?php echo $result[0]['Tenure_max'];?></td>
                 <td><?php echo $result[0]['Min_amount'];?></td>
-				<td><?php echo $result[0]['Max_amount'];?></td>				
+				<td><?php echo $result[0]['Max_amount'];?></td>	
+				<td><?php echo $result[0]['Loan_calculation_type'];?></td>			
             </tr>
         </tbody>
        
