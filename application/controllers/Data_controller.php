@@ -2530,6 +2530,69 @@ class Data_controller extends CI_Controller {
 	    
 	    echo json_encode($status) ;
 	}
+
+
+	 /* GROUP LOAN SANCTION TABLE */
+	public function group_sanction_table()
+	{ 
+		try {
+			$data['result']=$this->database->Get_group_sanction_table_Record();  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Group_sanction_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+	/* INDIVIDUAL LOAN SANCTION TABLE */
+	public function individual_sanction_table()
+	{ 
+		try {
+			$data['result']=$this->database->Get_individual_sanction_table_Record();  
+			$output = array(
+	        'html'=>$this->load->view('datafragment/dataTable/Individual_sanction_table',$data, true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
+
+	/*LOAD LOAN SANCTION FORM FOR INDIVIDUAL -- Written by Riyaj*/
+	public function add_loan_sanction_form()
+	{
+	    try {
+	        $loan_app_id =  $this->input->post('loan_app_id',true);
+	        if($loan_app_id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result']=$this->database->GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id);
+  	            $output = array(
+	                'html'=>$this->load->view('datafragment/individual_loan_sanction_form',$data,true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
 	public function Loan_calculate()
 	{
 		$_POST = json_decode(trim(file_get_contents('php://input')), true);
