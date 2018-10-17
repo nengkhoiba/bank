@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" style="zoom: 95%">
+<html lang="en" style="zoom: 90%">
   <head>
     <meta name="description" content="W2W">
     <!-- Twitter meta-->
