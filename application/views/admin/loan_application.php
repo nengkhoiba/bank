@@ -10,6 +10,25 @@
 		</div>
       </div>
       
+      <div class="modal fade" id="loanStatementModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+			  <div class="tile-title-w-btn">
+              <h3 class="title">Loan Statement</h3>
+            </div>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			  </div>
+
+			  <div id="loan-statement_container" class="modal-body" style="min-height:430px;">
+  
+ 			 </div>
+ 			 </div>
+ 		 </div>
+	  </div>
+			  
+			  
+      
       <div class="row" style="">
       <div class="clearix"></div>
         <div class="col-md-12">
@@ -300,6 +319,70 @@
         }
        });
     }
+
+   function calculate_loan()
+   { 
+   	if ($('#loan_amount').val().trim() == '') { 
+           SetWarningMessageBox('warning', 'Loan amount is mandatory !');
+           $('#loan_amount').focus();
+           return;
+       }
+		if ($('#loanmaster_tenure_type').val().trim() == '') { 
+           SetWarningMessageBox('warning', 'Please select Loan Interval type !');
+           $('#loanmaster_tenure_type').focus();
+           return;
+       }
+		if ($('#loan_tenure_interval_value').val().trim() == '') { 
+           SetWarningMessageBox('warning', 'Loan Interval value is mendatory !');
+           $('#loan_tenure_interval_value').focus();
+           return;
+       }
+		if ($('#tenure_length').val().trim() == '') { 
+           SetWarningMessageBox('warning', 'Select Tenure length!');
+           $('#tenure_length').focus();
+           return;
+       }
+		
+
+		
+   	
+   	var formData = $('form#Loan_Details_uploadForm').serializeObject();
+       var dataString = JSON.stringify(formData);
+       
+     var url = '<?php echo base_url();?>index.php/data_controller/Loan_calculate';
+     StartInsideLoading();
+     $.ajax({
+       type: "post",
+       url: url,
+       cache: false, 
+       data: dataString,  
+       dataType: 'json', 
+       success: function(response){ 
+       try{  
+         if (response.success)
+           {
+
+        	 $("#loanStatementModel").modal("show");
+        	 $("#loan-statement_container").html(response.html);
+         
+           } else
+            { 
+                SetWarningMessageBox('warning', response.msg);                
+            }
+        StopInsideLoading();
+        
+        }catch(e) {  
+           SetWarningMessageBox('warning', e);
+           StopInsideLoading();
+         } 
+       },
+       error: function(){      
+         SetWarningMessageBox('warning', 'Error while request..');
+         StopInsideLoading();
+       }
+      });
+   }
+   
     
    
   

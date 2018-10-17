@@ -2462,106 +2462,6 @@ class Data_controller extends CI_Controller {
 		$this->load->view('datafragment/interest_calculation_table',$data);
 	}
  
-	private function getNextMonth($date){
-		$date = new DateTime($date);
-		$interval = new DateInterval('P1M');
-		$date->add($interval);
-		$nextMonth= $date->format('d-m-Y');
-		return $nextMonth;
-	}
-	
-	private function getReducingEmi($principalAmount,$rate,$time,$date){
-		$rate = $rate/100/12;
-		$x= pow(1+$rate,$time);
-		$monthly = ($principalAmount*$x*$rate)/($x-1);
-		$monthly = round($monthly);
-		$mEmi=$monthly;
-		$k= $time;
-		$t=$principalAmount;
-		$tl;
-		$totalint=0;
-		$tp=0;
-		$sl=1;
-		$emi= array();
-		for($time;$time>0;$time--){
-			$arr= array();
-			$r = $t*$rate;
-			$p = round($monthly-$r);
-			$e= round($t-$p);
-			if($time==2){
-				$tl= $e;
-			}
-			if($time==1){
-				$p= $tl;
-				$e= round($t-$p);
-				$monthly= round($p+$r);
-			}
-			$totalint = $totalint + $r;
-			$tp = $tp+$monthly;
-			$arr['sl']=$sl;
-			$arr['date']=$date;
-			$arr['interest']=number_format(round($r));
-			$arr['opening']=number_format($t);
-			$arr['principal']=number_format($p);
-			$arr['emi']=number_format($monthly);
-			$arr['closing']=number_format(round($e));
-			$emi[]=$arr;
-			$date=$this->getNextMonth($date);
-			$t=$e;
-			$sl++;
-		}
-		$output['principle']=number_format(round($principalAmount));
-		$output['int']=number_format(round($rate));
-		$output['totalInterest']=number_format(round($totalint));
-		$output['totalWithprincipal']=number_format(round($tp));
-		$output['emi']=number_format(round($mEmi));
-		$output['details']=$emi;
-		return $output;
-	}
-	
-	private function getFlatEmi($principalAmount,$rate,$time,$date){
-		$rate = $rate/100/12;
-		
-		$interest=$principalAmount*$rate;
-		$principalPaid=$principalAmount/$time;
-		
-		$monthly=$interest+$principalPaid;
-		
-		$mEmi=$monthly;
-		$k= $time;
-		$t=$principalAmount;
-		$tl;
-		$totalint=0;
-		$tp=0;
-		$sl=1;
-		$emi= array();
-		for($time;$time>0;$time--){
-			$arr= array();
-			$e=$t-$principalPaid;
-			$totalint = $totalint + $interest;
-			$tp = $tp+$monthly;
-			$arr['sl']=$sl;
-			$arr['date']=$date;
-			$arr['interest']=number_format(round($interest));
-			$arr['opening']=number_format($t);
-			$arr['principal']=number_format($principalPaid);
-			$arr['emi']=number_format($monthly);
-			$arr['closing']=number_format(round($e));
-			$emi[]=$arr;
-			$date=$this->getNextMonth($date);
-			$t=$e;
-			$sl++;
-		}
-		$output['principle']=number_format(round($principalAmount));
-		$output['int']=number_format(round($rate));
-		$output['totalInterest']=number_format(round($totalint));
-		$output['totalWithprincipal']=number_format(round($tp));
-		$output['emi']=number_format(round($mEmi));
-		$output['details']=$emi;
-		return $output;
-	}
-
-
 	
 	/*UPDATE CUSTOMER DOCUMENT -- Written by Riyaj*/
 	public function Loan_Details_upload()
@@ -2594,27 +2494,25 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 				
-	     		$account_number = $this->db->escape_str ( trim ( $this->input->post('$account_number',true) ) );
-	     		$loan_account_no = $this->db->escape_str ( trim ( $this->input->post('$loan_account_no',true) ) );
-	     		$loan_master_id = $this->db->escape_str ( trim ( $this->input->post('$loan_master_id',true) ) );
-	     		$loan_fine_type = $this->db->escape_str ( trim ( $this->input->post('$loan_fine_type',true) ) );
-	     		$loan_fine_value = $this->db->escape_str ( trim ( $this->input->post('$loan_fine_value',true) ) );
-	     		$loan_buffer_days = $this->db->escape_str ( trim ( $this->input->post('$loan_buffer_days',true) ) );
-	     		$loan_calculation_type = $this->db->escape_str ( trim ( $this->input->post('$loan_calculation_type',true) ) );
-	     		$loan_name = $this->db->escape_str ( trim ( $this->input->post('$loan_name',true) ) );
-	     		$loan_pc = $this->db->escape_str ( trim ( $this->input->post('$loan_pc',true) ) );
-	     		$loan_pc_master_id = $this->db->escape_str ( trim ( $this->input->post('$loan_pc_master_id',true) ) );
-	     		$tenure_type_master_id = $this->db->escape_str ( trim ( $this->input->post('$tenure_type_master_id',true) ) );
-	     		$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('$loanmaster_tenure_type',true) ) );
-	     		$tenure_length = $this->db->escape_str ( trim ( $this->input->post('$tenure_length',true) ) );
-	     		$loan_purpose = $this->db->escape_str ( trim ( $this->input->post('$loan_purpose',true) ) );
-	     		$loan_amount = $this->db->escape_str ( trim ( $this->input->post('$loan_amount',true) ) );
-	     		$loan_tenure_interval_type = $this->db->escape_str ( trim ( $this->input->post('$loanmaster_tenure_type',true) ) );
-	     		$loan_tenure_interval_value = $this->db->escape_str ( trim ( $this->input->post('$loan_tenure_interval_value',true) ) );
-	     		
-	            
-	            //$file = $this->db->escape_str ( trim ( $_POST ['fileUpload'] ) );
-	            $result = $this->database->addLoanAppDetails($account_number,$loan_account_no,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value);
+	     		$account_number = $this->db->escape_str ( trim ( $this->input->post('account_number',true) ) );
+	     		$loan_master_id = $this->db->escape_str ( trim ( $this->input->post('loan_master_id',true) ) );
+	     		$loan_fine_type = $this->db->escape_str ( trim ( $this->input->post('loan_fine_type',true) ) );
+	     		$loan_fine_value = $this->db->escape_str ( trim ( $this->input->post('loan_fine_value',true) ) );
+	     		$loan_buffer_days = $this->db->escape_str ( trim ( $this->input->post('loan_buffer_days',true) ) );
+	     		$loan_calculation_type = $this->db->escape_str ( trim ( $this->input->post('loan_calculation_type',true) ) );
+	     		$loan_name = $this->db->escape_str ( trim ( $this->input->post('loan_name',true) ) );
+	     		$loan_pc = $this->db->escape_str ( trim ( $this->input->post('loan_pc',true) ) );
+	     		$loan_pc_master_id = $this->db->escape_str ( trim ( $this->input->post('loan_pc_master_id',true) ) );
+	     		$tenure_type_master_id = $this->db->escape_str ( trim ( $this->input->post('tenure_type_master_id',true) ) );
+	     		$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+	     		$tenure_length = $this->db->escape_str ( trim ( $this->input->post('tenure_length',true) ) );
+	     		$loan_purpose = $this->db->escape_str ( trim ( $this->input->post('loan_purpose',true) ) );
+	     		$loan_amount = $this->db->escape_str ( trim ( $this->input->post('loan_amount',true) ) );
+	     		$loan_tenure_interval_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+	     		$loan_tenure_interval_value = $this->db->escape_str ( trim ( $this->input->post('loan_tenure_interval_value',true) ) );
+	     		$IsGroup = $this->db->escape_str ( trim ( $this->input->post('isGroup',true) ) );
+	           
+	            $result = $this->database->addLoanAppDetails($account_number,$IsGroup,$loan_master_id,$loan_fine_type,$loan_fine_value,$loan_buffer_days,$loan_calculation_type,$loan_name,$loan_pc,$loan_pc_master_id,$tenure_type_master_id,$loanmaster_tenure_type,$tenure_length,$loan_purpose,$loan_amount,$loan_tenure_interval_type,$loan_tenure_interval_value);
 
 
 	            if($result['code'] == 1)
@@ -2632,6 +2530,7 @@ class Data_controller extends CI_Controller {
 	    
 	    echo json_encode($status) ;
 	}
+
 
 	 /* GROUP LOAN SANCTION TABLE */
 	public function group_sanction_table()
@@ -2694,4 +2593,58 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 
+	public function Loan_calculate()
+	{
+		$_POST = json_decode(trim(file_get_contents('php://input')), true);
+		$errorMSG ='';
+		try {
+	
+			if (empty($this->input->post('account_number',true))) {
+				$errorMSG = " Account no. is mandatory";
+			}
+			if (empty($this->input->post('loan_amount',true))) {
+				$errorMSG = " Loan amount is mandatory";
+			}
+			if (empty($this->input->post('loanmaster_tenure_type',true))) {
+				$errorMSG = " Please select Loan Tenure interval type ";
+			}
+			if (empty($this->input->post('loan_tenure_interval_value',true))) {
+				$errorMSG = " Loan Tenure Interval value is mendatory ";
+			}
+			if (empty($this->input->post('tenure_length',true))) {
+				$errorMSG = " Loan Tenure length is mandatory";
+			}
+			
+	
+			 
+			$status = array("success"=>false,"msg"=>$errorMSG);
+			if(empty($errorMSG)){
+	
+				$account_number = $this->db->escape_str ( trim ( $this->input->post('account_number',true) ) );
+				$loan_master_id = $this->db->escape_str ( trim ( $this->input->post('loan_master_id',true) ) );
+				$loan_fine_type = $this->db->escape_str ( trim ( $this->input->post('loan_fine_type',true) ) );
+				$loan_fine_value = $this->db->escape_str ( trim ( $this->input->post('loan_fine_value',true) ) );
+				$loan_buffer_days = $this->db->escape_str ( trim ( $this->input->post('loan_buffer_days',true) ) );
+				$loan_calculation_type = $this->db->escape_str ( trim ( $this->input->post('loan_calculation_type',true) ) );
+				$loan_name = $this->db->escape_str ( trim ( $this->input->post('loan_name',true) ) );
+				$loan_pc = $this->db->escape_str ( trim ( $this->input->post('loan_pc',true) ) );
+				$loan_pc_master_id = $this->db->escape_str ( trim ( $this->input->post('loan_pc_master_id',true) ) );
+				$tenure_type_master_id = $this->db->escape_str ( trim ( $this->input->post('tenure_type_master_id',true) ) );
+				$loanmaster_tenure_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+				$tenure_length = $this->db->escape_str ( trim ( $this->input->post('tenure_length',true) ) );
+				$loan_purpose = $this->db->escape_str ( trim ( $this->input->post('loan_purpose',true) ) );
+				$loan_amount = $this->db->escape_str ( trim ( $this->input->post('loan_amount',true) ) );
+				$loan_tenure_interval_type = $this->db->escape_str ( trim ( $this->input->post('loanmaster_tenure_type',true) ) );
+				$loan_tenure_interval_value = $this->db->escape_str ( trim ( $this->input->post('loan_tenure_interval_value',true) ) );
+				$IsGroup = $this->db->escape_str ( trim ( $this->input->post('isGroup',true) ) );
+				                        // GenerateLoan_statement($groupACC,$LAN,$principleAmount,$LoanPc,$loanPcType,$loanPayMentDate,$bufferDate,$FineType,$FineValue,$loanCalculationType,$loanTenure,$loanTenureType,$loanInterval,$loanIntervalType)
+				$data['loan']=$this->database->GenerateLoan_statement("","",$loan_amount,$loan_pc,$loan_pc_master_id,date("d-m-Y"),$loan_buffer_days,$loan_fine_type,$loan_fine_value,$loan_calculation_type,$tenure_length,$tenure_type_master_id,$loan_tenure_interval_value,$loan_tenure_interval_type);
+				$status = array("success" => true,"html" => $this->load->view('datafragment/interest_calculation_table',$data,true));
+			}
+		} catch (Exception $ex) {
+			$status = array("success" => false,"msg" => $ex->getMessage());
+		}
+		 
+		echo json_encode($status) ;
+	}
 }

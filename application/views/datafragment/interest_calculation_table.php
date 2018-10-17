@@ -1,9 +1,4 @@
-<html>
-	<head>	
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/main.css">
-	</head>
-	<body>
-		
+
 		
 		<div class="col-md-12">
 			<div class="col-md-6">
@@ -97,5 +92,4 @@
 		        </tfoot>
 		     
 		    </table>
-	</body>
-</html>
+	

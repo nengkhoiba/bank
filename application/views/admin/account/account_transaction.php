@@ -14,7 +14,7 @@
         </p>
       </div>
       
-      <div class="row" id="formContainer" style="display: block">
+      <div class="row" id="formContainer" style="display: none">
       <div class="clearix"></div>
         <div class="col-md-12">
           <div class="tile">
@@ -61,15 +61,15 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Amount</label>
                   <input name="acc_tran_amount" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="acc_tran_amount"
+    				class="form-control number" type="text" id="acc_tran_amount"
     				placeholder="Amount"></input>
                 </div>
 				
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="updateBranch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="updateAccTran()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasBranchForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasAccTranForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
                 </div>
@@ -133,9 +133,47 @@
     }
     
     loadAccTran();
+
+    function loadLedger()
+    { 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountLedgerDropDown'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#acc_tran_by').html(response.html);  
+            $('#acc_tran_to').html(response.html);             
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+    loadLedger(); 
+
+
+
     
 
-    function addBranchform($btn){  
+    function addAccTranform($btn){  
     	$reqestId =  $btn.val();
     	if($reqestId == 0)
     	{
@@ -184,7 +222,7 @@
     	}
     } 
    
-    function updateBranch(){  
+    function updateAccTran(){  
     	if ($('#branch_name').val().trim() == '') { 
             SetWarningMessageBox('warning', 'Branch name is mandatory !');
             $('#branch_name').focus();
@@ -202,7 +240,7 @@
         }
        
 
-        var formData = $('form#MasBranchForms').serializeObject();
+        var formData = $('form#MasAccTranForms').serializeObject();
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
         StartInsideLoading();

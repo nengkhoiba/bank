@@ -230,7 +230,7 @@
     				$('#Fine_type').val(response.json[0].Fine_type);
     				$('#Fine_value').val(response.json[0].Fine_value);
     				$('#buffer_day').val(response.json[0].Buffer_days);
-    				$('#loan_type').val(response.json[0].Loan_calculation_type);
+    				$('#Loan_type').val(response.json[0].Loan_calculation_type);
    				    $('#formContainer').show();
    				    $(window).scrollTop(0);
                      
