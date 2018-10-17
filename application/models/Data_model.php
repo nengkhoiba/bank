@@ -697,14 +697,16 @@ class Data_model extends CI_Model{
 	    		lm.Tenure_min, lm.Tenure_max, 
 	    		lm.Min_amount, lm.Max_amount, 
 	    		lm.Added_on, lm.ID,
-	    		lm.Fine_type,
+	    		ft.Name as Fine_type,
 	    		lm.Fine_value,
 	    		lm.Buffer_days,
-	    		lm.Loan_calculation_type
+	    		lct.Name as Loan_calculation_type
 	    		
     			from loan_master lm					
     			LEFT JOIN pc_type_master pc ON pc.ID  = lm.Loan_pc_type
                 LEFT JOIN tenure_type_master ten ON ten.ID  = lm.Tenure_type
+                LEFT JOIN fine_type ft ON ft.ID  = lm.Fine_type
+                LEFT JOIN loan_calculation_type lct ON lct.ID  = lm.Loan_calculation_type
                 WHERE lm.isActive = 1";
 	    
 	    $query = $this->db->query($sql);
@@ -1440,7 +1442,7 @@ class Data_model extends CI_Model{
 		 loan_master.Tenure_max,
 		 loan_master.Min_amount,
 		 loan_master.Max_amount,
-		 loan_master.Loan_calculation_type,
+		 loan_calculation_type.Name as Loan_calculation_type,
 		 pc_type_master.ID as loan_pc_master_id,
 		 pc_type_master.Name as pc_type_name, 
 		 tenure_type_master.Name as tenure_type_name,
@@ -1450,6 +1452,8 @@ class Data_model extends CI_Model{
 				ON loan_master.Loan_pc_type = pc_type_master.ID
 				LEFT JOIN tenure_type_master
 				ON loan_master.Tenure_type= tenure_type_master.ID
+                LEFT JOIN loan_calculation_type
+				ON loan_calculation_type.ID= loan_master.Loan_calculation_type
 
 				WHERE loan_master.ID='$loan_type_id'";
 	    $query=$this->db->query($sql);
@@ -1748,5 +1752,46 @@ class Data_model extends CI_Model{
 		$LAN=$prefix.$year.$month.$day.($Count+1);
 		return $LAN;
 	}
+
+
+	function Get_group_sanction_table_Record()
+	{
+		$sql =  "SELECT * FROM loan_app_details_relation WHERE IsActive='1' and IsGroup='0'";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
+	function Get_individual_sanction_table_Record()
+	{
+		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, loan_app_details_relation.Added_on FROM loan_app_details_relation
+				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+				LEFT JOIN customer on customer.ID = customer_account.Cus_id
+				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0'";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
+
+	function GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id)
+	{
+	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, 
+			loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no,
+			loan_app_details_relation.Loan_tenure_length,
+			loan_master.Loan_name as loan_name, 
+			loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, 
+			tenure_type_master.Name as tenure_name,
+			loan_app_details_relation.Added_on 
+			FROM loan_app_details_relation
+			LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+			LEFT JOIN loan_master on loan_master.ID = loan_app_details_relation.Loan_master_id              
+			LEFT JOIN tenure_type_master on tenure_type_master.ID = loan_app_details_relation.Tenure_type_master_id                           
+			LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+			LEFT JOIN customer on customer.ID = customer_account.Cus_id
+			WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='loan_app_id'
+			";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+
+	}
+
 }
     
