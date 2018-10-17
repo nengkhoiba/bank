@@ -6,9 +6,11 @@ class Data_model extends CI_Model{
         parent::__construct();
         $this->load->helper('date');
         if($this->session->userdata('loginStatus')){
-            $GLOBALS['branch_id']=$this->session->userdata('Branch_id');
-            $GLOBALS['financial_id']=$this->session->userdata('Financial_id');
-            $GLOBALS['Added_by']=$this->session->userdata('userId');
+           $GLOBALS['branch_id']=$this->session->userdata('Branch_id');
+    		$GLOBALS['financial_id']=$this->session->userdata('Financial_id');
+    		$GLOBALS['Added_by']=$this->session->userdata('userId');
+    		$date = new \Datetime('now');
+    		$GLOBALS['NOW']=date('Y-m-d H:i:s',now());
         }else{
             $output = array('success' =>false, 'msg'=> "EXP");
             echo json_encode($output);
@@ -773,9 +775,9 @@ class Data_model extends CI_Model{
 			'Fine_value'=>$Fine_value,
         	'Buffer_days'=>$buffer_day,
         	'Loan_calculation_type'=>$Loan_type,
-		  	 'Branch_id'=>  1,
-			  'Modified_by'=>  1,
-			 'IsActive'=>  1,
+		  	'Branch_id'=>  1,
+			'Modified_by'=>  1,
+			'IsActive'=>  1,
         );
 	    $this->db->where('ID',$loanmaster_id);
 	    $this->db->update('loan_master',$data);
@@ -1762,7 +1764,7 @@ class Data_model extends CI_Model{
 	}
 	function Get_individual_sanction_table_Record()
 	{
-		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
+		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, loan_app_details_relation.Added_on FROM loan_app_details_relation
 				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
 				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
 				LEFT JOIN customer on customer.ID = customer_account.Cus_id
@@ -1773,11 +1775,21 @@ class Data_model extends CI_Model{
 
 	function GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id)
 	{
-	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
-				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
-				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
-				LEFT JOIN customer on customer.ID = customer_account.Cus_id
-				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='$loan_app_id'";
+	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, 
+			loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no,
+			loan_app_details_relation.Loan_tenure_length,
+			loan_master.Loan_name as loan_name, 
+			loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, 
+			tenure_type_master.Name as tenure_name,
+			loan_app_details_relation.Added_on 
+			FROM loan_app_details_relation
+			LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+			LEFT JOIN loan_master on loan_master.ID = loan_app_details_relation.Loan_master_id              
+			LEFT JOIN tenure_type_master on tenure_type_master.ID = loan_app_details_relation.Tenure_type_master_id                           
+			LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+			LEFT JOIN customer on customer.ID = customer_account.Cus_id
+			WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='loan_app_id'
+			";
 	    $query=$this->db->query($sql);
 	    return $query->result_array();
 
