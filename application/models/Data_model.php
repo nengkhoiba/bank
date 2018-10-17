@@ -1758,7 +1758,7 @@ class Data_model extends CI_Model{
 	}
 	function Get_individual_sanction_table_Record()
 	{
-		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
+		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, loan_app_details_relation.Added_on FROM loan_app_details_relation
 				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
 				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
 				LEFT JOIN customer on customer.ID = customer_account.Cus_id
@@ -1769,11 +1769,21 @@ class Data_model extends CI_Model{
 
 	function GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id)
 	{
-	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
-				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
-				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
-				LEFT JOIN customer on customer.ID = customer_account.Cus_id
-				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='$loan_app_id'";
+	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, 
+			loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no,
+			loan_app_details_relation.Loan_tenure_length,
+			loan_master.Loan_name as loan_name, 
+			loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, 
+			tenure_type_master.Name as tenure_name,
+			loan_app_details_relation.Added_on 
+			FROM loan_app_details_relation
+			LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+			LEFT JOIN loan_master on loan_master.ID = loan_app_details_relation.Loan_master_id              
+			LEFT JOIN tenure_type_master on tenure_type_master.ID = loan_app_details_relation.Tenure_type_master_id                           
+			LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+			LEFT JOIN customer on customer.ID = customer_account.Cus_id
+			WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='loan_app_id'
+			";
 	    $query=$this->db->query($sql);
 	    return $query->result_array();
 

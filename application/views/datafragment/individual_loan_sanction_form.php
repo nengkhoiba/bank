@@ -15,7 +15,7 @@
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan Name</label>
                   <input name="loanmaster_loan_name" style="margin-top: 10px;"
-    				class="form-control name" type="text" id="loanmaster_loan_name"
+    				class="form-control name disabled" readonly type="text" id="loanmaster_loan_name"
     				placeholder="Loan Name" Value="<?php echo $result[0]['Loan_amount'];?>"></input>
                 </div>
           
