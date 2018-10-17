@@ -2441,7 +2441,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result']=$this->database->GetLoanTypeDetialList($loan_type_id);
 	            $output = array(
-	            	'html'=>$this->load->view('datafragment/loan_type_details',$data,true),
+	            	'html'=>$this->load->view('datafragment/dataTable/loan_type_details',$data,true),
 	                'success' =>true
 	            );
 	        }

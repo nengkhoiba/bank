@@ -697,14 +697,16 @@ class Data_model extends CI_Model{
 	    		lm.Tenure_min, lm.Tenure_max, 
 	    		lm.Min_amount, lm.Max_amount, 
 	    		lm.Added_on, lm.ID,
-	    		lm.Fine_type,
+	    		ft.Name as Fine_type,
 	    		lm.Fine_value,
 	    		lm.Buffer_days,
-	    		lm.Loan_calculation_type
+	    		lct.Name as Loan_calculation_type
 	    		
     			from loan_master lm					
     			LEFT JOIN pc_type_master pc ON pc.ID  = lm.Loan_pc_type
                 LEFT JOIN tenure_type_master ten ON ten.ID  = lm.Tenure_type
+                LEFT JOIN fine_type ft ON ft.ID  = lm.Fine_type
+                LEFT JOIN loan_calculation_type lct ON lct.ID  = lm.Loan_calculation_type
                 WHERE lm.isActive = 1";
 	    
 	    $query = $this->db->query($sql);
@@ -1440,7 +1442,7 @@ class Data_model extends CI_Model{
 		 loan_master.Tenure_max,
 		 loan_master.Min_amount,
 		 loan_master.Max_amount,
-		 loan_master.Loan_calculation_type,
+		 loan_calculation_type.Name as Loan_calculation_type,
 		 pc_type_master.ID as loan_pc_master_id,
 		 pc_type_master.Name as pc_type_name, 
 		 tenure_type_master.Name as tenure_type_name,
@@ -1450,6 +1452,8 @@ class Data_model extends CI_Model{
 				ON loan_master.Loan_pc_type = pc_type_master.ID
 				LEFT JOIN tenure_type_master
 				ON loan_master.Tenure_type= tenure_type_master.ID
+                LEFT JOIN loan_calculation_type
+				ON loan_calculation_type.ID= loan_master.Loan_calculation_type
 
 				WHERE loan_master.ID='$loan_type_id'";
 	    $query=$this->db->query($sql);

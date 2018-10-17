@@ -84,9 +84,7 @@
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Fine Type</label>
                   <select id="Fine_type" name="Fine_type" style="margin-top:10px;" class="form-control" >
-                  		<option value="1">Fixed</option>
-                  		<option value="2">PC</option>
-                  		<option value="3">Compound</option>
+                  		<!-- List of loan fine type -->
                   </select>
                 </div>
 				<div class="form-group col-md-4 align-self-end">
@@ -104,8 +102,7 @@
 				<div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Loan calculation type</label>
                   <select id="Loan_type" name="Loan_type" style="margin-top:10px;" class="form-control" >
-                  	<option value="1">Flat</option>
-                  	<option value="2">Reducing</option>
+                  	<!-- List of loan calculation type -->
                   </select>
                 </div>
 				
@@ -197,10 +194,10 @@
 			$('#loanmaster_tenure_max').val('');
 			$('#loanmaster_min_amount').val('');
 			$('#loanmaster_max_amount').val('');
-			$('#Fine_type').val('');
+			loadDropDown('','fine_type','#Fine_type');
 			$('#Fine_value').val('');
 			$('#buffer_day').val('');
-			$('#loan_type').val('');
+			loadDropDown('','loan_calculation_type','#Loan_type');
         	$('#formContainer').show();
         	$(window).scrollTop(0);
         }
@@ -227,10 +224,10 @@
     				$('#loanmaster_tenure_max').val(response.json[0].Tenure_max);
     				$('#loanmaster_min_amount').val(response.json[0].Min_amount);
     				$('#loanmaster_max_amount').val(response.json[0].Max_amount);
-    				$('#Fine_type').val(response.json[0].Fine_type);
+    				loadDropDown(response.json[0].Fine_type,'fine_type','#Fine_type');
     				$('#Fine_value').val(response.json[0].Fine_value);
-    				$('#buffer_day').val(response.json[0].Buffer_days);
-    				$('#Loan_type').val(response.json[0].Loan_calculation_type);
+     				$('#buffer_day').val(response.json[0].Buffer_days);
+     				loadDropDown(response.json[0].Loan_calculation_type,'loan_calculation_type','#Loan_type');
    				    $('#formContainer').show();
    				    $(window).scrollTop(0);
                      
