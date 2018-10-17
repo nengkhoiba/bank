@@ -1720,5 +1720,36 @@ class Data_model extends CI_Model{
 		$LAN=$prefix.$year.$month.$day.($Count+1);
 		return $LAN;
 	}
+
+
+	function Get_group_sanction_table_Record()
+	{
+		$sql =  "SELECT * FROM loan_app_details_relation WHERE IsActive='1' and IsGroup='0'";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
+	function Get_individual_sanction_table_Record()
+	{
+		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
+				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+				LEFT JOIN customer on customer.ID = customer_account.Cus_id
+				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0'";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
+
+	function GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id)
+	{
+	$sql =  "SELECT customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Added_on FROM loan_app_details_relation
+				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
+				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+				LEFT JOIN customer on customer.ID = customer_account.Cus_id
+				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0' AND loan_app_details_relation.ID='$loan_app_id'";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+
+	}
+
 }
     
