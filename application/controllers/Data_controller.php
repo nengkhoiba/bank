@@ -2580,7 +2580,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result']=$this->database->GetLoanSanctionInfoByIndiLoanAccNo($loan_app_id);
   	            $output = array(
-	                'html'=>$this->load->view('datafragment/individual_loan_sanction_form',$data,true),
+	                'html'=>$this->load->view('datafragment/addForm/individual_loan_sanction_form',$data,true),
 	                'success' =>true
 	            );
 	        }
