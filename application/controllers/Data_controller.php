@@ -128,7 +128,7 @@ class Data_controller extends CI_Controller {
 	    try {
 	        $tblName =  $this->input->post('tblName',true);
 	        $selectedVal =  $this->input->post('selectedVal',true);
-	        $data['result']=$this->database->GetAllActiveRecord($tblName);
+	        $data['result']=$this->database->GetDropDownList($tblName);
 	        $data['selectedVal']=$selectedVal;
 	        $output = array(
 	            'html'=>$this->load->view('datafragment/dropDown/Select_optionList',$data, true),

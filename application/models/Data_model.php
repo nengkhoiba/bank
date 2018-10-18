@@ -74,6 +74,14 @@ class Data_model extends CI_Model{
 	    $query = $this->db->get_where($tabName, array('IsActive' => 1)); 
 	    return $query->result_array();  
 	} 
+	function GetDropDownList($tabName)
+	{
+	    $sql=  "SELECT ID, Name
+    			from $tabName
+                WHERE IsActive = 1";	    
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
 	function GetRecordById($id,$tabName)  
     { 
          $query = $this->db->get_where($tabName, array('ID' => $id)); 
