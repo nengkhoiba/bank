@@ -62,6 +62,12 @@
 								<label class="control-label">Date to</label>
 								<input name="to_date" style="margin-top: 10px;" class="form-control" type="text" id="to_date" placeholder="Select to date">
 							</div>
+							<div class="form-group col-md-3 align-self-end">
+                  <button onclick="updateBranch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  &nbsp;&nbsp;&nbsp;
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasBranchForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                
+                </div>
 							
 						</div>
 					</div>
