@@ -11,9 +11,6 @@
     <title>Login</title>
   </head>
   <body>
-  <?php
-echo CI_VERSION;
-?>
     <section class="material-half-bg">
       <div class="cover"></div>
     </section>
@@ -25,11 +22,12 @@ echo CI_VERSION;
 	<div class="alert alert-danger"><?php echo $msg;?></div>
 	<?php }?>
       <div class="login-box">
+       &nbsp;&nbsp;Codeignitor <?php echo CI_VERSION; ?>
       <?php echo form_open_multipart('login',array('method'=>'post','class'=>'login-form'))?>
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label">USERNAME</label>
-            <input value="<?php echo set_value('email'); ?>" name="email" class="form-control" type="text" placeholder="Email" <?php if(form_error("email")){echo "autofocus";} ?>>
+            <input value="<?php echo set_value('email'); ?>" name="email" class="form-control" type="text" placeholder="Username" <?php if(form_error("email")){echo "autofocus";} ?>>
             <h5 class="text-danger" style="font-size: 12px"><?php echo form_error("email"); ?></h5>
           </div>
           <div class="form-group">
@@ -39,11 +37,11 @@ echo CI_VERSION;
           </div>
           <div class="form-group">
             <div class="utility">
-              <!-- <div class="animated-checkbox"> -->
-                <!-- <label> -->
-                  <!-- <input type="checkbox"><span class="label-text">Stay Signed in</span> -->
-                <!-- </label> -->
-              <!-- </div> -->
+              <div class="animated-checkbox">
+                <label>
+                  <input type="checkbox"><span class="label-text">Stay Signed in</span>
+                </label>
+              </div>
               <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>
             </div>
           </div>
@@ -57,8 +55,8 @@ echo CI_VERSION;
         <form class="forget-form" action="index.html">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?</h3>
           <div class="form-group">
-            <label class="control-label">EMAIL</label>
-            <input class="form-control" type="text" placeholder="Email">
+            <label class="control-label">Registered Mobile Number</label>
+            <input class="form-control" type="text" placeholder="Mobile Number">
           </div>
           <div class="form-group btn-container">
             <button class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>

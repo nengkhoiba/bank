@@ -136,12 +136,14 @@
 						 <br>
 							 <?php echo form_open_multipart('',array('id'=>'MasLoanApplicationIndividualForms','class'=>'row'))?>
 								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">Account Number</label>
-									<input id="individual_account_no" name="individual_account_no" style="margin-top: 10px;"
-									class="form-control number" type="text" 
-									placeholder="Account Number"></input>
+									<label class="control-label">Search</label>
+									<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" style="margin-top: 10px;" class="form-control text_number" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
 								</div>
-								<div class="form-group col-md-8 align-self-end">
+								<div class="form-group col-md-4 align-self-end">
+									<label class="control-label">Account Number</label>
+									<input id="individual_account_no" name="individual_account_no" style="margin-top: 10px;" class="form-control number" type="text" placeholder="Account Number"></input>
+								</div>
+								<div class="form-group col-md-4 align-self-end">
 									<button onclick="LoanIndividualSearch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
 									&nbsp;&nbsp;&nbsp;
 									<a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasLoanApplicationIndividualForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
@@ -382,6 +384,26 @@
        }
       });
    }
+
+   function runAutoComplete(query){
+  	 $('#searchfield').typeahead({
+  		 items: 10,
+  		    source: function(request, response) {
+  		        $.ajax({
+  		            url: "<?php echo site_url('index.php/data_controller/searchByKeyword?q='); ?>"+query,
+  		            method:"GET",
+  		            dataType: "json",
+  		            success: function (data) {
+  		            response(data);
+  		            }
+  		        });
+   		    },
+//   		   autoselect:true,
+  		  afterSelect:function(item){  $('#individual_account_no').val(item.id);},
+  		  displayText: function(item){ return item.value+ " <"+item.id+">";}
+  	 });
+  	 
+      }
    
     
    
