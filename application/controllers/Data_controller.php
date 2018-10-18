@@ -1480,42 +1480,6 @@ class Data_controller extends CI_Controller {
 	
 	
 	
-	
-	public function test(){
-		$this->load->model('Account_model', 'db_model');
-		$financialId=1;
-		$branchId=2;
-		$addedBy=1;
-		$jsonData=array("header"=>array(
-									"Acc_no"=>"1100223928920",
-									"Amount"=>"1000",
-									"TransactionID"=>"RD87191212",
-									"Naration"=>"This is naration",
-									"TransactionType"=>"R",
-									"IsManual"=>"1"),
-				      "footer"=>array(
-									array(
-									"Ledger_type"=>"CR",
-									"Ledger_id"=>"1",
-									"Ledger_name"=>"CASH",
-									"Amount"=>"5000",
-									"IsInward"=>"1"),
-									array(
-									"Ledger_type"=>"DR",
-									"Ledger_id"=>"2",
-									"Ledger_name"=>"Diposit",
-									"Amount"=>"5000",
-									"IsInward"=>"1")));
-									
-		$status=$this->db_model->updateTransaction($jsonData,$financialId,$branchId,$addedBy);	
-		echo $status;
-							
-	} 
-	
-	
-	
-	
-	
 	/*CUSTOMER DOCUMENT UPLOAD TABLE LOAD -- Written by William*/
 	public function loadCustomerDocUpload()
 	{

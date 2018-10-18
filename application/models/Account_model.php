@@ -44,13 +44,32 @@ class Account_model extends CI_Model
 	    $query = $this->db->get_where($tabName, array('ID' => $id,'IsActive' => 1));
 	    return $query->result_array();
 	}
-	function RemoveRecordById($ArrIds,$tblName)
-	{
-	    foreach ($ArrIds as $id)
+ function RemoveRecordById($ArrIds,$tblName)
+	{ 
+		$this->db->trans_begin();
+		$ids="";
+		foreach ($ArrIds as $id)
+		{ 	    
+			$this->db->set('IsActive', 0);  //Set the column name and which value to set..
+			$this->db->where('ID', $id); //set column_name and value in which row need to update
+			$this->db->update($tblName); //Set your table name
+		 $ids=$ids.",".$id;
+	        if($this->db->trans_status() === FALSE)
+	        {
+	        	$this->db->trans_rollback();
+	        	return array('code' => 0);
+	        }
+	    }
+	    if($this->db->trans_status() === FALSE)
 	    {
-	        $this->db->set('IsActive', 0);  //Set the column name and which value to set..
-	        $this->db->where('ID', $id); //set column_name and value in which row need to update
-	        $this->db->update($tblName); //Set your table name
+	    	$this->db->trans_rollback();
+	    	return array('code' => 0);
+	    }
+	    else
+	    {
+	    	$this->db->trans_commit();
+	    	$this->addLog("Soft delete Record From ".$tblName, "record deleted with ids. ".$ids."");
+	    	return array('code' => 1);
 	    }
 	}
 	function CheckAadhaarNo($aadhaar_no)
@@ -64,7 +83,7 @@ class Account_model extends CI_Model
 	        'log_name'	=>  $logtitle ,
 	        'log_detail'=>  $logDescription,
 	        'ipaddress'=>   $this->get_client_ip(),
-	        'user_id'=>     $this->session->userdata('userId')
+	         'user_id'=>    $GLOBALS['Added_by']
 	    );
 	    $this->db->insert('log', $data);
 	    $lastID=$this->db->insert_id();
@@ -145,6 +164,10 @@ class Account_model extends CI_Model
 	        'Group_name'	=>  $accountGrp_name,
 	        'Group_under'	=>  $accountGrp_under,
 	        'Group_nature'	=>  $accountGrp_nature,
+	    	'Added_by' =>$GLOBALS['Added_by'],
+	    	'Added_on' =>$GLOBALS['NOW'],
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],
 	        'IsActive'=>  1,
 	    );
 	    
@@ -172,6 +195,8 @@ class Account_model extends CI_Model
 	        'Group_name'	=>  $accountGrp_name,
 	        'Group_under'	=>  $accountGrp_under,
 	        'Group_nature'	=>  $accountGrp_nature,
+    		'Modified_by'=>$GLOBALS['Added_by'],
+    		'Modified_on'=>$GLOBALS['NOW'],
 	    );
 	    $this->db->where('ID',$accountGrp_id);
 	    $this->db->update('account_group',$data);
@@ -211,6 +236,10 @@ class Account_model extends CI_Model
 	        'Ledger'	=>  $accountLedger_name,
 	        'Group_ID'	=>  $accountLedger_grpUnder,
 	        'Open_balance'	=>  $accountLedger_open,
+    		'Added_by' =>$GLOBALS['Added_by'],
+    		'Added_on' =>$GLOBALS['NOW'],
+    		'Modified_by'=>$GLOBALS['Added_by'],
+    		'Modified_on'=>$GLOBALS['NOW'],
 	        'IsActive'=>  1,
 	    );
 	    
@@ -238,6 +267,8 @@ class Account_model extends CI_Model
 	        'Ledger'	=>  $accountLedger_name,
 	        'Group_ID'	=>  $accountLedger_grpUnder,
 	        'Open_balance'	=>  $accountLedger_open,
+    		'Modified_by'=>$GLOBALS['Added_by'],
+    		'Modified_on'=>$GLOBALS['NOW'],
 	    );
 	    $this->db->where('ID',$accountLedger_id);
 	    $this->db->update('account_ledger',$data);
@@ -487,5 +518,7 @@ class Account_model extends CI_Model
 		}
 		return $return;
 	}
+	
+	
 	
 }

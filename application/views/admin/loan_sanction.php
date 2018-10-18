@@ -250,6 +250,7 @@
     	           {
 					SetSucessMessageBox('Success', response.msg);      
    				    $(window).scrollTop(0);
+   					 individual_sanction_table();
                      
     	           } else
     	           { 

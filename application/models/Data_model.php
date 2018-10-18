@@ -92,33 +92,91 @@ class Data_model extends CI_Model{
     }    
     function RemoveRecordById($ArrIds,$tblName)
 	{ 
+		$this->db->trans_begin();
+		$ids="";
 		foreach ($ArrIds as $id)
 		{ 	    
 			$this->db->set('IsActive', 0);  //Set the column name and which value to set..
 			$this->db->where('ID', $id); //set column_name and value in which row need to update
 			$this->db->update($tblName); //Set your table name
-		}
+		 $ids=$ids.",".$id;
+	        if($this->db->trans_status() === FALSE)
+	        {
+	        	$this->db->trans_rollback();
+	        	return array('code' => 0);
+	        }
+	    }
+	    if($this->db->trans_status() === FALSE)
+	    {
+	    	$this->db->trans_rollback();
+	    	return array('code' => 0);
+	    }
+	    else
+	    {
+	    	$this->db->trans_commit();
+	    	$this->addLog("Soft delete Record From ".$tblName, "record deleted with ids. ".$ids."");
+	    	return array('code' => 1);
+	    }
 	}
 	function HardRemoveRecordById($ArrIds,$tblName)
 	{
+		$this->db->trans_begin();
+		$ids="";
 	    foreach ($ArrIds as $id)
 	    {
 	        $this->db->where('ID', $id); //set column_name and value in which row need to update
 	        $this->db->delete($tblName); //Set your table name
+	        $ids=$ids.",".$id;
+	        if($this->db->trans_status() === FALSE)
+	        {
+	        	$this->db->trans_rollback();
+	        	return array('code' => 0);
+	        }
+	    }
+	    if($this->db->trans_status() === FALSE)
+	    {
+	    	$this->db->trans_rollback();
+	    	return array('code' => 0);
+	    }
+	    else
+	    {
+	    	$this->db->trans_commit();
+	    	$this->addLog("Hard delete Record From ".$tblName, "record deleted with ids. ".$ids."");
+	    	return array('code' => 1);
 	    }
 	}
 	function UndoRemoveRecordById($ArrIds,$tblName)
 	{
+		$this->db->trans_begin();
+		$ids="";
 	    foreach ($ArrIds as $id)
 	    {
 	        $this->db->set('IsActive', 1);  //Set the column name and which value to set..
 	        $this->db->where('ID', $id); //set column_name and value in which row need to update
 	        $this->db->update($tblName); //Set your table name
+	        $ids=$ids.",".$id;
+	        if($this->db->trans_status() === FALSE)
+	        {
+	        	$this->db->trans_rollback();
+	        	return array('code' => 0);
+	        }
+	    }
+	    if($this->db->trans_status() === FALSE)
+	    {
+	    	$this->db->trans_rollback();
+	    	return array('code' => 0);
+	    }
+	    else
+	    {
+	    	$this->db->trans_commit();
+	    	$this->addLog("Undo Soft delete Record From ".$tblName, "record deleted with ids. ".$ids."");
+	    	return array('code' => 1);
 	    }
 	}
 
 	function UpdateRecordById($Id,$Val,$tblName)
 	{
+		$this->db->trans_begin();
 	    $data = array(
 	        'status'=>  $Val
 	    );
@@ -158,6 +216,7 @@ class Data_model extends CI_Model{
 	/*GENERATE CUSTOMER ACCOUNT NUMBER */
 	function GenerateAccountById( $Id,$tabName )
 	{	
+		$this->db->trans_begin();
 	    $date = new \Datetime('now');
 	    $accountNo = $this->generateGetAccountNo($GLOBALS['financial_id'], $GLOBALS['branch_id']);
 	    
@@ -209,6 +268,7 @@ class Data_model extends CI_Model{
 	}
 	
 	function addLog($logtitle,$logDescription){
+		$this->db->trans_begin();
 	    $data = array(
 	        'log_name'	=>  $logtitle ,
 	        'log_detail'=>  $logDescription,
@@ -291,6 +351,7 @@ class Data_model extends CI_Model{
 	/* EMPLOYEE DATA ADD  -- Written by William */
 	function addEmpModel( $employee_name, $employee_address,  $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{
+		$this->db->trans_begin();
 	         $data = array(
 	             'Name'	=>  $employee_name ,
 	             'address'=>  $employee_address,
@@ -305,6 +366,10 @@ class Data_model extends CI_Model{
 	             'qualification'	=>  $employee_qualification ,
 	             'martial_status'=>  $employee_martial_status,
 	             'Branch_id'=>  $employee_branch,
+	         		'Added_by' =>$GLOBALS['Added_by'],
+	         		'Added_on' =>$GLOBALS['NOW'],
+	         		'Modified_by'=>$GLOBALS['Added_by'],
+	         		'Modified_on'=>$GLOBALS['NOW'],
 	             'IsActive'=>  1,
 	         );
 	         
@@ -330,6 +395,7 @@ class Data_model extends CI_Model{
 	/* EMPLOYEE DATA UPDATE  -- Written by William */
 	function updateEmpModel($emp_id, $employee_name, $employee_address, $employee_country, $employee_state, $employee_city, $employee_district, $employee_pincode, $employee_designation, $employee_gender, $employee_dob, $employee_qualification, $employee_martial_status,$employee_branch)
 	{ 
+		$this->db->trans_begin();
 	        $data = array(
 	            'Name'	=>  $employee_name ,
 	            'address'=>  $employee_address,
@@ -343,6 +409,8 @@ class Data_model extends CI_Model{
 	            'dob'=>  $employee_dob,
 	            'qualification'	=>  $employee_qualification ,
 	            'martial_status'=>  $employee_martial_status,
+	        		'Modified_by'=>$GLOBALS['Added_by'],
+	        		'Modified_on'=>$GLOBALS['NOW'],
 	            'Branch_id'=>  $employee_branch
 	        );
 	   
@@ -366,6 +434,7 @@ class Data_model extends CI_Model{
 	/*PAGE MANAGER ROLE DATA ADD */
 	function addRoleModel( $role_title )
 	{
+		$this->db->trans_begin();
          $data = array(
              'Name'	=>  $role_title,
              'isActive'=>  1,
@@ -390,7 +459,7 @@ class Data_model extends CI_Model{
 	/*PAGE MANAGER ROLE DATA UPDATE */
 	function updateRoleModel($role_title, $role_id)
 	{ 
-	  
+		$this->db->trans_begin();
         $data = array(
             'Name'	=>  $role_title 
         );
@@ -418,6 +487,7 @@ class Data_model extends CI_Model{
 	    $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, 
 	    $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
 	{
+		$this->db->trans_begin();
 	    $data = array(
 	        'name'	=>  $member_name,
 	        'dob'	=>  $member_dob,
@@ -441,8 +511,10 @@ class Data_model extends CI_Model{
 	        'nominee_contact_no'=>  $member_nomineecontact,
 	        'status'=>  1,
 	        'Branch_id'=>  $GLOBALS['branch_id'],
-	        'Added_by'=>  $GLOBALS['Added_by'],
-	        'Added_on'=>  date('Y-m-d H:i:s',now()),
+	        'Added_by' =>$GLOBALS['Added_by'],
+	    	'Added_on' =>$GLOBALS['NOW'],
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],
 	        'IsActive'=>  1
 	    );
 	    
@@ -465,6 +537,7 @@ class Data_model extends CI_Model{
 	/*MEMBER DATA UPDATE  -- Written by William */
 	function updateMemModel($mem_id, $member_name, $member_dob, $member_gender, $member_aadhaar, $member_husband, $member_address, $member_rural, $member_urban, $member_district, $member_contact, $member_bankaccount, $member_bankbranch, $member_work, $member_nominee, $member_nomineeaadhaar, $member_nomineeaddress, $member_nomineerural, $member_nomineeurban, $member_nomineedistrict, $member_nomineecontact)
 	{
+		$this->db->trans_begin();
 	        $data = array(
 	            'name'	=>  $member_name,
 	            'dob'	=>  $member_dob,
@@ -485,7 +558,11 @@ class Data_model extends CI_Model{
 	            'nominee_rural'=>  $member_nomineerural,
 	            'nominee_urban'=>  $member_nomineeurban,
 	            'nominee_district'	=>  $member_nomineedistrict ,
-	            'nominee_contact_no'=>  $member_nomineecontact
+	            'nominee_contact_no'=>  $member_nomineecontact,
+        		'Added_by' =>$GLOBALS['Added_by'],
+        		'Added_on' =>$GLOBALS['NOW'],
+        		'Modified_by'=>$GLOBALS['Added_by'],
+        		'Modified_on'=>$GLOBALS['NOW']
 	        );
 	    
 	    $this->db->where('ID',$mem_id);
@@ -509,9 +586,14 @@ class Data_model extends CI_Model{
 	/*DESIGNATION MANAGER DATA ADD */
 	function addDesignModel( $design_title,$design_description )
 	{
+		$this->db->trans_begin();
          $data = array(
              'Name'	=>  $design_title,
-			  'description'	=>  $design_description,
+			 'description'	=>  $design_description,
+         		'Added_by' =>$GLOBALS['Added_by'],
+         		'Added_on' =>$GLOBALS['NOW'],
+         		'Modified_by'=>$GLOBALS['Added_by'],
+         		'Modified_on'=>$GLOBALS['NOW'],
              'IsActive'=>  1,
          );
 	         
@@ -533,10 +615,13 @@ class Data_model extends CI_Model{
 	
 	/*DESIGNATION MANAGER DATA UPDATE */
 	function updateDesignModel($design_title,$deg_desc, $design_id)
-	{	  
+	{	
+		$this->db->trans_begin();
         $data = array(
             'Name'	=>  $design_title ,
-        	'description'=>$deg_desc
+        	'description'=>$deg_desc,
+        		'Modified_by'=>$GLOBALS['Added_by'],
+        		'Modified_on'=>$GLOBALS['NOW'],
         );
 	    $this->db->where('ID',$design_id);
 	    $this->db->update('designation',$data);
@@ -571,6 +656,7 @@ class Data_model extends CI_Model{
 	//SHG START HERE
 	function addShgmasterModel(  $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra )
 	{
+		$this->db->trans_begin();
          $data = array(
             'Group_code'=>  $shg_code,
 		    'Group_name'=>  $shg_name,
@@ -578,9 +664,11 @@ class Data_model extends CI_Model{
 			'Area'		=>  $shg_area,
 			'Member_count'=>  $shg_member_count,
 			'Extra'		=>  $shg_extra,
-			'Branch_id'	=> '1',
-			'Added_by'	=> '1',
-			'Added_on'	=> '1',			
+			'Branch_id'	=> $GLOBALS['branch_id'],
+			'Added_by' =>$GLOBALS['Added_by'],
+	    	'Added_on' =>$GLOBALS['NOW'],
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],		
             'IsActive'	=> '1',
          );
 	         
@@ -602,7 +690,8 @@ class Data_model extends CI_Model{
 	
 	/*DESIGNATION MANAGER DATA UPDATE */
 	function updateShgmasterModel( $shg_code,$shg_name,$shg_address,$shg_area,$shg_member_count,$shg_extra , $shg_master_id)
-	{	  
+	{	
+		$this->db->trans_begin();
         $data = array(
              'Group_code'=>  $shg_code,
 		    'Group_name'=>  $shg_name,
@@ -610,9 +699,8 @@ class Data_model extends CI_Model{
 			'Area'		=>  $shg_area,
 			'Member_count'=>  $shg_member_count,
 			'Extra'		=>  $shg_extra,
-			'Modified_by'	=> '1',
-			'Modified_on'	=> '1',			
-			'Remark'	=> '1',						
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],					
             'IsActive'	=> '1',
         );
 	    $this->db->where('ID',$shg_master_id);
@@ -635,13 +723,18 @@ class Data_model extends CI_Model{
 	
 		/*FINANCIAL DATA ADD */
 	function addFinancialModel( $financial_title,$financial_start,$financial_end)
-	{		
+	{	
+		$this->db->trans_begin();
 		$financial_start = date("Y-m-d", strtotime($financial_start));
 		$financial_end = date("Y-m-d", strtotime($financial_end));
          $data = array(
              'Financial_year'	=>  $financial_title,
-			  'Start_date'	=>  $financial_start,
-			  'End_date'	=>  $financial_end,			  
+			 'Start_date'	=>  $financial_start,
+			 'End_date'	=>  $financial_end,	
+         		'Added_by' =>$GLOBALS['Added_by'],
+         		'Added_on' =>$GLOBALS['NOW'],
+         		'Modified_by'=>$GLOBALS['Added_by'],
+         		'Modified_on'=>$GLOBALS['NOW'],
              'IsActive'=>  1,
          );
 	         
@@ -664,13 +757,15 @@ class Data_model extends CI_Model{
 	/*FINANCIAL YEAR DATA UPDATE */
 	function updateFinancialModel($financial_id,$financial_title,$financial_start,$financial_end)
 	{ 
-	
+		$this->db->trans_begin();
 		$financial_start = date("Y-m-d", strtotime($financial_start));
 		$financial_end = date("Y-m-d", strtotime($financial_end));
 	  
         $data = array(
             'Financial_year'=>  $financial_title,
 			'Start_date'=>  $financial_start,
+        		'Modified_by'=>$GLOBALS['Added_by'],
+        		'Modified_on'=>$GLOBALS['NOW'],
 			'End_date'=>  $financial_end 			
         );
 	    $this->db->where('ID',$financial_id);
@@ -720,7 +815,7 @@ class Data_model extends CI_Model{
 	function addLoanmasterModel($loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type)
 	{	
 
-		
+		$this->db->trans_begin();
          $data = array(
              'Loan_name'	=> $loanmaster_loan_name,
 			'Loan_pc'	=>$loanmaster_loan_pc,
@@ -734,10 +829,12 @@ class Data_model extends CI_Model{
 			'Fine_value'=>$Fine_value,
         	'Buffer_days'=>$buffer_day,
         	'Loan_calculation_type'=>$Loan_type,	  
-			 'Branch_id'=>  1,
-			  'Added_by'=>  1,
-			  'Added_on'=>  1,
-			 'IsActive'=>  1,
+			'Branch_id'=>  $GLOBALS['branch_id'],
+			'Added_by' =>$GLOBALS['Added_by'],
+	    	'Added_on' =>$GLOBALS['NOW'],
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],
+			'IsActive'=>  1,
          );
 	         
 	    $this->db->insert('loan_master', $data);
@@ -761,7 +858,7 @@ class Data_model extends CI_Model{
 	function updateLoanmasterModel($loanmaster_id, $loanmaster_loan_name,$loanmaster_loan_pc,$loanmaster_loan_pc_type,$loanmaster_tenure_type,$loanmaster_tenure_min,$loanmaster_tenure_max,$loanmaster_min_amount,$loanmaster_max_amount,$Fine_type,$Fine_value,$buffer_day,$Loan_type)
 	{ 
 	
-	
+		$this->db->trans_begin();
         $data = array(
            'Loan_name'	=> $loanmaster_loan_name,
 			'Loan_pc'	=>$loanmaster_loan_pc,
@@ -775,8 +872,9 @@ class Data_model extends CI_Model{
 			'Fine_value'=>$Fine_value,
         	'Buffer_days'=>$buffer_day,
         	'Loan_calculation_type'=>$Loan_type,
-		  	'Branch_id'=>  1,
-			'Modified_by'=>  1,
+		  	'Branch_id'=>  $GLOBALS['branch_id'],
+	    	'Modified_by'=>$GLOBALS['Added_by'],
+	    	'Modified_on'=>$GLOBALS['NOW'],
 			'IsActive'=>  1,
         );
 	    $this->db->where('ID',$loanmaster_id);
@@ -803,10 +901,15 @@ class Data_model extends CI_Model{
 	/*BRANCH DATA ADD */
 	function addBranchModel($branch_name,$branch_code,$branch_address)
 	{
+		$this->db->trans_begin();
          $data = array(
              'Name'	=>  $branch_name,
 			  'branch_code'	=>  $branch_code,
-			  'branch_address'	=>  $branch_address,			  
+			  'branch_address'	=>  $branch_address,
+         		'Added_by' =>$GLOBALS['Added_by'],
+         		'Added_on' =>$GLOBALS['NOW'],
+         		'Modified_by'=>$GLOBALS['Added_by'],
+         		'Modified_on'=>$GLOBALS['NOW'],
              'IsActive'=>  1,
          );
 	         
@@ -829,11 +932,13 @@ class Data_model extends CI_Model{
 	/*BRANCH DATA UPDATE */
 	function updateBranchModel($branch_id,$branch_name,$branch_code,$branch_address)
 	{ 
-	
+		$this->db->trans_begin();
         $data = array(
             'Name'=>  $branch_name,
 			'Branch_code'=>  $branch_code,
-			'Branch_address'=>  $branch_address 			
+			'Branch_address'=>  $branch_address,
+        		'Modified_by'=>$GLOBALS['Added_by'],
+        		'Modified_on'=>$GLOBALS['NOW'],
         );
 	    $this->db->where('ID',$branch_id);
 	    $this->db->update('branch',$data);
@@ -857,12 +962,17 @@ class Data_model extends CI_Model{
 	/*CUSTOMER DOCUMENT DATA ADD  -- Written by William */
 	function addCustomerDoc($customer_id, $customer_doc_type,$file)
 	{
+		$this->db->trans_begin();
 	    $file_extension = explode(':', substr($file, 0, strpos($file, ';')))[1];
 	    $data = array(
 	        'Cus_id'	=>  $customer_id,
 	        'doc_type'	=>  $customer_doc_type,
 	        'file_type'	=>  $file_extension,
 	        'files'=>  $file,
+    		'Added_by' =>$GLOBALS['Added_by'],
+    		'Added_on' =>$GLOBALS['NOW'],
+    		'Modified_by'=>$GLOBALS['Added_by'],
+    		'Modified_on'=>$GLOBALS['NOW'],
 	        'IsActive'=>  1
 	    );
 	    
@@ -899,12 +1009,6 @@ class Data_model extends CI_Model{
         LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
         LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID WHERE cus.IsActive=1 AND cus.ID=$id ";
 	    $query=$this->db->query($sql);
-	      
-// 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
-// 	      ->from('customer')
-// 	      ->join('account_status', 'customer.status = account_status.ID', 'left')
-// 	      ->where_in('customer.isActive', 1)
-// 	      ->where_in('customer.ID', $id);
 	      
 	    return $query->result_array();
 	}
@@ -1027,7 +1131,7 @@ class Data_model extends CI_Model{
 	/*Add member to shg group*/ 
 	function AddCustomerToGroup($ac_id,$gr_id)
 	{
-
+		$this->db->trans_begin();
 		$sql="SELECT ID FROM group_customer_member WHERE  Acc_no='$ac_id'";
 		$query=$this->db->query($sql);
 		if($query->num_rows()>0){
@@ -1089,6 +1193,7 @@ class Data_model extends CI_Model{
 	/*USER MASTER DATA ADD */
 	function addUserModel(  $user_list,$user_name,$role_list)
 	{
+		$this->db->trans_begin();
 	    $data = array(
 	        'emp_id'	=>  $user_list,
 	        'username'	=>  $user_name,
@@ -1117,6 +1222,7 @@ class Data_model extends CI_Model{
 	/*USER MASTER DATA UPDATE */
 	function updateUserModel($userId,$user_list,$user_name,$role_list)
 	{
+		$this->db->trans_begin();
 	    $data = array(
 	        'emp_id'	=>  $user_list,
 	        'username'	=>  $user_name,
@@ -1287,17 +1393,12 @@ class Data_model extends CI_Model{
         WHERE loanAccRel.IsActive=1 AND loanAccRel.Loan_acc='$loan_acc_no_Indi' ";
 	    $query=$this->db->query($sql);
 	    
-	    // 	      $query = $this->db->select('account_status.Name as accStatus, customer.*')
-	    // 	      ->from('customer')
-	    // 	      ->join('account_status', 'customer.status = account_status.ID', 'left')
-	    // 	      ->where_in('customer.isActive', 1)
-	    // 	      ->where_in('customer.ID', $id);
-	    
 	    return $query->result_array();
 	}
 	
 	function AssignROGrpModel($loan_acc_no_Array,$ro_id,$grp_id,$grp_loan_acc_no)
 	{
+		$this->db->trans_begin();
 	    foreach ($loan_acc_no_Array as $loan_acc_no)
 	    {	        
 	        $data = array(
@@ -1313,18 +1414,23 @@ class Data_model extends CI_Model{
 	        
 	        $this->db->insert('ro_assign', $data);
 	        $lastID=$this->db->insert_id();
-	        
 	        if($this->db->trans_status() === FALSE)
 	        {
-	            $this->db->trans_rollback();
-	            return array('code' => 0);
+	        	$this->db->trans_rollback();
+	        	return array('code' => 0);
 	        }
-	        else
-	        {
-	            $this->db->trans_commit();
-	            $this->addLog("Assign new RO", "Emp ID ".$ro_id." is assign to Loan Acccount No ".$loan_acc_no.", Group ID ".$grp_id." and Group Loan Account No ".$grp_loan_acc_no." .");
-	            return array('code' => 1);
-	        }
+	       
+	    }
+	    if($this->db->trans_status() === FALSE)
+	    {
+	    	$this->db->trans_rollback();
+	    	return array('code' => 0);
+	    }
+	    else
+	    {
+	    	$this->db->trans_commit();
+	    	$this->addLog("Assign new RO", "Emp ID ".$ro_id." is assign to , Group ID ".$grp_id." and Group Loan Account No ".$grp_loan_acc_no." .");
+	    	return array('code' => 1);
 	    }
 	}	
 	
@@ -1349,7 +1455,7 @@ class Data_model extends CI_Model{
 	
 	function AssignROIndiModel($ro_id,$loan_acc_no)
 	{
-	    
+		$this->db->trans_begin();
 	        $data = array(
 	            'emp_id'	=>  $ro_id,
 	            'loan_acc_no'	=>  $loan_acc_no,
@@ -1499,7 +1605,10 @@ class Data_model extends CI_Model{
 	         	 'Loan_Tenure_interval_type'=>  $loan_tenure_interval_type,
 	         	 'Loan_tenure_interval_value'=>  $loan_tenure_interval_value,
 	         	 'Branch_id'=>$GLOBALS['branch_id'],
-	         	 'Added_by'=>$GLOBALS['Added_by'],
+	         	'Added_by' =>$GLOBALS['Added_by'],
+		    	'Added_on' =>$GLOBALS['NOW'],
+		    	'Modified_by'=>$GLOBALS['Added_by'],
+		    	'Modified_on'=>$GLOBALS['NOW'],
 	         	 'IsActive'=>1
 	         	 	
 	         	 
@@ -1764,11 +1873,24 @@ class Data_model extends CI_Model{
 	}
 	function Get_individual_sanction_table_Record()
 	{
-		$sql =  "SELECT loan_app_details_relation.ID, customer.Name as customer_name, emp.Name as emp_name_approved_by, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Acc_no, loan_app_details_relation.Loan_amount, loan_app_details_relation.Loan_pc, loan_app_details_relation.Added_on FROM loan_app_details_relation
+		$sql =  "SELECT 
+				loan_app_details_relation.ID, 
+				customer.Name as customer_name, 
+				emp.Name as emp_name_approved_by, 
+				loan_app_details_relation.Loan_acc_no, 
+				loan_app_details_relation.Acc_no, 
+				loan_app_details_relation.Loan_amount, 
+				loan_app_details_relation.Loan_pc, 
+				loan_app_details_relation.Added_on 
+				FROM loan_app_details_relation
 				LEFT JOIN emp on emp.ID = loan_app_details_relation.Added_by
 				LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
 				LEFT JOIN customer on customer.ID = customer_account.Cus_id
-				WHERE loan_app_details_relation.IsActive='1' and loan_app_details_relation.IsGroup='0'";
+				WHERE 
+				loan_app_details_relation.IsActive='1' 
+				AND loan_app_details_relation.IsGroup='0'
+				AND loan_app_details_relation.Loan_status=3
+				";
 	    $query=$this->db->query($sql);
 	    return $query->result_array();
 	}
@@ -1855,11 +1977,17 @@ class Data_model extends CI_Model{
 			$this->db->trans_begin();
 
 			$data=array('Payment_type'=>$payment_mode,
-						'Cheque_no'=>$cheque_no
+						'Cheque_no'=>$cheque_no,
+						'Loan_status'=>5
 						);
 
 			$this->db->where('Loan_acc_no',$loan_app_id);
 			$this->db->update('loan_app_details_relation',$data);
+			
+			$isGroup=0; //1 for group and 0 for individual
+			$LoanPaymentStartdate="01-09-2018";
+			
+			
 			
 			if($this->db->trans_status() === FALSE)
 			{
@@ -1868,10 +1996,132 @@ class Data_model extends CI_Model{
 			}
 			else
 			{
-				$this->db->trans_commit();
-				$this->addLog("Loan Sanction", "Loan Sanction for ".$loan_app_id."");
-				return array('code' => 1);
+				$result=$this->generateAndSaveLoanStatement($isGroup, $loan_app_id, $LoanPaymentStartdate);
+				if($result==1){
+					$this->db->trans_commit();
+					$this->addLog("Loan Sanction", "Loan Sanction for ".$loan_app_id."");
+					return array('code' => 1);
+				}else{
+					$this->db->trans_rollback();
+					return array('code' => 0);
+				}
+				
 			}
+	}
+	private function generateAndSaveLoanStatement($isGroup,$LAN,$LoanPaymentStartdate){
+		
+		if($isGroup==1){
+			
+		}else{
+			
+			$IndividualInfo=$this->GetDetailsForIndividualLoanAccNo($LAN);
+			$result=$this->GenerateLoan_statement("",$LAN,
+					$IndividualInfo[0]['Loan_amount'],
+					$IndividualInfo[0]['Loan_pc'],
+					$IndividualInfo[0]['Loan_pc_master_id'],
+					$LoanPaymentStartdate,
+					$IndividualInfo[0]['Buffer_days'],
+					$IndividualInfo[0]['Fine_type'],
+					$IndividualInfo[0]['Fine_value'],
+					$IndividualInfo[0]['Loan_calculation_type'],
+					$IndividualInfo[0]['loan_tenure_length'],
+					$IndividualInfo[0]['Tenure_type_master_id'],
+					$IndividualInfo[0]['Loan_tenure_interval_value'],
+					$IndividualInfo[0]['Loan_Tenure_interval_type']);
+			
+			$insertData=array();
+			foreach($result['details'] AS $row){
+				$singleRow=array();
+				$singleRow['Grp_acc']="";
+				$singleRow['IsGroup']=0;
+				$singleRow['LAN']=$LAN;
+				$singleRow['Opening']=$row['opening'];
+				$singleRow['Interest']=$row['interest'];
+				$singleRow['Principle']=$row['principal'];
+				$singleRow['Emi']=$row['emi'];
+				$singleRow['Closing']=$row['closing'];
+				$singleRow['Payment_date']=date("Y-m-d", strtotime($row['date']));
+				$interval="P".$IndividualInfo[0]['Buffer_days']."D";
+				$date = new DateTime($row['date']);
+				$date->add(new DateInterval($interval));
+				$BufferDate = $date->format('Y-m-d');
+				$singleRow['Buffer_date']=$BufferDate;
+				
+				$singleRow['Added_by']=$GLOBALS['Added_by'];
+				$singleRow['Added_on']=$GLOBALS['NOW'];
+				$singleRow['Modified_on']=$GLOBALS['NOW'];
+				$singleRow['Modified_by']=$GLOBALS['Added_by'];
+				$singleRow['IsActive']=1;
+				$insertData[]=$singleRow;
+				
+			}
+			$this->db->insert_batch('loan_recovery_statement',$insertData);
+			if($this->db->trans_status() === FALSE)
+			{
+				$this->db->trans_rollback();
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		
+		
+	}
+	
+	private function GetDetailsForIndividualLoanAccNo($LAN){
+		$sql="SELECT 
+				Acc_no,
+				Loan_master_id,
+				Fine_type,
+				Fine_value,
+				Buffer_days,
+				Loan_calculation_type,
+				Loan_name,
+				Loan_pc,
+				Loan_pc_master_id,
+				Tenure_type_master_id,
+				loan_tenure_length,
+				Loan_purpose,
+				Loan_amount,
+				Loan_Tenure_interval_type,
+				Loan_tenure_interval_value
+				
+				FROM loan_app_details_relation WHERE 
+				Loan_acc_no='$LAN'
+				AND IsActive=1
+				";
+		$query=$this->db->query($sql);
+		return $query->result_array();	
+	}
+	
+	private function GetDetailsForGroupLan($grpLan){
+		$sql="SELECT
+		Loan_acc_no,
+		Acc_no,
+		Loan_master_id,
+		Fine_type,
+		Fine_value,
+		Buffer_days,
+		Loan_calculation_type,
+		Loan_name,
+		Loan_pc,
+		Loan_pc_master_id,
+		Tenure_type_master_id,
+		loan_tenure_length,
+		Loan_purpose,
+		Loan_amount,
+		Loan_Tenure_interval_type,
+		Loan_tenure_interval_value
+		
+		FROM loan_app_details_relation WHERE
+		Group_loan_acc_no='$grpLan'
+		AND IsGroup=1
+		AND IsActive=1
+		";
+		$query=$this->db->query($sql);
+		return $query->result_array();
 	}
 
 
