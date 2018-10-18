@@ -32,20 +32,24 @@
 							</div>
 							<div class="form-group col-md-3 align-self-end">
 								<label class="control-label">Voucher Type</label>
-								<select class="form-control" style="margin-top: 10px;" id="account_ledger">
-								<!-- Ledger list will be loaded here -->
+								<select class="form-control" style="margin-top: 10px;" id="voucher_type">
+									<option class="form-control" value="">- Select -</option>
+                  					<option class="form-control" value="P">Payment</option>
+                  					<option class="form-control" value="R">Received</option>
+                  					<option class="form-control" value="C">Contra</option>
+                  					<option class="form-control" value="J">Journal</option>
 								</select>
 							</div>
 							<div class="form-group col-md-3 align-self-end">
 								<label class="control-label">User</label>
-								<select class="form-control" style="margin-top: 10px;" id="account_ledger">
-								<!-- Ledger list will be loaded here -->
+								<select class="form-control" style="margin-top: 10px;" id="user_name">
+								<!-- User list will be loaded here -->
 								</select>
 							</div>
 							<div class="form-group col-md-3 align-self-end">
 								<label class="control-label">Account Status</label>
-								<select class="form-control" style="margin-top: 10px;" id="account_ledger">
-								<!-- Ledger list will be loaded here -->
+								<select class="form-control" style="margin-top: 10px;" id="acc_status">
+								<!-- Acc status list will be loaded here -->
 								</select>
 							</div>
 							
@@ -68,8 +72,43 @@
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
    
-	loadDropDown('','branch','#branch_list');  
-	loadDropDown('','account_ledger','#account_ledger');  
+	loadDropDown('','branch','#branch_list');
+	loadDropDown('','emp','#user_name'); 
+	loadDropDown('','account_status','#acc_status');  
+
+	function loadLedger()
+    { 
+      var url = "<?php echo site_url('index.php/account_controller/loadAccountLedgerDropDown'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#account_ledger').html(response.html);             
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+    loadLedger(); 
 	
 	
     function LoanIndividualSearch()
