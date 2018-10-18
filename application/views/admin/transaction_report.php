@@ -48,9 +48,15 @@
 								<!-- Ledger list will be loaded here -->
 								</select>
 							</div>
+							
 							<div class="form-group col-md-3 align-self-end">
-								<label class="control-label">Account Status</label>
-								<input name="employee_dob" style="margin-top: 10px;" class="form-control" type="text" id="employee_dob" placeholder="Date of Birth">
+								<label class="control-label">Date from</label>
+								<input name="to_date" style="margin-top: 10px;" class="form-control" type="text" id="from_date" placeholder="Select to date">
+							</div>
+							
+							<div class="form-group col-md-3 align-self-end">
+								<label class="control-label">Date to</label>
+								<input name="to_date" style="margin-top: 10px;" class="form-control" type="text" id="to_date" placeholder="Select to date">
 							</div>
 							
 						</div>
@@ -279,7 +285,27 @@
       });
    }
    
+     $(document).ready(function (){
+    var date = new Date();
+    date.setDate(date.getDate()-1);            
+
+    // allow to pick future date
+        $('#from_date').datepicker({
+        format: "dd/mm/yyyy"
+        });
+    // allow to pick future date
+
+    var FromEndDate = new Date();
+    $(function(){
+    $('#to_date').datepicker({
+    format: 'mm-dd-yyyy',
+    //endDate: FromEndDate, 
+	endStart: FromEndDate, 
     
+	autoclose: true
+    });
+    });
+    });
    
   
 </script>
