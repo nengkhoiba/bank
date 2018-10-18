@@ -218,11 +218,17 @@
     		    		$('#employee_address').val(response.json[0].address);
     		    		$('#employee_country').val(response.json[0].country);
 
-    		    		loadStateUpdate(response.json[0].country);
+    		    		loadStateUpdate(response.json[0].country); 
+//     		    		creating drop down list by sending country ID
+
     		    		$('#employee_state').val(response.json[0].state);
+//     		    		selected previous state ID value
     		    		
     		    		loadCityUpdate(response.json[0].state);
+//     		    		creating drop down list by sending state ID
+
     		    		$('#employee_city').val(response.json[0].city);
+//     		    		selected previous city ID value
     		    		
     		    		loadDropDown(response.json[0].district,'district','#employee_district');
     					$('#employee_pincode').val(response.json[0].pincode);
