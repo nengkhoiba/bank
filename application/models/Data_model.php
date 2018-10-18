@@ -1778,21 +1778,21 @@ class Data_model extends CI_Model{
 			$tp = $tp+$monthly;
 			$arr['sl']=$sl;
 			$arr['date']=$date;
-			$arr['interest']=number_format(round($r));
-			$arr['opening']=number_format($t);
-			$arr['principal']=number_format($p);
-			$arr['emi']=number_format($monthly);
-			$arr['closing']=number_format(round($e));
+			$arr['interest']=round($r);
+			$arr['opening']=$t;
+			$arr['principal']=$p;
+			$arr['emi']=$monthly;
+			$arr['closing']=round($e);
 			$emi[]=$arr;
 			$date=$this->getNextInterval($date,$intValue);
 			$t=$e;
 			$sl++;
 		}
-		$output['principle']=number_format(round($principalAmount));
-		$output['int']=number_format(round($rate));
-		$output['totalInterest']=number_format(round($totalint));
-		$output['totalWithprincipal']=number_format(round($tp));
-		$output['emi']=number_format(round($mEmi));
+		$output['principle']=round($principalAmount);
+		$output['int']=round($rate);
+		$output['totalInterest']=round($totalint);
+		$output['totalWithprincipal']=round($tp);
+		$output['emi']=round($mEmi);
 		$output['details']=$emi;
 		return $output;
 	}
@@ -1818,21 +1818,21 @@ class Data_model extends CI_Model{
 			$tp = $tp+$monthly;
 			$arr['sl']=$sl;
 			$arr['date']=$date;
-			$arr['interest']=number_format(round($interest));
-			$arr['opening']=number_format($t);
-			$arr['principal']=number_format($principalPaid);
-			$arr['emi']=number_format($monthly);
-			$arr['closing']=number_format(round($e));
+			$arr['interest']=round($interest);
+			$arr['opening']=$t;
+			$arr['principal']=$principalPaid;
+			$arr['emi']=$monthly;
+			$arr['closing']=round($e);
 			$emi[]=$arr;
 			$date=$this->getNextInterval($date,$intValue);
 			$t=$e;
 			$sl++;
 		}
-		$output['principle']=number_format(round($principalAmount));
-		$output['int']=number_format(round($rate));
-		$output['totalInterest']=number_format(round($totalint));
-		$output['totalWithprincipal']=number_format(round($tp));
-		$output['emi']=number_format(round($mEmi));
+		$output['principle']=round($principalAmount);
+		$output['int']=round($rate);
+		$output['totalInterest']=round($totalint);
+		$output['totalWithprincipal']=round($tp);
+		$output['emi']=round($mEmi);
 		$output['details']=$emi;
 		return $output;
 	}
@@ -2056,6 +2056,7 @@ class Data_model extends CI_Model{
 				
 			}
 			$this->db->insert_batch('loan_recovery_statement',$insertData);
+			
 			if($this->db->trans_status() === FALSE)
 			{
 				$this->db->trans_rollback();

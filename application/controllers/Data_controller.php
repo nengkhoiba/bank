@@ -1478,7 +1478,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($status) ;
 	}
 	
-	
+		
 	
 	/*CUSTOMER DOCUMENT UPLOAD TABLE LOAD -- Written by William*/
 	public function loadCustomerDocUpload()
