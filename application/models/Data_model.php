@@ -1379,7 +1379,7 @@ class Data_model extends CI_Model{
         br.Name as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
         accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
         nomiDis.Name as nominee_district,
-        loanAccRel.Loan_acc as Loan_acc
+        loanAccRel.Loan_acc_no as Loan_acc
         FROM customer cus
         LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
         LEFT JOIN branch br on br.ID=cus.Branch_id
@@ -1389,8 +1389,10 @@ class Data_model extends CI_Model{
         LEFT JOIN district dis on dis.ID=cus.district
         LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
         LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID
-        LEFT JOIN loan_acc_relation loanAccRel on loanAccRel.Acc_no=acc.Acc_no
-        WHERE loanAccRel.IsActive=1 AND loanAccRel.Loan_acc='$loan_acc_no_Indi' ";
+        LEFT JOIN loan_app_details_relation loanAccRel on loanAccRel.Acc_no=acc.Acc_no
+        WHERE loanAccRel.IsActive=1 
+	    AND loanAccRel.Loan_acc_no='$loan_acc_no_Indi'
+	    AND loanAccRel.Loan_status=5";
 	    $query=$this->db->query($sql);
 	    
 	    return $query->result_array();
@@ -1849,12 +1851,12 @@ class Data_model extends CI_Model{
 		if($isGroup==1){
 			$this->db->select('COUNT(ID) AS LoneeCount')
 			->from('loan_app_details_relation')
-			->where(array('IsGroup' => 0));
+			->where(array('IsGroup' => 1));
 			$prefix="GLAN";
 		}else{
 			$this->db->select('COUNT(ID) AS LoneeCount')
 			->from('loan_app_details_relation')
-			->where(array('IsGroup' => 1));
+			->where(array('IsGroup' => 0));
 			$prefix="LAN";
 		}
 		$query = $this->db->get();
