@@ -38,14 +38,14 @@
 			
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
-						<li><a data-toggle="tab" href="#group" class="active show">Group</a></li>
-						<li><a data-toggle="tab" href="#individuals">Individuals</a></li>
+						<li><a data-toggle="tab" href="#group" >Group</a></li>
+						<li><a data-toggle="tab" class="active show" href="#individuals">Individuals</a></li>
 					</ul>
 					</div>
 					<div class="col-md-12">
 
 					<div class="tab-content">
-						<div id="group" class="tab-pane fade active show">
+						<div id="group" class="tab-pane fade ">
 						 <br>
 						 <h5>Group Loan Application</h5>
 						 <br>
@@ -130,7 +130,7 @@
 							  <?php echo form_close() ?>
 						  
 						</div>
-						<div id="individuals" class="tab-pane fade ">
+						<div id="individuals" class="tab-pane fade active show">
 						 <br>
 						 <h5>Individual Loan Application</h5>
 						 <br>

@@ -86,7 +86,6 @@
 										<label class="control-label custome_label"></label>
 								</div>
 								
-								<div hidden>
 								<div class="col-md-12">
 								<br><br>
 									<h5>Assets</h5>
