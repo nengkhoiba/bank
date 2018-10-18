@@ -59,12 +59,14 @@
 									 <select id="loanmaster_tenure_type" name="loanmaster_tenure_type" style="margin-top:10px;" class="form-control" >
 										<!-- List of loan tenure type -->
 									  </select>
+									  <label class="control-label custome_label"></label>
 								</div>
 								<div class="form-group col-md-4 align-self-end">
 									<label class="control-label">Interval value</label>
 								  	<div class="input-group" style="margin-top:10px;">
 										<input class="form-control number" id="loan_tenure_interval_value" name="loan_tenure_interval_value" type="text" placeholder="Interval value">
 									</div>
+									<label class="control-label custome_label"></label>
 								</div>
 								
 								<div class="form-group col-md-4 align-self-end">
@@ -79,11 +81,12 @@
 								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Loan Purpose</label>
 									<textarea  name="loan_purpose" style="margin-top: 10px;"
-										class="form-control "  type="text" id="loan_purpose"
-										placeholder="Loan Purpose"/>
-									</input>
+										class="form-control "  type="text" rows="1" id="loan_purpose"
+										placeholder="Loan Purpose"></textarea>
+										<label class="control-label custome_label"></label>
 								</div>
 								
+								<div hidden>
 								<div class="col-md-12">
 								<br><br>
 									<h5>Assets</h5>
