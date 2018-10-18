@@ -77,6 +77,7 @@
 		        		<td>
 		        		</td>
 		        		<td>
+		        		₹ <?php echo $loan['principle'];?>
 		        		</td>
 		        		<td>
 		        		₹<?php echo $loan['totalInterest'];?>
