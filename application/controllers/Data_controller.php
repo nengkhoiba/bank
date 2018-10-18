@@ -947,7 +947,7 @@ class Data_controller extends CI_Controller {
 	        if(empty($errorMSG)){
 	            
 	            $postType = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
-	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('Name',true) ) );
+	            $branch_name = $this->db->escape_str ( trim ( $this->input->post('branch_name',true) ) );
 				$branch_code = $this->db->escape_str ( trim ( $this->input->post('branch_code',true) ) );
 				$branch_address = $this->db->escape_str ( trim ( $this->input->post('branch_address',true) ) );
 	            
