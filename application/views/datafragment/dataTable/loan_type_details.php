@@ -86,73 +86,7 @@
 										<label class="control-label custome_label"></label>
 								</div>
 								
-								<div class="col-md-12">
-								<br><br>
-									<h5>Assets</h5>
-									<hr>
-								</div>
-									
-									
-									  <div class="">
-					<div data-role="dynamic-fields">
-						<div class="form-inline">
-							<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Asset Name</label>
-									  <input  name="asset_name[]" id="asset_name" style="margin-top: 10px;"
-										class="form-control name"  type="text" placeholder="Asset Name"></input>
-									</div>
-									<div class="form-group col-md-6 align-self-end">
-									  <label class="control-label">Particulars of the properties</label>
-									  <input  name="particular_properties[]" id="particular_properties" style="margin-top: 10px;"
-										class="form-control text_number"  type="text" placeholder="Particular of the properties"></input>
-									</div>
-									<div class="form-group col-md-2 align-self-end">
-									  <label class="control-label">Approx. values (in Rs.)</label>
-									  <input  name="approx_value[]" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="approx_value"
-										placeholder="Tenure length"></input>
-									</div>
-									
-								<div class="form-group col-md-1" style="padding-top: 25px;">
-									<button class="btn btn-danger" data-role="remove">
-										<span class="fa fa-close"></span>
-									</button>
-									<button class="btn btn-primary" data-role="add">
-										<span class="fa fa-plus"></span>
-									</button>
-								</div>
-						</div>  <!-- /div.form-inline -->
-					</div>  <!-- /div[data-role="dynamic-fields"] -->
-				</div>  <!-- /div.col-md-12 -->
-																	
-																	
-									<div class="col-md-12">
-									<br><br>
-										<h5>Guarantor</h5>
-										<hr>
-									</div>
-									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guarantor Name</label>
-									  <input  name="guarantor_name" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="guarantor_name"
-										placeholder="Guranter Name"></input>
-									</div>
-									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guranter Aadhaar No.</label>
-									  <input  name="guarantor_aadhaar" style="margin-top: 10px;"
-										class="form-control number"  type="text" id="guarantor_aadhaar"
-										placeholder="Aadhaar No."></input>
-									</div>
-									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guranter Photo</label>
-									  <input  name="guarantor_photo" style="margin-top: 10px;"
-										class="form-control number"  type="file" id="guarantor_photo"></input>
-									</div>
-									<div class="form-group col-md-3 align-self-end">
-									  <label class="control-label">Guranter ID Proof</label>
-									  <input  name="guarantor_id_proof" style="margin-top: 10px;"
-										class="form-control number"  type="file" id="guarantor_id_proof"></input>
-									</div>
+							
 							</div>
 						
 						

@@ -139,10 +139,7 @@
 			  </div>
 			  <div class="modal-footer">
 				<div class=" col-md-12 align-self-end" align="right">
-
 					<button onclick="addCustomer_to_group()" id="" class="btn btn-sm btn-info" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Add</button>
-
-
 					<button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
 				</div>
 			  </div>
@@ -246,8 +243,7 @@
             $('#selected_member_data_table').DataTable();
       			$('#showSelectedmember').show(); 
             $('#group_details').html(response.Group_details);
-            console.log(response.Group_details);
-
+           
       			$('#gr_id').val(id);
 
             $('#delete_onclick_set').attr('onclick','deleteSelectedMember('+id+')'); 

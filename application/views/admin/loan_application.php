@@ -46,89 +46,47 @@
 
 					<div class="tab-content">
 						<div id="group" class="tab-pane fade ">
+						<div id="model_display"></div>
+						
 						 <br>
 						 <h5>Group Loan Application</h5>
 						 <br>
-							 <?php echo form_open_multipart('',array('id'=>'MasShgmasterForms','class'=>'row'))?>
-								
+							 <?php echo form_open_multipart('',array('id'=>'MasLoanApplicationGropuForms','class'=>'row'))?>
 								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">SHG Group Code</label>
-									<input id="shg_name" name="shg_name" style="margin-top: 10px;"
-									class="form-control text_number" rows="1" type="text" id="shg_name"
-									placeholder="Group Code"></input>
+									<label class="control-label">Search SHG Group</label>
+									<input onkeyup="runAutoCompleteGroupSearch(this.value)"  style="margin-top: 10px;" class="form-control text_number" autocomplete="off" name="groupsearchfield" id="groupsearchfield" type="text" placeholder="Type Group Name/Number" >
 								</div>
 								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">Select Loan type</label>
-									<select class="form-control" style="margin-top: 10px;" id="exampleSelect1">
-									  <option>1</option>
-									  <option>2</option>
-									  <option>3</option>
-									  <option>4</option>
-									  <option>5</option>
-									</select>
+									<button onclick="LoanGroupSearch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
+									&nbsp;&nbsp;&nbsp;
+									<a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasLoanApplicationGropuForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 								</div>
+								<?php echo form_close() ?>
 								
-								<div class="col-md-12 ">
-									<table class="table">
-										<thead>
-										<tr>
-											<th>Loan Name</th>
-											<th>Loan PC</th>
-											<th>Loan PC type</th>
-											<th>Tenure type</th>
-											<th>Tenure Min.</th>				
-											<th>Tenure Max.</th>
-											<th>Min. amount</th>
-											<th>Max. amount</th>
-										</tr>
-										</thead>
-										<tbody>
-											<tr>
-											  <td>Education</td>
-											  <td>15%</td>
-											  <td>PA</td>
-											  <td>Day</td>
-											  <td>30</td>
-											  <td>60</td>
-											  <td>100000</td>
-											  <td>200000</td>
-											</tr>
-										</tbody>
-									</table>
+								 <?php echo form_open_multipart('',array('id'=>'Group_Loan_Details_uploadForm','class'=>'row'))?>
+								<div class="form-group col-md-12 align-self-end" id="LoadGroupApplicationForm">
 								</div>
-								
-								<div class="form-group col-md-4 align-self-end">
-								  <label class="control-label">Loan Amount</label>
-								  	<div class="input-group" style="margin-top:10px;">
-										<div class="input-group-prepend"><span class="input-group-text">$</span></div>
-										<input class="form-control number" id="exampleInputAmount" type="text" placeholder="Loan Amount">
-										<div class="input-group-append"><span class="input-group-text">.00</span></div>
+								<?php echo form_close() ?>
+							  
+							
+							 <div class="row" id="showSelectedmember" style="display:none;">
+								  <div class="clearix"></div>
+									<div class="col-md-12">		
+									  <div class="tile">
+										<div class="tile-title-w-btn">
+										  <h3 class="title"><span id="group_title">Selected group member list.</span></h3>
+										 <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
+										  width: 36px;"><span aria-hidden="true">×</span></button>
+										</div>
+										<div class="tile-body">
+										
+										<div class="" id="group_details"></div>
+										<div class="" id="selected_member_data"></div>
+										</div>
+									  </div>
 									</div>
-									<label class="control-label custome_label">(Rs.100000 to Rs.200000)</label>
-									
-
-									
-								</div>
-								<div class="form-group col-md-4 align-self-end">
-								  <label class="control-label">Tenure length</label>
-								  <input  name="shg_member_count" style="margin-top: 10px;"
-									class="form-control number"  type="text" id="shg_member_count"
-									placeholder="Tenure length"></input>
-									<label class="control-label custome_label">(30 to 60)</label>
-								</div>
-								<div class="form-group align-self-center">
-								 <label class="control-label custome_label">( Days )</label>
-								</div>
-								
-								<div class="form-group col-md-12 align-self-end">
-								  <button onclick="" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Calculate</button>
-								  &nbsp;&nbsp;&nbsp;
-								   <button onclick="" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
-								  &nbsp;&nbsp;&nbsp;
-										  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-								</div>
-							  <?php echo form_close() ?>
-						  
+								  </div>
+							
 						</div>
 						<div id="individuals" class="tab-pane fade active show">
 						 <br>
@@ -404,7 +362,76 @@
   	 });
   	 
       }
-   
+	  
+
+	   function runAutoCompleteGroupSearch(query){
+  	 $('#groupsearchfield').typeahead({
+  		 items: 10,
+  		    source: function(request, response) {
+  		        $.ajax({
+  		            url: "<?php echo site_url('index.php/data_controller/GroupSearchByKeyword?q='); ?>"+query,
+  		            method:"GET",
+  		            dataType: "json",
+  		            success: function (data) {
+  		            response(data);
+  		            }
+  		        });
+   		    },
+//   		   autoselect:true,
+		  
+			afterSelect:function(item){ LoanGroupSearch(item.group_id)},
+			displayText: function(item){ return item.group_code+ " < "+item.group_name+" >";}
+  	 });
+  	 
+      }
+	
+	
+	 function LoanGroupSearch(id)
+    { 
+      var url = "<?php echo site_url('index.php/data_controller/LoadGroupSelected_memberlistForLoan?id='); ?>"+id;
+      StartInsideLoading();
+      $.ajax({
+        type: "get",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+			
+            $('#selected_member_data').html(response.html);
+			$('#group_Loan_Type_Id').html(response.loantype_html);
+      		$('#showSelectedmember').show(); 
+		    $('#group_details').html(response.Group_details);
+            
+
+      			$('#gr_id').val(id);
+
+            $('#delete_onclick_set').attr('onclick','deleteSelectedMember('+id+')'); 
+      			
+			  	
+              
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+   // loadMember_list_group();
+ 
     
    
   

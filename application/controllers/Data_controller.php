@@ -2728,5 +2728,77 @@ class Data_controller extends CI_Controller {
 	    }
 	    echo json_encode($output);
 	}
+
+	/*GROUP LIVE SEARCH -- Written by Riyaj*/
+	public function GroupSearchByKeyword()
+	{
+	    try {
+	        $q =  $this->input->get('q',true);
+	        $output = $this->database->loadGroupDataBySearchKeyword($q);
+	        if ($output == null)
+	        {
+
+	        }
+	       } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    };
+	    
+	    
+	    echo json_encode($output);
+	}
+
+	/*VIEW GROUP DETAILS AND MEMBERS DETAILS BY SEARCH KEYWORD -- Written by Riyaj*/
+	public function searchGroupAccountForLoan()
+	{
+	    try {
+	        $q =  $this->input->post('group_id',true);
+	        if($q == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetGroupMemberBySearchKeyWord($q);
+	            $output = array(
+   	  'group_details_html'=>$this->load->view('datafragment/dataTable/',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+
+
+	/*SELECT GROUP DETAILS AND SELECTED MEMBERS*/
+		public function LoadGroupSelected_memberlistForLoan()
+	{ 	
+		$id =  $this->input->get('id',true);
+		try {
+			$data['result']=$this->database->GetAllSelectedMember($id);  
+			$data['group_details']=$this->database->GetGroupDetails($id);  
+			$data['loantype']=$this->database->GetLoanTypeList();
+
+			$output = array(
+			'loantype_html'=>$this->load->view('datafragment/dropDown/LoanTypeList',$data, true),	
+			'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_for_loan.php',$data,true),
+			'Group_details'=>$this->load->view('datafragment/dataTable/Group_details_for_loan_app.php',$data,true),
+	        'success' =>true
+	    	);
+		} catch (Exception $ex) {
+            $output = array(
+	        'msg'=> $ex->getMessage(),
+	        'success' => false
+	    	);
+        }
+    	 echo json_encode($output);
+	}
 	
 }

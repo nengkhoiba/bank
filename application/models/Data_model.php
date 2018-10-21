@@ -2136,5 +2136,54 @@ class Data_model extends CI_Model{
 	}
 
 
+
+//Group Live Search from this query
+    function loadGroupDataBySearchKeyword($q)
+    {
+       $sql="SELECT shg_master.ID AS group_id, shg_master.Group_name  AS group_name, shg_master.Group_code  AS group_code  FROM shg_master
+            WHERE shg_master.Group_name like '%$q%'
+            OR shg_master.Group_code like '%$q%'
+            AND shg_master.Branch_id='1'
+            AND shg_master.IsActive='1'
+           LIMIT 10
+            ";
+        $query=$this->db->query($sql);
+        
+        return $query->result_array();
+    }
+
+    /*GET GROUP DETAILS AND MEMBER DATA  -- Written by Riyaj */
+	function GetGroupMemberBySearchKeyWord($accNo,$tabName)
+	{
+	    $sql = "SELECT cus.ID as ID,cus.name 
+	    		as name,cus.Added_on 
+	    		as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
+       				 urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no 
+		        as accNo,br.Name 
+        		as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
+        accSt.ID 
+        		as status, accSt.Name 
+        		as accStatus, cusDoc.files 
+        		as photo, genMas.Name 
+        		as sex, dis.Name 
+        		as district,nomiDis.Name 
+        		as nominee_district 
+        		FROM $tabName cus
+        LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+        LEFT JOIN branch br on br.ID=cus.Branch_id
+        LEFT JOIN account_status accSt on accSt.ID=cus.status
+        LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+        LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+        LEFT JOIN district dis on dis.ID=cus.district
+        LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID 
+
+        WHERE acc.IsActive=1 AND acc.Acc_no=$accNo ";
+	    $query=$this->db->query($sql);
+	    return $query->result_array();
+	}
+
+
 }
     
