@@ -22,7 +22,7 @@
                 <td><?php echo $mem_data['aadhaar_no']?></td>
                 <td><?php echo $mem_data['district']?></td>
                 <td>
-            	<button onclick="addDocForm($(this))" value="<?php echo $mem_data['ID']?>"  class="btn btn-sm btn-danger"$("#imgThumb").attr("src",base_url+"assets/img/NoImage.png"); style="" type="button">Upload Document</button>
+            	<button onclick="addDocForm($(this))" value="<?php echo $mem_data['ID']?>"  class="btn btn-sm btn-success" type="button">Upload Document</button>
             	
 				</td>
 				</tr>

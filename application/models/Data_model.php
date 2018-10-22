@@ -1560,20 +1560,21 @@ class Data_model extends CI_Model{
 		 loan_master.Tenure_max,
 		 loan_master.Min_amount,
 		 loan_master.Max_amount,
-		 loan_calculation_type.Name as Loan_calculation_type,
+         loan_master.Loan_calculation_type,
+		 loan_calculation_type.Name as Loan_calculation_type_name,
 		 pc_type_master.ID as loan_pc_master_id,
 		 pc_type_master.Name as pc_type_name, 
 		 tenure_type_master.Name as tenure_type_name,
 		 tenure_type_master.ID as tenure_type_master_id
-				FROM loan_master
-				LEFT JOIN pc_type_master
-				ON loan_master.Loan_pc_type = pc_type_master.ID
-				LEFT JOIN tenure_type_master
-				ON loan_master.Tenure_type= tenure_type_master.ID
-                LEFT JOIN loan_calculation_type
-				ON loan_calculation_type.ID= loan_master.Loan_calculation_type
-
-				WHERE loan_master.ID='$loan_type_id'";
+    		FROM loan_master
+    		LEFT JOIN pc_type_master
+    		ON loan_master.Loan_pc_type = pc_type_master.ID
+    		LEFT JOIN tenure_type_master
+    		ON loan_master.Tenure_type= tenure_type_master.ID
+            LEFT JOIN loan_calculation_type
+    		ON loan_calculation_type.ID= loan_master.Loan_calculation_type
+    
+    		WHERE loan_master.ID='$loan_type_id'";
 	    $query=$this->db->query($sql);
 	    
 	   return $query->result_array();
@@ -2183,6 +2184,74 @@ class Data_model extends CI_Model{
 	    $query=$this->db->query($sql);
 	    return $query->result_array();
 	}
+	
+	
+	function GetAllSelectedMemberForLoanDocUpload($id)
+	{
+	    //data is retrive from this query
+	    $sql="  SELECT customer.ID,
+   				customer.name,
+   				customer.aadhaar_no,
+   				customer.parmanent_address,
+   				customer.contact_no,
+   				customer_account.Acc_no,
+   				district.name AS district,
+                shg_master.Group_name,
+                group_customer_member.ID AS group_id,
+                loan_app_details_relation.Loan_acc_no
+		        FROM customer
+		        
+		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
+		   		LEFT JOIN group_customer_member ON  group_customer_member.Acc_no=customer_account.Acc_no
+		   		LEFT JOIN district ON district.ID =customer.district
+		   		LEFT JOIN shg_master ON shg_master.ID  = group_customer_member.Group_id
+                LEFT JOIN loan_app_details_relation  ON loan_app_details_relation.Acc_no  = customer_account.Acc_no
+		   		
+		   		WHERE group_customer_member.Group_id='$id'
+		   		
+		   		";
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+	}
+	
+	/*GET CUSTOMER DATA  -- Written by William */
+	function GetCustomerRecordByLAN($id,$tabName)
+	{
+	    $sql = "SELECT cus.ID as ID,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
+        urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
+        nominee_rural,nominee_urban,nominee_district,nominee_contact_no, cusAcc.Acc_no as accNo,
+        br.Name as branchName, br.Branch_address as Branch_address, br.Branch_code as Branch_code,
+        accSt.ID as status, accSt.Name as accStatus, cusDoc.files as photo, genMas.Name as sex, dis.Name as district,
+        loan_app_details_relation.Loan_master_id as Loan_master_id, nomiDis.Name as nominee_district, loan_app_details_relation.Loan_acc_no as Loan_acc_no
+        FROM $tabName cus
+        LEFT JOIN customer_account acc on acc.Cus_ID=cus.ID
+        LEFT JOIN branch br on br.ID=cus.Branch_id
+        LEFT JOIN account_status accSt on accSt.ID=cus.status
+        LEFT JOIN customer_document cusDoc on cusDoc.Cus_id=cus.ID
+        LEFT JOIN gender_master genMas on genMas.ID=cus.sex
+        LEFT JOIN district dis on dis.ID=cus.district
+        LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
+        LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID
+        LEFT JOIN loan_app_details_relation  ON loan_app_details_relation.Acc_no  = cusAcc.Acc_no
+        WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no='$id' ";
+	    
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
+	
+	
+	function GetDocRecordByLAN($id)
+	{
+	    $sql =  "SELECT loanDoc.ID as ID, loanDocType.name as doc_type, loanDoc.file_type as file_type, loanDoc.Added_by as Added_by, loanDoc.Added_on as Added_on, loanDoc.files as files
+                FROM loan_document loanDoc
+                LEFT JOIN loan_app_details_relation on loan_app_details_relation.Loan_master_id=loanDoc.loan_master_id
+                LEFT JOIN loan_document_type loanDocType on loanDocType.ID=loanDoc.doc_type
+                WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no = '$id'";
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	} 
 
 
 }

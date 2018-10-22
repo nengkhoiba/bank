@@ -25,7 +25,7 @@
 				<td><?php echo $result[0]['Tenure_max'];?></td>
                 <td><?php echo $result[0]['Min_amount'];?></td>
 				<td><?php echo $result[0]['Max_amount'];?></td>	
-				<td><?php echo $result[0]['Loan_calculation_type'];?></td>			
+				<td><?php echo $result[0]['Loan_calculation_type_name'];?></td>			
             </tr>
         </tbody>
        
@@ -81,7 +81,7 @@
 								<div class="form-group col-md-4 align-self-end">
 								  <label class="control-label">Loan Purpose</label>
 									<textarea  name="loan_purpose" style="margin-top: 10px;"
-										class="form-control "  type="text" rows="1" id="loan_purpose"
+										class="form-control " rows="1" id="loan_purpose"
 										placeholder="Loan Purpose"></textarea>
 										<label class="control-label custome_label"></label>
 								</div>

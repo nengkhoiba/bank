@@ -2801,4 +2801,81 @@ class Data_controller extends CI_Controller {
     	 echo json_encode($output);
 	}
 	
+	/*SELECT GROUP DETAILS AND SELECTED MEMBERS FOR UPLOAD LOAN DOCUMENT*/
+	public function LoadGroupSelected_memberlistForUploadLoanDoc()
+	{
+	    $id =  $this->input->get('id',true);
+	    try {
+	        $data['result']=$this->database->GetAllSelectedMemberForLoanDocUpload($id);
+	        $data['group_details']=$this->database->GetGroupDetails($id);
+	        
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_for_loan_doc_table.php',$data,true),
+	            'Group_details'=>$this->load->view('datafragment/dataTable/Group_details_for_loan_app.php',$data,true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	/*ADD CUSTOMER DOCUMENT -- Written by William*/
+	public function AddLoanDocUploadForm()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetCustomerRecordByLAN($Id,'customer');
+	            $data1 = $this->database->GetDocRecordByLAN($Id);
+	            $output = array(
+	                'json'=>$data,
+	                'json1'=>$data1,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	public function loadLoanDocType()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data['result'] = $this->database->GetSelectListById($Id,'Loan_master_id','loan_document_type');
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/dropDown/Select_loanDocList',$data, true),
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
 }
