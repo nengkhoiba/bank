@@ -92,7 +92,7 @@
              { 
             $('#accountgrp_table').html(response.html);
               $('#accountgrp').DataTable();
-              
+              $('#formContainer').show();
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -196,8 +196,9 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#formContainer').hide(); 
+				   loadAccountGrpUnder();
 				   loadAccountGrp();
+				  
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
