@@ -519,6 +519,60 @@ class Account_model extends CI_Model
 		return $return;
 	}
 	
+function getTransactionReportList($transNature,$branch,$ledger,$voucher,$user,$AccountStatus,$dateFrom,$dateTo){
+		$Acc_nature="";
+		switch($transNature){
+				
+			case 'I':
+				$Acc_nature="2";//Income
+				break;
+			case 'E':
+				$Acc_nature="3,1";//Expenses
+				
+				break;
+			case 'R':
+				$Acc_nature="1";//Recievable
+				break;
+	
+		}
+		$dateFrom=date("Y-m-d", strtotime($dateFrom));
+		$dateTo=date("Y-m-d", strtotime($dateTo));
+		$sql="SELECT
+		transaction_footer.Voucher_no,
+		transaction_footer.Acc_no,
+		transaction_footer.Amount,
+		transaction_header.Naration,
+		transaction_footer.Added_on,
+		emp.Name,
+		account_ledger.Ledger
+	
+		FROM transaction_footer
+		LEFT JOIN transaction_header ON transaction_header.Voucher_no=transaction_footer.Voucher_no
+		LEFT JOIN account_ledger ON account_ledger.ID=transaction_footer.Ledger_id
+		LEFT JOIN account_group ON account_group.ID=account_ledger.Group_ID
+		LEFT JOIN emp ON emp.ID=transaction_footer.Added_by
+	
+		WHERE
+	
+		transaction_footer.IsActive=1
+		AND transaction_header.IsActive=1
+		AND transaction_header.Transaction_type=CASE WHEN '$voucher'!='' THEN '$voucher' ELSE transaction_header.Transaction_type END
+		AND transaction_header.IsClosed=CASE WHEN '$AccountStatus'!='3' THEN '$AccountStatus' ELSE transaction_header.IsClosed END
+		AND transaction_footer.Ledger_id=CASE WHEN '$ledger'!='' THEN '$ledger' ELSE transaction_footer.Ledger_id END
+		AND transaction_footer.Ledger_type=CASE WHEN transaction_header.Transaction_type !='C' THEN 'DR' ELSE 'CR' END
+		AND DATE(transaction_footer.Added_on) BETWEEN '$dateFrom' AND '$dateTo' 
+		AND transaction_footer.Added_by=CASE WHEN '$user'!='' THEN '$user' ELSE transaction_footer.Added_by END
+		AND account_group.Group_nature IN ($Acc_nature)
+		AND transaction_footer.Branch_id=CASE WHEN '$branch' !='' THEN '$branch' ELSE transaction_footer.Branch_id END
+		AND transaction_footer.ID=CASE WHEN '$transNature'!='E' THEN 
+		CASE WHEN '$transNature'!='R' THEN transaction_footer.ID ELSE
+		CASE WHEN transaction_header.Transaction_type='R' THEN transaction_footer.ID ELSE 0 END 
+		END
+		ELSE CASE WHEN transaction_header.Transaction_type='P' THEN transaction_footer.ID ELSE 0 END END 
+		";
+		$query=$this->db->query($sql);
+		return $query->result_array();
+	}
 	
 	
 }

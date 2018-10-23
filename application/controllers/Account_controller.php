@@ -400,6 +400,44 @@ class Account_controller extends CI_Controller {
     	}
     	echo json_encode($status) ;
     }
+    
+function getTransactionReport(){
+    	$_POST = json_decode(trim(file_get_contents('php://input')), true);
+    	try {
+    		$branch = $this->db->escape_str ( trim ( $this->input->post('branch_list',true) ) );
+    		$ledger = $this->db->escape_str ( trim ( $this->input->post('account_ledger',true) ) );
+    		$voucher = $this->db->escape_str ( trim ( $this->input->post('voucher_type',true) ) );
+    		$user = $this->db->escape_str ( trim ( $this->input->post('user_name',true) ) );
+    		$AccountStatus = $this->db->escape_str ( trim ( $this->input->post('acc_status',true) ) );
+    		$dateFrom = $this->db->escape_str ( trim ( $this->input->post('from_date',true) ) );
+    		$dateTo = $this->db->escape_str ( trim ( $this->input->post('to_date',true) ) );
+    		 if($dateFrom==""){
+    		 	$date = new \Datetime('now');
+    		 	$dateFrom=date('Y-m-d',now());
+    		 }
+    		 if($dateTo==""){
+    		 	$date = new \Datetime('now');
+    		 	$dateTo=date('Y-m-d',now());
+    		 }
+    		$data['from']=$dateFrom;
+    		$data['to']=$dateTo;
+    		$data['Income']=$this->account->getTransactionReportList("I",$branch,$ledger,$voucher,$user,$AccountStatus,$dateFrom,$dateTo);
+    		$data['Expense']=$this->account->getTransactionReportList("E",$branch,$ledger,$voucher,$user,$AccountStatus,$dateFrom,$dateTo);
+    		$data['Receivable']=$this->account->getTransactionReportList("R",$branch,$ledger,$voucher,$user,$AccountStatus,$dateFrom,$dateTo);
+    		 
+    		$output = array(
+    				'html'=>$this->load->view('datafragment/dataTable/transaction_report',$data, true),
+    				'success' =>true
+    		);
+    	} catch (Exception $ex) {
+    		$output = array(
+    				'msg'=> $ex->getMessage(),
+    				'success' => false
+    		);
+    	}
+    	echo json_encode($output);
+    	 
+    }
 	
 	
 }
