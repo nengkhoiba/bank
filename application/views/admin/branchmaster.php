@@ -188,7 +188,7 @@
         var dataString = JSON.stringify(formData);
         var url = '<?php echo base_url();?>index.php/data_controller/updateBranch';
         StartInsideLoading();
-		 $.ajax({
+		  $.ajax({
 		  type: "post",
 		  url: url,
 		  cache: false,    

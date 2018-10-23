@@ -2896,4 +2896,49 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	/*Loan Master Document Type Load*/
+	public function searchLoanMasterDocType()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    try {        
+	                $loan_type = $this->db->escape_str ( trim ( $this->input->post('loan_type',true) ) );	            
+	                $data['result'] = $this->database->getLoanMasterDocType($loan_type);
+	                $output = array(
+	                    'html'=>$this->load->view('datafragment/dataTable/LoanMasterDocType_table',$data, true),
+	                    'success' =>true
+	                );	
+	                
+	    } catch (Exception $ex) {
+	               $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($output) ;
+	}
+	
+	/*LOAN DOCUMENT TYPE EDIT SECTION*/
+	public function EditLoanDocType()
+	{
+	    try {
+	        $Id =  $this->input->post('reqId',true);
+	        if($Id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->GetRecordById($Id,'loan_document_type');
+	            $output = array(
+	                'json'=>$data,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
 }

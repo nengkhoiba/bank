@@ -2270,6 +2270,12 @@ class Data_model extends CI_Model{
 	    
 	    return $query->result_array();
 	}
+	
+	function getLoanMasterDocType($loan_type_id)
+	{
+	    $query = $this->db->get_where('loan_document_type', array('Loan_master_id' => $loan_type_id));
+	    return $query->result_array();
+	}
 
 }
     
