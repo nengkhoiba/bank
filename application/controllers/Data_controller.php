@@ -2851,7 +2851,7 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
-	
+	/*ADD CUSTOMER DOCUMENT -- Written by William*/
 	public function loadLoanDocType()
 	{
 	    try {
@@ -2877,5 +2877,23 @@ class Data_controller extends CI_Controller {
 	    echo json_encode($output);
 	}
 	
+	
+	/*LOAN TYPE DROPDOWN -- Written by William*/
+	public function loadLoanType()
+	{
+	    try {
+	            $data['loantype']=$this->database->GetLoanTypeList();
+	            $output = array(
+	                'html'=>$this->load->view('datafragment/dropDown/LoanTypeList',$data, true),
+	                'success' =>true
+	            );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
 	
 }

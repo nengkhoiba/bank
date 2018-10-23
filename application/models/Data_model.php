@@ -2141,10 +2141,11 @@ class Data_model extends CI_Model{
 //Group Live Search from this query
     function loadGroupDataBySearchKeyword($q)
     {
+       $branch_id = $GLOBALS['branch_id'];
        $sql="SELECT shg_master.ID AS group_id, shg_master.Group_name  AS group_name, shg_master.Group_code  AS group_code  FROM shg_master
             WHERE shg_master.Group_name like '%$q%'
             OR shg_master.Group_code like '%$q%'
-            AND shg_master.Branch_id='1'
+            AND shg_master.Branch_id='$branch_id'
             AND shg_master.IsActive='1'
            LIMIT 10
             ";
@@ -2253,6 +2254,22 @@ class Data_model extends CI_Model{
 	    return $query->result_array();
 	} 
 
+	
+	//Loan master live search from this query
+	function loadLoanMasterDataBySearchKeyword($q)
+	{
+	    $branch_id = $GLOBALS['branch_id'];
+	    $sql="SELECT ID,Loan_name FROM loan_master
+            WHERE Loan_name like '%$q%'
+            OR ID like '%$q%'
+            AND Branch_id='$branch_id'
+            AND IsActive='1'
+           LIMIT 10
+            ";
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
 
 }
     

@@ -50,6 +50,7 @@
 							<div class="form-group col-md-3 align-self-end">
 								<label class="control-label">Account Status</label>
 								<select class="form-control" style="margin-top: 10px;" name="acc_status" id="acc_status">
+									<option value="">- Select -</option>
 									<option value="0">OPEN</option>
 									<option value="1">CLOSED</option>
 									<option value="3">ALL</option>
@@ -68,7 +69,7 @@
 							<div class="form-group col-md-3 align-self-end">
                   <button onclick="SearchReport()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
                   &nbsp;
-                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasBranchForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#TranReportForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;<a id="btn_print" class="btn btn-sm btn-secondary" href="#" onclick="printReport()"><i class="fa fa-fw fa-lg fa-print"></i>Print</a>
                 </div>
 							<?php echo form_close() ?> 
@@ -148,7 +149,8 @@
         try{  
           if (response.success)
             {
-        		$('#report_table').html(response.html);             
+        		$('#report_table').html(response.html);
+        		$('#transaction_report_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});             
             } else
              { 
                  SetWarningMessageBox('warning', response.msg);                

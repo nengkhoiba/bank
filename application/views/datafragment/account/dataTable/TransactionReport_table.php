@@ -8,19 +8,7 @@ $totalExpense=0;
 $totalRecievable=0
 ?>
 
-<table class="table table-hover table-striped">
-		<thead>
-            <tr>
-            	<th>INCOME</th>
-            	<th></th>
-                <th></th>
-				<th></th>
-				<th></th> 
-				<th></th>             
-                <th></th>
-				<th></th>
-            </tr>
-        </thead>
+<table id="transaction_report_table" class="table table-hover table-striped">
         <thead>
             <tr>
             	<th>Sl No</th>
@@ -31,6 +19,18 @@ $totalRecievable=0
 				<th>User</th>             
                 <th>Ledger</th>
 				<th>Amount</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+            	<th>INCOME</th>
+            	<th></th>
+                <th></th>
+				<th></th>
+				<th></th> 
+				<th></th>             
+                <th></th>
+				<th></th>
             </tr>
         </thead>
         <tbody>

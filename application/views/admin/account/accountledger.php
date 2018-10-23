@@ -88,7 +88,7 @@ function loadAccountLedger()
           if (response.success)
              { 
             $('#accountledger_table').html(response.html);
-              $('#accountledger').DataTable();
+              $('#accountledger').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               
              } else
              { 

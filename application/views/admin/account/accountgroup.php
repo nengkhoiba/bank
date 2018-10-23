@@ -91,7 +91,7 @@
           if (response.success)
              { 
             $('#accountgrp_table').html(response.html);
-              $('#accountgrp').DataTable();
+              $('#accountgrp').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
               $('#formContainer').show();
              } else
              { 

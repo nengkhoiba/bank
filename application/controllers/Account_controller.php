@@ -426,7 +426,7 @@ function getTransactionReport(){
     		$data['Receivable']=$this->account->getTransactionReportList("R",$branch,$ledger,$voucher,$user,$AccountStatus,$dateFrom,$dateTo);
     		 
     		$output = array(
-    				'html'=>$this->load->view('datafragment/dataTable/transaction_report',$data, true),
+    				'html'=>$this->load->view('datafragment/account/dataTable/TransactionReport_table',$data, true),
     				'success' =>true
     		);
     	} catch (Exception $ex) {
