@@ -268,6 +268,7 @@
     		  cache: false,    
     		  data: {reqId:$reqestId},
     		  dataType: 'json',
+    		  async: false,
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
@@ -300,6 +301,7 @@
     		  cache: false,    
     		  data: {reqId:$reqestId},
     		  dataType: 'json',
+    		  async: false,
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
@@ -433,6 +435,7 @@
         url: url,
         cache: false,   
         dataType: 'json', 
+        async: false,
         success: function(response){ 
         try{  
           if (response.success)
