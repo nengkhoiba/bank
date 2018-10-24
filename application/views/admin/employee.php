@@ -41,13 +41,13 @@
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Country</label>
-                  	<select onchange="loadState($(this))" id="employee_country" name="employee_country" style="margin-top:10px;" class="form-control" >
+                  	<select onchange="loadState(this.value)" id="employee_country" name="employee_country" style="margin-top:10px;" class="form-control" >
                         <!-- List of country -->
                   	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">State</label>
-                  	<select onchange="loadCity($(this))" id="employee_state" name="employee_state" style="margin-top:10px;" class="form-control" >
+                  	<select onchange="loadCity(this.value)" id="employee_state" name="employee_state" style="margin-top:10px;" class="form-control" >
                   	     <option class="form-control" value="">- Select -</option>
                   	     <!-- List of state -->
                   	</select>
@@ -188,6 +188,9 @@
     		$('#postType').val(0);
     		$('#employee_name').val('');
     		$('#employee_address').val('');
+    		loadCountry();
+    		loadState(0);
+    		loadCity(0);
     		loadDropDown('','district','#employee_district');
 			$('#employee_pincode').val('');
 			loadDropDown('','designation','#employee_designation');
@@ -218,13 +221,13 @@
     		    		$('#employee_address').val(response.json[0].address);
     		    		$('#employee_country').val(response.json[0].country);
 
-    		    		loadStateUpdate(response.json[0].country); 
+    		    		loadState(response.json[0].country); 
 //     		    		creating drop down list by sending country ID
 
     		    		$('#employee_state').val(response.json[0].state);
 //     		    		selected previous state ID value
     		    		
-    		    		loadCityUpdate(response.json[0].state);
+    		    		loadCity(response.json[0].state);
 //     		    		creating drop down list by sending state ID
 
     		    		$('#employee_city').val(response.json[0].city);
@@ -258,71 +261,6 @@
     	}
     } 
 
-    function loadStateUpdate($select){  
-    	$reqestId =  $select; 
-    	var url = '<?php echo base_url();?>index.php/data_controller/loadState';
-    	StartInsideLoading();
-    	$.ajax({
-    		  type: "post",
-    		  url: url,
-    		  cache: false,    
-    		  data: {reqId:$reqestId},
-    		  dataType: 'json',
-    		  async: false,
-    		  success: function(response){   
-    		  try{  	 
-    			   if (response.success)
-    	           { 	
-    				 $('#employee_state').html(response.html);
-    	           } else
-    	           { 
-    	               SetWarningMessageBox('warning', response.msg);
-    	           }
-    		 StopInsideLoading();
-    		  }catch(e) {  
-    			  SetWarningMessageBox('warning', e);
-    			  StopInsideLoading();
-    		  }  
-    		  },
-    		  error: function(){      
-    			  SetWarningMessageBox('warning', 'Error while request..');
-    			  StopInsideLoading();
-    		  }
-    		 });
-    } 
-
-    function loadCityUpdate($select){  
-    	$reqestId =  $select; 
-    	var url = '<?php echo base_url();?>index.php/data_controller/loadCity';
-    	StartInsideLoading();
-    	$.ajax({
-    		  type: "post",
-    		  url: url,
-    		  cache: false,    
-    		  data: {reqId:$reqestId},
-    		  dataType: 'json',
-    		  async: false,
-    		  success: function(response){   
-    		  try{  	 
-    			   if (response.success)
-    	           { 	
-    				 $('#employee_city').html(response.html);
-    	           } else
-    	           { 
-    	               SetWarningMessageBox('warning', response.msg);
-    	           }
-    		 StopInsideLoading();
-    		  }catch(e) {  
-    			  SetWarningMessageBox('warning', e);
-    			  StopInsideLoading();
-    		  }  
-    		  },
-    		  error: function(){      
-    			  SetWarningMessageBox('warning', 'Error while request..');
-    			  StopInsideLoading();
-    		  }
-    		 });
-    }
     
     function updateEmp(){  
     	if ($('#employee_name').val().trim() == '') { 
@@ -462,8 +400,7 @@
     loadCountry();
 
 
-    function loadState($select){  
-    	$reqestId =  $select.val(); 
+    function loadState($reqestId){ 
     	var url = '<?php echo base_url();?>index.php/data_controller/loadState';
     	StartInsideLoading();
     	$.ajax({
@@ -472,11 +409,13 @@
     		  cache: false,    
     		  data: {reqId:$reqestId},
     		  dataType: 'json',
+    		  async: false,
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
     	           { 	
     				 $('#employee_state').html(response.html);
+    				 loadCity(0);
     	           } else
     	           { 
     	               SetWarningMessageBox('warning', response.msg);
@@ -494,8 +433,7 @@
     		 });
     } 
 
-    function loadCity($select){  
-    	$reqestId =  $select.val(); 
+    function loadCity($reqestId){
     	var url = '<?php echo base_url();?>index.php/data_controller/loadCity';
     	StartInsideLoading();
     	$.ajax({
@@ -504,6 +442,7 @@
     		  cache: false,    
     		  data: {reqId:$reqestId},
     		  dataType: 'json',
+    		  async: false,
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
