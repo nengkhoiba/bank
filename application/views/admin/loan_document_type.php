@@ -219,7 +219,6 @@ function UpdateLoanMasterDocType(){
      if (response.success)
          { 
        SetSucessMessageBox('Success', response.msg);
-       $('#formContainer').hide();
        searchLoanMasterDocType(response.loan_type);
          } else
          { 
