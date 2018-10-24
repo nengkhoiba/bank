@@ -2,7 +2,7 @@
 		<h3 class="title">Existing Document Type</h3>
 		<p class="bs-component">	
             <a onclick="addLoanMasterDocTypeform($(this))" value="0" style="color:#fff" class="btn btn-sm btn-success">New</a>
-            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('loan_document_type','loadDesignnation()')">Delete</button>
+            <button class="btn btn-sm btn-danger" type="button" onclick="deleteItem('loan_document_type','searchLoanMasterDocType(<?php if(!$result) {echo "";} else {echo $result[0]['Loan_master_id'];}?>)')">Delete</button>
         </p>
 		</div>
 		

@@ -23,22 +23,13 @@
 						<br>
 							<h5>Loan Document Type</h5>
 						<br>
-						 <?php echo form_open_multipart('',array('id'=>'MasLoanTypeForm','class'=>'row'))?>
                 
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select Loan Type</label>
-                  	<select id="loan_type" name="loan_type" style="margin-top:10px;" class="form-control" >
+                  	<select onchange="searchLoanMasterDocType(this.value)" id="loan_type" name="loan_type" style="margin-top:10px;" class="form-control" >
                         <!-- List of loan -->
                   	</select>
                 </div>
-                
-               
-                <div class="form-group col-md-4 align-self-end">
-                  <button onclick="searchLoanMasterDocType()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
-                  &nbsp;&nbsp;&nbsp;
-                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasLoanTypeForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-                </div>
-              <?php echo form_close() ?>
               
               <div class="row" id="formContainer" style="display:none;">
       <div class="clearix"></div>
@@ -52,6 +43,7 @@
             </div>
             
             <?php echo form_open_multipart('',array('id'=>'LoanMasterDocTypeForm','class'=>'row'))?>
+            <input id="loanType" name="loanType" type="hidden">
             	<input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Document Type</label>
@@ -61,7 +53,7 @@
                 </div>               
                 
                 <div class="form-group col-md-4 align-self-end">
-                  <button onclick="UpdateDocument()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
+                  <button onclick="UpdateLoanMasterDocType()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Submit</button>
                   &nbsp;&nbsp;&nbsp;
                   <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#LoanMasterDocTypeForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
                 &nbsp;&nbsp;&nbsp;
@@ -122,30 +114,22 @@ function loadLoanType(){
 loadLoanType();
 
 
-function searchLoanMasterDocType(){  
-
-	if ($('#loan_type').val().trim() == '') { 
-        SetWarningMessageBox('warning', 'Loan type is mandatory !');
-        $('#loan_type').focus();
-        return;
-    }
-   
-    var formData = $('form#MasLoanTypeForm').serializeObject();
-    var dataString = JSON.stringify(formData);
-	 
+function searchLoanMasterDocType($reqestId){  
 	var url = '<?php echo base_url();?>index.php/data_controller/searchLoanMasterDocType';
 	StartInsideLoading();
 	$.ajax({
 		  type: "post",
 		  url: url,
 		  cache: false,    
-		  data: dataString,
+		  data: {loan_type:$reqestId},
 		  dataType: 'json',
 		  success: function(response){   
 		  try{  	 
 			   if (response.success)
-	           { 
+	           {
+				$('#docTypeForm').hide(); 
 				$('#formContainer').show();
+				$('#loanType').val(response.loanType);
    				$('#loanMasterDocType').html(response.html);
    				$('#loanMasterDocTypeTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
 	           } else
@@ -212,21 +196,16 @@ function addLoanMasterDocTypeform($btn){
 } 
 
 
-function UpdateDesignation(){ 
-	if ($('#design_title').val().trim() == '') { 
-        SetWarningMessageBox('warning', 'Title is mandatory !');
-        $('#design_title').focus();
+function UpdateLoanMasterDocType(){ 
+	if ($('#document_type').val().trim() == '') { 
+        SetWarningMessageBox('warning', 'Document type is mandatory !');
+        $('#document_type').focus();
         return;
     }
-	if ($('#design_title').val().trim() == '') { 
-        SetWarningMessageBox('warning', 'Description is mandatory !');
-        $('#design_title').focus();
-        return;
-    }
-   
-    var formData = $('form#MasDesignForms').serializeObject();
+	   
+    var formData = $('form#LoanMasterDocTypeForm').serializeObject();
     var dataString = JSON.stringify(formData);
-    var url = '<?php echo base_url();?>index.php/data_controller/UpdateDesignation';
+    var url = '<?php echo base_url();?>index.php/data_controller/UpdateLoanDocType';
     
  StartInsideLoading();
  $.ajax({
@@ -241,7 +220,7 @@ function UpdateDesignation(){
          { 
        SetSucessMessageBox('Success', response.msg);
        $('#formContainer').hide();
-       loadDesignnation();
+       searchLoanMasterDocType(response.loan_type);
          } else
          { 
              SetWarningMessageBox('warning', response.msg);

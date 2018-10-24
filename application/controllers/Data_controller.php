@@ -2899,14 +2899,21 @@ class Data_controller extends CI_Controller {
 	/*Loan Master Document Type Load*/
 	public function searchLoanMasterDocType()
 	{
-	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
-	    try {        
-	                $loan_type = $this->db->escape_str ( trim ( $this->input->post('loan_type',true) ) );	            
+	    try { 	        
+	        $loan_type =  $this->input->post('loan_type',true);
+	        if($loan_type == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{	            
 	                $data['result'] = $this->database->getLoanMasterDocType($loan_type);
 	                $output = array(
+	                    'loanType'=>$loan_type,
 	                    'html'=>$this->load->view('datafragment/dataTable/LoanMasterDocType_table',$data, true),
 	                    'success' =>true
 	                );	
+	        }
 	                
 	    } catch (Exception $ex) {
 	               $status = array("success" => false,"msg" => $ex->getMessage());
@@ -2939,6 +2946,58 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
+	}
+	
+	/*LOAN DOCUMENT TYPE ADD AND UPDATE*/
+	public function UpdateLoanDocType()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* document type validation */
+	        if (empty($this->input->post('document_type',true))) {
+	            $errorMSG = " Title is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $postype = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            $loan_type = $this->db->escape_str ( trim ( $this->input->post('loanType',true) ) );
+	            $document_type = $this->db->escape_str ( trim ( $this->input->post('document_type',true) ) );
+	            
+	            if($postype==0){
+	                $result = $this->database->addLoanDocTypeModel($loan_type, $document_type);
+	                if($result['code'] == 1){
+	                    $status = array(
+	                        "success" => true,
+	                        "msg" => "Save sucessfull!",
+	                        "loan_type" => $loan_type
+	                    );
+	                }else{
+	                    $status = array("success" => false,"msg" => "Fail to save !!!");
+	                }
+	            }else{
+	                $result = $this->database->updateLoanDocTypeModel($loan_type, $document_type, $postype);
+	                if($result['code'] == 1)
+	                {
+	                    $status = array("success" => true,"msg" => "Update sucessfull!","loan_type" => $loan_type);
+	                }
+	                else
+	                {
+	                    $status = array("success" => false,"msg" => "Fail to Update !!!");
+	                }
+	            }
+	            
+	            
+	            
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
 	}
 	
 }

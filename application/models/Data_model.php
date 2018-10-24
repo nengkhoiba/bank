@@ -2273,9 +2273,72 @@ class Data_model extends CI_Model{
 	
 	function getLoanMasterDocType($loan_type_id)
 	{
-	    $query = $this->db->get_where('loan_document_type', array('Loan_master_id' => $loan_type_id));
+	    $sql =  "SELECT loan_document_type.Name, loan_document_type.Added_on, loan_document_type.ID, emp.Name as Added_by, loan_document_type.Loan_master_id
+                FROM loan_document_type
+                LEFT JOIN emp on emp.ID=loan_document_type.Added_by
+                WHERE loan_document_type.IsActive=1 AND loan_document_type.Loan_master_id = $loan_type_id";
+	    
+	    $query=$this->db->query($sql);
+	    
 	    return $query->result_array();
 	}
+	
+	/*LOAN MASTER DOCUMENT TYPE DATA ADD */
+	function addLoanDocTypeModel($loan_type, $document_type )
+	{
+	    $this->db->trans_begin();
+	    $data = array(
+	        'Name'	=>  $document_type,
+	        'Loan_master_id'	=>  $loan_type,
+	        'Added_by' =>$GLOBALS['Added_by'],
+	        'Added_on' =>$GLOBALS['NOW'],
+	        'Modified_by'=>$GLOBALS['Added_by'],
+	        'Modified_on'=>$GLOBALS['NOW'],
+	        'IsActive'=>  1,
+	    );
+	    
+	    $this->db->insert('loan_document_type', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new loan document type", "Document type ".$document_type." is added to loan master ID ".$loan_type.".");
+	        return array('code' => 1);
+	    }
+	}
+	
+	/*LOAN MASTER DOCUMENT TYPE DATA UPDATE */
+	function updateLoanDocTypeModel($loan_type, $document_type,  $loan_doc_type_id)
+	{
+	    $this->db->trans_begin();
+	    $data = array(
+	        'Name'	=>  $document_type,
+	        'Loan_master_id'	=>  $loan_type,
+	        'Modified_by'=>$GLOBALS['Added_by'],
+	        'Modified_on'=>$GLOBALS['NOW'],
+	    );
+	    $this->db->where('ID',$loan_doc_type_id);
+	    $this->db->update('loan_document_type',$data);
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Update existing loan document type", "New document type is ".$document_type." in loan master ID ".$loan_type.".");
+	        return array('code' => 1);
+	    }
+	}
+	//DESIGNATION END HERE
 
 }
     
