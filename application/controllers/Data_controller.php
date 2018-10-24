@@ -2810,7 +2810,7 @@ class Data_controller extends CI_Controller {
 	        $data['group_details']=$this->database->GetGroupDetails($id);
 	        
 	        $output = array(
-	            'html'=>$this->load->view('datafragment/dataTable/Selected_memberlist_for_loan_doc_table.php',$data,true),
+	            'Selected_group_memberlist'=>$this->load->view('datafragment/dataTable/Selected_memberlist_for_loan_doc_table.php',$data,true),
 	            'Group_details'=>$this->load->view('datafragment/dataTable/Group_details_for_loan_app.php',$data,true),
 	            'success' =>true
 	        );
@@ -2992,6 +2992,64 @@ class Data_controller extends CI_Controller {
 	            
 	            
 	            
+	        }
+	    } catch (Exception $ex) {
+	        $status = array("success" => false,"msg" => $ex->getMessage());
+	    }
+	    
+	    echo json_encode($status) ;
+	}
+	
+	/*LOAD LOAN VERIFIED TABLE START HERE*/
+	public function loadVerifiedLoan()
+	{
+	    try {
+	        $data['result']=$this->database->GetVerifiedLoanRecord();
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/VerifiedLoan_table',$data, true),
+	            'success' =>true
+	        );
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	/*UPDATE CUSTOMER LOAN DOCUMENT -- Written by William*/
+	public function updateCustomerLoanDoc()
+	{
+	    $_POST = json_decode(trim(file_get_contents('php://input')), true);
+	    $errorMSG ='';
+	    try {
+	        /* customer loan doc type validation */
+	        if (empty($this->input->post('customer_loan_doc_type',true))) {
+	            $errorMSG = " Document type is required";
+	        }
+	        /* file validation */
+	        if (empty($this->input->post('fileUpload',true))) {
+	            $errorMSG = " File is required";
+	        }
+	        
+	        
+	        $status = array("success"=>false,"msg"=>$errorMSG);
+	        if(empty($errorMSG)){
+	            
+	            $loan_acc_no = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            $customer_loan_doc_type = $this->db->escape_str ( trim ( $this->input->post('customer_loan_doc_type',true) ) );
+	            $file = $this->db->escape_str ( trim ( $_POST ['fileUpload'] ) );
+	            $result = $this->database->addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$file);
+	            if($result['code'] == 1)
+	            {
+	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	            }
+	            else
+	            {
+	                $status = array("success" => false,"msg" => "Fail to Update !!!");
+	            }
 	        }
 	    } catch (Exception $ex) {
 	        $status = array("success" => false,"msg" => $ex->getMessage());

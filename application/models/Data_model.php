@@ -2199,7 +2199,8 @@ class Data_model extends CI_Model{
    				district.name AS district,
                 shg_master.Group_name,
                 group_customer_member.ID AS group_id,
-                loan_app_details_relation.Loan_acc_no
+                loan_app_details_relation.Loan_acc_no,
+                loan_app_details_relation.Loan_master_id
 		        FROM customer
 		        
 		   		LEFT JOIN customer_account ON customer_account.Cus_id  = customer.ID
@@ -2244,10 +2245,11 @@ class Data_model extends CI_Model{
 	
 	function GetDocRecordByLAN($id)
 	{
-	    $sql =  "SELECT loanDoc.ID as ID, loanDocType.name as doc_type, loanDoc.file_type as file_type, loanDoc.Added_by as Added_by, loanDoc.Added_on as Added_on, loanDoc.files as files
+	    $sql =  "SELECT loanDoc.ID as ID, loanDocType.name as doc_type, loanDoc.file_type as file_type, emp.Name as Added_by, loanDoc.Added_on as Added_on, loanDoc.files as files
                 FROM loan_document loanDoc
-                LEFT JOIN loan_app_details_relation on loan_app_details_relation.Loan_master_id=loanDoc.loan_master_id
+                LEFT JOIN loan_app_details_relation on loan_app_details_relation.Loan_acc_no=loanDoc.loan_acc_no
                 LEFT JOIN loan_document_type loanDocType on loanDocType.ID=loanDoc.doc_type
+                LEFT JOIN emp on emp.ID=loanDoc.Added_by
                 WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no = '$id'";
 	    $query=$this->db->query($sql);
 	    
@@ -2338,7 +2340,54 @@ class Data_model extends CI_Model{
 	        return array('code' => 1);
 	    }
 	}
-	//DESIGNATION END HERE
+	//LOAN MASTER DOCUMENT TYPE DATA UPDATE END HERE
+	
+	
+	
+	//LOAD LOAN VERIFIED TABLE START HERE//
+	function GetVerifiedLoanRecord()
+	{
+	    $sql =  "SELECT *
+                FROM loan_app_details_relation
+                WHERE IsActive=1 AND IsGroup=1 GROUP BY Group_id";
+	    
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
+	}
+	
+	/*CUSTOMER LOAN DOCUMENT DATA ADD  -- Written by William */
+	function addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$file)
+	{
+	    $this->db->trans_begin();
+	    $file_extension = explode(':', substr($file, 0, strpos($file, ';')))[1];
+	    $data = array(
+	        'loan_acc_no'	=>  $loan_acc_no,
+	        'doc_type'	=>  $customer_loan_doc_type,
+	        'file_type'	=>  $file_extension,
+	        'files'=>  $file,
+	        'Added_by' =>$GLOBALS['Added_by'],
+	        'Added_on' =>$GLOBALS['NOW'],
+	        'Modified_by'=>$GLOBALS['Added_by'],
+	        'Modified_on'=>$GLOBALS['NOW'],
+	        'IsActive'=>  1
+	    );
+	    
+	    $this->db->insert('loan_document', $data);
+	    $lastID=$this->db->insert_id();
+	    
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Add new Customer loan document", "Loan Acc no ".$loan_acc_no." and document type ID ".$customer_loan_doc_type." is added.");
+	        return array('code' => 1);
+	    }
+	}
 
 }
     

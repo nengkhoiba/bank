@@ -25,7 +25,7 @@
 				<td><?php echo $mem_data['Loan_acc_no']?></td>
                 <td>
 				
-					<button class="btn btn-sm btn-success" onclick="addDocForm($(this))" value="<?php echo $mem_data['Loan_acc_no']?>" type="button" >Upload Document</button>					
+					<button class="btn btn-sm btn-success" onclick="addDocForm('<?php echo $mem_data['Loan_acc_no']?>','<?php echo $mem_data['Loan_master_id']?>')" type="button" >Upload Document</button>					
     			</td>
 				</tr>
         <?php $count ++;  } ?>

@@ -8,16 +8,48 @@
           <li class="breadcrumb-item">Loan Document</li>
         </ul>
 		</div>
-      </div>
+      </div>      
+			  
       
-      
-      <div class="row" id="formContainer" style="display: none">
+      <div class="row" style="">
       <div class="clearix"></div>
         <div class="col-md-12">
           <div class="tile">
+          
+            <div class="tile-body">
+			
+				<div class="col-md-12">
+					<ul class="nav nav-tabs">
+						<li><a data-toggle="tab" class="active show" href="#group" >Group</a></li>
+						<li><a data-toggle="tab"  href="#individuals">Individuals</a></li>
+					</ul>
+					</div>
+					
+					
+					<div class="col-md-12">
+
+					<div class="tab-content">
+						<div id="group" class="tab-pane fade active show">
+						<br>
+                		<div id="verifiedLoanTable" class="table-responsive">
+                              
+                	  </div>
+								
+								 <?php echo form_open_multipart('',array('id'=>'Group_Loan_Details_uploadForm','class'=>'row'))?>
+								<div class="form-group col-md-12 align-self-end" id="LoadGroupApplicationForm">
+								</div>
+								<?php echo form_close() ?>
+							  
+							
+							 <div class="row" id="showSelectedmember" style="display:none;">
+								  <div class="clearix"></div>
+									<div class="col-md-12">		
+									  <div class="tile">
+									  
+									  <div id="formContainer" style="display: none" >
             <div class="tile-title-w-btn">
               <h3 class="title">Add Document</h3>
-             <button class="close"  href="" onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
+             <button class="close"  onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
               width: 36px;"><span aria-hidden="true">×</span></button>
             </div>
             <div class="tile-body">
@@ -57,12 +89,12 @@
                 </div>
               </div>
               <br>
-            <?php echo form_open_multipart('',array('id'=>'CustomerDocUploadForm','class'=>'row'))?>
+            <?php echo form_open_multipart('',array('id'=>'CustomerLoanDocUploadForm','class'=>'row'))?>
               <input id="postType" name="postType" type="hidden">
                 <div class="form-group col-md-4 align-self-end">
                   <label class="control-label">Select Document Type</label>
-                  <select id="loan_doc_type" name="loan_doc_type" style="margin-top:10px;" class="form-control" >
-                        <!-- List of document -->
+                  <select id="customer_loan_doc_type" name="customer_loan_doc_type" style="margin-top:10px;" class="form-control" >
+                        <!-- List of document type -->
                   	</select>
                 </div>
                 <div class="form-group col-md-4 align-self-end">
@@ -77,9 +109,9 @@
                 </div>
                 	
                 	<div class="form-group col-md-4 align-self-end">
-		                  <button onclick="updateCustomerDoc()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
+		                  <button onclick="updateCustomerLoanDoc()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Summit</button>
 		                   &nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerLoanDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>            
@@ -105,58 +137,12 @@
                     </tbody>
                   </table>
                 </div>
-		           
-          </div>
-        </div>
-        
-        
-         
-      </div>
-      
-			  
-      
-      <div class="row" style="">
-      <div class="clearix"></div>
-        <div class="col-md-12">
-          <div class="tile">
-          
-            <div class="tile-body">
-			
-				<div class="col-md-12">
-					<ul class="nav nav-tabs">
-						<li><a data-toggle="tab" href="#group" >Group</a></li>
-						<li><a data-toggle="tab" class="active show" href="#individuals">Individuals</a></li>
-					</ul>
-					</div>
-					<div class="col-md-12">
-
-					<div class="tab-content">
-						<div id="group" class="tab-pane fade ">
-						<div id="model_display"></div>
-						
-						 <br>
-						 <h5>Group Loan Document</h5>
-						 <br>
-							 <?php echo form_open_multipart('',array('id'=>'MasLoanApplicationGropuForms','class'=>'row'))?>
-								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">Search SHG Group</label>
-									<input onkeyup="runAutoCompleteGroupSearch(this.value)"  style="margin-top: 10px;" class="form-control text_number" autocomplete="off" name="groupsearchfield" id="groupsearchfield" type="text" placeholder="Type Group Code/Name" >
-								</div>
-								
-								<?php echo form_close() ?>
-								
-								 <?php echo form_open_multipart('',array('id'=>'Group_Loan_Details_uploadForm','class'=>'row'))?>
-								<div class="form-group col-md-12 align-self-end" id="LoadGroupApplicationForm">
-								</div>
-								<?php echo form_close() ?>
-							  
-							
-							 <div class="row" id="showSelectedmember" style="display:none;">
-								  <div class="clearix"></div>
-									<div class="col-md-12">		
-									  <div class="tile">
+                <br>
+              </div>
+              
+									  
 										<div class="tile-title-w-btn">
-										  <h3 class="title"><span id="group_title">Selected group member list.</span></h3>
+										  <h3 class="title"><span id="group_title">Group Information</span></h3>
 										 <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
 										  width: 36px;"><span aria-hidden="true">×</span></button>
 										</div>
@@ -165,36 +151,14 @@
 										<div class="" id="group_details"></div>
 										<div class="" id="selected_member_data"></div>
 										</div>
-									  </div>
 									</div>
 								  </div>
 							
 						</div>
-						<div id="individuals" class="tab-pane fade active show">
+						</div>
+						<div id="individuals" class="tab-pane fade">
 						 <br>
-						 <h5>Individual Loan Application</h5>
-						 <br>
-							 <?php echo form_open_multipart('',array('id'=>'MasLoanApplicationIndividualForms','class'=>'row'))?>
-								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">Search</label>
-									<input onkeyup="runAutoComplete(this.value)" onfocus="resetValue()" style="margin-top: 10px;" class="form-control text_number" autocomplete="off" name="searchkeyword" id="searchfield" type="text" placeholder="Type Account Name/Number" >
-								</div>
-								<div class="form-group col-md-4 align-self-end">
-									<label class="control-label">Account Number</label>
-									<input id="individual_account_no" name="individual_account_no" style="margin-top: 10px;" class="form-control number" type="text" placeholder="Account Number"></input>
-								</div>
-								<div class="form-group col-md-4 align-self-end">
-									<button onclick="LoanIndividualSearch()" class="btn btn-sm btn-primary" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Search</button>
-									&nbsp;&nbsp;&nbsp;
-									<a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#MasLoanApplicationIndividualForms')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
-								</div>
-								<?php echo form_close() ?>
-								
-								 <?php echo form_open_multipart('',array('id'=>'Loan_Details_uploadForm','class'=>'row'))?>
-								<div class="form-group col-md-12 align-self-end" id="LoadIndividualApplicationForm">
-								</div>
-								<?php echo form_close() ?>
-							  
+							 
 						  
 						</div>
 					</div>
@@ -204,11 +168,51 @@
           </div>
         </div>
       </div>
+      
+      
      
      
     </main>
 	  <?php $this->load->view('global/footer');?> 
     <script type="text/javascript">
+
+
+    function loadVerifiedLoan()
+    { 
+      var url = "<?php echo site_url('index.php/data_controller/loadVerifiedLoan'); ?>"; 
+      StartInsideLoading();
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,   
+        dataType: 'json', 
+        success: function(response){ 
+        try{  
+          if (response.success)
+             { 
+            $('#verifiedLoanTable').html(response.html);
+              $('#verifiedLoan').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+              
+             } else
+             { 
+                 SetWarningMessageBox('warning', response.msg);
+                
+             }
+         StopInsideLoading();
+         
+         }catch(e) {  
+            SetWarningMessageBox('warning', e);
+            StopInsideLoading();
+          } 
+        },
+        error: function(){      
+          SetWarningMessageBox('warning', 'Error while request..');
+          StopInsideLoading();
+        }
+       });
+    }
+    
+    loadVerifiedLoan();
    
 
 	
@@ -256,86 +260,6 @@
        });
     }
 	
-	function searchLoanTypeDetails(value)
-    { 
-      var loan_type_id = value;
-        
-      var url = '<?php echo base_url();?>index.php/data_controller/searchLoanTypeDetails';
-      StartInsideLoading();
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false, 
-        data: {loan_type_id:loan_type_id},  
-        dataType: 'json', 
-        success: function(response){ 
-        try{  
-          if (response.success)
-            {
-        	$('#loan_details').html(response.html); 
-			loadDropDown('','tenure_type_master','#loanmaster_tenure_type');            
-            } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);                
-             }
-         StopInsideLoading();
-         
-         }catch(e) {  
-            SetWarningMessageBox('warning', e);
-            StopInsideLoading();
-          } 
-        },
-        error: function(){      
-          SetWarningMessageBox('warning', 'Error while request..');
-          StopInsideLoading();
-        }
-       });
-    }
-	
-
-   function runAutoComplete(query){
-  	 $('#searchfield').typeahead({
-  		 items: 10,
-  		    source: function(request, response) {
-  		        $.ajax({
-  		            url: "<?php echo site_url('index.php/data_controller/searchByKeyword?q='); ?>"+query,
-  		            method:"GET",
-  		            dataType: "json",
-  		            success: function (data) {
-  		            response(data);
-  		            }
-  		        });
-   		    },
-//   		   autoselect:true,
-  		  afterSelect:function(item){  $('#individual_account_no').val(item.id);},
-  		  displayText: function(item){ return item.value+ " <"+item.id+">";}
-  	 });
-  	 
-      }
-	  
-
-	   function runAutoCompleteGroupSearch(query){
-  	 $('#groupsearchfield').typeahead({
-  		 items: 10,
-  		    source: function(request, response) {
-  		        $.ajax({
-  		            url: "<?php echo site_url('index.php/data_controller/GroupSearchByKeyword?q='); ?>"+query,
-  		            method:"GET",
-  		            dataType: "json",
-  		            success: function (data) {
-  		            response(data);
-  		            }
-  		        });
-   		    },
-//   		   autoselect:true,
-		  
-			afterSelect:function(item){ LoanGroupSearch(item.group_id)},
-			displayText: function(item){ return item.group_code+ " < "+item.group_name+" >";}
-  	 });
-  	 
-      }
-	
-	
 	 function LoanGroupSearch(id)
     { 
       var url = "<?php echo site_url('index.php/data_controller/LoadGroupSelected_memberlistForUploadLoanDoc?id='); ?>"+id;
@@ -350,7 +274,7 @@
           if (response.success)
              { 
 			
-            $('#selected_member_data').html(response.html);
+            $('#selected_member_data').html(response.Selected_group_memberlist);
             $('#selected_member_data_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
       		$('#showSelectedmember').show(); 
 		    $('#group_details').html(response.Group_details);
@@ -382,22 +306,21 @@
     }
    // loadMember_list_group();
    
-   function addDocForm($btn){   
-    	$reqestId =  $btn.val();  
+   function addDocForm($loan_acc_no, $loan_master_id){   
     	var url = '<?php echo base_url();?>index.php/data_controller/AddLoanDocUploadForm';
     	StartInsideLoading();
     	$.ajax({
     		  type: "post",
     		  url: url,
     		  cache: false,    
-    		  data: {reqId:$reqestId},
+    		  data: {reqId:$loan_acc_no},
     		  dataType: 'json',
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
     	           {
     				 $('#photo').attr('src',response.json[0].photo); 	
-    				 $('#postType').val(response.json[0].ID);
+    				 $('#postType').val(response.json[0].Loan_acc_no);
     				 $('#customer_ID').html(response.json[0].ID);
     				 $('#customer_account_status').html(response.json[0].accStatus);
     				 $('#customer_account_no').html(response.json[0].accNo);
@@ -435,7 +358,7 @@
     				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
     				 $('#loan_acc_no').html(response.json[0].Loan_acc_no);
     				 
-    				 loadLoanDocType(response.json[0].Loan_master_id);
+    				 loadLoanDocType($loan_master_id);
     				 
     				 $('#loan_doc_type').attr('onchange','checkDocumentType($(this),'+response.json[0].ID+')');
     				 $('#cusDocument').empty();
@@ -476,7 +399,7 @@
    		  try{  	 
    			   if (response.success)
    	           { 	
-   				 $('#loan_doc_type').html(response.html);
+   				 $('#customer_loan_doc_type').html(response.html);
    	           } else
    	           { 
    	               SetWarningMessageBox('warning', response.msg);
@@ -495,6 +418,59 @@
    }
 
 
+
+   function updateCustomerLoanDoc(){  
+   	if ($('#customer_loan_doc_type').val().trim() == '') { 
+           SetWarningMessageBox('warning', 'Document type is mandatory !');
+           $('#customer_loan_doc_type').focus();
+           return;
+       }
+       if ($('#file').val().trim() == '') {
+           SetWarningMessageBox('warning', 'File is mandatory!');
+           $('#file').focus();
+           return;
+       }
+              
+
+       var formData = $('form#CustomerLoanDocUploadForm').serializeObject();
+       var dataString = JSON.stringify(formData);
+       var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerDoc';
+       StartInsideLoading();
+		 $.ajax({
+		  type: "post",
+		  url: url,
+		  cache: false,    
+		  data: dataString,
+		  dataType: 'json',
+		  success: function(response){   
+		  try{  	
+			   if (response.success)
+	           { 
+				   SetSucessMessageBox('Success', response.msg);
+				   $('#customer_loan_doc_type').val('');
+				   $('#file').val('');
+				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
+				   $('#formContainer').hide(); 
+				   loadCustomer();
+	           } else
+	           { 
+	               SetWarningMessageBox('warning', response.msg);
+	           }
+		  StopInsideLoading();
+		  }catch(e) {  
+			  SetWarningMessageBox('warning', e);
+			  StopInsideLoading();
+		  }  
+		  },
+		  error: function(){      
+			  SetWarningMessageBox('warning', 'Error while request..');
+			  StopInsideLoading();
+		  }
+		 });
+	}
+   
+
+
    function checkDocumentType($btn,$CustomerId){ 
 
    	$reqestId =  $btn.val(); 
@@ -511,8 +487,8 @@
    			   if (response.success)
    	           {
    			   SetWarningMessageBox('warning', response.msg);
-   			   $('#customer_doc_type').children('option[value = '+$reqestId+']').attr('disabled',true);
-   			   $('#customer_doc_type').val('');	           
+   			   $('#customer_loan_doc_type').children('option[value = '+$reqestId+']').attr('disabled',true);
+   			   $('#customer_loan_doc_type').val('');	           
    	           } else
    	           { 
    	               SetSucessMessageBox('success', response.msg);
@@ -531,10 +507,10 @@
    }
 
 
-   function updateCustomerDoc(){  
-   	if ($('#customer_doc_type').val().trim() == '') { 
+   function updateCustomerLoanDoc(){  
+   	if ($('#customer_loan_doc_type').val().trim() == '') { 
            SetWarningMessageBox('warning', 'Document type is mandatory !');
-           $('#customer_doc_type').focus();
+           $('#customer_loan_doc_type').focus();
            return;
        }
        if ($('#file').val().trim() == '') {
@@ -544,9 +520,9 @@
        }
               
 
-       var formData = $('form#CustomerDocUploadForm').serializeObject();
+       var formData = $('form#CustomerLoanDocUploadForm').serializeObject();
        var dataString = JSON.stringify(formData);
-       var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerDoc';
+       var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerLoanDoc';
        StartInsideLoading();
 		 $.ajax({
 		  type: "post",
@@ -559,11 +535,10 @@
 			   if (response.success)
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
-				   $('#customer_doc_type').val('');
+				   $('#customer_loan_doc_type').val('');
 				   $('#file').val('');
 				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
-				   $('#formContainer').hide(); 
-				   loadCustomer();
+				   $('#formContainer').hide();
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
