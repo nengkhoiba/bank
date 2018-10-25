@@ -385,13 +385,7 @@ class Data_controller extends CI_Controller {
 	        );
 	    }
 	    echo json_encode($output);
-	    
-	    
-	    $Id =  $this->input->post('reqId',true);
-	    $check = $this->database->CheckAadhaarNo($Id);
-	    if (sizeof ( $check ) == 1) {
-	        $errorMSG = " Aadhaar No. is already used";
-	    }
+	   
 	}
 
 	
@@ -2827,15 +2821,15 @@ class Data_controller extends CI_Controller {
 	public function AddLoanDocUploadForm()
 	{
 	    try {
-	        $Id =  $this->input->post('reqId',true);
-	        if($Id == ''){
+	        $loan_acc_no =  $this->input->post('loan_acc_no',true);
+	        if($loan_acc_no == ''){
 	            $output = array(
 	                'msg'=> 'Resquest Error !!!',
 	                'success' =>false
 	            );
 	        }else{
-	            $data = $this->database->GetCustomerRecordByLAN($Id,'customer');
-	            $data1 = $this->database->GetDocRecordByLAN($Id);
+	            $data = $this->database->GetCustomerRecordByLAN($loan_acc_no,'customer');
+	            $data1 = $this->database->GetDocRecordByLAN($loan_acc_no);
 	            $output = array(
 	                'json'=>$data,
 	                'json1'=>$data1,
@@ -3029,6 +3023,12 @@ class Data_controller extends CI_Controller {
 	        if (empty($this->input->post('customer_loan_doc_type',true))) {
 	            $errorMSG = " Document type is required";
 	        }
+	        
+	        /* customer loan doc type validation */
+	        if (empty($this->input->post('customer_loan_doc_remark',true))) {
+	            $errorMSG = " Remark is required";
+	        }
+	        
 	        /* file validation */
 	        if (empty($this->input->post('fileUpload',true))) {
 	            $errorMSG = " File is required";
@@ -3038,13 +3038,15 @@ class Data_controller extends CI_Controller {
 	        $status = array("success"=>false,"msg"=>$errorMSG);
 	        if(empty($errorMSG)){
 	            
-	            $loan_acc_no = $this->db->escape_str ( trim ( $this->input->post('postType',true) ) );
+	            $loan_acc_no = $this->db->escape_str ( trim ( $this->input->post('loanAccNo',true) ) );
+	            $loan_master_id = $this->db->escape_str ( trim ( $this->input->post('loanMasterId',true) ) );
 	            $customer_loan_doc_type = $this->db->escape_str ( trim ( $this->input->post('customer_loan_doc_type',true) ) );
+	            $customer_loan_doc_remark = $this->db->escape_str ( trim ( $this->input->post('customer_loan_doc_remark',true) ) );
 	            $file = $this->db->escape_str ( trim ( $_POST ['fileUpload'] ) );
-	            $result = $this->database->addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$file);
+	            $result = $this->database->addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$customer_loan_doc_remark,$file);
 	            if($result['code'] == 1)
 	            {
-	                $status = array("success" => true,"msg" => "Update sucessfull!");
+	                $status = array("success" => true,"msg" => "Update sucessfull!", "loanAccNo" => $loan_acc_no, "loanMasterId" => $loan_master_id);
 	            }
 	            else
 	            {
@@ -3056,6 +3058,77 @@ class Data_controller extends CI_Controller {
 	    }
 	    
 	    echo json_encode($status) ;
+	}
+	
+	
+	/* Check customer document type already exists or not */
+	public function checkLoanDocumentType()
+	{
+	    
+	    
+	    try {
+	        $docTypeVal =  $this->input->post('doc_type',true);
+	        $loan_acc_no =  $this->input->post('loan_acc_no',true);
+	        if($docTypeVal == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' => false
+	            );
+	        }else{
+	            $check = $this->database->CheckLoanDocument($docTypeVal,$loan_acc_no);
+	            if (sizeof ( $check ) == 1) {
+	                $output = array(
+	                    'msg'=> ' Document is already uploaded !',
+	                    'success' => true
+	                );
+	            }
+	            else
+	            {
+	                $output = array(
+	                    'msg'=> 'Document has been accepted',
+	                    'success' => false
+	                );
+	            }
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	    
+	}
+	
+	
+	/*DELET CUSTOMER LOAN DOCUMENT*/
+	public function deleteLoanDocument()
+	{
+	      $IdsArray = json_decode($this->input->post('loan_acc_no_master_id',true), TRUE);
+	    try {
+	        $loan_acc_no = $IdsArray['loanAccNo'];
+	        $loan_master_id = $IdsArray['loanMasterId'];
+	        $loan_cus_doc_type_id =  $this->input->post('loan_cus_doc_type_id',true);
+	        if($loan_cus_doc_type_id == ''){
+	            $output = array(
+	                'msg'=> 'Resquest Error !!!',
+	                'success' =>false
+	            );
+	        }else{
+	            $data = $this->database->RemoveSingleRecordById($loan_cus_doc_type_id,'loan_document');
+	            $output = array(
+	                'msg'=> 'Deleted sucessfull',
+	                "loanAccNo" => $loan_acc_no, "loanMasterId" => $loan_master_id,
+	                'success' =>true
+	            );
+	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
 	}
 	
 }

@@ -90,20 +90,25 @@
               </div>
               <br>
             <?php echo form_open_multipart('',array('id'=>'CustomerLoanDocUploadForm','class'=>'row'))?>
-              <input id="postType" name="postType" type="hidden">
-                <div class="form-group col-md-4 align-self-end">
+              <input id="loanAccNo" name="loanAccNo" type="hidden">
+              <input id="loanMasterId" name="loanMasterId" type="hidden">
+                <div class="form-group col-md-3 align-self-end">
                   <label class="control-label">Select Document Type</label>
                   <select id="customer_loan_doc_type" name="customer_loan_doc_type" style="margin-top:10px;" class="form-control" >
                         <!-- List of document type -->
                   	</select>
                 </div>
-                <div class="form-group col-md-4 align-self-end">
+                <div class="form-group col-md-3 align-self-end">
+                  <label class="control-label">Remark</label>
+                  <input class="form-control" id="customer_loan_doc_remark" name="customer_loan_doc_remark" style="margin-top: 10px;" type="text"></input>
+                </div>
+                <div class="form-group col-md-3 align-self-end">
                   <label class="control-label">Select File</label>
                   <input class="form-control" onchange="imagetoBase64(this)" id="file"
 					style="margin-top: 10px;" type="file"></input> <input
 					type="hidden" name="fileUpload" id="fileUpload">
                 </div>
-                <div class="form-group col-md-4 align-self-end">
+                <div class="form-group col-md-3 align-self-end">
                   <label class="control-label"></label>
                   <img id="imgThumb" height="80" class="img-responsive" style="" src="<?php echo base_url();?>assets/img/NoImage.png">
                 </div>
@@ -118,7 +123,7 @@
 		              <?php echo form_close() ?>
 		           </div>
 		           
-		           <div class="table-responsive">
+		           <div class="table-responsive" id="loanDocTable" tabindex="1">
                   <table class="table table-hover dataTable no-footer">
                     <thead>
                       <tr>
@@ -126,11 +131,12 @@
                         <th>Document Type</th>
                         <th>File Type</th>
                         <th>Uploaded By</th>
+                        <th>Remark</th>
                         <th>Uploaded On</th>
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="cusDocument">
+                    <tbody id="cusLoanDocument">
                     
                       
                       
@@ -214,53 +220,8 @@
     
     loadVerifiedLoan();
    
-
 	
-    function LoanIndividualSearch()
-    { 
-    	if ($('#individual_account_no').val().trim() == '') { 
-            SetWarningMessageBox('warning', 'Account No. is mandatory !');
-            $('#individual_account_no').focus();
-            return;
-        }
-    	
-    	var formData = $('form#MasLoanApplicationIndividualForms').serializeObject();
-        var dataString = JSON.stringify(formData);
-        
-      var url = '<?php echo base_url();?>index.php/data_controller/searchIndividualAccountForLoan';
-      StartInsideLoading();
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false, 
-        data: dataString,  
-        dataType: 'json', 
-        success: function(response){ 
-        try{  
-          if (response.success)
-            {
-        	$('#LoadIndividualApplicationForm').html(response.html); 
-			$('#individual_Loan_Type_Id').html(response.loantype_html); 
-        	$('#LoadIndividualApplicationForm').show();             
-            } else
-             { 
-                 SetWarningMessageBox('warning', response.msg);                
-             }
-         StopInsideLoading();
-         
-         }catch(e) {  
-            SetWarningMessageBox('warning', e);
-            StopInsideLoading();
-          } 
-        },
-        error: function(){      
-          SetWarningMessageBox('warning', 'Error while request..');
-          StopInsideLoading();
-        }
-       });
-    }
-	
-	 function LoanGroupSearch(id)
+function LoanGroupSearch(id)
     { 
       var url = "<?php echo site_url('index.php/data_controller/LoadGroupSelected_memberlistForUploadLoanDoc?id='); ?>"+id;
       StartInsideLoading();
@@ -274,22 +235,15 @@
           if (response.success)
              { 
 			
-            $('#selected_member_data').html(response.Selected_group_memberlist);
-            $('#selected_member_data_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
-      		$('#showSelectedmember').show(); 
-		    $('#group_details').html(response.Group_details);
-            
-
-      			$('#gr_id').val(id);
-
-            $('#delete_onclick_set').attr('onclick','deleteSelectedMember('+id+')'); 
-      			
-			  	
+                $('#selected_member_data').html(response.Selected_group_memberlist);
+                $('#selected_member_data_table').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+          		$('#showSelectedmember').show();
+          		$('#formContainer').hide(); 
+    		    $('#group_details').html(response.Group_details); 		  	
               
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
-                
              }
          StopInsideLoading();
          
@@ -313,14 +267,15 @@
     		  type: "post",
     		  url: url,
     		  cache: false,    
-    		  data: {reqId:$loan_acc_no},
+    		  data: {loan_acc_no:$loan_acc_no},
     		  dataType: 'json',
     		  success: function(response){   
     		  try{  	 
     			   if (response.success)
     	           {
     				 $('#photo').attr('src',response.json[0].photo); 	
-    				 $('#postType').val(response.json[0].Loan_acc_no);
+    				 $('#loanAccNo').val(response.json[0].Loan_acc_no);
+    				 $('#loanMasterId').val($loan_master_id);
     				 $('#customer_ID').html(response.json[0].ID);
     				 $('#customer_account_status').html(response.json[0].accStatus);
     				 $('#customer_account_no').html(response.json[0].accNo);
@@ -357,15 +312,18 @@
     				 $('#customer_nominee_district').html(response.json[0].nominee_district);
     				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
     				 $('#loan_acc_no').html(response.json[0].Loan_acc_no);
+
+    				 $('#customer_loan_doc_type').attr('onchange', 'checkLoanDocumentType($(this),"'+response.json[0].Loan_acc_no+'")');
     				 
     				 loadLoanDocType($loan_master_id);
     				 
     				 $('#loan_doc_type').attr('onchange','checkDocumentType($(this),'+response.json[0].ID+')');
-    				 $('#cusDocument').empty();
+    				 $('#cusLoanDocument').empty();
     				 $.each(response.json1, function (index, value) {
-    					 $('#cusDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="updateDocument($(this))" value="'+value.ID+'"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td></tr>');
+    					 $('#cusLoanDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Remark+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="deleteLoanDocument($(this))" value="'+value.ID+'"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td></tr>');
     				    });
-                     $(window).scrollTop(0);
+                     //$(window).scrollTop(0);
+                     $('#loanDocTable').focus();
                      $('#formContainer').show();
     	           } else
     	           { 
@@ -419,75 +377,24 @@
 
 
 
-   function updateCustomerLoanDoc(){  
-   	if ($('#customer_loan_doc_type').val().trim() == '') { 
-           SetWarningMessageBox('warning', 'Document type is mandatory !');
-           $('#customer_loan_doc_type').focus();
-           return;
-       }
-       if ($('#file').val().trim() == '') {
-           SetWarningMessageBox('warning', 'File is mandatory!');
-           $('#file').focus();
-           return;
-       }
-              
-
-       var formData = $('form#CustomerLoanDocUploadForm').serializeObject();
-       var dataString = JSON.stringify(formData);
-       var url = '<?php echo base_url();?>index.php/data_controller/updateCustomerDoc';
-       StartInsideLoading();
-		 $.ajax({
-		  type: "post",
-		  url: url,
-		  cache: false,    
-		  data: dataString,
-		  dataType: 'json',
-		  success: function(response){   
-		  try{  	
-			   if (response.success)
-	           { 
-				   SetSucessMessageBox('Success', response.msg);
-				   $('#customer_loan_doc_type').val('');
-				   $('#file').val('');
-				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
-				   $('#formContainer').hide(); 
-				   loadCustomer();
-	           } else
-	           { 
-	               SetWarningMessageBox('warning', response.msg);
-	           }
-		  StopInsideLoading();
-		  }catch(e) {  
-			  SetWarningMessageBox('warning', e);
-			  StopInsideLoading();
-		  }  
-		  },
-		  error: function(){      
-			  SetWarningMessageBox('warning', 'Error while request..');
-			  StopInsideLoading();
-		  }
-		 });
-	}
    
 
-
-   function checkDocumentType($btn,$CustomerId){ 
-
-   	$reqestId =  $btn.val(); 
-   	var url = '<?php echo base_url();?>index.php/data_controller/checkDocumentType';
+   function checkLoanDocumentType($this,$loan_acc_no){ 
+	$doc_type =  $this.val();
+   	var url = '<?php echo base_url();?>index.php/data_controller/checkLoanDocumentType';
    	StartInsideLoading();
    	$.ajax({
    		  type: "post",
    		  url: url,
    		  cache: false,    
-   		  data: {reqId:$reqestId,cusId:$CustomerId},
+   		  data: {doc_type:$doc_type,loan_acc_no:$loan_acc_no},
    		  dataType: 'json',
    		  success: function(response){   
    		  try{  	 
    			   if (response.success)
    	           {
    			   SetWarningMessageBox('warning', response.msg);
-   			   $('#customer_loan_doc_type').children('option[value = '+$reqestId+']').attr('disabled',true);
+   			   $('#customer_loan_doc_type').children('option[value = '+$doc_type+']').attr('disabled',true);
    			   $('#customer_loan_doc_type').val('');	           
    	           } else
    	           { 
@@ -513,6 +420,13 @@
            $('#customer_loan_doc_type').focus();
            return;
        }
+
+       	if ($('#customer_loan_doc_remark').val().trim() == '') {
+            SetWarningMessageBox('warning', 'Remark is mandatory!');
+            $('#customer_loan_doc_remark').focus();
+            return;
+        }
+    
        if ($('#file').val().trim() == '') {
            SetWarningMessageBox('warning', 'File is mandatory!');
            $('#file').focus();
@@ -536,9 +450,11 @@
 	           { 
 				   SetSucessMessageBox('Success', response.msg);
 				   $('#customer_loan_doc_type').val('');
+				   $('#customer_loan_doc_remark').val('');				   
 				   $('#file').val('');
+				   $('#fileUpload').val('');				   
 				   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
-				   $('#formContainer').hide();
+				   addDocForm(response.loanAccNo,response.loanMasterId)
 	           } else
 	           { 
 	               SetWarningMessageBox('warning', response.msg);
@@ -555,6 +471,64 @@
 		  }
 		 });
 	}
+
+   function deleteLoanDocument($btn){ 
+
+	   swal({
+		   title: "Are you sure?",
+		   text: "You will not be able to recover this imaginary file!",
+		   type: "warning",
+		   showCancelButton: true,
+		   confirmButtonText: "Yes, Delete it!",
+		   cancelButtonText: "No, cancel plz!",
+		   closeOnConfirm: true,
+		   closeOnCancel: true
+		   }, function(isConfirm) {
+		   if (isConfirm)  {
+
+			   $loan_cus_doc_type_id =  $btn.val();
+			   	var formData = $('form#CustomerLoanDocUploadForm').serializeObject();
+			    var dataString = JSON.stringify(formData);   	   	 
+			   	var url = '<?php echo base_url();?>index.php/data_controller/deleteLoanDocument';
+			   	StartInsideLoading();
+			   	$.ajax({
+			   		  type: "post",
+			   		  url: url,
+			   		  cache: false,    
+			   		  data: {loan_acc_no_master_id:dataString,loan_cus_doc_type_id:$loan_cus_doc_type_id},
+			   		  dataType: 'json',
+			   		  success: function(response){   
+			   		  try{  	 
+			   			   if (response.success)
+			   	           { 	
+			   				   SetSucessMessageBox('Success', response.msg);
+							   $('#customer_loan_doc_type').val('');
+							   $('#customer_loan_doc_remark').val('');				   
+							   $('#file').val('');
+							   $('#fileUpload').val('');
+							   $("#imgThumb").attr("src",base_url+"assets/img/NoImage.png");
+							   addDocForm(response.loanAccNo,response.loanMasterId)
+			   	           } else
+			   	           { 
+			   	               SetWarningMessageBox('warning', response.msg);
+			   	           }
+			   		  StopInsideLoading();
+			   		  }catch(e) {  
+			   			  SetWarningMessageBox('warning', e);
+			   			  StopInsideLoading();
+			   		  }  
+			   		  },
+			   		  error: function(){      
+			   			  SetWarningMessageBox('warning', 'Error while request..');
+			   			  StopInsideLoading();
+			   		  }
+			   		 });			   
+
+				  
+		   }
+		   }); 
+	    
+   } 
     
    
   

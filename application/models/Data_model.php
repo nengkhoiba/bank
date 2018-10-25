@@ -210,7 +210,7 @@ class Data_model extends CI_Model{
 	}
 	function CheckDocument($docTypeVal,$cusId)
 	{
-	    $query = $this->db->get_where('customer_document', array('Cus_id' => $cusId,'doc_type' => $docTypeVal));
+	    $query = $this->db->get_where('customer_document', array('Cus_id' => $cusId,'doc_type' => $docTypeVal, 'IsActive' => '1'));
 	    return $query->result ();
 	}
 	
@@ -2217,7 +2217,7 @@ class Data_model extends CI_Model{
 	}
 	
 	/*GET CUSTOMER DATA  -- Written by William */
-	function GetCustomerRecordByLAN($id,$tabName)
+	function GetCustomerRecordByLAN($loan_acc_no,$tabName)
 	{
 	    $sql = "SELECT cus.ID as ID,cus.name as name,cus.Added_on as Added_on,dob,aadhaar_no,husband_name,parmanent_address,rural,
         urban,contact_no,bank_ac_no,bank_branch,work,nominee_name,nominee_aadhaar_no,nominee_permanent_address,
@@ -2235,7 +2235,7 @@ class Data_model extends CI_Model{
         LEFT JOIN district nomiDis on nomiDis.ID=cus.nominee_district
         LEFT JOIN customer_account cusAcc on cusAcc.Cus_id=cus.ID
         LEFT JOIN loan_app_details_relation  ON loan_app_details_relation.Acc_no  = cusAcc.Acc_no
-        WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no='$id' ";
+        WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no='$loan_acc_no' ";
 	    
 	    $query=$this->db->query($sql);
 	    
@@ -2243,14 +2243,13 @@ class Data_model extends CI_Model{
 	}
 	
 	
-	function GetDocRecordByLAN($id)
+	function GetDocRecordByLAN($loan_acc_no)
 	{
-	    $sql =  "SELECT loanDoc.ID as ID, loanDocType.name as doc_type, loanDoc.file_type as file_type, emp.Name as Added_by, loanDoc.Added_on as Added_on, loanDoc.files as files
+	    $sql =  "SELECT loanDoc.ID as ID, loanDocType.name as doc_type, loanDoc.file_type as file_type,  loanDoc.Remark, emp.Name as Added_by, loanDoc.Added_on as Added_on, loanDoc.files as files
                 FROM loan_document loanDoc
-                LEFT JOIN loan_app_details_relation on loan_app_details_relation.Loan_acc_no=loanDoc.loan_acc_no
                 LEFT JOIN loan_document_type loanDocType on loanDocType.ID=loanDoc.doc_type
                 LEFT JOIN emp on emp.ID=loanDoc.Added_by
-                WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.Loan_acc_no = '$id'";
+                WHERE loanDoc.IsActive=1 AND loanDoc.loan_acc_no = '$loan_acc_no'";
 	    $query=$this->db->query($sql);
 	    
 	    return $query->result_array();
@@ -2357,13 +2356,14 @@ class Data_model extends CI_Model{
 	}
 	
 	/*CUSTOMER LOAN DOCUMENT DATA ADD  -- Written by William */
-	function addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$file)
+	function addCustomerLoanDoc($loan_acc_no, $customer_loan_doc_type,$customer_loan_doc_remark,$file)
 	{
 	    $this->db->trans_begin();
 	    $file_extension = explode(':', substr($file, 0, strpos($file, ';')))[1];
 	    $data = array(
 	        'loan_acc_no'	=>  $loan_acc_no,
 	        'doc_type'	=>  $customer_loan_doc_type,
+	        'Remark' => $customer_loan_doc_remark,
 	        'file_type'	=>  $file_extension,
 	        'files'=>  $file,
 	        'Added_by' =>$GLOBALS['Added_by'],
@@ -2385,6 +2385,37 @@ class Data_model extends CI_Model{
 	    {
 	        $this->db->trans_commit();
 	        $this->addLog("Add new Customer loan document", "Loan Acc no ".$loan_acc_no." and document type ID ".$customer_loan_doc_type." is added.");
+	        return array('code' => 1);
+	    }
+	}
+	
+	function CheckLoanDocument($docTypeVal,$loan_acc_no)
+	{
+	    $query = $this->db->get_where('loan_document', array('loan_acc_no' => $loan_acc_no,'doc_type' => $docTypeVal,'IsActive' => '1'));
+	    return $query->result ();
+	}
+	
+	
+	function RemoveSingleRecordById($Id,$tblName)
+	{
+	    $this->db->trans_begin();
+	        $this->db->set('IsActive', 0);  //Set the column name and which value to set..
+	        $this->db->where('ID', $Id); //set column_name and value in which row need to update
+	        $this->db->update($tblName); //Set your table name
+	        if($this->db->trans_status() === FALSE)
+	        {
+	            $this->db->trans_rollback();
+	            return array('code' => 0);
+	        }
+	    if($this->db->trans_status() === FALSE)
+	    {
+	        $this->db->trans_rollback();
+	        return array('code' => 0);
+	    }
+	    else
+	    {
+	        $this->db->trans_commit();
+	        $this->addLog("Soft delete Record From ".$tblName, "record deleted with ID ".$Id."");
 	        return array('code' => 1);
 	    }
 	}
