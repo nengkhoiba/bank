@@ -323,7 +323,8 @@ function LoanGroupSearch(id)
     					 $('#cusLoanDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Remark+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="deleteLoanDocument($(this))" value="'+value.ID+'"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td></tr>');
     				    });
                      //$(window).scrollTop(0);
-                     $('#loanDocTable').focus();
+                     var scrollPos =  $("#loanDocTable").offset().top;
+ 				     $(window).scrollTop(scrollPos);
                      $('#formContainer').show();
     	           } else
     	           { 
