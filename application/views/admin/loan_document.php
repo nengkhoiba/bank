@@ -44,7 +44,7 @@
 							 <div class="row" id="showSelectedmember" style="display:none;">
 								  <div class="clearix"></div>
 									<div class="col-md-12">		
-									  <div class="tile">
+									  <div class="">
 									  
 									  <div id="formContainer" style="display: none" >
             <div class="tile-title-w-btn">
