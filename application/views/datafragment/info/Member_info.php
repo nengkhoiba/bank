@@ -30,7 +30,7 @@
       <b> Contact No. : </b><span id="customer_nominee_contact"><?php echo $member_details[0]['nominee_contact_no'];?></span><br><br>
       <b> Account Number : </b><span id="customer_account_no"><?php echo $member_details[0]['accNo'];?></span><br>
       <b> Loan Account Number : </b><span id="loan_acc_no"><?php echo $member_details[0]['Loan_acc_no'];?></span><br>                  
-      <b> Account Status : </b><span id="customer_account_status"><?php echo $member_details[0]['ID'];?></span> <br><br>
+      <b> Account Status : </b><span id="customer_account_status"><?php echo $member_details[0]['accStatus'];?></span> <br><br>
     </div>
  </div>
  <br>
