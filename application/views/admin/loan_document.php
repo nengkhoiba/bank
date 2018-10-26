@@ -187,6 +187,10 @@ function LoanGroupSearch(id)
     			   if (response.success)
     	           {
 
+    				 $('#Member_info_indi').empty();
+	   				 $('#Member_loan_doc_upload_form_indi').empty();
+	   			     $('#Member_loan_doc_indi').empty();
+
         	         $('#Member_info_grp').html(response.member_info_grp_loan);
         	         $('#Member_loan_doc_upload_form_grp').html(response.member_doc_upload_form);
         	         $('#Member_loan_doc_grp').html(response.member_doc_loan);
@@ -472,6 +476,12 @@ function LoanGroupSearch(id)
    			   if (response.success)
    	           {
 
+   				 $('#group_details').empty();
+  				 $('#selected_member_data').empty();
+   				 $('#Member_info_grp').empty();
+   				 $('#Member_loan_doc_upload_form_grp').empty();
+   			     $('#Member_loan_doc_grp').empty();  			
+   				 
        	         $('#Member_info_indi').html(response.member_info_grp_loan);
        	         $('#Member_loan_doc_upload_form_indi').html(response.member_doc_upload_form);
        	         $('#Member_loan_doc_indi').html(response.member_doc_loan);
@@ -502,6 +512,8 @@ function LoanGroupSearch(id)
    		  }
    		 });
    } 
+
+   
     
    
   
