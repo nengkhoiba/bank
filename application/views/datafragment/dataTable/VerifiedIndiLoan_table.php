@@ -17,7 +17,7 @@
                 <td><?php echo $row['Acc_no'];?></td>
 				<td><?php echo $row['Loan_acc_no'];?></td>
 				<td><?php echo $row['Loan_name'];?></td>
-                <td><button onclick="addDocForm('<?php echo $row['Loan_acc_no'];?>','<?php echo $row['Loan_master_id'];?>')" value="<?php echo $row['Loan_acc_no']?>" class="btn btn-sm btn-success" style="" type="button">Upload Document</button></td>
+                <td><button onclick="addIndividualMemberDocForm('<?php echo $row['Loan_acc_no'];?>','<?php echo $row['Loan_master_id'];?>')" value="<?php echo $row['Loan_acc_no']?>" class="btn btn-sm btn-success" style="" type="button">Upload Document</button></td>
 				</tr>
         <?php $count ++;} ?>
         </tbody>

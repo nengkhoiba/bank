@@ -2833,6 +2833,7 @@ class Data_controller extends CI_Controller {
 	            $output = array(
 	                'member_info_grp_loan'=>$this->load->view('datafragment/info/Member_info',$data,true),
 	                'member_doc_loan'=>$this->load->view('datafragment/dataTable/Member_loan_doc',$data,true),
+	                'member_doc_upload_form'=>$this->load->view('datafragment/addForm/LoanDocUploadForm','',true),
 	                'loanAccNo' => $data['member_details'][0]['Loan_acc_no'],
 	                'loanMasterId' => $data['member_details'][0]['Loan_master_id'],	                
 	                'success' =>true
