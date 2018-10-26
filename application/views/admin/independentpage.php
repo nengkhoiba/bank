@@ -1,4 +1,7 @@
 	<?php $this->load->view('global/header');?>
+	<script>
+	$('#hideSlideBar').hide();
+	</script>
     
        <div class="row" id="formContainer" style="margin-top: 45px">
       <div class="clearix"></div>
