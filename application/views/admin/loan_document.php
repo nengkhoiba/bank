@@ -31,7 +31,7 @@
 					<div class="tab-content">
 						<div id="group" class="tab-pane fade active show">
 						<br>
-                		<div id="verifiedLoanTable" class="table-responsive">
+                		<div id="verifiedGrpLoanTable" class="table-responsive">
                               
                 	  </div>
 								
@@ -41,55 +41,34 @@
 								<?php echo form_close() ?>
 							  
 							
-							 <div class="row" id="showSelectedmember" style="display:none;">
-								  <div class="clearix"></div>
-									<div class="col-md-12">		
-									  <div class="">
+							 		<div class="row" id="showSelectedmember" style="display:none;">
+								  	<div class="clearix"></div>
+									<div class="col-md-12">									
+										<div class="tile-title-w-btn">
+										  <h3 class="title"><span id="group_title">Group Information</span></h3>
+										 <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
+										  width: 36px;"><span aria-hidden="true">×</span></button>
+										</div>
+										
+										
+										<div class="" id="group_details"></div>
+										
+										
+										<div class="" id="selected_member_data"></div>
 									  
-									  <div id="formContainer" style="display: none" >
-            <div class="tile-title-w-btn">
-              <h3 class="title">Add Document</h3>
-             <button class="close"  onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
-              width: 36px;"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="tile-body">
-            <div class="row invoice-info" style="border: 2px solid #ced4da; margin: 0px; padding-top: 10px;">
-                <div class="col-4">
-                <b>Customer ID : <span id="customer_ID"></span><br><br></b>
-                    <b><address>Name : </b><span id="customer_name"></span><br>
-                    <b>Date of Birth : </b><span id="customer_dob"></span><br>
-                    <b>Gender : </b><span id="customer_gender"></span><br>
-                    <b>Aadhaar No. : </b><span id="customer_aadhaar"></span><br>
-                    <b>Husband/Father Name : </b><span id="customer_husband"></span><br>
-                    <b> Permanent Address : </b><span id="customer_address"></span><br>
-                    <b>Rural : </b><input id="customer_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>Urban : </b><input id="customer_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <b>District :</b><span id="customer_district"></span><br>
-                   <b> Contact No. : </b><span id="customer_contact"></span><br>
-                   <b> Work/Business/Profession : </b><span id="customer_work"></span></address>
-                </div>
-                <div class="col-4">
-                <b>Bank Information </b><br><br>
-                  <b>Account No. : </b><span id="customer_bank_ac_no"></span><br>
-                  <b>Branch : </b><span id="customer_bank_branch"></span>
-                </div>
-                <div class="col-4">
-                <img id="photo" width="90" class="img-responsive pull-right" style="padding: 5px" src="<?php echo base_url();?>assets/img/profile.png">
-                <b>Nominee Information </b><br><br>
-                  <b>Name : </b><span id="customer_nominee_name"></span><br>
-                  <b>Aadhaar No. : </b><span id="customer_nominee_aadhaar_no"></span><br>
-                  <b> Permanent Address : </b><span id="customer_nominee_address"></span><br>
-                  <b>Rural : </b><input id="customer_nominee_rural" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <b>Urban : </b><input id="customer_nominee_urban" disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <b>District :</b><span id="customer_nominee_district"></span><br>
-                  <b> Contact No. : </b><span id="customer_nominee_contact"></span><br><br>
-                  <b> Account Number : </b><span id="customer_account_no"></span><br>
-                  <b> Loan Account Number : </b><span id="loan_acc_no"></span><br>                  
-                  <b> Account Status : </b><span id="customer_account_status"></span> <br><br>
-                </div>
-              </div>
-              <br>
-            <?php echo form_open_multipart('',array('id'=>'CustomerLoanDocUploadForm','class'=>'row'))?>
+									<div id="formContainer" style="display: none" >
+                                    <div class="tile-title-w-btn">
+                                      <h3 class="title">Member Information</h3>
+                                     <button class="close"  onclick="removeMasterform('#formContainer')" type="button" aria-label="Close" style="height: 28px;
+                                      width: 36px;"><span aria-hidden="true">×</span></button>
+                                    </div>
+            
+            
+                                    <div id="Member_info_grp"> </div>
+                                    
+                                    <div id="Member_loan_doc_grp"> </div>
+            
+            <?php echo form_open_multipart('',array('id'=>'CustomerLoanDocUploadForm','class'=>'row', 'style'=>'display:none'))?>
               <input id="loanAccNo" name="loanAccNo" type="hidden">
               <input id="loanMasterId" name="loanMasterId" type="hidden">
                 <div class="form-group col-md-3 align-self-end">
@@ -118,53 +97,19 @@
 		                   &nbsp;&nbsp;&nbsp;
 		                  <a class="btn btn-sm btn-secondary" href="#" onclick="resetAllFormValue('#CustomerLoanDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Reset</a>
 		                	&nbsp;&nbsp;&nbsp;
-		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#formContainer')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
+		                  <a class="btn btn-sm btn-secondary" href="#" onclick="removeMasterform('#CustomerLoanDocUploadForm')"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cancel</a>
 		                </div>            
 		              <?php echo form_close() ?>
-		           </div>
-		           
-		           <div class="table-responsive" id="loanDocTable" tabindex="1">
-                  <table class="table table-hover dataTable no-footer">
-                    <thead>
-                      <tr>
-                        <th>Sl No.</th>
-                        <th>Document Type</th>
-                        <th>File Type</th>
-                        <th>Uploaded By</th>
-                        <th>Remark</th>
-                        <th>Uploaded On</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="cusLoanDocument">
-                    
-                      
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <br>
               </div>
-              
-									  
-										<div class="tile-title-w-btn">
-										  <h3 class="title"><span id="group_title">Group Information</span></h3>
-										 <button onclick="removeMasterform('#showSelectedmember')" class="close" type="button" aria-label="Close" style="height: 28px;
-										  width: 36px;"><span aria-hidden="true">×</span></button>
-										</div>
-										<div class="tile-body">
-										
-										<div class="" id="group_details"></div>
-										<div class="" id="selected_member_data"></div>
-										</div>
-									</div>
 								  </div>
 							
 						</div>
 						</div>
 						<div id="individuals" class="tab-pane fade">
 						 <br>
-							 
+                		<div id="verifiedIndiLoanTable" class="table-responsive">
+                              
+                	  </div>
 						  
 						</div>
 					</div>
@@ -183,9 +128,9 @@
     <script type="text/javascript">
 
 
-    function loadVerifiedLoan()
+    function loadVerifiedGrpLoan()
     { 
-      var url = "<?php echo site_url('index.php/data_controller/loadVerifiedLoan'); ?>"; 
+      var url = "<?php echo site_url('index.php/data_controller/loadVerifiedGrpLoan'); ?>"; 
       StartInsideLoading();
       $.ajax({
         type: "post",
@@ -196,9 +141,8 @@
         try{  
           if (response.success)
              { 
-            $('#verifiedLoanTable').html(response.html);
-              $('#verifiedLoan').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
-              
+            $('#verifiedGrpLoanTable').html(response.html);
+              $('#verifiedGrpLoan').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
              } else
              { 
                  SetWarningMessageBox('warning', response.msg);
@@ -218,7 +162,7 @@
        });
     }
     
-    loadVerifiedLoan();
+    loadVerifiedGrpLoan();
    
 	
 function LoanGroupSearch(id)
@@ -273,57 +217,18 @@ function LoanGroupSearch(id)
     		  try{  	 
     			   if (response.success)
     	           {
-    				 $('#photo').attr('src',response.json[0].photo); 	
-    				 $('#loanAccNo').val(response.json[0].Loan_acc_no);
-    				 $('#loanMasterId').val($loan_master_id);
-    				 $('#customer_ID').html(response.json[0].ID);
-    				 $('#customer_account_status').html(response.json[0].accStatus);
-    				 $('#customer_account_no').html(response.json[0].accNo);
-    				 $('#customer_name').html(response.json[0].name);
-    				 $('#customer_dob').html(response.json[0].dob);
-    				 $('#customer_gender').html(response.json[0].sex);
-    				 $('#customer_aadhaar').html(response.json[0].aadhaar_no);
-    				 $('#customer_husband').html(response.json[0].husband_name);
-    				 $('#customer_address').html(response.json[0].parmanent_address);
 
-    				 $('#customer_rural').attr('checked', false);
-    				 $('#customer_urban').attr('checked', false);
-    				 if(response.json[0].rural == 1)
-        			 {$('#customer_rural').attr('checked', true);}
-    				 if(response.json[0].urban == 1)
-        			 {$('#customer_urban').attr('checked', true);}
-        			 
-    				 $('#customer_district').html(response.json[0].district);
-    				 $('#customer_contact').html(response.json[0].contact_no);
-    				 $('#customer_work').html(response.json[0].work);
-    				 $('#customer_bank_ac_no').html(response.json[0].bank_ac_no);
-    				 $('#customer_bank_branch').html(response.json[0].bank_branch);
-
-    				 $('#customer_nominee_name').html(response.json[0].nominee_name);
-    				 $('#customer_nominee_aadhaar_no').html(response.json[0].nominee_aadhaar_no);
-    				 $('#customer_nominee_address').html(response.json[0].nominee_permanent_address);
-
-    				 $('#customer_nominee_rural').attr('checked', false);
-    				 $('#customer_nominee_urban').attr('checked', false);
-    				 if(response.json[0].nominee_rural == 1)
-        			 {$('#customer_nominee_rural').attr('checked', true);}
-    				 if(response.json[0].nominee_urban == 1)
-        			 {$('#customer_nominee_urban').attr('checked', true);}
-    				 $('#customer_nominee_district').html(response.json[0].nominee_district);
-    				 $('#customer_nominee_contact').html(response.json[0].nominee_contact_no);
-    				 $('#loan_acc_no').html(response.json[0].Loan_acc_no);
-
-    				 $('#customer_loan_doc_type').attr('onchange', 'checkLoanDocumentType($(this),"'+response.json[0].Loan_acc_no+'")');
-    				 
+        	         $('#Member_info_grp').html(response.member_info_grp_loan);
+        	         $('#Member_loan_doc_grp').html(response.member_doc_loan);
+        	         
+        	         $('#loanDocTable').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});                     
+        	         $('#customer_loan_doc_type').attr('onchange', 'checkLoanDocumentType($(this),"'+response.loanAccNo+'")');
+        	         $('#loanAccNo').val(response.loanAccNo);
+        	         $('#loanMasterId').val(response.loanMasterId);
     				 loadLoanDocType($loan_master_id);
-    				 
-    				 $('#loan_doc_type').attr('onchange','checkDocumentType($(this),'+response.json[0].ID+')');
-    				 $('#cusLoanDocument').empty();
-    				 $.each(response.json1, function (index, value) {
-    					 $('#cusLoanDocument').append('<tr><td>'+(index+1)+'</td><td>'+value.doc_type+'</td><td>'+value.file_type+'</td><td>'+value.Added_by+'</td><td>'+value.Remark+'</td><td>'+value.Added_on+'</td><td><a href="'+value.files+'" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="deleteLoanDocument($(this))" value="'+value.ID+'"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td></tr>');
-    				    });
+    				
                      //$(window).scrollTop(0);
-                     var scrollPos =  $("#loanDocTable").offset().top;
+                     var scrollPos =  $("#memberInfo").offset().top;
  				     $(window).scrollTop(scrollPos);
                      $('#formContainer').show();
     	           } else
@@ -530,6 +435,57 @@ function LoanGroupSearch(id)
 		   }); 
 	    
    } 
+
+   function showDivisionById($divId){  
+	   $('#'+$divId).show();
+   	}
+
+
+
+
+
+
+
+
+
+
+
+   function loadVerifiedIndiLoan()
+   { 
+     var url = "<?php echo site_url('index.php/data_controller/loadVerifiedIndiLoan'); ?>"; 
+     StartInsideLoading();
+     $.ajax({
+       type: "post",
+       url: url,
+       cache: false,   
+       dataType: 'json', 
+       success: function(response){ 
+       try{  
+         if (response.success)
+            { 
+           $('#verifiedIndiLoanTable').html(response.html);
+             $('#verifiedIndiLoan').DataTable({dom: 'lBfrtip', buttons: [ 'excel', 'pdf', 'print']});
+             
+            } else
+            { 
+                SetWarningMessageBox('warning', response.msg);
+               
+            }
+        StopInsideLoading();
+        
+        }catch(e) {  
+           SetWarningMessageBox('warning', e);
+           StopInsideLoading();
+         } 
+       },
+       error: function(){      
+         SetWarningMessageBox('warning', 'Error while request..');
+         StopInsideLoading();
+       }
+      });
+   }
+   
+   loadVerifiedIndiLoan();
     
    
   

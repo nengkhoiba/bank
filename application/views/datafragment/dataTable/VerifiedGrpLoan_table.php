@@ -1,4 +1,4 @@
-<table id="verifiedLoan" class="table table-hover">
+<table id="verifiedGrpLoan" class="table table-hover">
         <thead>
             <tr>
                 <th>Sl. No.</th>

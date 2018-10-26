@@ -2757,7 +2757,7 @@ class Data_controller extends CI_Controller {
 	        }else{
 	            $data['result'] = $this->database->GetGroupMemberBySearchKeyWord($q);
 	            $output = array(
-   	  'group_details_html'=>$this->load->view('datafragment/dataTable/',$data, true),
+   	            'group_details_html'=>$this->load->view('datafragment/dataTable/',$data, true),
 	                'success' =>true
 	            );
 	        }
@@ -2828,11 +2828,13 @@ class Data_controller extends CI_Controller {
 	                'success' =>false
 	            );
 	        }else{
-	            $data = $this->database->GetCustomerRecordByLAN($loan_acc_no,'customer');
-	            $data1 = $this->database->GetDocRecordByLAN($loan_acc_no);
+	            $data['member_details'] = $this->database->GetCustomerRecordByLAN($loan_acc_no,'customer');
+	            $data['member_loan_doc'] = $this->database->GetDocRecordByLAN($loan_acc_no);
 	            $output = array(
-	                'json'=>$data,
-	                'json1'=>$data1,
+	                'member_info_grp_loan'=>$this->load->view('datafragment/info/Member_info',$data,true),
+	                'member_doc_loan'=>$this->load->view('datafragment/dataTable/Member_loan_doc',$data,true),
+	                'loanAccNo' => $data['member_details'][0]['Loan_acc_no'],
+	                'loanMasterId' => $data['member_details'][0]['Loan_master_id'],	                
 	                'success' =>true
 	            );
 	        }
@@ -2995,12 +2997,12 @@ class Data_controller extends CI_Controller {
 	}
 	
 	/*LOAD LOAN VERIFIED TABLE START HERE*/
-	public function loadVerifiedLoan()
+	public function loadVerifiedGrpLoan()
 	{
 	    try {
-	        $data['result']=$this->database->GetVerifiedLoanRecord();
+	        $data['result']=$this->database->GetVerifiedGrpLoanRecord();
 	        $output = array(
-	            'html'=>$this->load->view('datafragment/dataTable/VerifiedLoan_table',$data, true),
+	            'html'=>$this->load->view('datafragment/dataTable/VerifiedGrpLoan_table',$data, true),
 	            'success' =>true
 	        );
 	    } catch (Exception $ex) {
@@ -3122,6 +3124,25 @@ class Data_controller extends CI_Controller {
 	                'success' =>true
 	            );
 	        }
+	    } catch (Exception $ex) {
+	        $output = array(
+	            'msg'=> $ex->getMessage(),
+	            'success' => false
+	        );
+	    }
+	    echo json_encode($output);
+	}
+	
+	
+	/*LOAD INDIVIDUAL LOAN VERIFIED TABLE START HERE*/
+	public function loadVerifiedIndiLoan()
+	{
+	    try {
+	        $data['result']=$this->database->GetVerifiedIndiLoanRecord();
+	        $output = array(
+	            'html'=>$this->load->view('datafragment/dataTable/VerifiedIndiLoan_table',$data, true),
+	            'success' =>true
+	        );
 	    } catch (Exception $ex) {
 	        $output = array(
 	            'msg'=> $ex->getMessage(),

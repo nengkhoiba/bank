@@ -2344,7 +2344,7 @@ class Data_model extends CI_Model{
 	
 	
 	//LOAD LOAN VERIFIED TABLE START HERE//
-	function GetVerifiedLoanRecord()
+	function GetVerifiedGrpLoanRecord()
 	{
 	    $sql =  "SELECT *
                 FROM loan_app_details_relation
@@ -2418,6 +2418,20 @@ class Data_model extends CI_Model{
 	        $this->addLog("Soft delete Record From ".$tblName, "record deleted with ID ".$Id."");
 	        return array('code' => 1);
 	    }
+	}
+	
+	//LOAD LOAN VERIFIED TABLE START HERE//
+	function GetVerifiedIndiLoanRecord()
+	{
+	    $sql =  "SELECT customer.name as Name, customer_account.Acc_no as Acc_no, loan_app_details_relation.Loan_acc_no, loan_app_details_relation.Loan_name, loan_app_details_relation.Loan_master_id 
+                FROM loan_app_details_relation
+                LEFT JOIN customer_account on customer_account.Acc_no = loan_app_details_relation.Acc_no
+                LEFT JOIN customer on customer.ID = customer_account.Cus_id
+                WHERE loan_app_details_relation.IsActive=1 AND loan_app_details_relation.IsGroup=0";
+	    
+	    $query=$this->db->query($sql);
+	    
+	    return $query->result_array();
 	}
 
 }
