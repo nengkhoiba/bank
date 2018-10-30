@@ -1,9 +1,9 @@
 <div class="tile-title-w-btn">
               <h3 class="title">Existing Loan Related Document</h3>
-              <a onclick="showDivisionById('CustomerLoanDocUploadForm')" style="color:#fff" class="btn btn-sm btn-success">New</a>
+              <a onclick="showDivisionById('CustomerLoanDocUploadForm_Indi')" style="color:#fff" class="btn btn-sm btn-success">New</a>
 </div>
 <div class="table-responsive">
-  <table id="loanDocTable" class="table table-hover dataTable no-footer">
+  <table id="loanDocTableIndi" class="table table-hover dataTable no-footer">
     <thead>
       <tr>
         <th>Sl No.</th>
@@ -24,7 +24,7 @@
     <td><?php echo $loan_doc['Added_by'];?></td>
     <td><?php echo $loan_doc['Remark'];?></td>
     <td><?php echo $loan_doc['Added_on'];?></td>
-    <td><a href="<?php echo $loan_doc['files'];?>" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="deleteLoanDocument($(this))" value="<?php echo $loan_doc['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td>
+    <td><a href="<?php echo $loan_doc['files'];?>" target="_blank" class="btn btn-sm btn-success">View Document</a><button onclick="deleteLoanDocument_Indi($(this))" value="<?php echo $loan_doc['ID'];?>"class="btn btn-primary w2wbutton" style="" type="button"><i style ="font-size: 12px; margin-right: 0px;" class="fa fa-lg fa-fw fa-remove"></i></button></td>
     </tr>
     <?php $count ++; } ?>
     </tbody>
