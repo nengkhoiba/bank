@@ -6,7 +6,7 @@
         <b>Gender : </b><span id="customer_gender"><?php echo $member_details[0]['sex'];?></span><br>
         <b>Aadhaar No. : </b><span id="customer_aadhaar"><?php echo $member_details[0]['aadhaar_no'];?></span><br>
         <b>Husband/Father Name : </b><span id="customer_husband"><?php echo $member_details[0]['husband_name'];?></span><br>
-        <b> Permanent Address : </b><span id="customer_address"><?php echo $member_details[0]['parmanent_address'];?></span><br>
+        <b>Permanent Address : </b><span id="customer_address"><?php echo $member_details[0]['parmanent_address'];?></span><br>
         <b>Rural : </b><input id="customer_rural" <?php if($member_details[0]['rural'] == 1) echo 'checked';?> disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <b>Urban : </b><input id="customer_urban" <?php if($member_details[0]['urban'] == 1) echo 'checked';?> disabled type="checkbox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <b>District :</b><span id="customer_district"><?php echo $member_details[0]['district'];?></span><br>
