@@ -107,7 +107,7 @@ class Data_model extends CI_Model{
 			$this->db->set('IsActive', 0);  //Set the column name and which value to set..
 			$this->db->where('ID', $id); //set column_name and value in which row need to update
 			$this->db->update($tblName); //Set your table name
-		 $ids=$ids.",".$id;
+		    $ids=$ids.",".$id;
 	        if($this->db->trans_status() === FALSE)
 	        {
 	        	$this->db->trans_rollback();

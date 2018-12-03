@@ -2349,7 +2349,7 @@ class Data_controller extends CI_Controller {
 	            $data['loantype']=$this->database->GetLoanTypeList();	
 	            $output = array(
 	            	'loantype_html'=>$this->load->view('datafragment/dropDown/LoanTypeList',$data, true),
-	                'html'=>$this->load->view('admin/IndividualInfoForLoan',$data,true),
+	                'html'=>$this->load->view('datafragment/info/IndividualInfoForLoan',$data,true),
 	                'success' =>true
 	            );
 	        }

@@ -146,6 +146,8 @@
 			</div>
 		  </div>
 		</div>
+		  </div>
+		</div>
 	  
       <div class="row" id="showSelectedmember" style="display:none;">
       <div class="clearix"></div>
