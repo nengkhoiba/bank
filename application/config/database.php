@@ -75,14 +75,14 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '103.83.12.24',
-	'username' => 'root',
+	'hostname' => 'mobimp.com',
+	'username' => 'u699038125_bank',
 	'password' => 'imphal795001',
 
 	// 'hostname' => 'localhost',
 	// 'username' => 'root',
 	// 'password' => '',
-	'database' => 'bank_db',
+	'database' => 'u699038125_bank',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
